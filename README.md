@@ -90,5 +90,7 @@ Pour les admins, un accès à la page d’administration est proposé.
 - Une page Remise ouverte peut être fermée sans pour autant être clôturée
 - Bouton pour clôturer la page
 
+#Test michael
+
 
 
