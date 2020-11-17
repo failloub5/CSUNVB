@@ -1,0 +1,99 @@
+body {
+    background-color: #6cc8ff;
+}
+
+.colorblue{
+    color: blue;
+}
+
+.versionnumber {
+    font-size: 10px;
+    color: #93a1a1;
+}
+.banner {
+    background-color: transparent;
+    width: 100%;
+}
+
+.menutile {
+    background-color: aliceblue;
+    font-size: xx-large;
+}
+.week {
+    background-color: #4DB9EE;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 2px;
+    margin: 2px;
+}
+.day {
+    background-color: pink;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 2px;
+    margin: 2px;
+}
+.hour {
+    background-color: chartreuse;
+    padding: 4px;
+    margin: 2px;
+}
+.hour2 {
+    background-color: green;
+    padding: 4px;
+    margin: 2px;
+}
+.dayheader {
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+    padding: 3px;
+}
+
+.error {
+    color: white;
+    background-color: red;
+}
+
+.today
+{
+    background-color: yellow;
+    color:black;
+}
+textarea{
+    font-size: 13px;
+}
+.sizemax
+{
+    max-width: 50px;
+}
+
+.logo {
+    width: 152px;
+    height: 81px;
+}
+
+.title {
+    font-size: xx-large;
+}
+
+.bigfont {
+    font-size: 36px;
+}
+
+table.table-bordered{
+    border:2px solid black;
+    margin-top:20px;
+}
+table.table-bordered > thead > tr > th{
+    border:1px solid black;
+}
+table.table-bordered > tbody > tr > td{
+    border:1px solid black;
+}
+
+.todothing {
+    border:1px solid black;
+}
