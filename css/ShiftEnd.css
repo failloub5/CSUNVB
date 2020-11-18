@@ -10,3 +10,17 @@
 .no{
     background-color: lightcoral;
 }
+
+.sectiontitle{
+    padding: 5px;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.table .actionname {
+    width: 200px;
+}
+
+.table .ackcell {
+    width: 40px;
+}
