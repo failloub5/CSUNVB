@@ -193,6 +193,10 @@ switch ($action) {
     case 'NewGuardSheet':
         NewGuardSheet();
         break;
+    case 'showGuardSheet':
+        $sheetid = $_GET['id'];
+        showShiftEnd($sheetid);
+        break;
     case 'changePwdState':
         $changeUser = $_GET['idUser'];
         changePwd($changeUser);
