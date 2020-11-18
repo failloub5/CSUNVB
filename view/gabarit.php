@@ -44,7 +44,8 @@
 <div class="container">
     <header>
         <div class="row banner">
-            <a href="index.php?action=<?php if ($_SESSION['username']['firstconnect'] == true){echo "login";}else{echo "home";}?>" class="col-auto"><img class="logo" src="/assets/images/logo.png"></a><div class="title col text-center">Gestion des rapports<span class="versionnumber">v1.0.1</span></div>
+            <a href="index.php?action=<?php if ($_SESSION['username']['firstconnect'] == true){echo "login";}else{echo "home";}?>" class="col-auto"><img class="logo" src="/assets/images/logo.png"></a><div class="title col text-center">Gestion des rapports</div>
+            <?= gitBranchTag() ?>
         </div>
         <div>
             <?php if (isset($_SESSION['username']) && $_SESSION['username']['firstconnect'] != true) { ?>
