@@ -1,13 +1,25 @@
 <?php
 /**
- * Title: CSUNVB
+ * Title: adminModel.php
+ * Project : CSU-NVB
+ **/
+
+/**
+ * MODIFICATIONS BY :
  * USER: marwan.alhelo
  * DATE: 13.02.2020
  * Time: 11:29
- **/
+ *
+ *  *USER: paola.costa
+ * DATE : 20.11.20
+ * Time : 17:08
+ */
 
 
-
+/**
+ * @param $id : id de la base à déterminer
+ * @return text : nom de la base selon $id
+ */
 function getbasebyid($id)       //Récupère une base en fonction de son Id
 {
     return selectOne("SELECT * FROM bases where id =:id", ['id' => $id]);
@@ -33,7 +45,8 @@ function getUser($id)     //Récupère l'utilisateur qui a cet $id
     return selectOne("SELECT * FROM users where id=:id", ['id' => $id]);
 }
 
-function getUserAdmin($admin){
+function getUserAdmin($admin)
+{
     return selectOne("SELECT * FROM users where admin = :admin", ['admin' => $admin]);
 }
 
@@ -56,46 +69,53 @@ function SaveBase($bases)       //Met à jour les informations d'une base
 
 function addNewDrug($nameDrug)
 {
-    return intval(insert("INSERT INTO drugs (name) values (:nameDrugs) ",['nameDrugs'=>$nameDrug] ));
+    return intval(insert("INSERT INTO drugs (name) values (:nameDrugs) ", ['nameDrugs' => $nameDrug]));
 }
 
 function addNewUser($prenomUser, $nomUser, $initialesUser, $hash, $admin, $firstconnect)
 {
-    return intval(insert("INSERT INTO users (firstname, lastname, initials, password, admin, firstconnect) VALUES (:firstname, :lastname, :initials, :password, :admin, :firstconnect)", ['firstname'=>$prenomUser, 'lastname'=>$nomUser, 'initials'=>$initialesUser, 'password'=>$hash, 'admin'=>$admin, 'firstconnect'=>$firstconnect]));       //à optimiser/simplifier avec un tableau
+    return intval(insert("INSERT INTO users (firstname, lastname, initials, password, admin, firstconnect) VALUES (:firstname, :lastname, :initials, :password, :admin, :firstconnect)", ['firstname' => $prenomUser, 'lastname' => $nomUser, 'initials' => $initialesUser, 'password' => $hash, 'admin' => $admin, 'firstconnect' => $firstconnect]));       //à optimiser/simplifier avec un tableau
 }
 
 function addNewBase($nameBase)
 {
-    return intval (insert("INSERT INTO bases (name) values (:nameBase) ",['nameBase'=>$nameBase] ));
+    return intval(insert("INSERT INTO bases (name) values (:nameBase) ", ['nameBase' => $nameBase]));
 }
 
 function changePwdState($changeUser)
 {
-    $newpassw = substr(md5(rand()),0,6);
+    $newpassw = substr(md5(rand()), 0, 6);
     $hash = password_hash($newpassw, PASSWORD_DEFAULT);
     execute("UPDATE users SET firstconnect= :firstconnect, password = :hash WHERE id= :id", ['firstconnect' => 1, 'id' => $changeUser, 'hash' => $hash]);
     return $newpassw;
 }
+
 function addNewNova($nameNova)
 {
-    return intval (insert("INSERT INTO novas (number) values (:nameNovas) ",['nameNovas'=>$nameNova] ));
+    return intval(insert("INSERT INTO novas (number) values (:nameNovas) ", ['nameNovas' => $nameNova]));
 }
+
 function saveModifDrug($modifNameDrug, $idDrug)
 {
     return execute("UPDATE drugs SET name= :name WHERE id= :id", ['name' => $modifNameDrug, 'id' => $idDrug]);
 }
+
 function saveModifBase($modifNameBase, $idBase)
 {
     return execute("UPDATE bases SET name= :name WHERE id= :id", ['name' => $modifNameBase, 'id' => $idBase]);
 }
+
 function saveModifNova($modifNameNova, $idNova)
 {
     return execute("UPDATE novas SET number= :number WHERE id= :id", ['number' => $modifNameNova, 'id' => $idNova]);
-}function addNewGuardsheet ($state,$idBase){
+}
+
+function addNewGuardsheet($state, $idBase)
+{
 
     return execute("Insert into guardsheets(date,state,base_id)
-values(current_timestamp(),:state,:idBase)",['state'=>$state,'idBase'=>$idBase]);
-    $gid =$dbh->LastindexOfid();
+values(current_timestamp(),:state,:idBase)", ['state' => $state, 'idBase' => $idBase]);
+    $gid = $dbh->LastindexOfid();
 
     return execute("Insert into guard_use_nova(nova_id,guardsheet_id,day)
 values(1,:guardsheetId,1)['guardsheetId'=>$gid]");
@@ -126,4 +146,5 @@ values(1,1,151,1)
 ;
 */
 }
+
 ?>
