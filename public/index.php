@@ -28,8 +28,6 @@ require MODEL . "drugModel.php";
 require MODEL . "novaModel.php";
 require MODEL . "shiftEndModel.php";
 require MODEL . "weeklyTasksModel.php";
-require MODEL . "guardSheetModel.php";
-require MODEL . "todoListModel.php";
 
 
 if(isset($_SESSION["username"])){
