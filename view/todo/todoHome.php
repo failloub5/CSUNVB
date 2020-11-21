@@ -17,7 +17,7 @@ $title = "CSU-NVB - Tâches hebdomadaires";
 
 
 <div class="row">
-    <FORM action="/index.php?action=todolist" method="post" class="col">
+    <FORM action="?action=todolist" method="post" class="col">
         <SELECT onchange="this.form.submit()" name="site" size="1">
             <?php
             foreach ($bases as $base) { ?>
@@ -30,8 +30,8 @@ $title = "CSU-NVB - Tâches hebdomadaires";
     </FORM>
 
     <div class="col">
-        <form action="/index.php?action=todolist" method="post">
-            <input type="hidden" name="base" value="<?= $_SESSION['Selectsite'] ?>">
+        <form action="?action=todolist" method="post">
+            <input type="hidden" name="base" value="<?= $selectedBase ?>">
             <?php if ($_SESSION['username']['admin'] == 1) { ?>
                 <button type="submit" class='btn btn-primary m-1 float-right'>Nouvelle feuille de tâches</button>
             <?php } ?>
@@ -50,7 +50,7 @@ $title = "CSU-NVB - Tâches hebdomadaires";
         <?php
         foreach ($todoSheets as $todosheet) { ?>
             <tr>
-                <form action="/index.php?action=edittod&sheetid=<?= $todosheet['id'] ?>" method="post">
+                <form action="?action=edittod&sheetid=<?= $todosheet['id'] ?>" method="post">
                     <td>
                         <?php
                         //Convert the date string into a unix timestamp.
@@ -65,10 +65,10 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                 </form>
                 <td>
                     <div class="row">
-                    <form action="/index.php?action=reopenToDo" method="post">
+                    <form action="?action=reOpenToDo" method="post">
                         <button class="btn btn-primary btn-sm ml-3" name="reopen" value="<?= $todosheet['id'] ?>">Reopen</button>
                     </form>
-                    <form action="/index.php?action=closedToDo" method="post">
+                    <form action="?action=closedToDo" method="post">
                         <button class="btn btn-primary btn-sm ml-3" name="close" value="<?= $todosheet['id'] ?>">Close</button>
                     </form>
                     </div>
@@ -81,6 +81,6 @@ $title = "CSU-NVB - Tâches hebdomadaires";
 
 <?php
 $content = ob_get_clean();
-require "view/gabarit.php";
+require GABARIT;
 ?>
 

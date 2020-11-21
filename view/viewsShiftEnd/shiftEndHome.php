@@ -13,7 +13,7 @@ $title = "CSU-NVB - Remise de garde";
 </div>
 
 <div class="row">
-    <FORM action="/index.php?action=listShiftEnd" method="post" class="col">
+    <FORM action="?action=listShiftEnd" method="post" class="col">
         <SELECT onchange="this.form.submit()" name="site" size="1">
             <?php foreach ($Bases
 
@@ -56,7 +56,7 @@ $title = "CSU-NVB - Remise de garde";
     <?php ?>
     <?php foreach ($guardsheets as $guardsheet) { ?>
         <tr>
-            <td><a href='?action=showGuardSheet&id=<?= $guardsheet['id'] ?>' class="btn"><?= date('d.m.Y',strtotime($guardsheet['date'])) ?>  </a></td>
+            <td><?= substr($guardsheet['date'], 0, 10) ?></td>
             <td><?php if ($guardsheet['state'] == 'open') { ?>
                     <?= "Ouvert " ?>
                 <?php }
@@ -74,13 +74,13 @@ $title = "CSU-NVB - Remise de garde";
             <?php if ($admin['admin'] == 1) { ?>
                 <td>
                     <?php if ($guardsheet['state'] == 'closed') : ?>
-                        <form action="/index.php?action=reopenShift" method="post">
-                            <button class="btn btn-primary btn-sm" name="reopen" value="<?= $guardsheet['id'] ?>"
+                        <form action="?action=reOpenShift" method="post">
+                            <button class="btn btn-primary btn-sm" name="reOpen" value="<?= $guardsheet['id'] ?>"
                             </button>Reopen
                         </form>
                     <?php endif; ?>
                     <?php if ($guardsheet['state'] == 'open' || $guardsheet['state'] == 'reopen') : ?>
-                        <form action="/index.php?action=closedShift" method="post">
+                        <form action="?action=closedShift" method="post">
                             <button class="btn btn-primary btn-sm" name="close" value="<?= $guardsheet['id'] ?>"
                             </button>Close
                         </form>
@@ -94,5 +94,5 @@ $title = "CSU-NVB - Remise de garde";
 <?php
 
 $content = ob_get_clean();
-require "view/gabarit.php";
+require GABARIT;
 ?>
