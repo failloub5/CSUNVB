@@ -1,12 +1,10 @@
 <?php
 
 ob_start();
-$title = "CSU-NVB - 404";
-?>
+$title = "CSU-NVB - error 404";
 
-erreur : la page l'existe pas ou ne vous n'êtes pas autorisé(e)
+echo "Erreur : la page n'existe pas ou vous n'êtes pas autorisé(e) à y accéder.";
 
-<?php
 $content = ob_get_clean();
 require GABARIT;
 ?>
