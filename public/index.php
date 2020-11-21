@@ -106,6 +106,10 @@ function switcherAdmin(){
         case 'updateNova' :
             updateNova();
             break;
+        //---- ShiftSheet ----
+        case 'newSheet':
+            newShiftSheet($_POST['site']);
+            break;
         default :
             switcherUser();
             break;

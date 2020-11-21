@@ -2,12 +2,14 @@
 /**
  * Auteur: Thomas Grossmann / Mounir Fiaux
  * Date: Mars 2020
- **/
+ */
 
-
-function NewGuardSheet()
+/**
+ * @param $baseID
+ */
+function newShiftSheet($baseID)
 {
-    $result = addNewGuardsheet();
+    $result = addNewShiftSheet("en préparation", $baseID);
     if ($result == false) {
         $_SESSION['flashmessage'] = "Une erreur est survenue. Impossible d'ajouter la Nova.";
     } else {

@@ -184,7 +184,7 @@ function getGuardsheetForBase($base_id)
     from guardsheets where base_id=:base_id',["base_id" => $base_id]);
 }
 
-function addNewGuardsheet ($state,$idBase){
+function addNewShiftSheet ($state,$idBase){
 
     return execute("Insert into guardsheets(date,state,base_id)
 values(current_timestamp(),:state,:idBase)",['state'=>$state,'idBase'=>$idBase]);

@@ -27,7 +27,7 @@ $title = "CSU-NVB - Remise de garde";
     </FORM>
     <?php if ($admin['admin'] == 1) { ?>
         <div class="col">
-            <a href="?action=NewGuardSheet" class='btn btn-primary m-1 float-right'>Nouvelle Feuille de garde</a>
+            <a href="?action=newSheet" class='btn btn-primary m-1 float-right'>Nouvelle Feuille de garde</a>
         </div>
     <?php } ?>
 </div>
