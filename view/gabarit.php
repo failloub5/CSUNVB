@@ -48,7 +48,7 @@
 <div class="container">
     <header>
         <div class="row banner">
-            <a href="../public/index.php?action=home" class="col-auto">
+            <a href="?action=home" class="col-auto">
                 <img class="logo" src="assets/images/logo.png">
             </a>
             <div class="title col text-center">
