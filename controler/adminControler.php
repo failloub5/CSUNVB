@@ -148,11 +148,22 @@ function saveNewDrugs($nameDrug)
 
 function NewGuardSheet()
 {
-    $result = addNewGuardsheet();
+    //détermine l'état -> si admin : préparation, si utilisateur : ouvert
+    if(/*user = admin*/){
+        $state = "en préparation";
+    }
+    else/*user != admin*/{
+        $state = "ouvert";
+    }
+
+    //récupération de l'id de la base selon liste affichée. Ne fonctionne pas pour le moment, renvoie le mauvais ID
+    // $baseID = $_SESSION["Selectsite"];
+    //retourne si la création a fonctionnée ou pas (booléen)
+    $result = addNewGuardsheet($state, $baseID);
     if ($result == false) {
-        $_SESSION['flashmessage'] = "Une erreur est survenue. Impossible d'ajouter la Nova.";
+        $_SESSION['flashmessage'] = "Une erreur est survenue. Impossible de créer la feuille de rapport";
     } else {
-        $_SESSION['flashmessage'] = "La Nova a bien été créé !";
+        $_SESSION['flashmessage'] = "La feuille de rapport a bien été créé !";
     }
     adminGuardSheet();
 }
