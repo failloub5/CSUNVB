@@ -1,170 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="e30c7e12-ee5e-4d7e-812d-ac8e8020c55c" name="Default Changelist" comment="" />
+    <list default="true" id="5154e90c-a48b-45ed-b2b2-f8c623afe397" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/model/.const.example.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Remake.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/databaseModel.php" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ComposerSettings">
-    <execution />
+    <execution>
+      <executable />
+    </execution>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="PhpDebugGeneral" listening_started="true" />
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 7.4" />
-  <component name="ProjectId" id="1kVKaY6FmU7qh3apRsfavAXjX5v" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
+  <component name="ProjectId" id="1kjz0ZYfA8kX57mqyTwsund4Opy" />
   <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="project.propDebugger" />
-    <property name="vue.rearranger.settings.migration" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/model" />
+    <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="G:\CSU\Remake\view" />
-      <recent name="G:\CSU\Remake\view\admin" />
-      <recent name="G:\CSU\Remake\view\main" />
-      <recent name="G:\CSU\Remake" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="G:\CSU\Remake\public" />
-      <recent name="G:\CSU\Remake\public\assets\images" />
-      <recent name="G:\CSU\Remake\public\assets" />
-      <recent name="G:\CSU\Remake" />
-      <recent name="G:\CSU\Remake\view" />
+      <recent name="$PROJECT_DIR$/model" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="CSU" type="PhpBuiltInWebServerConfigurationType" factoryName="PHP Built-in Web Server" document_root="$PROJECT_DIR$/public" port="8080" router_script="$PROJECT_DIR$/public/index.php">
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="PhpBuiltInWebServerConfigurationType" factoryName="PHP Built-in Web Server" document_root="$PROJECT_DIR$" port="8080">
-      <CommandLine workingDirectory="D:/CPNV/Logiciel/php-7.4.12" />
-      <method v="2" />
-    </configuration>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
-    <configuration>C:\Users\Michael.GOGNIAT\AppData\Roaming\Subversion</configuration>
+    <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e30c7e12-ee5e-4d7e-812d-ac8e8020c55c" name="Default Changelist" comment="" />
-      <created>1605780382875</created>
+      <changelist id="5154e90c-a48b-45ed-b2b2-f8c623afe397" name="Default Changelist" comment="" />
+      <created>1606228565231</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1605780382875</updated>
-      <workItem from="1605780383956" duration="1215000" />
-      <workItem from="1605781613918" duration="1020000" />
-      <workItem from="1605783515753" duration="174000" />
-      <workItem from="1605783703173" duration="13000" />
-      <workItem from="1605789091940" duration="3019000" />
-      <workItem from="1605794263052" duration="137000" />
-      <workItem from="1605795476772" duration="2227000" />
-      <workItem from="1605800445229" duration="3881000" />
-      <workItem from="1605804715355" duration="2549000" />
-      <workItem from="1605807293582" duration="48000" />
-      <workItem from="1605807361386" duration="6523000" />
-      <workItem from="1605814629465" duration="7255000" />
-      <workItem from="1605862610690" duration="1661000" />
-      <workItem from="1605877867580" duration="108000" />
-      <workItem from="1605877987816" duration="2049000" />
-      <workItem from="1605880067313" duration="804000" />
-      <workItem from="1605881059251" duration="17870000" />
-      <workItem from="1605900958262" duration="415000" />
-      <workItem from="1605901383563" duration="33000" />
-      <workItem from="1605901424162" duration="16935000" />
-      <workItem from="1605946024292" duration="5432000" />
-      <workItem from="1605959333950" duration="184000" />
+      <updated>1606228565231</updated>
+      <workItem from="1606228566439" duration="453000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="1" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="684" y="256" key="#CLI_Interpreters" timestamp="1605880038158">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="513" y="190" key="#CLI_Interpreters/0.0.1920.1040@0.0.1920.1040" timestamp="1605780585422" />
-    <state x="684" y="256" key="#CLI_Interpreters/0.0.2560.1400@0.0.2560.1400" timestamp="1605880038158" />
-    <state x="692" y="185" key="#PHP" timestamp="1605959361678">
-      <screen x="78" y="0" width="1842" height="1080" />
-    </state>
-    <state x="640" y="178" key="#PHP/0.0.1920.1040@0.0.1920.1040" timestamp="1605780589964" />
-    <state x="692" y="185" key="#PHP/1982.0.1474.864/78.0.1842.1080@78.0.1842.1080" timestamp="1605959361678" />
-    <state x="515" y="123" width="786" height="695" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605959374698">
-      <screen x="78" y="0" width="1842" height="1080" />
-    </state>
-    <state x="456" y="119" width="1092" height="848" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605862619950" />
-    <state x="608" y="160" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1605951459445" />
-    <state x="515" y="123" width="786" height="695" key="#com.intellij.execution.impl.EditConfigurationsDialog/1982.0.1474.864/78.0.1842.1080@78.0.1842.1080" timestamp="1605959374698" />
-    <state x="1086" y="416" key="#com.intellij.ide.util.MemberChooser" timestamp="1605882393179">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="1086" y="416" key="#com.intellij.ide.util.MemberChooser/0.0.2560.1400@0.0.2560.1400" timestamp="1605882393179" />
-    <state x="1011" y="447" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1605951868367">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="1011" y="447" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1605951868367" />
-    <state x="796" y="558" key="FileChooserDialogImpl" timestamp="1605946102839">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="591" y="382" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1605797487312" />
-    <state x="796" y="558" key="FileChooserDialogImpl/0.0.2560.1400@0.0.2560.1400" timestamp="1605946102839" />
-    <state width="1799" height="295" key="GridCell.Tab.0.bottom" timestamp="1605959412765">
-      <screen x="78" y="0" width="1842" height="1080" />
-    </state>
-    <state width="1281" height="126" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605869830429" />
-    <state width="1258" height="400" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1605946455070" />
-    <state width="1799" height="295" key="GridCell.Tab.0.bottom/1982.0.1474.864/78.0.1842.1080@78.0.1842.1080" timestamp="1605959412765" />
-    <state width="1799" height="295" key="GridCell.Tab.0.center" timestamp="1605959412764">
-      <screen x="78" y="0" width="1842" height="1080" />
-    </state>
-    <state width="1281" height="126" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605869830429" />
-    <state width="1258" height="400" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1605946455070" />
-    <state width="1799" height="295" key="GridCell.Tab.0.center/1982.0.1474.864/78.0.1842.1080@78.0.1842.1080" timestamp="1605959412764" />
-    <state width="1799" height="295" key="GridCell.Tab.0.left" timestamp="1605959412764">
-      <screen x="78" y="0" width="1842" height="1080" />
-    </state>
-    <state width="1281" height="126" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605869830429" />
-    <state width="1258" height="400" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1605946455070" />
-    <state width="1799" height="295" key="GridCell.Tab.0.left/1982.0.1474.864/78.0.1842.1080@78.0.1842.1080" timestamp="1605959412764" />
-    <state width="1799" height="295" key="GridCell.Tab.0.right" timestamp="1605959412765">
-      <screen x="78" y="0" width="1842" height="1080" />
-    </state>
-    <state width="1281" height="126" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605869830429" />
-    <state width="1258" height="400" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1605946455070" />
-    <state width="1799" height="295" key="GridCell.Tab.0.right/1982.0.1474.864/78.0.1842.1080@78.0.1842.1080" timestamp="1605959412765" />
-    <state x="1117" y="624" key="NewPhpFileDialog" timestamp="1605901794805">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="1117" y="624" key="NewPhpFileDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1605901794805" />
-    <state x="579" y="217" key="SettingsEditor" timestamp="1605901412466">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="434" y="161" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1605782365977" />
-    <state x="579" y="217" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1605901412466" />
-    <state x="977" y="524" key="com.intellij.ide.util.TipDialog" timestamp="1605946024448">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="977" y="524" key="com.intellij.ide.util.TipDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1605946024448" />
-    <state x="795" y="307" width="896" height="913" key="search.everywhere.popup" timestamp="1605879204927">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="596" y="228" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1605781528175" />
-    <state x="795" y="307" width="896" height="913" key="search.everywhere.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1605879204927" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
