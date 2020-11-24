@@ -1,10 +1,27 @@
 <?php
-/**
- * Auteur: David Roulet / Fabien Masson
- * Date: Aril 2020
- **/
 
-require 'model/database.php';
+//-------------------------------------- Used For Admin Part --------------------------------------------
+/**
+ * Retourne la liste des médicaments connus (table 'drugs')
+ */
+function getDrugs()
+{
+    return selectMany('SELECT * FROM drugs', []);
+}
+
+function addNewDrug($nameDrug)
+{
+    return intval(insert("INSERT INTO drugs (name) values (:nameDrugs) ",['nameDrugs'=>$nameDrug] ));
+}
+
+function updateNameDrug($updateNameDrug, $idDrug)
+{
+    return execute("UPDATE drugs SET name= :name WHERE id= :id", ['name' => $updateNameDrug, 'id' => $idDrug]);
+}
+
+
+//-------------------------------------- Drug Part --------------------------------------------
+//TODO revoir ce model, car un model qui gère seulement les requêtes mysql ne devrait pas faire plus de 600 lignes
 
 /**
  *  Retours les sheet en fonction de la semaine et de la base
@@ -63,6 +80,7 @@ function getNovasForSheet($stupSheet_id)
 function getBatchesForSheet($stupSheet_id)
 {
     // TODO Coder la fonction avec PDO
+    // fait ou encore à mofifier ?
     return selectMany("SELECT * FROM batches INNER JOIN stupsheet_use_batch ON batches.id = batch_id WHERE stupsheet_id =:stupsheetid", ["stupsheetid" => $stupSheet_id]);
 }
 
@@ -226,7 +244,7 @@ function readbatche($id)
 /**
  * met un jours un item precis
  */
-function updateBatche($item)
+function updateBatches($item)
 {
     $sheets = getBatches();
     $sheets[$item["id"]] = $item;
@@ -272,26 +290,7 @@ function destroybatch($id)
 
 }
 
-/**
- * Retours la liste de tout les items
- */
-function getnovas()
-{
-    try {
-        $dbh = getPDO();
-        $query = 'SELECT * FROM novas';
-        $statement = $dbh->prepare($query);//prepare query
-        $statement->execute();//execute query
-        $queryResult = $statement->fetchAll(PDO::FETCH_ASSOC);//prepare result for client
-        $dbh = null;
-        return $queryResult;
-    } catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
-        return null;
-    }
 
-
-}
 
 /**
  * Retourne un item précis, identifié par son id
@@ -315,14 +314,6 @@ function readnova($id)
 
 
 /**
- * Retourne la liste des médicaments connus (table 'drugs')
- */
-function getDrugs()
-{
-    return selectMany('SELECT * FROM drugs', []);
-}
-
-/**
  * Retourne un item précis, identifié par son id
  * ...
  */
@@ -344,6 +335,7 @@ function readDrug($id)
 /**
  * Met un jours un item precis en fonction de l'id
  */
+/**
 function updateDrug($item)
 {
 
@@ -353,7 +345,7 @@ function updateDrug($item)
         unset($sheets[$iteme["id"]]["batches"]);
     }
     updateDrugs($sheets);
-}
+}*/
 
 /**
  * Crée un nouvelle items et l ajoute au fichier
@@ -661,4 +653,3 @@ function activateStupPageFromTable($baseId, $week)
 {
     return execute("UPDATE stupsheets SET state='open' WHERE base_id=:baseId AND week=:week", ["baseId"=>$baseId, "week"=>$week]);
 }
-?>

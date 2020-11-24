@@ -1,77 +1,44 @@
 <?php
-/**
- * Auteur: Thomas Grossmann
- * Date: Mars 2020
- **/
 
-require_once 'model/adminModel.php';
-
-function trylogin($initials, $password, $baselogin)     //Fonction pour se connecter sur le site
+/** Display Admin page */
+function adminHome()
 {
-    $User = getUserByInitials($initials);
-    if (password_verify($password, $User['password'])) {
-        $_SESSION['username'] = $User;
-        $_SESSION['username']['base'] = getbasebyid($baselogin);        //Met la base dans la session
-        if ($User['firstconnect'] == true) {
-            require 'view/firstLogin.php';
-        } else {
-            $_SESSION['flashmessage'] = 'Bienvenue ' . $User['firstname'] . ' ' . $User['lastname'] . ' !';
-            require 'view/home.php';
-        }
-    } else {
-        $_SESSION['flashmessage'] = 'Identifiants incorrects ...';
-        login();
-    }
+    require VIEW . 'admin/adminHome.php';
 }
 
-function login()            //Pointe sur la page du login
-{
-    require 'view/login.php';
-}
-
-function disconnect()           //Vide la session (déconnecte l'user)
-{
-    unset($_SESSION['username']);
-    require 'view/login.php';
-}
-
-function adminHomePage()        //Pointe sur la page admin
-{
-    require_once 'view/Admin/adminHome.php';
-}
-
-function adminCrew()        //Pointe sur la liste d'users
+/** Users Administration */
+function adminCrew()
 {
     $users = getUsers();
-    require_once 'view/Admin/adminCrew.php';
+    require_once VIEW . 'admin/adminCrew.php';
 }
 
-function adminBases()       //Pointe sur la liste des bases
+function newUser()      //Pointe sur la page d'ajout d'un user
 {
-    $bases = getbases();
-    require_once 'view/Admin/adminBases.php';
+    require_once VIEW . 'admin/newUser.php';
 }
 
-function adminNovas()       //pointe sur la liste des ambulances
+function saveNewUser()         //Crée un utilisateur
 {
-    $novas = getnovas();
-    require_once 'view/Admin/adminNovas.php';
+
+    $prenomUser = $_POST['prenomUser'];
+    $nomUser = $_POST['nomUser'];
+    $initialesUser = $_POST['initialesUser'];
+    $startPassword = $_POST['startPassword'];
+
+    $hash = password_hash($startPassword, PASSWORD_DEFAULT);
+    $result = addNewUser($prenomUser, $nomUser, $initialesUser, $hash, 0, 1);
+    if ($result == 0) {
+        $_SESSION['flashmessage'] = "Une erreur est survenue. Impossible d'ajouter l'utilisateur.";
+    } else {
+        $_SESSION['flashmessage'] = "L'utilisateur a bien été créé !";
+    }
+    adminCrew();
 }
 
-function adminDrugs()       //Pointe sur la liste des médicaments
+function changeUserAdmin()       //Change un user en admin (et inversément)
 {
-    $drugs = getDrugs();
-    require_once 'view/Admin/adminDrugs.php';
-}
-
-function adminGuardSheet()
-{
-    $guardsheets = getGuardsheets();
-    require_once 'view/viewsShiftEnd/ListShiftEnd.php';
-}
-
-function changeUserAdmin($changeUser)       //Change un user en admin (et inversément)
-{
+    $changeUser = $_GET['idUser'];
     $user = getUser($changeUser);
     if ($user['admin']) {
         $user['admin'] = 0;
@@ -84,128 +51,98 @@ function changeUserAdmin($changeUser)       //Change un user en admin (et invers
     adminCrew();
 }
 
-function newUser()      //Pointe sur la page d'ajout d'un user
+function resetUserPassword()
 {
-    require_once 'view/Admin/newUser.php';
-}
-
-function newBase()      //Pointe sur la page d'ajout d'une base
-{
-    require_once 'view/Admin/newBase.php';
-}
-
-function saveNewUser($prenomUser, $nomUser, $initialesUser, $startPassword)         //Crée un utilisateur
-{
-    $hash = password_hash($startPassword, PASSWORD_DEFAULT);
-    $result = addNewUser($prenomUser, $nomUser, $initialesUser, $hash, 0, 1);
-    if ($result == 0) {
-        $_SESSION['flashmessage'] = "Une erreur est survenue. Impossible d'ajouter l'utilisateur.";
-    } else {
-        $_SESSION['flashmessage'] = "L'utilisateur a bien été créé !";
-    }
+    $newpassword = changePwdState($_GET['idUser']);
+    $_SESSION['flashmessage'] = "Le nouveau mot de passe est: $newpassword";
     adminCrew();
 }
 
-function changeFirstPassword($passwordchange, $confirmpassword)         //Oblige le nouvel user à changer son mdp à sa première connection
+/** Drug Administration */
+
+function adminDrugs()
 {
-    $hash = password_hash($confirmpassword, PASSWORD_DEFAULT);
-    if ($passwordchange != $_SESSION['username']['password']) {
-        if ($confirmpassword != $passwordchange) {
-            $_SESSION['flashmessage'] = "Erreur lors de la confirmation du mot de passe";
-            login();
-        } else {
-            $id = $_SESSION['username']['id'];
-            SaveUserPassword($hash, $id);
-            disconnect();
-        }
-    } else {
-        $_SESSION['flashmessage'] = "Le nouveau mot de passe doit être différent de l'ancien !";
-        require_once 'view/firstLogin.php';
+    $drugs = getDrugs();
+    require_once VIEW . 'admin/adminDrugs.php';
+}
+
+function newDrug(){
+    if(isset($_POST['nameDrug'])){
+        addNewDrug($_POST['nameDrug']);
+        adminDrugs();
+    }
+    else {
+        require_once VIEW . 'admin/newDrug.php';
     }
 }
 
-function saveNewBase($nameBase)      //Crée une base
-{
-    $result = addNewBase($nameBase);
-    if ($result == 0) {
-        $_SESSION['flashmessage'] = "Une erreur est survenue. Impossible d'ajouter la base.";
-    } else {
-        $_SESSION['flashmessage'] = "La base a bien été créée !";
+function updateDrug(){
+    $idDrug = $_GET['idDrug'];
+    if(isset($_POST['updateNameDrug'])){
+        updateNameDrug($_POST['updateNameDrug'], $idDrug);
+        adminDrugs();
     }
-    adminBases();
-}
-
-function saveNewDrugs($nameDrug)
-{
-    $result = addNewDrug($nameDrug);
-    if ($result == 0) {
-        $_SESSION['flashmessage'] = "Une erreur est survenue. Impossible d'ajouter le médicament.";
-    } else {
-        $_SESSION['flashmessage'] = "Le médicament a bien été créé !";
+    else {
+        require_once VIEW . 'admin/updateDrug.php';
     }
-    adminDrugs();
 }
 
-function NewGuardSheet()
+/** Bases Administration */
+
+function adminBases()
 {
-    $result = addNewGuardsheet();
-    if ($result == false) {
-        $_SESSION['flashmessage'] = "Une erreur est survenue. Impossible d'ajouter la Nova.";
-    } else {
-        $_SESSION['flashmessage'] = "La Nova a bien été créé !";
+    $bases = getbases();
+    require_once VIEW . 'admin/adminBases.php';
+}
+
+function newBase(){
+    if(isset($_POST['nameBase'])){
+        addNewBase($_POST['nameBase']);
+        adminBases();
     }
-    adminGuardSheet();
-}
-
-function changePwd($changeUser)
-{
-    $newpassw = changePwdState($changeUser);
-    $_SESSION['flashmessage'] = "Le nouveau mot de passe est: $newpassw";
-    adminCrew();
-}
-
-function saveNewNovas($nameNova)
-{
-    $result = addNewNova($nameNova);
-    if ($result == 0) {
-        $_SESSION['flashmessage'] = "Une erreur est survenue. Impossible d'ajouter la Nova, il est possible que cette Nova existe déjà";
-    } else {
-        $_SESSION['flashmessage'] = "La Nova a bien été créé !";
+    else {
+        require_once VIEW . 'admin/newBase.php';
     }
-    adminNovas();
 }
 
-function modifyNameDrug($modifNameDrug, $idDrug)
+function updateBase()
 {
-    $result = saveModifDrug($modifNameDrug, $idDrug);
-    if ($result == false) {
-        $_SESSION['flashmessage'] = "Une erreur est survenue. Impossible de modifier le médicament.";
-    } else {
-        $_SESSION['flashmessage'] = "Le médicament a bien été modifié !";
+    $idBase = $_GET['idBase'];
+    if(isset($_POST['updateNameBase'])){
+        updateNameBase($_POST['updateNameBase'], $idBase);
+        adminBases();
     }
-    adminDrugs();
+    else {
+        require_once VIEW . 'admin/updateBase.php';
+    }
 }
 
-function modifyNameBase($modifNameBase, $idBase)
+/** Nova Administration */
+
+function adminNovas()
 {
-    $result = saveModifBase($modifNameBase, $idBase);
-    if ($result == false) {
-        $_SESSION['flashmessage'] = "Une erreur est survenue. Impossible de modifier la base.";
-    } else {
-        $_SESSION['flashmessage'] = "La base a bien été modifiée !";
-    }
-    adminBases();
+    $novas = getNovas();
+    require_once VIEW . 'admin/adminNovas.php';
 }
 
-function modifyNameNova($modifNameNova, $idNova)
+function newNova(){
+    if(isset($_POST['nameNova'])){
+        addNewNova($_POST['nameNova']);
+        adminNovas();
+    }
+    else {
+        require_once VIEW . 'admin/newNova.php';
+    }
+}
+
+function updateNova()
 {
-    $result = saveModifNova($modifNameNova, $idNova);
-    if ($result == false) {
-        $_SESSION['flashmessage'] = "Une erreur est survenue. Impossible de modifier la nova.";
-    } else {
-        $_SESSION['flashmessage'] = "La nova a bien été modifiée !";
+    $idNova = $_GET['idNova'];
+    if(isset($_POST['updateNameNova'])){
+        updateNameNova($_POST['updateNameNova'], $idNova);
+        adminNovas();
     }
-    adminNovas();
+    else {
+        require_once VIEW . 'admin/updateNova.php';
+    }
 }
-
-?>

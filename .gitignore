@@ -1,11 +1,4 @@
-# Dependency directories
-node_modules/
-
-#phpStorm
+node_modules
 .idea
-*.mwb.bak
-.vs
-*~$*
-Key/Private_Key_SSH.ppk
-Key/Public_Key_SSH.ppk
+.idea/*
 .const.php

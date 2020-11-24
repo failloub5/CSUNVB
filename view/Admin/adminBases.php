@@ -15,11 +15,11 @@ $title = "CSU-NVB - Administration - Bases";
     <tbody>
     <?php foreach ($bases as $base) { ?>
         <tr>
-        <td><a href="?action=modifBases&idBase=<?= $base['id'] ?>"><?= $base['name'] ?></a></td>
+        <td><a href="?action=updateBase&idBase=<?= $base['id'] ?>"><?= $base['name'] ?></a></td>
         </tr><?php } ?>
     </tbody>
 </table>
 <?php
 $content = ob_get_clean();
-require "view/gabarit.php";
+require GABARIT ;
 ?>
