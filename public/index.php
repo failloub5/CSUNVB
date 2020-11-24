@@ -19,7 +19,7 @@ require  CONTROLER . "shiftEndControler.php";
 require  CONTROLER . "weeklyTasksControler.php";
 
 
-require MODEL . "configDatabase.php";
+require MODEL . ".const.php";
 require MODEL . "databaseModel.php";
 
 require MODEL ."baseModel.php";
