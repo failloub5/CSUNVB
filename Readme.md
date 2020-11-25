@@ -4,7 +4,7 @@ L’objectif du projet est de créer un site web application permettant aux memb
 
 Un premier niveau de détail des fonctionnalités du site se trouve dans le [cahier des charges](CdC.md)
 
-Les spécifications exactes sur lesquelles le développement est effectué se trouvent dans les User Stories du [projet sur IceScrum](https://cloud.icescrum.com/p/XCLGRP3/#/planning)
+Les spécifications exactes sur lesquelles le développement est effectué se trouvent dans les User Stories des projets IceScrum (détails ci-dessous)
 
 ## Mise en place
 
@@ -23,6 +23,31 @@ Voici la marche à suivre pour reproduire l'environnement de développement de c
 1. Cloner le repository `git clone https://github.com/CPNV-INFO/CSUNVB`
 2. `cd CSUNVB`
 3. Installer les dépendances: `npm install`
-4. Créer la base de données en exécutant le script `doc\SQL\CSU_data.sql`
+4. Créer la base de données en exécutant le script `doc\SQL\CSU_data.sql`. Ce script contient plusieurs utilisateurs dont le mot de passe est leurs initiales (exemple: login 'JDE', mot de passe 'JDE')
 5. Copier `.const.example.php` en `.const.php` et adapter le contenu de ce fichier aux paramètres locaux de votre environnement
 6. Lancer un serveur web dont la racine est le dossier `public`
+
+## Modalités de travail
+
+Le repository a quatre branches:
+
+1. `master` sous la responsabilité du Product Owner (XCL)
+2. `stups` contenant les développement spécifiques au rapports de stupéfiants, gérée par Loïc, Alexandre D et Jérémy
+2. `todo` contenant les développement spécifiques au rapports de tâches hebdomadaires, gérée par Paola et Michaël
+2. `garde` contenant les développement spécifiques au rapports de remise de garde, gérée par Vicky, Daniel et Alexandre R
+
+Aucune autre branche ne doit être créée sans concertation préalable avec l'ensemble de l'équipe.
+
+Chaque équipe travaille sur sa branche. XCL est responsable de fusionner le tout sur `master` et de refléter le tout sur chacune des branches ensuite
+
+Le suivi des projets se fait dans les projets IceScrum suivants:
+
+1. [Stups](https://cloud.icescrum.com/p/XCLGRP3/#/planning)
+1. [Garde](https://cloud.icescrum.com/p/XCLGRP1/#/planning)
+1. [Todo](https://cloud.icescrum.com/p/XCLGRP2/#/planning)
+
+Chaque développeur(se) veillera à toujours travailler sur une tâche de son projet IceScrum. Il/elle veillera également à reporter dans le champ `time spent` de la tâche le nombre de minutes approximativement passées à la réalisation de la tâche.
+
+Le journal de travail de chacun(e) pourra ainsi être automatiquement construit grâce aux pages `doc\timesheets-xxx\Timesheet-individual.html`
+
+
