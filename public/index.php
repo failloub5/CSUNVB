@@ -12,6 +12,8 @@ session_start();
 
 require  "../path.php";
 
+require "../helpers.php";
+
 require  CONTROLER . "adminControler.php";
 require  CONTROLER . "drugControler.php";
 require  CONTROLER . "mainControler.php";

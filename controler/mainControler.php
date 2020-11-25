@@ -13,33 +13,6 @@ function disconnect()
     login();
 }
 
-
-/** Return HTML code of a box with a message if $_SESSION['flashmessage'] is set */
-function getFlashMessage()
-{
-    if (isset($_SESSION['flashmessage'])) {
-        $message = $_SESSION['flashmessage'];
-        unset($_SESSION['flashmessage']);
-        return '<div class="alert alert-info">' . $message . '</div>';
-    } else {
-        return null;
-    }
-}
-
-/** TODO derterminer le fonctionnement ( michael )*/
-function displaydebug($var)
-{
-    require ".const.php";   //get the $debug variable
-    if ($debug == true) {   //if debug mode enabled
-        if (substr($_SERVER['SERVER_SOFTWARE'], 0, 7) != "PHP 7.3") {  //if version is not 7.3 (var_dump() don't have the same design)
-            echo "<pre><small>" . print_r($var, true) . "</small></pre>";   //print with line break and style of <pre>
-        } else {
-            var_dump($var); //else to a simple var_dump() of PHP 7.3
-        }
-    }
-}
-
-
 function login()
 {
     if(isset($_POST['username'])&&isset($_POST['password'])&&isset($_POST['base']))

@@ -53,7 +53,7 @@
             </a>
             <div class="title col text-center">
                 Gestion des rapports
-                <span class="versionnumber">v1.0.1</span>
+                <?= gitBranchTag() ?>
             </div>
         </div>
         <div>
