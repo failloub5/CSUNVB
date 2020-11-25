@@ -48,3 +48,9 @@ function listShiftEnd($baseID)
     require_once VIEW . 'viewsShiftEnd/shiftEndHome.php';
 }
 
+function showShiftEnd($shiftid)
+{
+    $sections = getGuardSectionsWithLines();
+    $guardsheet = getGuardsheetDetails($shiftid);
+    require_once VIEW . 'viewsShiftEnd/showShiftEnd.php';
+}

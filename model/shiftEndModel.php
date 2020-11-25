@@ -146,10 +146,20 @@ function getGuardComments()
 function getGuardLinesForSection($section)
 {
     // TODO return le lines for one section only
-    return selectOne('SELECT * FROM guarlines where section=:section', ['section' => $section]);
+    return selectMany('SELECT * FROM guardlines where guard_sections_id=:section', ['section' => $section]);
     //$section = getGuardLines();
     //for ($guardline = 0;$guardline < $section ; $guardline++){}
 }
+
+function getGuardSectionsWithLines()
+{
+    $sections = selectMany('SELECT id, title FROM guardsections', []);
+    foreach ($sections as $section) {
+        $res[$section['title']]=getGuardLinesForSection($section['id']);
+    }
+    return $res;
+}
+
 
 function getGuardSheetsByBase($base_id)
 {
@@ -182,6 +192,22 @@ function getGuardsheetForBase($base_id)
     (select number from novas inner join guard_use_nova on novas.id = guard_use_nova.nova_id where guard_use_nova.guardsheet_id = guardsheets.id and  guard_use_nova.day = 0) as novaNight,
     (select number from novas inner join guard_use_nova on novas.id = guard_use_nova.nova_id where guard_use_nova.guardsheet_id = guardsheets.id and  guard_use_nova.day = 1) as novaDay
     from guardsheets where base_id=:base_id',["base_id" => $base_id]);
+}
+
+function getGuardsheetDetails($guardsheet_id)
+{
+    return selectOne('select
+	date,
+    state,
+    base_id,
+    name as base,
+    (select initials from users inner join crews on users.id = crews.user_id where crews.guardsheet_id = guardsheets.id and crews.day = 1 and crews.boss = 1) as bossDay,
+    (select initials from users inner join crews on users.id = crews.user_id where crews.guardsheet_id = guardsheets.id and crews.day = 0 and crews.boss = 1) as bossNight,
+    (select initials from users inner join crews on users.id = crews.user_id where crews.guardsheet_id = guardsheets.id and crews.day = 1 and crews.boss = 0) as teammateDay,
+    (select initials from users inner join crews on users.id = crews.user_id where crews.guardsheet_id = guardsheets.id and crews.day = 0 and crews.boss = 0) as teammateNight,
+    (select number from novas inner join guard_use_nova on novas.id = guard_use_nova.nova_id where guard_use_nova.guardsheet_id = guardsheets.id and  guard_use_nova.day = 0) as novaNight,
+    (select number from novas inner join guard_use_nova on novas.id = guard_use_nova.nova_id where guard_use_nova.guardsheet_id = guardsheets.id and  guard_use_nova.day = 1) as novaDay
+    from guardsheets inner join bases on base_id = bases.id where guardsheets.id=:id',["id" => $guardsheet_id]);
 }
 
 function addNewShiftSheet ($idBase){
