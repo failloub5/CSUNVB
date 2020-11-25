@@ -14,7 +14,7 @@ ob_start();
 <?php if ($_SESSION['username']['admin'] == 1) { if (($stupSheet['state'] == 'open')||($stupSheet['state'] == 'reopen')) { ?>
     <a href="?action=closeStupFromTable&stupBaseId=<?php echo $stupSheet['base_id'] ?>&stupPageWeek=<?php echo $stupSheet['week'] ?>" class="btn btn-primary">Clore</a>
 <?php } else { ?>
-    <a href="?action=activateStupFromTable&stupBaseId=<?php echo $stupSheet['base_id'] ?>&stupPageWeek=<?php echo $stupSheet['week'] ?>" class="btn btn-primary">Activer</a>
+    <a href="?action=activateStupFromTable&stupBaseId=<?php echo $_GET["site"] ?>&stupPageWeek=<?php echo $_POST["semaine"] ?>" class="btn btn-primary">Activer</a>
 <?php } } ?>
 
 <?php foreach ($jours as $jour) { // vas generé tous les jours de semaine ?>
@@ -41,8 +41,10 @@ ob_start();
                 <td></td>
                 <?php foreach ($novas as $nova) { ?>
                     <td class="text-center">
-                        <?= getnovacheckbydateandbybatch(date("Y-m-d", $date), $drug['id'], $nova['id'], $stupSheetId)['start'] ?> /
-                        <?= getnovacheckbydateandbybatch(date("Y-m-d", $date), $drug['id'], $nova['id'], $stupSheetId)['end'] ?>
+                        <?php
+                        $novaCheck = getnovacheckbydateandbybatch(date("Y-m-d", $date), $drug['id'], $nova['id'], $stupSheetId);
+                        echo $novaCheck["end"] . " / " . $novaCheck["start"];
+                       ?>
                     </td>
                 <?php } ?>
                 <td></td>
@@ -73,6 +75,6 @@ ob_start();
     ?>
 <?php }
 $content = ob_get_clean();
-require "view/gabarit.php";
+require GABARIT;
 
 ?>

@@ -14,13 +14,11 @@ $title = "CSU-NVB - Stupéfiants";
 </div>
 
 <div class="row">
-    <FORM action="/index.php?action=drugs" method="post" class="col">
+    <FORM action="?action=drugs" method="post" class="col">
         <SELECT onchange="this.form.submit()" name="site" size="1">
             <?php
-            foreach ($bases
-
-            as $base){ ?>
-            <OPTION value="<?= $base["id"] ?>" <?php if ($_SESSION["Selectsite"] == $base["id"]) { ?> selected="selected"  <?php } ?>
+            foreach ($bases as $base){ ?>
+            <OPTION value="<?= $base["id"] ?>" <?php if ($base_id == $base["id"]) { ?> selected="selected"  <?php } ?>
                     name="site"><?= $base["name"] ?>
 
                 <?php }
@@ -31,7 +29,7 @@ $title = "CSU-NVB - Stupéfiants";
     <div class="row m-2">
         <?php
         foreach ($liste as $item) {
-            if ($item["base_id"] == $_SESSION["Selectsite"]) {
+            if ($item["base_id"] == $base_id) {
                 $weeks[] = $item;
             }
         } ?>
@@ -39,7 +37,7 @@ $title = "CSU-NVB - Stupéfiants";
 
     <div class="col">
         <form action="?action=addNewStup" method="post">
-            <input type="hidden" name="baseStup" value="<?= $_SESSION['Selectsite'] ?>">
+            <input type="hidden" name="baseStup" value="<?= $base_id ?>">
             <?php if ($_SESSION['username']['admin'] == 1) { ?>
                 <button type="submit" class='btn btn-primary m-1 float-right'>Nouvelle feuille de stupéfiants</button>
             <?php } ?>
@@ -58,7 +56,7 @@ $title = "CSU-NVB - Stupéfiants";
         <?php
         foreach ($weeks as $week) { ?>
             <tr>
-                <form action="/index.php?action=drugSiteTable" method="post">
+                <form action="?action=drugSiteTable&site=<?= $base_id ?>" method="post">
                     <td>
                         <button class="btn" name="semaine" value="<?= $week["week"] ?>"> <?php echo "Semaine " . $week["week"] ?> </button>
                     </td>
@@ -68,11 +66,11 @@ $title = "CSU-NVB - Stupéfiants";
                     <td>
                         <div class="row">
                         <?php if ($week['state'] == "closed") { ?>
-                            <form action="/index.php?action=reopenStup" method="post">
+                            <form action="?action=reopenStup" method="post">
                                 <button class="btn btn-primary btn-sm ml-3" name="reopen" value="<?= $week['id'] ?>">Reopen</button>
                             </form>
                         <?php } else if (($week['state'] == "open") || ($week['state'] == "reopen")) { ?>
-                            <form action="/index.php?action=closedStup" method="post">
+                            <form action="?action=closedStup" method="post">
                                 <button class="btn btn-primary btn-sm ml-3" name="close" value="<?= $week['id'] ?>">Close</button>
                             </form>
                         <?php } else if ($week['state'] == "vierge") { ?>
@@ -91,5 +89,5 @@ $title = "CSU-NVB - Stupéfiants";
 
 <?php
 $content = ob_get_clean();
-require "view/gabarit.php";
+require GABARIT;
 ?>
