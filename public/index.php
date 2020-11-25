@@ -18,7 +18,7 @@ require  CONTROLER . "adminControler.php";
 require  CONTROLER . "drugControler.php";
 require  CONTROLER . "mainControler.php";
 require  CONTROLER . "shiftEndControler.php";
-require  CONTROLER . "weeklyTasksControler.php";
+require CONTROLER . "weeklyTasksControler.php";
 
 
 require MODEL . ".const.php";
@@ -203,29 +203,25 @@ function switcherUser(){
 
         /** Using weeklyTasksControler */
 
-        case 'todolist':
-
-            if (isset($_POST['base'])) {
-                createSheetToDo($_POST['base']);
-            }
-            if (isset($_POST['site'])) {
-                $selectedBase = $_POST['site'];
+        case 'homeWeeklyTasks':
+            if(isset($_POST['selectBaseID'])){
+                $selectedBase = $_POST['selectBaseID'];
             } else {
                 $selectedBase = $_SESSION['base']['id'];
             }
-            if (!isset($_POST['newtodo'])) {
-                todoListHomePage($selectedBase);
-            }
+            homeWeeklyTasks($selectedBase);
             break;
-        case 'edittod':
-            $sheetid = $_GET['sheetid'];
-            edittodopage($sheetid);
+        case 'toDoDetails':
+            showWeeklyTasks($_POST['weekID'], $_POST['weekNbr']);
+            break;
+        case 'addWeek':
+
+            break;
+        case 'closeWeek':
+
             break;
         case 'reOpenToDo':
             reOpenToDo();
-            break;
-        case 'closedToDo':
-            closeToDo();
             break;
         default :
             unknownPage();
