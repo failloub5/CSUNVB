@@ -138,9 +138,20 @@ function getGuardLines()
     return selectMany('SELECT * FROM guardlines', []);
 }
 
-function getGuardComments()
+function getGuardComment($ligneID, $guardSheetID)
 {
-    return selectMany('SELECT * FROM guardcontent', []);
+    var_dump($ligneID);
+    var_dump($guardSheetID);
+    return selectOne('SELECT comment FROM guardcontents where guardsheet_id =:guardSheetID and guard_line_id =:ligneID', ['guardSheetID' => $guardSheetID, 'ligneID' => $ligneID]);
+    /**
+     * SELECT guardcontents.comment, u1.initials AS day_ini, u2.initials AS night_ini
+    FROM guardcontents
+    INNER JOIN users u1
+    ON u1.id = guardcontents.day_check_user_id
+    INNER JOIN users u2
+    ON u2.id = guardcontents.night_check_user_id
+    where guardcontents.guardsheet_id = 151 and guardconte
+     */
 }
 
 function getGuardLinesForSection($section)

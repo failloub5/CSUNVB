@@ -27,8 +27,8 @@ $title = "CSU-NVB - Remise de garde";
     <div class="col-1 text-center"><?= $guardsheet['teammateNight'] ?></div>
 </div>
 
-<?php foreach ($sections as $title => $section): ?>
-    <div class="row sectiontitle"><?= $title ?></div>
+<?php foreach ($listSections as $section): ?>
+    <div class="row sectiontitle"><?= $section["title"] ?></div>
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <th class="actionname"></th>
@@ -39,10 +39,14 @@ $title = "CSU-NVB - Remise de garde";
         <tbody>
         <?php foreach ($section as $action): ?>
             <tr>
+                <?php
+                $data = getGuardComment($action['id'], $shiftid);
+                ?>
+
                 <td class="actionname"><?= $action['text'] ?></td>
+                <td class="ackcell"><?= "ss" ?></td>
                 <td class="ackcell"></td>
-                <td class="ackcell"></td>
-                <td></td>
+                <td><?= $data['comment'] ?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

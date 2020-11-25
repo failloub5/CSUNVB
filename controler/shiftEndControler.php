@@ -50,7 +50,7 @@ function listShiftEnd($baseID)
 
 function showShiftEnd($shiftid)
 {
-    $sections = getGuardSectionsWithLines();
+    $listSections = getGuardSectionsWithLines();
     $guardsheet = getGuardsheetDetails($shiftid);
     require_once VIEW . 'viewsShiftEnd/showShiftEnd.php';
 }
