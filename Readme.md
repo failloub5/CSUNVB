@@ -29,16 +29,20 @@ Voici la marche à suivre pour reproduire l'environnement de développement de c
 
 ## Modalités de travail
 
+### Repository
+
 Le repository a quatre branches:
 
-1. `master` sous la responsabilité du Product Owner (XCL)
+1. `master` sous la responsabilité du Product Owner (Xavier)
 2. `stups` contenant les développement spécifiques au rapports de stupéfiants, gérée par Loïc, Alexandre D et Jérémy
 2. `todo` contenant les développement spécifiques au rapports de tâches hebdomadaires, gérée par Paola et Michaël
 2. `garde` contenant les développement spécifiques au rapports de remise de garde, gérée par Vicky, Daniel et Alexandre R
 
 Aucune autre branche ne doit être créée sans concertation préalable avec l'ensemble de l'équipe.
 
-Chaque équipe travaille sur sa branche. XCL est responsable de fusionner le tout sur `master` et de refléter le tout sur chacune des branches ensuite
+Chaque équipe travaille sur sa branche. Xavier est responsable de fusionner le tout sur `master` et de refléter le tout sur chacune des branches ensuite
+
+### IceScrum
 
 Le suivi des projets se fait dans les projets IceScrum suivants:
 
@@ -50,4 +54,6 @@ Chaque développeur(se) veillera à toujours travailler sur une tâche de son pr
 
 Le journal de travail de chacun(e) pourra ainsi être automatiquement construit grâce aux pages `doc\timesheets-xxx\Timesheet-individual.html`
 
+### Teams
 
+Le document 'Q&R.docx' dans l'équipe CSUNVB sur Teams permet à chaque membre de l'équipe de poser une question à un autre membre, et surtout de garder une trace de la réponse
