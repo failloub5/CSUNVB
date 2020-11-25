@@ -19,7 +19,8 @@ function homeWeeklyTasks($selectedBaseID){
  * @param $weekID : l'ID de la semaine à afficher
  * @param $weekNbr : Le numéro de la semaine à afficher
  */
-function showWeeklyTasks($weekID, $weekNbr){
+function showWeeklyTasks($baseID, $weekID, $weekNbr){
+    $base = getbasebyid($baseID);
     $dates = getDatesFromWeekNumber($weekNbr);
     // Récupération des dates par rapport à la semaine
     require_once VIEW . 'todo/detailsWeeklyTasks.php';
@@ -31,6 +32,7 @@ function showWeeklyTasks($weekID, $weekNbr){
  * @return array : les dates de la semaine
  */
 function getDatesFromWeekNumber($weekNumber){
+    // ToDo : Valeurs en dur à enlever !
     $year = 2000 + intdiv($weekNumber,100);
     $week = $weekNumber%100;
 
@@ -52,5 +54,22 @@ function addWeek($base){
     $week = readLastWeek($base);
     $week['last_week'] +=  1;
     weeknew($base,$week['last_week']);
+}
 
+function openAWeek($baseID, $weekID, $weekNbr){
+    $alreadyOpen = getOpenedWeeks($baseID);
+    if(empty($alreadyOpen)){
+        openWeeklyTasks($weekID);
+        $_SESSION['flashmessage'] = "La semaine a été ouverte.";
+    } else {
+        // toDo : changement de couleur possible pour les messages d'erreur ?
+        $_SESSION['flashmessage'] = "Une autre semaine est déjà ouverte.";
+    }
+    showWeeklyTasks($baseID, $weekID, $weekNbr);
+}
+
+function closeAWeek($baseID, $weekID, $weekNbr){
+    closeWeeklyTasks($weekID);
+    $_SESSION['flashmessage'] = "La semaine a été cloturée.";
+    showWeeklyTasks($baseID, $weekID, $weekNbr);
 }
