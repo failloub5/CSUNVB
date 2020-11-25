@@ -11,5 +11,5 @@ $title = "CSU-NVB - Administration";
 </div>
 <?php
 $content = ob_get_clean();
-require "view/gabarit.php";
+require GABARIT;
 ?>
