@@ -10,21 +10,21 @@
 
 session_start();
 
-require  "../path.php";
+require "../path.php";
 
 require "../helpers.php";
 
-require  CONTROLER . "adminControler.php";
-require  CONTROLER . "drugControler.php";
-require  CONTROLER . "mainControler.php";
-require  CONTROLER . "shiftEndControler.php";
-require  CONTROLER . "weeklyTasksControler.php";
+require CONTROLER . "adminControler.php";
+require CONTROLER . "drugControler.php";
+require CONTROLER . "mainControler.php";
+require CONTROLER . "shiftEndControler.php";
+require CONTROLER . "weeklyTasksControler.php";
 
 
 require MODEL . ".const.php";
 require MODEL . "databaseModel.php";
 
-require MODEL ."baseModel.php";
+require MODEL . "baseModel.php";
 require MODEL . "userModel.php";
 require MODEL . "drugModel.php";
 require MODEL . "novaModel.php";
@@ -32,32 +32,31 @@ require MODEL . "shiftEndModel.php";
 require MODEL . "weeklyTasksModel.php";
 
 
-if(isset($_SESSION["username"])){
-    if($_SESSION["username"]['firstconnect'] == false){
-        if (isset($_GET['action'])){
-            if(($_SESSION['username']['admin'] == true)){
+if (isset($_SESSION["username"])) {
+    if ($_SESSION["username"]['firstconnect'] == false) {
+        if (isset($_GET['action'])) {
+            if (($_SESSION['username']['admin'] == true)) {
                 switcherAdmin();
-            }else{
+            } else {
                 switcherUser();
             }
-        }
-        else {
+        } else {
             /** Using mainControler */
             home();
         }
-    }
-    else{
+    } else {
         /** Using mainControler */
         switcherFirstLogin();
     }
-}else{
+} else {
     /** Using mainControler */
     login();
 }
 
 
-function switcherAdmin(){
-    switch ($_GET['action']){
+function switcherAdmin()
+{
+    switch ($_GET['action']) {
         //---- Using adminControler ----
         //---- Users ----
         case 'adminHome':
@@ -119,8 +118,9 @@ function switcherAdmin(){
 }
 
 
-function switcherFirstLogin(){
-    switch ($_GET['action']){
+function switcherFirstLogin()
+{
+    switch ($_GET['action']) {
         /** Using mainControler */
         case 'disconnect' :
             disconnect();
@@ -131,7 +131,8 @@ function switcherFirstLogin(){
     }
 }
 
-function switcherUser(){
+function switcherUser()
+{
     switch ($_GET['action']) {
         /** Using mainControler */
         case 'home' :
@@ -148,7 +149,8 @@ function switcherUser(){
             $week = $_GET['stupPageWeek'];
             closedStupFromTable($baseId, $week);
             break;
-        case 'addNewStup':;
+        case 'addNewStup':
+            ;
             createSheetStup();
             break;
         case 'activateStup' :
@@ -167,8 +169,8 @@ function switcherUser(){
             PharmaUpdate();
             break;
         case 'LogStup':
-        logStup();
-        break;
+            logStup();
+            break;
         case 'drugs':
             if (isset($_POST["site"])) {
                 $base_id = $_POST["site"];
@@ -193,6 +195,10 @@ function switcherUser(){
                 $baseID = $_SESSION['base']['id'];
             }
             listShiftEnd($baseID);
+            break;
+        case 'showGuardSheet':
+            $sheetid = $_GET['id'];
+            showShiftEnd($sheetid);
             break;
         case 'reOpenShift':
             reOpenShift();
