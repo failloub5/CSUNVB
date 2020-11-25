@@ -155,7 +155,7 @@ function getGuardSectionsWithLines()
 {
     $sections = selectMany('SELECT id, title FROM guardsections', []);
     foreach ($sections as $section) {
-        $res[$section['title']]=getGuardLinesForSection($section['id']);
+        $res[$section['title']] = getGuardLinesForSection($section['id']);
     }
     return $res;
 }
@@ -191,7 +191,7 @@ function getGuardsheetForBase($base_id)
     (select initials from users inner join crews on users.id = crews.user_id where crews.guardsheet_id = guardsheets.id and crews.day = 0 and crews.boss = 0) as teammateNight,
     (select number from novas inner join guard_use_nova on novas.id = guard_use_nova.nova_id where guard_use_nova.guardsheet_id = guardsheets.id and  guard_use_nova.day = 0) as novaNight,
     (select number from novas inner join guard_use_nova on novas.id = guard_use_nova.nova_id where guard_use_nova.guardsheet_id = guardsheets.id and  guard_use_nova.day = 1) as novaDay
-    from guardsheets where base_id=:base_id',["base_id" => $base_id]);
+    from guardsheets where base_id=:base_id', ["base_id" => $base_id]);
 }
 
 function getGuardsheetDetails($guardsheet_id)
@@ -207,26 +207,31 @@ function getGuardsheetDetails($guardsheet_id)
     (select initials from users inner join crews on users.id = crews.user_id where crews.guardsheet_id = guardsheets.id and crews.day = 0 and crews.boss = 0) as teammateNight,
     (select number from novas inner join guard_use_nova on novas.id = guard_use_nova.nova_id where guard_use_nova.guardsheet_id = guardsheets.id and  guard_use_nova.day = 0) as novaNight,
     (select number from novas inner join guard_use_nova on novas.id = guard_use_nova.nova_id where guard_use_nova.guardsheet_id = guardsheets.id and  guard_use_nova.day = 1) as novaDay
-    from guardsheets inner join bases on base_id = bases.id where guardsheets.id=:id',["id" => $guardsheet_id]);
+    from guardsheets inner join bases on base_id = bases.id where guardsheets.id=:id', ["id" => $guardsheet_id]);
 }
 
-function addNewShiftSheet ($idBase){
+function addNewShiftSheet($idBase)
+{
+$dbh = getPDO();
+    try {
+        $insertGuardSheet = execute("Insert into guardsheets(date,state,base_id)
+values(current_timestamp(),:state,:idBase)", ['state' => "En préparation", 'idBase' => $idBase]);
+        $gid = $dbh->LastindexOfid();
+        $insertGuardUseNova = execute("Insert into guard_use_nova(nova_id,guardsheet_id,day)
+values(1,:guardsheetId,1), (1,:guardsheetId,0) ['guardsheetId'=>$gid]");
 
-    return execute("Insert into guardsheets(date,state,base_id)
-values(current_timestamp(),:state,:idBase)",['state'=>"En préparation",'idBase'=>$idBase]);
-    $gid =$dbh->LastindexOfid();
+        $insertCrews = execute("Insert into crews(boss,day,guardsheet_id,user_id)
+values(0,0,:guardsheetId,1), (1,1,:guardsheetId,1)['guardsheetId'=>$gid]");
+        if ($insertCrews == false || $insertGuardSheet == false || $insertGuardUseNova == false) {
+            throw new Exception("L'enregistrement ne s'est pas effectué correctement");
+        }
+        $dbh = null;
+    } catch (Exception $e) {
+        echo 'Attention: ', $e->getMessage(), "\n";
+        return false;
+    }
+    return true;
 
-    return execute("Insert into guard_use_nova(nova_id,guardsheet_id,day)
-values(1,:guardsheetId,1)['guardsheetId'=>$gid]");
-
-    return execute("Insert into guard_use_nova(nova_id,guardsheet_id,day)
-values(1,:guardsheetId,0)['guardsheetId'=>$gid]");
-
-    return execute("Insert into crews(boss,day,guardsheet_id,user_id)
-values(0,0,:guardsheetId,1)['guardsheetId'=>$gid]");
-
-    return execute("Insert into crews(boss,day,guardsheet_id,user_id)
-values(1,1,:guardsheetId,1)['guardsheetId'=>$gid]");
 
     /*Insert into guardsheets(date,state,base_id)
 values(current_timestamp(),"blank",1)
