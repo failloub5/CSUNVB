@@ -23,11 +23,12 @@ $title = "CSU-NVB - Remise de garde";
                 <?php } ?>
         </SELECT>
     </FORM>
+
     <form action="?action=newSheet" method="post">
         <?php if ($admin['admin'] == 1) { ?>
             <div class="col">
-                <input type="hidden" name="baseID" value="<?= $baseID ?>">
-                <a href="?" class='btn btn-primary m-1 float-right'>Nouvelle Feuille de garde</a>
+                <input type="hidden" name="site" value="<?= $baseID ?>">
+                <button type="submit" class='btn btn-primary m-1 float-right'>Nouvelle Feuille de garde</button>
             </div>
         <?php } ?>
     </form>

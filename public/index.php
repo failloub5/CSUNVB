@@ -109,7 +109,9 @@ function switcherAdmin()
             break;
         //---- ShiftSheet ----
         case 'newSheet':
-            newShiftSheet($_POST['baseID']);
+            $baseID = $_POST["site"];
+            echo"New Sheet" . $baseID;
+            newShiftSheet($baseID);
             break;
         default :
             switcherUser();

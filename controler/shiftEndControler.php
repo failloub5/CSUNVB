@@ -11,9 +11,9 @@ function newShiftSheet($baseID)
 {
     $result = addNewShiftSheet($baseID);
     if ($result == false) {
-        $_SESSION['flashmessage'] = "Une erreur est survenue. Impossible d'ajouter la Nova.";
+        $_SESSION['flashmessage'] = "Une erreur est survenue. Impossible d'ajouter la feuille de garde.";
     } else {
-        $_SESSION['flashmessage'] = "La Nova a bien été créé !";
+        $_SESSION['flashmessage'] = "La feuille de garde a bien été créé !";
     }
     adminGuardSheet();
 }
