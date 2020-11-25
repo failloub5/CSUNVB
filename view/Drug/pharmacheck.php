@@ -3,7 +3,7 @@
  * Auteur: David Roulet / Fabien Mason
  * Date: Aril 2020
  **/
-
+// TODO implémenter cette page sur le site ( michael )
 ob_start();
 $title = "CSU-NVB - pharmacheck";
 
@@ -24,7 +24,7 @@ $title = "CSU-NVB - pharmacheck";
     </tr>
     <tr>
         <td><?= $batch["number"] ?></td>
-        <form action="/index.php?action=PharmaUpdate&batchtoupdate=<?= $batch["id"] ?>&PharmaUpdateuser=<?= $user["id"] ?>&sheetid=<?= $sheet["id"] ?>&date=<?= $datefrom ?>"
+        <form action="?action=PharmaUpdate&batchtoupdate=<?= $batch["id"] ?>&PharmaUpdateuser=<?= $user["id"] ?>&sheetid=<?= $sheet["id"] ?>&date=<?= $datefrom ?>"
               method="post">
             <td><input type="number" name="Pharmastart" value="<?= $pharmacheck["start"] ?>"></td>
             <td><input type="number" name="Pharmaend" value="<?= $pharmacheck["end"] ?>"></td>
@@ -38,5 +38,5 @@ $title = "CSU-NVB - pharmacheck";
 <?php
 //TODO faire le gestionnaire d'evenment pour que tout la partie du bas sois un bouton
 $content = ob_get_clean();
-require "view/gabarit.php";
+require GABARIT;
 ?>

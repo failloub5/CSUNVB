@@ -15,19 +15,6 @@ function getFlashMessage()
     }
 }
 
-//display a var (with var_dump()) for debug, only if debug mode is enabled
-function displaydebug($var)
-{
-    require ".const.php";   //get the $debug variable
-    if ($debug == true) {   //if debug mode enabled
-        if (substr($_SERVER['SERVER_SOFTWARE'], 0, 7) != "PHP 7.3") {  //if version is not 7.3 (var_dump() don't have the same design)
-            echo "<pre><small>" . print_r($var, true) . "</small></pre>";   //print with line break and style of <pre>
-        } else {
-            var_dump($var); //else to a simple var_dump() of PHP 7.3
-        }
-    }
-}
-
 /**
  * inspired by source https://stackoverflow.com/questions/7447472/how-could-i-display-the-current-git-branch-name-at-the-top-of-the-page-of-my-de
  * @author Kevin Ridgway

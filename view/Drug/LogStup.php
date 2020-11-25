@@ -3,7 +3,7 @@
  * Auteur: David Roulet / Fabien Mason
  * Date: Aril 2020
  **/
-
+// TODO implémenter cette page sur le site ( michael )
 ob_start();
 $title = "CSU-NVB - Logs";
 //affiche un tableau avec les données dedans
@@ -24,6 +24,6 @@ $title = "CSU-NVB - Logs";
 </table>
 <?php
 $content = ob_get_clean();
-require "view/gabarit.php";
+require GABARIT;
 
 ?>

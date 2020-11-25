@@ -22,12 +22,12 @@ $title = "CSU-NVB - Administration - Secouristes";
         <td><?= $user['firstname'] ?></td>
         <td><?= $user['lastname'] ?></td>
         <td><?= $user['initials'] ?></td>
-        <td><?php if ($user['id'] != $_SESSION['username']['id']) {
-                if ($user['admin'] == 1) { ?>
+        <td><?php
+            if ($user['id'] != $_SESSION['username']['id']) { if ($user['admin'] == 1) { ?>
         <a href="?action=changeUserAdmin&idUser=<?= $user['id'] ?>" class="btn btn-primary">Changer en utilisateur</a><?php } else { ?>
         <a href="?action=changeUserAdmin&idUser=<?= $user['id'] ?>" class="btn btn-primary">Changer en administrateur</a><?php } } else { ?>
         <p>Vous ne pouvez pas changer votre propre état</p><?php } ?>
-        <td><?php if ($user['firstconnect'] == 1) { ?>Mot de passe expiré<br><?php } ?> <a href="?action=changePwdState&idUser=<?= $user['id'] ?>" class="btn btn-primary">Réinitialiser le mot de passe</a></td>
+        <td><?php if ($user['firstconnect'] == 1) { ?>Mot de passe expiré<br><?php } ?> <a href="?action=resetUserPassword&idUser=<?= $user['id'] ?>" class="btn btn-primary">Réinitialiser le mot de passe</a></td>
         </td>
         </tr><?php } ?>
     </tbody>
@@ -35,5 +35,5 @@ $title = "CSU-NVB - Administration - Secouristes";
 
 <?php
 $content = ob_get_clean();
-require "view/gabarit.php";
+require GABARIT;
 ?>

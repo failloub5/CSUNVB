@@ -29,5 +29,5 @@ $title = "CSU-NVB - Administration - Nouveau secouriste";
 
 <?php
 $content = ob_get_clean();
-require "view/gabarit.php";
+require GABARIT;
 ?>
