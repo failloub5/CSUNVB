@@ -212,13 +212,13 @@ function switcherUser(){
             homeWeeklyTasks($selectedBase);
             break;
         case 'toDoDetails':
-            showWeeklyTasks($_POST['weekID'], $_POST['weekNbr']);
-            break;
-        case 'addWeek':
-
+            showWeeklyTasks($_POST['baseID'],$_POST['weekID'], $_POST['weekNbr']);
             break;
         case 'closeWeek':
-
+            closeAWeek($_POST['baseID'],$_POST['weekID'], $_POST['weekNbr']);
+            break;
+        case 'openWeek':
+            openAWeek($_POST['baseID'],$_POST['weekID'], $_POST['weekNbr']);
             break;
         case 'reOpenToDo':
             reOpenToDo();

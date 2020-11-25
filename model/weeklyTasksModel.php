@@ -6,8 +6,8 @@
  */
 function getClosedWeeks($baseID)
 {
-    $query = "SELECT t.week, t.id FROM todosheets t JOIN bases b ON t.base_id = b.id WHERE b.id = '$baseID' AND t.state = 'close' ORDER BY t.week DESC;";
-    return selectMany($query, ['base']);
+    $query = "SELECT t.week, t.id FROM todosheets t JOIN bases b ON t.base_id = b.id WHERE b.id = :baseID AND t.state = 'close' ORDER BY t.week DESC;";
+    return selectMany($query, ['baseID' => $baseID]);
 }
 
 /**
@@ -17,8 +17,8 @@ function getClosedWeeks($baseID)
  */
 function getOpenedWeeks($baseID)
 {
-    $query = "SELECT t.week, t.id FROM todosheets t JOIN bases b ON t.base_id = b.id WHERE b.id = '$baseID' AND t.state = 'open';";
-    return selectOne($query, []);
+    $query = "SELECT t.week, t.id FROM todosheets t JOIN bases b ON t.base_id = b.id WHERE b.id = :baseID AND t.state = 'open';";
+    return selectOne($query, ['baseID' => $baseID]);
 }
 
 /**
@@ -27,7 +27,16 @@ function getOpenedWeeks($baseID)
  */
 function closeWeeklyTasks($id)
 {
-    execute("UPDATE todosheets set state='closed' WHERE id=:id", ['id' => $id]);
+    execute("UPDATE todosheets set state='close' WHERE id=:id", ['id' => $id]);
+}
+
+/**
+ * Fonction permettant d'ouvrir une semaine
+ * @param $id : l'ID de la semaine à ouvrir
+ */
+function openWeeklyTasks($id)
+{
+    execute("UPDATE todosheets set state='open' WHERE id=:id", ['id' => $id]);
 }
 
 ?>
