@@ -48,26 +48,12 @@ function getDatesFromWeekNumber($weekNumber){
 
     return $dates;
 }
-/**
- * Fonction qui ajoute à la bbd dans todosheets les données relative à base_id et week
- * @param $base : id de la base
- */
-function addWeek($base){
-    //Lit la dernière semaine
-    $week = readLastWeek($base);
 
-    if(empty($week)){
-        /*S'il pas de dernière semaine dans une base, il faut en créer 1*/
-        $today = date("y.m.d");
-        $good_format=strtotime ($today);
-        /*echo date('W',$good_format);*/
-        $week['last_week'] = date('W',$good_format);
-    }else {
-        /*Sinon ajouter 1 nouvelle semaine à celle déjà existante*/
-        $week['last_week'] +=  1;
-    }
-    
-    weeknew($base, $week['last_week']);
+function addWeek($base){
+
+    $week = readLastWeek($base);
+    $week['last_week'] +=  1;
+    weeknew($base,$week['last_week']);
 }
 
 function openAWeek($baseID, $weekID, $weekNbr){
