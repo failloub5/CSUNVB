@@ -30,4 +30,17 @@ function closeWeeklyTasks($id)
     execute("UPDATE todosheets set state='closed' WHERE id=:id", ['id' => $id]);
 }
 
+function readLastWeek($base_id)
+{
+    return selectOne("SELECT MAX(week) as 'last_week'  
+                            FROM todosheets
+                            Where base_id =:base_id
+                            GROUP BY base_id",["base_id" => $base_id]);
+}
+
+function weeknew($base,$week)
+{
+    execute("INSERT INTO todosheets(week,state ,base_id)
+                   VALUES('$week','closen','$base')", []);
+}
 ?>

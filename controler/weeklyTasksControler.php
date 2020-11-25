@@ -46,3 +46,11 @@ function getDatesFromWeekNumber($weekNumber){
 
     return $dates;
 }
+
+function addWeek($base){
+
+    $week = readLastWeek($base);
+    $week['last_week'] +=  1;
+    weeknew($base,$week['last_week']);
+
+}
