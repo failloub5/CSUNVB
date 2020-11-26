@@ -11,12 +11,13 @@ $title = "CSU-NVB - Tâches hebdomadaires";
             <input type="hidden" name="selectBaseID" value="<?= $base['id'] ?>">
             <button type="submit" class='btn btn-primary m-1 float-right'>Retour à la liste</button>
         </form>
-        <?php if ($_SESSION['username']['admin'] == 1): ?>
+        <?php if ($_SESSION['username']['admin'] == 1 && $alreadyOpen == false && $week['state'] == "close"): ?>
             <form action="?action=openWeek" method="POST">
                 <input type="hidden" name="weekID" value="<?= $week['id'] ?>">
                 <input type="hidden" name="baseID" value="<?= $base['id'] ?>">
                 <button type="submit" class='btn btn-primary m-1 float-right'>Ouvrir</button>
             </form>
+        <?php elseif ($_SESSION['username']['admin'] == 1 && $week['state'] == "open"): ?>
             <form action="?action=closeWeek" method="POST">
                 <input type="hidden" name="weekID" value="<?= $week['id'] ?>">
                 <input type="hidden" name="baseID" value="<?= $base['id'] ?>">

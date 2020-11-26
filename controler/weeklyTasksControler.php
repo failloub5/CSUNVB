@@ -23,6 +23,12 @@ function showWeeklyTasks($baseID, $weekID){
     $base = getbasebyid($baseID);
     $week = getTodosheetsByID($weekID);
     $dates = getDatesFromWeekNumber($week['week']);
+
+    /** Test pour vérifier si une autre feuille est déjà ouverte */
+    $alreadyOpen = true;
+    if(empty(getOpenedWeeks($baseID))){
+        $alreadyOpen = false;
+    }
     // toDo : Affichage des tâches (Fusion des 2 vues d'affichage)
     require_once VIEW . 'todo/detailsWeeklyTasks.php';
 }
@@ -71,20 +77,26 @@ function addWeek($base){
     weeknew($base, $week['last_week']);
 }
 
+/**
+ * Function qui ouvre une semaine fermée et affiche sa vue détaillée
+ * @param $baseID : l'ID de la base à laquelle appartient la semaine
+ * @param $weekID : l'ID de la semaine a ouvrir
+ */
 function openAWeek($baseID, $weekID){
-    $alreadyOpen = getOpenedWeeks($baseID);
-    if(empty($alreadyOpen)){
-        openWeeklyTasks($weekID);
-        $_SESSION['flashmessage'] = "La semaine a été ouverte.";
-    } else {
-        // toDo : changement de couleur possible pour les messages d'erreur ?
-        $_SESSION['flashmessage'] = "Une autre semaine est déjà ouverte.";
-    }
+    openWeeklyTasks($weekID);
+    $_SESSION['flashmessage'] = "La semaine a été ouverte.";
     showWeeklyTasks($baseID, $weekID);
 }
 
+/**
+ * Function qui ferme une semaine ouverte et renvoie sur la liste des semaines
+ * @param $baseID : l'ID de la base à laquelle appartient la semaine
+ * @param $weekID : l'ID de la semaine a fermer
+ */
 function closeAWeek($baseID, $weekID){
+    $week = getTodosheetsByID($weekID);
+
     closeWeeklyTasks($weekID);
-    $_SESSION['flashmessage'] = "La semaine a été cloturée.";
-    showWeeklyTasks($baseID, $weekID);
+    $_SESSION['flashmessage'] = "La semaine ".$week['week']." a été cloturée.";
+    homeWeeklyTasks($baseID);
 }
