@@ -190,8 +190,16 @@ function createTodoThing($item)
 // WIP
 function readTodoThingsForDay($sid, $day, $dayOfWeek)
 {
-    $res = selectMany("SELECT description, type FROM todos INNER JOIN todothings t on todothing_id = t.id where todosheet_id=:sid AND daything = :daything AND day_of_week = :dayofweek", ["sid" => $sid, "daything" => $day, "dayofweek" => $dayOfWeek]);
+    $res = selectMany("SELECT description, type 
+                             FROM todos 
+                             INNER JOIN todothings t on todothing_id = t.id where todosheet_id=:sid AND daything = :daything AND day_of_week = :dayofweek", ["sid" => $sid, "daything" => $day, "dayofweek" => $dayOfWeek]);
     return $res;
 }
+
+/* SELECT description, week, base_id
+ * FROM todos
+ * INNER JOIN todothings ON todos.todothing_id = todothings.id
+ * INNER JOIN todosheets ON todos.todosheet_id = todosheets.id
+ */
 
 ?>
