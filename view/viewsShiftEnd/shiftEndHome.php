@@ -60,18 +60,25 @@ $title = "CSU-NVB - Remise de garde";
         <tr>
             <td><a href='?action=showGuardSheet&id=<?= $guardSheet['id'] ?>'
                    class="btn"><?= date('d.m.Y', strtotime($guardSheet['date'])) ?>  </a></td>
-            <td><?php if ($guardSheet['state'] == 'open') : ?>
-                    <?php "Ouvert" ?>
-                <?php endif;
-                if ($guardSheet['state'] == 'blank') : ?>
-                    <?= "En préparation" ?>
-                <?php endif;
-                if ($guardSheet['state'] == 'reopen') : ?>
-                    <?= "Réouvert" ?>
-                <?php endif;
-                if ($guardSheet['state'] == 'close') : ?>
-                    <?= "Fermé" ?>
-                <?php endif; ?></td>
+            <td><?php
+                switch ($guardSheet['state']) {
+                    case 'open' :
+                        echo 'Ouvert';
+                        break;
+                    case 'En préparation' :
+                        echo 'En préparation';
+                        break;
+                    case 'reopen' :
+                        echo 'Réouvert';
+                        break;
+                    case 'close' :
+                        echo 'Fermé';
+                        break;
+                    default :
+                        echo 'Statut Inconnu';
+                        break;
+                }
+                ?></td>
             <td>Jour : <?= $guardSheet['novaDay'] ?><br>Nuit : <?= $guardSheet['novaNight'] ?></td>
             <td>Jour :<?= $guardSheet['bossDay'] ?><br>Nuit :<?= $guardSheet['bossNight'] ?> </td>
             <td>Jour : <?= $guardSheet['teammateDay'] ?><br>Nuit : <?= $guardSheet['teammateNight'] ?></td>
