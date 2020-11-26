@@ -73,8 +73,10 @@ $title = "CSU-NVB - Remise de garde";
             <td>Jour :<?= $guardSheet['bossDay'] ?><br>Nuit :<?= $guardSheet['bossNight'] ?> </td>
             <td>Jour : <?= $guardSheet['teammateDay'] ?><br>Nuit : <?= $guardSheet['teammateNight'] ?></td>
             <td>
-                <?php if (($_SESSION['username']['admin'] == true || $guardSheet['state'] == 'open' || $guardSheet['state'] == 'reopen')) { ?>
-
+                <?php if ((($_SESSION['username']['admin'] == true and getNbGuardSheet('open') == 0 ) ||
+                    ($_SESSION['username']['admin'] == true and $guardSheet['state'] == 'close') ||
+                    $guardSheet['state'] == 'open' ||
+                    $guardSheet['state'] == 'reopen')) { ?>
                     <form action="?action=alterGuardSheetStatus" method="post">
                         <input type = hidden name="id" value = <?= $guardSheet['id'] ?>>
                         <button class="btn btn-primary btn-sm" name="status" value="<?= $guardSheet['state'] ?>"
