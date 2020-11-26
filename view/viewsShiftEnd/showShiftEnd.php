@@ -40,13 +40,44 @@ $title = "CSU-NVB - Remise de garde";
         <?php foreach ($section as $action): ?>
             <tr>
                 <?php
-                $data = getGuardComment($action['id'], $shiftid);
+                $guardContent = getGuardContent($action['id'], $shiftid);
                 ?>
 
                 <td class="actionname"><?= $action['text'] ?></td>
-                <td class="ackcell"><?= "ss" ?></td>
-                <td class="ackcell"></td>
-                <td><?= $data['comment'] ?></td>
+                <td class="ackcell">
+                    <?php
+                    $number = 0;
+                    foreach ($guardContent as $data){
+                        if(isset($data['dayInitials'])){
+                            if($number > 0) echo "<br>";
+                            echo $data['dayInitials'];
+                            $number ++;
+                        }
+                    }
+                    ?>
+                </td>
+                <td class="ackcell">
+                    <?php
+                    $number = 0;
+                    foreach ($guardContent as $data){
+                        if(isset($data['nightInitials'])){
+                            if($number > 0) echo "<br>";
+                            echo $data['nightInitials'];
+                            $number ++;
+                        }
+                    }
+                    ?>
+                </td>
+                <td>
+                    <?php
+                    $number = 0;
+                    foreach ($guardContent as $data){
+                        if($number > 0)echo "<br>";
+                        echo $data['comment'];
+                        $number ++;
+                    }
+                    ?>
+                </td>
             </tr>
         <?php endforeach; ?>
         </tbody>
