@@ -75,6 +75,7 @@ function addWeek($base){
     }
 
     weeknew($base, $week['last_week']);
+    homeWeeklyTasks($base);
 }
 
 /**

@@ -60,7 +60,7 @@ function readLastWeek($base_id)
 function weeknew($base,$week)
 {
     execute("INSERT INTO todosheets(week,state ,base_id)
-                   VALUES('$week','closen','$base')", []);
+                   VALUES('$week','close','$base')", []);
 }
 
 /** ================== Fonctions à vérifier =============== */
