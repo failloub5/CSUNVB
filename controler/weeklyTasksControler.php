@@ -100,3 +100,42 @@ function closeAWeek($baseID, $weekID){
     $_SESSION['flashmessage'] = "La semaine ".$week['week']." a été cloturée.";
     homeWeeklyTasks($baseID);
 }
+
+
+
+/** ================== Fonctions à vérifier =============== */
+/** Crées par marwan.alhelo, David.Roulet & Gatien.Jayme */
+
+
+function createSheetToDo($base_id)
+{
+    // récupérer la valeur de $item puis transférer les valeurs
+
+    $lastWeek = readLastWeek($base_id);
+    createTodoSheet($base_id, $lastWeek['last_week']);
+    unset($_POST['site']);
+    unset($_POST['base']);
+    todoListHomePage($base_id);
+}
+
+
+function activateSheet($state)
+{
+    $activatestatus = activateTodoSheets($state);
+}
+
+function edittodopage($sheetid)
+{
+    for ($daynight = 0; $daynight <= 1; $daynight++) {
+        for ($dayofweek = 1; $dayofweek <= 7; $dayofweek++) {
+            $todoThings[$daynight][$dayofweek] = readTodoThingsForDay($sheetid, $daynight, $dayofweek);
+        }
+    }
+
+
+    require_once VIEW . 'todo/Edittodopage.php';
+
+}
+
+
+
