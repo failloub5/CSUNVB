@@ -33,7 +33,13 @@ function alterGuardSheetStatus(){
             closeShiftPage($_POST["id"]);
             break;
         case 'blank' :
-            if (($_SESSION['username']['admin'] == true)) openShiftPage($_POST["id"]);
+            if (($_SESSION['username']['admin'] == true)) {
+                if( getNbGuardSheet('open') == 0 ){
+                    openShiftPage($_POST["id"]);
+                }else{
+                    $_SESSION["flashmessage"] = "Une autre feuille est déjà ouverte";
+                }
+            }
             break;
         case 'close' :
             if (($_SESSION['username']['admin'] == true)) reopenShiftPage($_POST["id"]);
@@ -62,3 +68,4 @@ function showShiftEnd($shiftid)
     $guardSheet = getGuardsheetDetails($shiftid);
     require_once VIEW . 'viewsShiftEnd/showShiftEnd.php';
 }
+

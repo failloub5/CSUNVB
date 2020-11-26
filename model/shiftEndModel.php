@@ -278,3 +278,7 @@ function getNewDate(){
     return $newDate;
 }
 
+function getNbGuardSheet($status){
+    return selectOne("SELECT COUNT(id) as number FROM  guardsheets where state = :status", ['status' => $status])["number"];
+}
+
