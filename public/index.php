@@ -191,11 +191,13 @@ function switcherUser()
         /** Using shiftEndControler */
 
         case 'listShiftEnd':
-            if (isset($_POST["site"])) {
-                $baseID = $_POST["site"];
+            if(isset($_POST["selectedBase"]))$_SESSION["selectedBase"] = $_POST["selectedBase"];
+            if (isset($_SESSION["selectedBase"])) {
+                $baseID = $_SESSION["selectedBase"];
             } else {
-                $baseID = $_SESSION['base']['id'];
+                $_SESSION["selectedBase"] = $_SESSION['base']['id'];
             }
+            $baseID = $_SESSION["selectedBase"];
             listShiftEnd($baseID);
             break;
         case 'showGuardSheet':

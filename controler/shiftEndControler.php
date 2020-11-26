@@ -28,18 +28,20 @@ function adminGuardSheet()
 function openShift()
 {
     openShiftPage($_POST["open"]);
-    require_once VIEW . 'main/home.php';
+    listShiftEnd($_SESSION["selectedBase"]);
 }
 
 function reOpenShift()
 {
     reopenShiftPage($_POST["reOpen"]);
-    require_once VIEW . 'main/home.php';
+    listShiftEnd($_SESSION["selectedBase"]);
+
 }
 function closeShift()
 {
     closeShiftPage($_POST["close"]);
-    require_once VIEW . 'main/home.php';
+    listShiftEnd($_SESSION["selectedBase"]);
+
 }
 
 function listShiftEnd($baseID)

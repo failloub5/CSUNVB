@@ -14,10 +14,8 @@ $title = "CSU-NVB - Remise de garde";
 
 <div class="row">
     <FORM action="?action=listShiftEnd" method="post" class="col">
-        <SELECT onchange="this.form.submit()" name="site" size="1">
-            <?php foreach ($Bases
-
-            as $base) { ?>
+        <SELECT onchange="this.form.submit()" name="selectedBase" size="1">
+            <?php foreach ($Bases as $base) { ?>
             <OPTION value="<?= $base['id'] ?>" <?php if ($baseID == $base['id']) { ?>
                 selected="selected"
             <?php } ?>
@@ -38,7 +36,7 @@ $title = "CSU-NVB - Remise de garde";
 <div class="row m-2">
     <?php
     foreach ($list as $item) {
-        if ($item["base_id"] == $_SESSION["Selectsite"]) {
+        if ($item["base_id"] == $_SESSION["Selectsite"]) {//todo michael
             $weeks[] = $item;
 
         }
