@@ -107,12 +107,6 @@ function switcherAdmin()
         case 'updateNova' :
             updateNova();
             break;
-        //---- ShiftSheet ----
-        case 'newSheet':
-            $baseID = $_POST["site"];
-            echo"New Sheet" . $baseID;
-            newShiftSheet($baseID);
-            break;
         default :
             switcherUser();
             break;
@@ -212,6 +206,9 @@ function switcherUser()
             break;
         case 'closedShift':
             closeShift();
+            break;
+        case 'newSheet':
+            newShiftSheet($_SESSION["selectedBase"]);
             break;
 
         /** Using weeklyTasksControler */

@@ -166,21 +166,14 @@ function getGuardContent($ligneID, $guardSheetID)
     where guardcontents.guardsheet_id =:guardSheetID and guardcontents.guard_line_id =:ligneID', ['guardSheetID' => $guardSheetID, 'ligneID' => $ligneID]);
 }
 
-function getGuardLinesForSection($section)
+function getActionFromSection($sectionID)
 {
-    // TODO return le lines for one section only
-    return selectMany('SELECT * FROM guardlines where guard_sections_id=:section', ['section' => $section]);
-    //$section = getGuardLines();
-    //for ($guardline = 0;$guardline < $section ; $guardline++){}
+    return selectMany('SELECT * FROM guardlines where guard_sections_id =:sectionID', ['sectionID' => $sectionID]);
 }
 
-function getGuardSectionsWithLines()
+function getGuardSections()
 {
-    $sections = selectMany('SELECT id, title FROM guardsections', []);
-    foreach ($sections as $section) {
-        $res[$section['title']] = getGuardLinesForSection($section['id']);
-    }
-    return $res;
+    return selectMany('SELECT id, title FROM guardsections', []);
 }
 
 
@@ -238,13 +231,15 @@ function addNewShiftSheet($idBase)
 $dbh = getPDO();
     try {
         $insertGuardSheet = execute("Insert into guardsheets(date,state,base_id)
-values(current_timestamp(),:state,:idBase)", ['state' => "En préparation", 'idBase' => $idBase]);
-        $gid = $dbh->LastindexOfid();
+        values(current_timestamp(),:state,:idBase)", ['state' => "blank", 'idBase' => $idBase]);
+
+        $gid = selectOne("SELECT MAX(id) FROM guardsheets",[]);
+        $gid = $gid["MAX(id)"];
         $insertGuardUseNova = execute("Insert into guard_use_nova(nova_id,guardsheet_id,day)
-values(1,:guardsheetId,1), (1,:guardsheetId,0) ['guardsheetId'=>$gid]");
+        values(1,:guardsheetId,1), (1,:guardsheetId,0)", ['guardsheetId'=>$gid]);
 
         $insertCrews = execute("Insert into crews(boss,day,guardsheet_id,user_id)
-values(0,0,:guardsheetId,1), (1,1,:guardsheetId,1)['guardsheetId'=>$gid]");
+values(0,0,:guardsheetId,1), (1,1,:guardsheetId,1)", ['guardsheetId'=>$gid]);
         if ($insertCrews == false || $insertGuardSheet == false || $insertGuardUseNova == false) {
             throw new Exception("L'enregistrement ne s'est pas effectué correctement");
         }

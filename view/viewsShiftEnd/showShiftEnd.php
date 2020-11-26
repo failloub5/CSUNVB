@@ -3,7 +3,7 @@ ob_start();
 $title = "CSU-NVB - Remise de garde";
 ?>
 <div class="row m-2">
-    <h1>Remise de Garde du <?= date('d.m.Y', strtotime($guardsheet['date'])) ?> à <?= $guardsheet['base'] ?></h1>
+    <h1>Remise de Garde du <?= date('d.m.Y', strtotime($guardSheet['date'])) ?> à <?= $guardSheet['base'] ?></h1>
 </div>
 
 <div class="row">
@@ -13,18 +13,18 @@ $title = "CSU-NVB - Remise de garde";
 </div>
 <div class="row">
     <div class="col-3 text-right">Novas</div>
-    <div class="col-1 text-center"><?= $guardsheet['novaDay'] ?></div>
-    <div class="col-1 text-center"><?= $guardsheet['novaNight'] ?></div>
+    <div class="col-1 text-center"><?= $guardSheet['novaDay'] ?></div>
+    <div class="col-1 text-center"><?= $guardSheet['novaNight'] ?></div>
 </div>
 <div class="row">
     <div class="col-3 text-right">Responsable</div>
-    <div class="col-1 text-center"><?= $guardsheet['bossDay'] ?></div>
-    <div class="col-1 text-center"><?= $guardsheet['bossNight'] ?></div>
+    <div class="col-1 text-center"><?= $guardSheet['bossDay'] ?></div>
+    <div class="col-1 text-center"><?= $guardSheet['bossNight'] ?></div>
 </div>
 <div class="row">
     <div class="col-3 text-right">Equipier</div>
-    <div class="col-1 text-center"><?= $guardsheet['teammateDay'] ?></div>
-    <div class="col-1 text-center"><?= $guardsheet['teammateNight'] ?></div>
+    <div class="col-1 text-center"><?= $guardSheet['teammateDay'] ?></div>
+    <div class="col-1 text-center"><?= $guardSheet['teammateNight'] ?></div>
 </div>
 
 <?php foreach ($listSections as $section): ?>
@@ -37,7 +37,10 @@ $title = "CSU-NVB - Remise de garde";
         <th>Remarques</th>
         </thead>
         <tbody>
-        <?php foreach ($section as $action): ?>
+
+        <?php
+        $actions = getActionFromSection($section["id"]);
+        foreach ($actions as $action): ?>
             <tr>
                 <?php
                 $guardContent = getGuardContent($action['id'], $shiftid);

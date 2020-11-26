@@ -65,7 +65,7 @@ $title = "CSU-NVB - Remise de garde";
                     case 'open' :
                         echo 'Ouvert';
                         break;
-                    case 'En préparation' :
+                    case 'blank' :
                         echo 'En préparation';
                         break;
                     case 'reopen' :

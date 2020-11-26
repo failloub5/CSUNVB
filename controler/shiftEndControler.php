@@ -15,7 +15,7 @@ function newShiftSheet($baseID)
     } else {
         $_SESSION['flashmessage'] = "La feuille de garde a bien été créé !";
     }
-    adminGuardSheet();
+    listShiftEnd($_SESSION["selectedBase"]);
 }
 
 
@@ -58,7 +58,7 @@ function listShiftEnd($baseID)
 
 function showShiftEnd($shiftid)
 {
-    $listSections = getGuardSectionsWithLines();
-    $guardsheet = getGuardsheetDetails($shiftid);
+    $listSections = getGuardSections();
+    $guardSheet = getGuardsheetDetails($shiftid);
     require_once VIEW . 'viewsShiftEnd/showShiftEnd.php';
 }
