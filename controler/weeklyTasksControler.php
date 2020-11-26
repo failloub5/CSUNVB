@@ -55,6 +55,7 @@ function getDatesFromWeekNumber($weekNumber){
 
     return $dates;
 }
+
 /**
  * Fonction qui ajoute à la bbd dans todosheets les données relative à base_id et week
  * @param $base : id de la base
@@ -64,18 +65,30 @@ function addWeek($base){
     $week = readLastWeek($base);
 
     if(empty($week)){
-        /*S'il pas de dernière semaine dans une base, il faut en créer 1*/
-        $today = date("y.m.d");
-        $good_format=strtotime ($today);
-        /*echo date('W',$good_format);*/
-        $week['last_week'] = date('W',$good_format);
+        $week['last_week'] = date("yW"); // Affiche le numéro de la semaine actuelle dans le bon format
     }else {
         /*Sinon ajouter 1 nouvelle semaine à celle déjà existante*/
-        $week['last_week'] +=  1;
+        $week['last_week'] = nextWeekNumber($week['last_week']);
     }
 
     weeknew($base, $week['last_week']);
+    $_SESSION['flashmessage'] = "La semaine ".$week['last_week']." a été créée.";
     homeWeeklyTasks($base);
+}
+
+/**
+ * Fonction qui retourne le numéro de semaine de la semaine suivante
+ * @param $weekNbr : le numéro de la semaine
+ * @return false|string
+ */
+function nextWeekNumber($weekNbr){
+    $year = 2000 + intdiv($weekNbr,100);
+    $week = $weekNbr%100;
+
+    $time = strtotime(sprintf("%4dW%02d", $year , $week));
+    $nextWeek = date(strtotime("+ 1 week", $time));
+
+    return  date("yW", $nextWeek);
 }
 
 /**
