@@ -39,6 +39,23 @@ function updateShiftEndItem($item)
     saveShiftEndItem($items);
 }
 
+function openShiftPage($id){
+    try {
+        $dbh = getPDO();
+        $query = "update guardsheets
+set state='open' WHERE id=:id";
+        $statement = $dbh->prepare($query);//prepare query
+        $statement->execute(["id" => $id]);//execute query
+        //$queryResult = $statement->fetch(PDO::FETCH_ASSOC);//prepare result for client
+        $dbh = null;
+        return true;
+        //return $queryResult;
+    } catch (PDOException $e) {
+        print "Error!: " . $e->getMessage() . "<br/>";
+        return null;
+    }
+}
+
 function reopenShiftPage($id)
 {
     try {
@@ -62,7 +79,7 @@ function closeShiftPage($id)
     try {
         $dbh = getPDO();
         $query = "update guardsheets
-set state='closed' WHERE id=:id";
+set state='close' WHERE id=:id";
         $statement = $dbh->prepare($query);//prepare query
         $statement->execute(["id" => $id]);//execute query
         //$queryResult = $statement->fetchAll(PDO::FETCH_ASSOC);//prepare result for client

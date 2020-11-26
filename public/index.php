@@ -202,6 +202,9 @@ function switcherUser()
             $sheetid = $_GET['id'];
             showShiftEnd($sheetid);
             break;
+        case 'openShift':
+            openShift();
+            break;
         case 'reOpenShift':
             reOpenShift();
             break;

@@ -25,6 +25,12 @@ function adminGuardSheet()
     require_once VIEW . 'viewsShiftEnd/shiftEndHome.php';
 }
 
+function openShift()
+{
+    openShiftPage($_POST["open"]);
+    require_once VIEW . 'main/home.php';
+}
+
 function reOpenShift()
 {
     reopenShiftPage($_POST["reOpen"]);
