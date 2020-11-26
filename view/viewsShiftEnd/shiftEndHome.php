@@ -15,7 +15,9 @@ $title = "CSU-NVB - Remise de garde";
 <div class="row">
     <FORM action="?action=listShiftEnd" method="post" class="col">
         <SELECT onchange="this.form.submit()" name="site" size="1">
-            <?php foreach ($Bases as $base) { ?>
+            <?php foreach ($Bases
+
+            as $base) { ?>
             <OPTION value="<?= $base['id'] ?>" <?php if ($baseID == $base['id']) { ?>
                 selected="selected"
             <?php } ?>
@@ -56,35 +58,45 @@ $title = "CSU-NVB - Remise de garde";
         <th>Action</th><?php } ?>
     </thead>
     <?php ?>
-    <?php foreach ($guardsheets as $guardsheet) { ?>
+    <?php foreach ($guardsheets as $guardSheet) { ?>
         <tr>
-            <td><a href='?action=showGuardSheet&id=<?= $guardsheet['id'] ?>' class="btn"><?= date('d.m.Y',strtotime($guardsheet['date'])) ?>  </a></td>
-            <td><?php if ($guardsheet['state'] == 'open') { ?>
-                    <?= "Ouvert " ?>
-                <?php }
-                if ($guardsheet['state'] == 'reopen') { ?>
-                    <?= "Réouverte " ?>
-                <?php }
-                if ($guardsheet['state'] == 'closed') { ?>
-                    <?= "Fermée " ?>
-                <?php } ?></td>
-            <td>Jour : <?= $guardsheet['novaDay'] ?><br>Nuit : <?= $guardsheet['novaNight'] ?></td>
-            <td>Jour :<?= $guardsheet['bossDay'] ?><br>Nuit :<?= $guardsheet['bossNight'] ?> </td>
-            <td>Jour : <?= $guardsheet['teammateDay'] ?><br>Nuit : <?= $guardsheet['teammateNight'] ?></td>
+            <td><a href='?action=showGuardSheet&id=<?= $guardSheet['id'] ?>'
+                   class="btn"><?= date('d.m.Y', strtotime($guardSheet['date'])) ?>  </a></td>
+            <td><?php if ($guardSheet['state'] == 'open') : ?>
+                    <?php "Ouvert" ?>
+                <?php endif;
+                if ($guardSheet['state'] == 'blank') : ?>
+                    <?= "En préparation" ?>
+                <?php endif;
+                if ($guardSheet['state'] == 'reopen') : ?>
+                    <?= "Réouvert" ?>
+                <?php endif;
+                if ($guardSheet['state'] == 'close') : ?>
+                    <?= "Fermé" ?>
+                <?php endif; ?></td>
+            <td>Jour : <?= $guardSheet['novaDay'] ?><br>Nuit : <?= $guardSheet['novaNight'] ?></td>
+            <td>Jour :<?= $guardSheet['bossDay'] ?><br>Nuit :<?= $guardSheet['bossNight'] ?> </td>
+            <td>Jour : <?= $guardSheet['teammateDay'] ?><br>Nuit : <?= $guardSheet['teammateNight'] ?></td>
 
 
             <?php if ($admin['admin'] == 1) { ?>
                 <td>
-                    <?php if ($guardsheet['state'] == 'closed') : ?>
+                    <?php if ($guardSheet['state'] == 'close') : ?>
                         <form action="?action=reOpenShift" method="post">
-                            <button class="btn btn-primary btn-sm" name="reOpen" value="<?= $guardsheet['id'] ?>"
-                            </button>Reopen
+                            <button class="btn btn-primary btn-sm" name="reOpen" value="<?= $guardSheet['id'] ?>"
+                            </button>Rouvrir
                         </form>
                     <?php endif; ?>
-                    <?php if ($guardsheet['state'] == 'open' || $guardsheet['state'] == 'reopen') : ?>
+                    <?php if ($guardSheet['state'] == 'blank') : ?>
+                        <form action="?action=openShift" method="post">
+                            <button class="btn btn-primary btn-sm" name="open" value="<?= $guardSheet['id'] ?>"
+                            </button>Ouvrir
+                        </form>
+                    <?php endif; ?>
+                    <?php if ($guardSheet['state'] == 'open' || $guardSheet['state'] == 'reopen') : ?>
                         <form action="?action=closedShift" method="post">
-                            <button class="btn btn-primary btn-sm" name="close" value="<?= $guardsheet['id'] ?>"
-                            </button>Close
+                            <button class="btn btn-primary btn-sm" name="close" value="<?= $guardSheet['id'] ?>"
+                            </button>Fermer
                         </form>
                     <?php endif; ?>
                 </td>
