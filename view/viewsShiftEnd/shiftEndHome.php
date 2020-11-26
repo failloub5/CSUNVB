@@ -52,10 +52,9 @@ $title = "CSU-NVB - Remise de garde";
     <th>Responsable</th>
     <th>Équipage</th>
 
-    <?php if ($admin['admin'] == 1) { ?>
-        <th>Action</th><?php } ?>
+
+        <th>Action</th>
     </thead>
-    <?php ?>
     <?php foreach ($guardsheets as $guardSheet) { ?>
         <tr>
             <td><a href='?action=showGuardSheet&id=<?= $guardSheet['id'] ?>'
@@ -84,8 +83,15 @@ $title = "CSU-NVB - Remise de garde";
             <td>Jour : <?= $guardSheet['teammateDay'] ?><br>Nuit : <?= $guardSheet['teammateNight'] ?></td>
 
 
-            <?php if ($admin['admin'] == 1) { ?>
+
                 <td>
+                    <?php if ($guardSheet['state'] == 'open' || $guardSheet['state'] == 'reopen') : ?>
+                        <form action="?action=closedShift" method="post">
+                            <button class="btn btn-primary btn-sm" name="close" value="<?= $guardSheet['id'] ?>"
+                            </button>Fermer
+                        </form>
+                    <?php endif; ?>
+                    <?php if ($admin['admin'] == 1) { ?>
                     <?php if ($guardSheet['state'] == 'close') : ?>
                         <form action="?action=reOpenShift" method="post">
                             <button class="btn btn-primary btn-sm" name="reOpen" value="<?= $guardSheet['id'] ?>"
@@ -96,12 +102,6 @@ $title = "CSU-NVB - Remise de garde";
                         <form action="?action=openShift" method="post">
                             <button class="btn btn-primary btn-sm" name="open" value="<?= $guardSheet['id'] ?>"
                             </button>Ouvrir
-                        </form>
-                    <?php endif; ?>
-                    <?php if ($guardSheet['state'] == 'open' || $guardSheet['state'] == 'reopen') : ?>
-                        <form action="?action=closedShift" method="post">
-                            <button class="btn btn-primary btn-sm" name="close" value="<?= $guardSheet['id'] ?>"
-                            </button>Fermer
                         </form>
                     <?php endif; ?>
                 </td>

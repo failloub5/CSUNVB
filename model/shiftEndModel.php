@@ -236,10 +236,10 @@ $dbh = getPDO();
         $gid = selectOne("SELECT MAX(id) FROM guardsheets",[]);
         $gid = $gid["MAX(id)"];
         $insertGuardUseNova = execute("Insert into guard_use_nova(nova_id,guardsheet_id,day)
-        values(1,:guardsheetId,1), (1,:guardsheetId,0)", ['guardsheetId'=>$gid]);
+        values(NULL,:guardsheetId,1), (NULL,:guardsheetId,0)", ['guardsheetId'=>$gid]);
 
         $insertCrews = execute("Insert into crews(boss,day,guardsheet_id,user_id)
-values(0,0,:guardsheetId,1), (1,1,:guardsheetId,1)", ['guardsheetId'=>$gid]);
+values(NULL,0,:guardsheetId,NULL), (NULL,1,:guardsheetId,NULL)", ['guardsheetId'=>$gid]);
         if ($insertCrews == false || $insertGuardSheet == false || $insertGuardUseNova == false) {
             throw new Exception("L'enregistrement ne s'est pas effectué correctement");
         }
