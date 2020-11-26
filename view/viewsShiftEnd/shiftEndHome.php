@@ -33,15 +33,6 @@ $title = "CSU-NVB - Remise de garde";
         <?php } ?>
     </form>
 </div>
-<div class="row m-2">
-    <?php
-    foreach ($list as $item) {
-        if ($item["base_id"] == $_SESSION["Selectsite"]) {//todo michael
-            $weeks[] = $item;
-
-        }
-    } ?>
-</div>
 
 
 <table class="table table-bordered  table-striped" style="text-align: center">
