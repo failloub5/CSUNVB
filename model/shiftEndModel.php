@@ -205,7 +205,7 @@ function getGuardsheetForBase($base_id)
     (select initials from users inner join crews on users.id = crews.user_id where crews.guardsheet_id = guardsheets.id and crews.day = 0 and crews.boss = 0) as teammateNight,
     (select number from novas inner join guard_use_nova on novas.id = guard_use_nova.nova_id where guard_use_nova.guardsheet_id = guardsheets.id and  guard_use_nova.day = 0) as novaNight,
     (select number from novas inner join guard_use_nova on novas.id = guard_use_nova.nova_id where guard_use_nova.guardsheet_id = guardsheets.id and  guard_use_nova.day = 1) as novaDay
-    from guardsheets where base_id=:base_id', ["base_id" => $base_id]);
+    from guardsheets where base_id=:base_id order by date DESC ', ["base_id" => $base_id]);
 }
 
 function getGuardsheetDetails($guardsheet_id)
