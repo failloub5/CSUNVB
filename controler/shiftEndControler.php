@@ -25,23 +25,23 @@ function adminGuardSheet()
     require_once VIEW . 'viewsShiftEnd/shiftEndHome.php';
 }
 
-function openShift()
-{
-    openShiftPage($_POST["open"]);
+// blank -> open -> close -> reopen -> close
+function alterGuardSheetStatus(){
+    switch ($_POST["status"]) {
+        case 'open' :
+        case 'reopen' :
+            closeShiftPage($_POST["id"]);
+            break;
+        case 'blank' :
+            if (($_SESSION['username']['admin'] == true)) openShiftPage($_POST["id"]);
+            break;
+        case 'close' :
+            if (($_SESSION['username']['admin'] == true)) reopenShiftPage($_POST["id"]);
+            break;
+        default :
+            break;
+    }
     listShiftEnd($_SESSION["selectedBase"]);
-}
-
-function reOpenShift()
-{
-    reopenShiftPage($_POST["reOpen"]);
-    listShiftEnd($_SESSION["selectedBase"]);
-
-}
-function closeShift()
-{
-    closeShiftPage($_POST["close"]);
-    listShiftEnd($_SESSION["selectedBase"]);
-
 }
 
 function listShiftEnd($baseID)

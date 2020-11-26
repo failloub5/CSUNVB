@@ -198,14 +198,8 @@ function switcherUser()
             $sheetid = $_GET['id'];
             showShiftEnd($sheetid);
             break;
-        case 'openShift':
-            openShift();
-            break;
-        case 'reOpenShift':
-            reOpenShift();
-            break;
-        case 'closedShift':
-            closeShift();
+        case 'alterGuardSheetStatus':
+            alterGuardSheetStatus();
             break;
         case 'newSheet':
             newShiftSheet($_SESSION["selectedBase"]);

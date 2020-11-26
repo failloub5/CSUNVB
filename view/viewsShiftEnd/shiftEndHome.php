@@ -25,7 +25,7 @@ $title = "CSU-NVB - Remise de garde";
     </FORM>
 
     <form action="?action=newSheet" method="post">
-        <?php if ($admin['admin'] == 1) { ?>
+        <?php if (($_SESSION['username']['admin'] == true)) { ?>
             <div class="col">
                 <input type="hidden" name="site" value="<?= $baseID ?>">
                 <button type="submit" class='btn btn-primary m-1 float-right'>Nouvelle Feuille de garde</button>
@@ -81,31 +81,33 @@ $title = "CSU-NVB - Remise de garde";
             <td>Jour : <?= $guardSheet['novaDay'] ?><br>Nuit : <?= $guardSheet['novaNight'] ?></td>
             <td>Jour :<?= $guardSheet['bossDay'] ?><br>Nuit :<?= $guardSheet['bossNight'] ?> </td>
             <td>Jour : <?= $guardSheet['teammateDay'] ?><br>Nuit : <?= $guardSheet['teammateNight'] ?></td>
+            <td>
+                <?php if (($_SESSION['username']['admin'] == true || $guardSheet['state'] == 'open' || $guardSheet['state'] == 'reopen')) { ?>
 
+                    <form action="?action=alterGuardSheetStatus" method="post">
+                        <input type = hidden name="id" value = <?= $guardSheet['id'] ?>>
+                        <button class="btn btn-primary btn-sm" name="status" value="<?= $guardSheet['state'] ?>"
+                        </button>
+                        <?php
+                        switch ($guardSheet['state']) {
+                            case 'open' :
+                            case 'reopen' :
+                                echo 'Fermer';
+                                break;
+                            case 'blank' :
+                                echo 'Ouvrir';
+                                break;
+                            case 'close' :
+                                echo 'Rouvrir';
+                                break;
+                            default :
+                                echo 'erreur';
+                                break;
+                        }?>
+                    </form>
 
-
-                <td>
-                    <?php if ($guardSheet['state'] == 'open' || $guardSheet['state'] == 'reopen') : ?>
-                        <form action="?action=closedShift" method="post">
-                            <button class="btn btn-primary btn-sm" name="close" value="<?= $guardSheet['id'] ?>"
-                            </button>Fermer
-                        </form>
-                    <?php endif; ?>
-                    <?php if ($admin['admin'] == 1) { ?>
-                    <?php if ($guardSheet['state'] == 'close') : ?>
-                        <form action="?action=reOpenShift" method="post">
-                            <button class="btn btn-primary btn-sm" name="reOpen" value="<?= $guardSheet['id'] ?>"
-                            </button>Rouvrir
-                        </form>
-                    <?php endif; ?>
-                    <?php if ($guardSheet['state'] == 'blank') : ?>
-                        <form action="?action=openShift" method="post">
-                            <button class="btn btn-primary btn-sm" name="open" value="<?= $guardSheet['id'] ?>"
-                            </button>Ouvrir
-                        </form>
-                    <?php endif; ?>
-                </td>
-            <?php } ?>
+                <?php } ?>
+            </td>
         </tr>
     <?php } ?>
 </table>

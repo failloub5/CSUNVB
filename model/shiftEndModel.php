@@ -189,9 +189,7 @@ function getGuradSheetWeek($week, $base)
 
 function Guardsheet()
 {
-
     return selectMany('SELECT * FROM guardsheets;', []);
-
 }
 
 function getGuardsheetForBase($base_id)
@@ -230,16 +228,17 @@ function addNewShiftSheet($idBase)
 {
 $dbh = getPDO();
     try {
+        $date = getNewDate();
         $insertGuardSheet = execute("Insert into guardsheets(date,state,base_id)
-        values(current_timestamp(),:state,:idBase)", ['state' => "blank", 'idBase' => $idBase]);
+        values(:date,:state,:idBase)", ['date' => $date, 'state' => "blank", 'idBase' => $idBase]);
 
         $gid = selectOne("SELECT MAX(id) FROM guardsheets",[]);
         $gid = $gid["MAX(id)"];
         $insertGuardUseNova = execute("Insert into guard_use_nova(nova_id,guardsheet_id,day)
-        values(NULL,:guardsheetId,1), (NULL,:guardsheetId,0)", ['guardsheetId'=>$gid]);
+        values(1,:guardsheetId,1), (1,:guardsheetId,0)", ['guardsheetId'=>$gid]);
 
         $insertCrews = execute("Insert into crews(boss,day,guardsheet_id,user_id)
-values(NULL,0,:guardsheetId,NULL), (NULL,1,:guardsheetId,NULL)", ['guardsheetId'=>$gid]);
+values(1,0,:guardsheetId,1), (1,1,:guardsheetId,1)", ['guardsheetId'=>$gid]);
         if ($insertCrews == false || $insertGuardSheet == false || $insertGuardUseNova == false) {
             throw new Exception("L'enregistrement ne s'est pas effectué correctement");
         }
@@ -268,5 +267,14 @@ values(1,1,151,1)
 ;
 */
 }
+function getDateOfLastSheet(){
+    $lastDate = selectOne("SELECT MAX(date) FROM guardsheets",[])["MAX(date)"];
+    return $lastDate;
+    //SELECT DATE_ADD(`your_field_name`, INTERVAL 2 DAY)
+}
 
+function getNewDate(){
+    $newDate = selectOne("SELECT DATE_ADD( :lastDate, INTERVAL 1 DAY) as newDate" ,['lastDate' => getDateOfLastSheet() ])["newDate"];
+    return $newDate;
+}
 
