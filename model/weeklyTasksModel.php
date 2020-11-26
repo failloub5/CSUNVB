@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * Fonction permettant de récupérer l'ensemble des informations d'une semaine grâce à son ID
+ * @param $id : l'ID de la semaine à retrouver
+ * @return array|mixed|null
+ */
+function getTodosheetsByID($id){
+    return selectOne("SELECT * FROM todosheets where id =:id", ['id' => $id]);
+}
+
 /**
  * Fonction permettant de rechercher dans la base de données lu numéro et l'id des semaines fermées pour une base spécifique
  * @param $baseID : l'ID de la base dont on cherche les semaines fermées
