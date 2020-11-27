@@ -57,7 +57,7 @@ $title = "CSU-NVB - Remise de garde";
     <?php ?>
     <?php foreach ($guardsheets as $guardsheet) { ?>
         <tr>
-            <td><?= substr($guardsheet['date'], 0, 10) ?></td>
+            <td><a href='?action=showGuardSheet&id=<?= $guardsheet['id'] ?>' class="btn"><?= date('d.m.Y',strtotime($guardsheet['date'])) ?>  </a></td>
             <td><?php if ($guardsheet['state'] == 'open') { ?>
                     <?= "Ouvert " ?>
                 <?php }
