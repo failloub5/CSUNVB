@@ -223,9 +223,6 @@ function switcherUser(){
         case 'openWeek':
             openAWeek($_POST['baseID'],$_POST['weekID']);
             break;
-        case 'reOpenToDo':
-            reOpenToDo();
-            break;
         default :
             unknownPage();
             break;
