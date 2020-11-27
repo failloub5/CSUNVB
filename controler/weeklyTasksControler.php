@@ -85,7 +85,7 @@ function addWeek($base){
 
     foreach ($toDos as $todo) {
 
-        addtoDo($todo['todothing_id'], $newWeekID['id'],  $todo['day_of_week']);
+        addtoDo($todo['todothing_id'], $newWeek['id'],  $todo['day_of_week']);
     }
 
     $_SESSION['flashmessage'] = "La semaine ".$week['last_week']." a été créée.";
