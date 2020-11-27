@@ -29,7 +29,16 @@ function showWeeklyTasks($baseID, $weekID){
     if(empty(getOpenedWeeks($baseID))){
         $alreadyOpen = false;
     }
+
     // toDo : Affichage des tâches (Fusion des 2 vues d'affichage)
+    for ($daynight=0; $daynight <= 1; $daynight++) {
+        for ($dayofweek = 1; $dayofweek <= 7; $dayofweek++) {
+            $todoThings[$daynight][$dayofweek] = readTodoThingsForDay($weekID,$daynight,$dayofweek);
+        }
+    }
+
+    $days = [1 => "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
+
     require_once VIEW . 'todo/detailsWeeklyTasks.php';
 }
 
@@ -44,12 +53,11 @@ function getDatesFromWeekNumber($weekNumber){
     $week = $weekNumber%100;
 
     $dates = Array();
-    setlocale(LC_TIME, 'fr'); // Besoin de vérifier que cette ligne ne posera aucun problème !
     $time = strtotime(sprintf("%4dW%02d", $year, $week));
 
     for($i = 0; $i < 7; $i++){
         $day = date(strtotime("+".$i." day", $time));
-        $fullDate = strftime('%A %e %b %Y', $day);
+        $fullDate = strftime('%e %b %Y', $day);
         $dates[] = $fullDate;
     }
 
@@ -150,18 +158,6 @@ function activateSheet($state)
     $activatestatus = activateTodoSheets($state);
 }
 
-function edittodopage($sheetid)
-{
-    for ($daynight = 0; $daynight <= 1; $daynight++) {
-        for ($dayofweek = 1; $dayofweek <= 7; $dayofweek++) {
-            $todoThings[$daynight][$dayofweek] = readTodoThingsForDay($sheetid, $daynight, $dayofweek);
-        }
-    }
-
-
-    require_once VIEW . 'todo/Edittodopage.php';
-
-}
 
 
 
