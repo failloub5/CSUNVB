@@ -63,6 +63,16 @@ function weeknew($base,$week)
                    VALUES('$week','close','$base')", []);
 }
 
+function readTodoThingsForDay($sid, $day, $dayOfWeek)
+{
+    $res = selectMany("SELECT description, type, u.initials AS 'initials'
+                             FROM todos 
+                             INNER JOIN todothings t ON todos.todothing_id = t.id
+                             LEFT JOIN users u ON todos.user_id = u.id
+                             WHERE todosheet_id=:sid AND daything = :daything AND day_of_week = :dayofweek", ["sid" => $sid, "daything" => $day, "dayofweek" => $dayOfWeek]);
+    return $res;
+}
+
 /** ================== Fonctions à vérifier =============== */
 /** Crées par marwan.alhelo, David.Roulet & Gatien.Jayme */
 
@@ -187,14 +197,6 @@ function createTodoThing($item)
 }
 
 
-// WIP
-function readTodoThingsForDay($sid, $day, $dayOfWeek)
-{
-    $res = selectMany("SELECT description, type 
-                             FROM todos 
-                             INNER JOIN todothings t on todothing_id = t.id where todosheet_id=:sid AND daything = :daything AND day_of_week = :dayofweek", ["sid" => $sid, "daything" => $day, "dayofweek" => $dayOfWeek]);
-    return $res;
-}
 
 /* SELECT description, week, base_id
  * FROM todos
