@@ -51,7 +51,7 @@ function openWeeklyTasks($id)
 
 function readLastWeek($base_id)
 {
-    return selectOne("SELECT MAX(week) as 'last_week'  
+    return selectOne("SELECT MAX(week) as 'last_week', id
                             FROM todosheets
                             Where base_id =:base_id
                             GROUP BY base_id",["base_id" => $base_id]);
@@ -61,6 +61,11 @@ function weeknew($base,$week)
 {
     execute("INSERT INTO todosheets(week,state ,base_id)
                    VALUES('$week','close','$base')", []);
+
+    $query = "SELECT id FROM todosheets 
+                WHERE week = :week AND base_id = :base";
+
+    return selectOne($query, ['week'=> $week, 'base'=> $base]);
 }
 
 function readTodoThingsForDay($sid, $day, $dayOfWeek)
@@ -72,6 +77,22 @@ function readTodoThingsForDay($sid, $day, $dayOfWeek)
                              WHERE todosheet_id=:sid AND daything = :daything AND day_of_week = :dayofweek", ["sid" => $sid, "daything" => $day, "dayofweek" => $dayOfWeek]);
     return $res;
 }
+
+function readTodoForASheet($sheetID){
+    $query =  "SELECT todothing_id, daything, day_of_week
+                FROM todos
+                INNER JOIN todothings ON todos.todothing_id = todothings.id
+                INNER JOIN todosheets ON todos.todosheet_id = todosheets.id
+                WHERE todosheet_id = :id";
+
+    return selectMany($query, ['id' => $sheetID]);
+}
+
+function addtoDo($todoID, $weekID, $dayOfWeek){
+    $query = "INSERT INTO todos (todothing_id, todosheet_id, day_of_week) VALUE (:todoID, :sheetID, :day)";
+    execute($query, ['todoID' =>$todoID, 'sheetID' =>$weekID, 'day'=>$dayOfWeek]);
+}
+
 
 /** ================== Fonctions à vérifier =============== */
 /** Crées par marwan.alhelo, David.Roulet & Gatien.Jayme */
@@ -195,13 +216,5 @@ function createTodoThing($item)
 {
     return insert("INSERT INTO todothing (daything,description,type,display_order) VALUES (:daything,:description,:type,:display_order)", $item);
 }
-
-
-
-/* SELECT description, week, base_id
- * FROM todos
- * INNER JOIN todothings ON todos.todothing_id = todothings.id
- * INNER JOIN todosheets ON todos.todosheet_id = todosheets.id
- */
 
 ?>

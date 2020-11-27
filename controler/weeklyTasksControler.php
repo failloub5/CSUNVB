@@ -74,26 +74,22 @@ function addWeek($base){
 
     if(empty($week)){
         $week['last_week'] = date("yW"); // Affiche le numéro de la semaine actuelle dans le bon format
+        // $week['id'] = 23; /** toDO : Semaine par défaut ? */
     }else {
         /*Sinon ajouter 1 nouvelle semaine à celle déjà existante*/
         $week['last_week'] = nextWeekNumber($week['last_week']);
     }
-    weeknew($base, $week['last_week']);
+
+    $toDos = readTodoForASheet($week['id']);
+    $newWeek = weeknew($base, $week['last_week']);
+
+    foreach ($toDos as $todo) {
+
+        addtoDo($todo['todothing_id'], $newWeekID['id'],  $todo['day_of_week']);
+    }
+
     $_SESSION['flashmessage'] = "La semaine ".$week['last_week']." a été créée.";
     homeWeeklyTasks($base);
-
-    // Dans todo chaque tache appartient à l'id 23
-    // Donc il faut maintenant ajouter dans todo l'id 23 + 1 créer précédemment
-    // Et le lui ajouter une tâche copier sur le plan de l'id précédent
-    /* do {
-     *     INSERT INTO todos (todosheet_id)
-     *     VALUE (base_id + 1)
-     *
-     *     INSERT INTO todos (todos.todothing_id)
-     *     VALUE (todothing_id)
-     * } while(todothings.id == readTodoThingsFirDay($base) )
-     */
-
 }
 
 /**
@@ -131,7 +127,7 @@ function closeAWeek($baseID, $weekID){
     $week = getTodosheetsByID($weekID);
 
     closeWeeklyTasks($weekID);
-    $_SESSION['flashmessage'] = "La semaine ".$week['week']." a été cloturée.";
+    $_SESSION['flashmessage'] = "La semaine ".$week['week']." a été clôturée.";
     homeWeeklyTasks($baseID);
 }
 
