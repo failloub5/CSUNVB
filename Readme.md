@@ -35,8 +35,8 @@ Le repository a quatre branches:
 
 1. `master` sous la responsabilité du Product Owner (Xavier)
 2. `stups` contenant les développement spécifiques au rapports de stupéfiants, gérée par Loïc, Alexandre D et Jérémy
-2. `todo` contenant les développement spécifiques au rapports de tâches hebdomadaires, gérée par Paola et Michaël
-2. `garde` contenant les développement spécifiques au rapports de remise de garde, gérée par Vicky, Daniel et Alexandre R
+2. `todo` contenant les développement spécifiques au rapports de tâches hebdomadaires, gérée par Vicky, Daniel et Alexandre R
+2. `garde` contenant les développement spécifiques au rapports de remise de garde, gérée par Paola et Michaël
 
 Aucune autre branche ne doit être créée sans concertation préalable avec l'ensemble de l'équipe.
 

@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `csunvb_csu` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `csunvb_csu`;
 -- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
 --
 -- Host: 127.0.0.1    Database: csunvb_csu
@@ -18,7 +20,6 @@
 --
 -- Table structure for table `Logs`
 --
-USE csunvb_csu;
 
 DROP TABLE IF EXISTS `Logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -299,7 +300,7 @@ CREATE TABLE `guardsheets` (
 
 LOCK TABLES `guardsheets` WRITE;
 /*!40000 ALTER TABLE `guardsheets` DISABLE KEYS */;
-INSERT INTO `guardsheets` VALUES (151,'2020-10-26 00:00:00','closed',2),(152,'2020-10-27 00:00:00','closed',2),(153,'2020-10-28 00:00:00','open',2),(154,'2020-10-29 00:00:00','empty',2),(155,'2020-10-30 00:00:00','empty',2);
+INSERT INTO `guardsheets` VALUES (151,'2020-10-26 00:00:00','close',2),(152,'2020-10-27 00:00:00','close',2),(153,'2020-10-28 00:00:00','open',2),(154,'2020-10-29 00:00:00','blank',2),(155,'2020-10-30 00:00:00','blank',2);
 /*!40000 ALTER TABLE `guardsheets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -684,4 +685,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-14 15:31:27
+-- Dump completed on 2020-11-27 11:09:14

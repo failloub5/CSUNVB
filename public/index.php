@@ -10,21 +10,21 @@
 
 session_start();
 
-require  "../path.php";
+require "../path.php";
 
 require "../helpers.php";
 
-require  CONTROLER . "adminControler.php";
-require  CONTROLER . "drugControler.php";
-require  CONTROLER . "mainControler.php";
-require  CONTROLER . "shiftEndControler.php";
-require  CONTROLER . "weeklyTasksControler.php";
+require CONTROLER . "adminControler.php";
+require CONTROLER . "drugControler.php";
+require CONTROLER . "mainControler.php";
+require CONTROLER . "shiftEndControler.php";
+require CONTROLER . "weeklyTasksControler.php";
 
 
 require MODEL . ".const.php";
 require MODEL . "databaseModel.php";
 
-require MODEL ."baseModel.php";
+require MODEL . "baseModel.php";
 require MODEL . "userModel.php";
 require MODEL . "drugModel.php";
 require MODEL . "novaModel.php";
@@ -32,32 +32,31 @@ require MODEL . "shiftEndModel.php";
 require MODEL . "weeklyTasksModel.php";
 
 
-if(isset($_SESSION["username"])){
-    if($_SESSION["username"]['firstconnect'] == false){
-        if (isset($_GET['action'])){
-            if(($_SESSION['username']['admin'] == true)){
+if (isset($_SESSION["username"])) {
+    if ($_SESSION["username"]['firstconnect'] == false) {
+        if (isset($_GET['action'])) {
+            if (($_SESSION['username']['admin'] == true)) {
                 switcherAdmin();
-            }else{
+            } else {
                 switcherUser();
             }
-        }
-        else {
+        } else {
             /** Using mainControler */
             home();
         }
-    }
-    else{
+    } else {
         /** Using mainControler */
         switcherFirstLogin();
     }
-}else{
+} else {
     /** Using mainControler */
     login();
 }
 
 
-function switcherAdmin(){
-    switch ($_GET['action']){
+function switcherAdmin()
+{
+    switch ($_GET['action']) {
         //---- Using adminControler ----
         //---- Users ----
         case 'adminHome':
@@ -108,10 +107,6 @@ function switcherAdmin(){
         case 'updateNova' :
             updateNova();
             break;
-        //---- ShiftSheet ----
-        case 'newSheet':
-            newShiftSheet($_POST['baseID']);
-            break;
         default :
             switcherUser();
             break;
@@ -119,8 +114,9 @@ function switcherAdmin(){
 }
 
 
-function switcherFirstLogin(){
-    switch ($_GET['action']){
+function switcherFirstLogin()
+{
+    switch ($_GET['action']) {
         /** Using mainControler */
         case 'disconnect' :
             disconnect();
@@ -131,7 +127,8 @@ function switcherFirstLogin(){
     }
 }
 
-function switcherUser(){
+function switcherUser()
+{
     switch ($_GET['action']) {
         /** Using mainControler */
         case 'home' :
@@ -148,7 +145,8 @@ function switcherUser(){
             $week = $_GET['stupPageWeek'];
             closedStupFromTable($baseId, $week);
             break;
-        case 'addNewStup':;
+        case 'addNewStup':
+            ;
             createSheetStup();
             break;
         case 'activateStup' :
@@ -167,8 +165,8 @@ function switcherUser(){
             PharmaUpdate();
             break;
         case 'LogStup':
-        logStup();
-        break;
+            logStup();
+            break;
         case 'drugs':
             if (isset($_POST["site"])) {
                 $base_id = $_POST["site"];
@@ -187,45 +185,47 @@ function switcherUser(){
         /** Using shiftEndControler */
 
         case 'listShiftEnd':
-            if (isset($_POST["site"])) {
-                $baseID = $_POST["site"];
+            if(isset($_POST["selectedBase"]))$_SESSION["selectedBase"] = $_POST["selectedBase"];
+            if (isset($_SESSION["selectedBase"])) {
+                $baseID = $_SESSION["selectedBase"];
             } else {
-                $baseID = $_SESSION['base']['id'];
+                $_SESSION["selectedBase"] = $_SESSION['base']['id'];
             }
+            $baseID = $_SESSION["selectedBase"];
             listShiftEnd($baseID);
             break;
-        case 'reOpenShift':
-            reOpenShift();
+        case 'showGuardSheet':
+            $sheetid = $_GET['id'];
+            showShiftEnd($sheetid);
             break;
-        case 'closedShift':
-            closeShift();
+        case 'alterGuardSheetStatus':
+            alterGuardSheetStatus();
+            break;
+        case 'newSheet':
+            newShiftSheet($_SESSION["selectedBase"]);
             break;
 
         /** Using weeklyTasksControler */
 
-        case 'todolist':
-
-            if (isset($_POST['base'])) {
-                createSheetToDo($_POST['base']);
-            }
-            if (isset($_POST['site'])) {
-                $selectedBase = $_POST['site'];
+        case 'homeWeeklyTasks':
+            if(isset($_POST['selectBaseID'])){
+                $selectedBase = $_POST['selectBaseID'];
             } else {
                 $selectedBase = $_SESSION['base']['id'];
             }
-            if (!isset($_POST['newtodo'])) {
-                todoListHomePage($selectedBase);
-            }
+            homeWeeklyTasks($selectedBase);
             break;
-        case 'edittod':
-            $sheetid = $_GET['sheetid'];
-            edittodopage($sheetid);
+        case 'toDoDetails':
+            showWeeklyTasks($_POST['baseID'],$_POST['weekID']);
             break;
-        case 'reOpenToDo':
-            reOpenToDo();
+        case 'addWeek':
+            addWeek($_GET['base']);
             break;
-        case 'closedToDo':
-            closeToDo();
+        case 'closeWeek':
+            closeAWeek($_POST['baseID'],$_POST['weekID']);
+            break;
+        case 'openWeek':
+            openAWeek($_POST['baseID'],$_POST['weekID']);
             break;
         default :
             unknownPage();
