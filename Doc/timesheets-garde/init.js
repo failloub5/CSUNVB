@@ -1,5 +1,5 @@
 project_id = 'XCLGRP2'
-team = ["Vicky", "Daniel", "Alexandre"]
+team = ["Paola","Michaël"]
 
 inpProject.value = project_id
 
