@@ -107,10 +107,6 @@ function switcherAdmin()
         case 'updateNova' :
             updateNova();
             break;
-        //---- ShiftSheet ----
-        case 'newSheet':
-            newShiftSheet($_POST['baseID']);
-            break;
         default :
             switcherUser();
             break;
@@ -189,22 +185,24 @@ function switcherUser()
         /** Using shiftEndControler */
 
         case 'listShiftEnd':
-            if (isset($_POST["site"])) {
-                $baseID = $_POST["site"];
+            if(isset($_POST["selectedBase"]))$_SESSION["selectedBase"] = $_POST["selectedBase"];
+            if (isset($_SESSION["selectedBase"])) {
+                $baseID = $_SESSION["selectedBase"];
             } else {
-                $baseID = $_SESSION['base']['id'];
+                $_SESSION["selectedBase"] = $_SESSION['base']['id'];
             }
+            $baseID = $_SESSION["selectedBase"];
             listShiftEnd($baseID);
             break;
         case 'showGuardSheet':
             $sheetid = $_GET['id'];
             showShiftEnd($sheetid);
             break;
-        case 'reOpenShift':
-            reOpenShift();
+        case 'alterGuardSheetStatus':
+            alterGuardSheetStatus();
             break;
-        case 'closedShift':
-            closeShift();
+        case 'newSheet':
+            newShiftSheet($_SESSION["selectedBase"]);
             break;
 
         /** Using weeklyTasksControler */
