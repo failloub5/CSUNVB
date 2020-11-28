@@ -231,7 +231,7 @@ function readbatche($id)
         $dbh = null;
         return $queryResult;
     } catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
+        error_log($e->getMessage());
         return null;
     }
 }
@@ -307,7 +307,7 @@ function readnova($id)
         $dbh = null;
         return $queryResult;
     } catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
+        error_log($e->getMessage());
         return null;
     }
 }
@@ -387,7 +387,7 @@ function getsutpbatch()
         $dbh = null;
         return $queryResult;
     } catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
+        error_log($e->getMessage());
         return null;
     }
 
@@ -407,7 +407,7 @@ function getstupnova()
         $dbh = null;
         return $queryResult;
     } catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
+        error_log($e->getMessage());
         return null;
     }
 }
@@ -504,7 +504,7 @@ function getpharmachecks()
         $dbh = null;
         return $queryResult;
     } catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
+        error_log($e->getMessage());
         return null;
     }
 }
@@ -523,7 +523,7 @@ function getrestocks()
         $dbh = null;
         return $queryResult;
     } catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
+        error_log($e->getMessage());
         return null;
     }
 }
@@ -574,7 +574,7 @@ set state='reopen' WHERE id=:id";
         $dbh = null;
         return $queryResult;
     } catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
+        error_log($e->getMessage());
         return null;
     }
 
@@ -594,7 +594,7 @@ set state='closed' WHERE id=:id";
         $dbh = null;
         return $queryResult;
     } catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
+        error_log($e->getMessage());
         return null;
     }
 
@@ -614,7 +614,7 @@ set state='closed' WHERE base_id=:baseId AND week=:week";
         $dbh = null;
         return $queryResult;
     } catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
+        error_log($e->getMessage());
         return null;
     }
 
@@ -644,7 +644,7 @@ function activateStupPage($id)
         $dbh = null;
         return $queryResult;
     } catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
+        error_log($e->getMessage());
         return null;
     }
 }

@@ -10,7 +10,7 @@ function getNovas()
         $dbh = null;
         return $queryResult;
     } catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
+        error_log($e->getMessage());
         return null;
     }
 }
