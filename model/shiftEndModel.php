@@ -51,7 +51,7 @@ set state='open' WHERE id=:id";
         return true;
         //return $queryResult;
     } catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
+        error_log($e->getMessage());
         return null;
     }
 }
@@ -69,7 +69,7 @@ set state='reopen' WHERE id=:id";
         return true;
         //return $queryResult;
     } catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
+        error_log($e->getMessage());
         return null;
     }
 }
@@ -87,7 +87,7 @@ set state='close' WHERE id=:id";
         return true;
         //return $queryResult;
     } catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
+        error_log($e->getMessage());
         return null;
     }
 }
@@ -130,7 +130,7 @@ VALUES (:base_id,:state,:date)";
         $statement->execute($item);//execute query
         $dbh = null;
     } catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
+        error_log($e->getMessage());
         return false;
     }
     /* $items = getShiftEndItems();
@@ -241,7 +241,7 @@ function addNewShiftSheet($idBase)
         }
         $dbh = null;
     } catch (Exception $e) {
-        echo 'Attention: ', $e->getMessage(), "\n";
+        error_log($e->getMessage());
         return false;
     }
     return true;
