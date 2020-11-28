@@ -15,7 +15,9 @@ $title = "CSU-NVB - Remise de garde";
 <div class="row">
     <FORM action="?action=listShiftEnd" method="post" class="col">
         <SELECT onchange="this.form.submit()" name="selectedBase" size="1">
-            <?php foreach ($Bases as $base) { ?>
+            <?php foreach ($Bases
+
+            as $base) { ?>
             <OPTION value="<?= $base['id'] ?>" <?php if ($baseID == $base['id']) { ?>
                 selected="selected"
             <?php } ?>
@@ -44,7 +46,7 @@ $title = "CSU-NVB - Remise de garde";
     <th>Équipage</th>
 
 
-        <th>Action</th>
+    <th>Action</th>
     </thead>
     <?php foreach ($guardsheets as $guardSheet) { ?>
         <tr>
@@ -70,15 +72,15 @@ $title = "CSU-NVB - Remise de garde";
                 }
                 ?></td>
             <td>Jour : <?= $guardSheet['novaDay'] ?><br>Nuit : <?= $guardSheet['novaNight'] ?></td>
-            <td>Jour :<?= $guardSheet['bossDay'] ?><br>Nuit :<?= $guardSheet['bossNight'] ?> </td>
+            <td>Jour : <?= $guardSheet['bossDay'] ?><br>Nuit : <?= $guardSheet['bossNight'] ?> </td>
             <td>Jour : <?= $guardSheet['teammateDay'] ?><br>Nuit : <?= $guardSheet['teammateNight'] ?></td>
             <td>
-                <?php if ((($_SESSION['username']['admin'] == true and getNbGuardSheet('open') == 0 ) ||
+                <?php if ((($_SESSION['username']['admin'] == true and getNbGuardSheet('open') == 0) ||
                     ($_SESSION['username']['admin'] == true and $guardSheet['state'] == 'close') ||
                     $guardSheet['state'] == 'open' ||
                     $guardSheet['state'] == 'reopen')) { ?>
                     <form action="?action=alterGuardSheetStatus" method="post">
-                        <input type = hidden name="id" value = <?= $guardSheet['id'] ?>>
+                        <input type=hidden name="id" value= <?= $guardSheet['id'] ?>>
                         <button class="btn btn-primary btn-sm" name="status" value="<?= $guardSheet['state'] ?>"
                         </button>
                         <?php
@@ -96,7 +98,7 @@ $title = "CSU-NVB - Remise de garde";
                             default :
                                 echo 'erreur';
                                 break;
-                        }?>
+                        } ?>
                     </form>
 
                 <?php } ?>

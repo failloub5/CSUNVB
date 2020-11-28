@@ -235,14 +235,8 @@ function addNewShiftSheet($idBase)
             $insertGuardSheet = execute("Insert into guardsheets(date,state,base_id)
         values(:date,:state,:idBase)", ['date' => $date, 'state' => "blank", 'idBase' => $idBase]);
         }
-        $gid = selectOne("SELECT MAX(id) FROM guardsheets",[]);
-        $gid = $gid["MAX(id)"];
-        $insertGuardUseNova = execute("Insert into guard_use_nova(nova_id,guardsheet_id,day)
-        values(1,:guardsheetId,1), (1,:guardsheetId,0)", ['guardsheetId'=>$gid]);
 
-        $insertCrews = execute("Insert into crews(boss,day,guardsheet_id,user_id)
-values(1,0,:guardsheetId,1), (1,1,:guardsheetId,1)", ['guardsheetId'=>$gid]);
-        if ($insertCrews == false || $insertGuardSheet == false || $insertGuardUseNova == false) {
+        if ($insertGuardSheet == false) {
             throw new Exception("L'enregistrement ne s'est pas effectué correctement");
         }
         $dbh = null;
@@ -251,25 +245,19 @@ values(1,0,:guardsheetId,1), (1,1,:guardsheetId,1)", ['guardsheetId'=>$gid]);
         return false;
     }
     return true;
-
-
-    /*Insert into guardsheets(date,state,base_id)
-values(current_timestamp(),"blank",1)
-;
-Insert into guard_use_nova(nova_id,guardsheet_id,day)
-values(1,151,1)
-;
-Insert into guard_use_nova(nova_id,guardsheet_id,day)
-values(1,151,0)
-;
-Insert into crews(boss,day,guardsheet_id,user_id)
-values(0,0,151,1)
-;
-Insert into crews(boss,day,guardsheet_id,user_id)
-values(1,1,151,1)
-;
-*/
 }
+
+function insertDataShiftSheet($sheetID, $sheetline){
+    $gid = selectOne("SELECT MAX(id) FROM guardsheets",[]);
+    $gid = $gid["MAX(id)"];
+    $insertGuardUseNova = execute("Insert into guard_use_nova(nova_id,guardsheet_id,day)
+        values(1,:guardsheetId,1), (1,:guardsheetId,0)", ['guardsheetId'=>$gid]);
+
+    $insertCrews = execute("Insert into crews(boss,day,guardsheet_id,user_id)
+values(1,0,:guardsheetId,1), (1,1,:guardsheetId,1)", ['guardsheetId'=>$gid]);
+
+}
+
 function getDateOfLastSheet($baseID){
     $lastDate = selectOne("SELECT MAX(date) FROM guardsheets where base_id = :baseID",['baseID'=>$baseID])["MAX(date)"];
     return $lastDate;
