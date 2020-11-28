@@ -34,7 +34,7 @@ function gitBranchTag()
 
 function getVersion()
 {
-    return "2.0";
+    return "2.1";
 }
 
 ?>
