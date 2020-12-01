@@ -1,6 +1,6 @@
 <?php
 
-/** Display Admin page */
+/** Display admin page */
 function adminHome()
 {
     require VIEW . 'admin/adminHome.php';
@@ -58,17 +58,17 @@ function resetUserPassword()
     adminCrew();
 }
 
-/** Drug Administration */
+/** stups Administration */
 
 function adminDrugs()
 {
-    $drugs = getDrugs();
+    $drugs = getStups();
     require_once VIEW . 'admin/adminDrugs.php';
 }
 
 function newDrug(){
     if(isset($_POST['nameDrug'])){
-        addNewDrug($_POST['nameDrug']);
+        addNewStup($_POST['nameDrug']);
         adminDrugs();
     }
     else {
@@ -79,7 +79,7 @@ function newDrug(){
 function updateDrug(){
     $idDrug = $_GET['idDrug'];
     if(isset($_POST['updateNameDrug'])){
-        updateNameDrug($_POST['updateNameDrug'], $idDrug);
+        updateStupName($_POST['updateNameDrug'], $idDrug);
         adminDrugs();
     }
     else {

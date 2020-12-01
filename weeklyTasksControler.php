@@ -2,7 +2,6 @@
 COMMENTAIRES
 -->
 <?php
-<<<<<<< Updated upstream
 
 /** Fonction qui permet l'affichage des semaines de tâches pour une base spécifique
  * @param $selectedBaseID : l'ID de la base dont les semaines sont à afficher
@@ -13,41 +12,6 @@ function homeWeeklyTasks($selectedBaseID){
 
     $baseList = getbases();
     require_once VIEW . 'todo/homeWeeklyTasks.php';
-=======
-/**
- * Title: CSUNVB
- * USER: marwan.alhelo
- * DATE: 13.02.2020
- * Time: 11:29
- *
- **/
-/**
- * Title: CSUNVB
- * USER: David.Roulet
- * DATE: 12.06.2020
- * Time: 11:15
- **/
-/**
- * Title: CSUNVB - Controller
- * USER: Gatien.Jayme
- * DATE: 27.08.2020
- **/
-// récupérer la valeur de $item puis transférer les valeurs
-function createSheetToDo($base_id) {
-    $lastWeek = readLastWeek($base_id);
-    createTodoSheet($base_id, $lastWeek['last_week']);
-    unset($_POST['site']);
-    unset($_POST['base']);
-    todoListHomePage($base_id);
-}
-
-function todoListHomePage($selectedBase) {
-    $TodoListItemsread = readTodoSheets();
-    $todoSheets=readTodoSheetsForBase($selectedBase);
-    $bases= getbases();
-    $basedefault = $_SESSION["base"]['id'];
-    require_once VIEW . 'todo/todoHome.php';
->>>>>>> Stashed changes
 }
 
 /**
@@ -66,11 +30,7 @@ function showWeeklyTasks($baseID, $weekID){
         $alreadyOpen = false;
     }
 
-<<<<<<< Updated upstream
     // toDo : Affichage des tâches (Fusion des 2 vues d'affichage)
-=======
-function edittodopage($sheetid) {
->>>>>>> Stashed changes
     for ($daynight=0; $daynight <= 1; $daynight++) {
         for ($dayofweek = 1; $dayofweek <= 7; $dayofweek++) {
             $todoThings[$daynight][$dayofweek] = readTodoThingsForDay($weekID,$daynight,$dayofweek);

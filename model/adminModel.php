@@ -118,7 +118,7 @@ values(current_timestamp(),:state,:idBase)", ['state' => $state, 'idBase' => $id
     $gid = $dbh->LastindexOfid();
 
     return execute("Insert into guard_use_nova(nova_id,guardsheet_id,day)
-values(1,:guardsheetId,1)['guardsheetId'=>$gid]");
+values(1,:guardsheetId,1)",['guardhseetId'=>$gid]);
 
     return execute("Insert into guard_use_nova(nova_id,guardsheet_id,day)
 values(1,:guardsheetId,0)['guardsheetId'=>$gid]");
