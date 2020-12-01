@@ -168,12 +168,19 @@ function getGuardContent($ligneID, $guardSheetID)
 
 function getActionFromSection($sectionID)
 {
-    return selectMany('SELECT * FROM guardlines where guard_sections_id =:sectionID', ['sectionID' => $sectionID]);
+    return selectMany('SELECT id, text FROM guardlines where guard_sections_id =:sectionID', ['sectionID' => $sectionID]);
 }
 
-function getGuardSections()
+function getGuardSections($shiftid)
 {
-    return selectMany('SELECT id, title FROM guardsections', []);
+    $res = selectMany('SELECT id, title FROM guardsections', []);
+    foreach ($res as &$section){
+        $section["actions"] = getActionFromSection($section["id"]);
+        foreach ($section["actions"]  as &$action){
+            $action["lines"] = getGuardContent($action['id'], $shiftid);
+        }
+    }
+    return $res;
 }
 
 

@@ -64,8 +64,10 @@ function listShiftEnd($baseID)
 
 function showShiftEnd($shiftid)
 {
-    $listSections = getGuardSections();
+    $sections = getGuardSections($shiftid);
     $guardSheet = getGuardsheetDetails($shiftid);
+    $enableGuardSheetUpdate = ($guardSheet['state'] == "open" || ($guardSheet['state'] == "blank" && $_SESSION['username']['admin'] == true));
+    $enableGuardSheetFilling = ($guardSheet['state'] == "open");
     require_once VIEW . 'viewsShiftEnd/showShiftEnd.php';
 }
 
