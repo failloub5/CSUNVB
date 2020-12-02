@@ -54,18 +54,8 @@ $title = "CSU-NVB - Tâches hebdomadaires";
         <?php foreach ($dates as $index => $date) : ?>
             <div class="col p-1">
                 <?php foreach ($todoThings[1][$index + 1] as $todothing): ?>
-                    <div class="todothing mb-1">
-                        <?= $todothing['description'] ?>
-                        <br>
-                        <div clase="text-primary">
-                            <?php if (empty($todothing['initials'])): ?>
-                                <br>
-                            <?php else: ?>
-                                <?= $todothing['initials'] ?>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
+                    <?= buttonTask($todothing['initials'], $todothing['description'], $week['state']) ?>
+                <?php endforeach;?>
             </div>
         <?php endforeach; ?>
     </div>
@@ -77,20 +67,8 @@ $title = "CSU-NVB - Tâches hebdomadaires";
         <?php foreach ($dates as $index => $date) : ?>
             <div class="col p-1">
                 <?php foreach ($todoThings[0][$index + 1] as $todothing): ?>
-                    <div class="todothing mb-1">
-                        <?= $todothing['description'] ?>
-                        <br>
-                        <div>
-                            <?php if (empty($todothing['initials'])): ?>
-                                <br>
-                            <?php else: ?>
-                                <?= $todothing['initials'] ?>
-                            <?php endif; ?>
-
-                        </div>
-
-                    </div>
-                <?php endforeach; ?>
+                    <?= buttonTask($todothing['initials'], $todothing['description'], $week['state']) ?>
+                <?php endforeach;?>
             </div>
         <?php endforeach; ?>
     </div>
