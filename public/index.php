@@ -227,6 +227,11 @@ function switcherUser()
         case 'openWeek':
             openAWeek($_POST['baseID'],$_POST['weekID']);
             break;
+        case 'modelWeek' :
+            modelWeek($_POST['weekID'],$_POST['model_name']);
+            break;
+        case '':
+            break;
         default :
             unknownPage();
             break;

@@ -93,6 +93,17 @@ function addtoDo($todoID, $weekID, $dayOfWeek){
     execute($query, ['todoID' =>$todoID, 'sheetID' =>$weekID, 'day'=>$dayOfWeek]);
 }
 
+/**
+ * Modifie un item précis
+ * Le paramètre $item est un item complet (donc un tableau associatif)
+ * ...
+ */
+function updateTodoSheet($id, $model_name)
+{
+    return execute(
+        "UPDATE todosheets SET model_name=:model_name WHERE id =:id",['model_name'=>$model_name,'id'=>$id]);
+}
+
 
 /** ================== Fonctions à vérifier =============== */
 /** Crées par marwan.alhelo, David.Roulet & Gatien.Jayme */
@@ -114,19 +125,7 @@ function readTodoSheet($id)
     return selectMany("SELECT * FROM todosheets where id='$id';", []);
 }
 
-/**
- * Modifie un item précis
- * Le paramètre $item est un item complet (donc un tableau associatif)
- * ...
- */
-function updateTodoSheet($item)
-{
-    return execute("UPDATE todosheets SET
-                    base_id=:base_id,
-             state=:state,
-                    week=:week,
-                    WHERE id =:id", $item);
-}
+
 
 
 /**

@@ -131,6 +131,11 @@ function closeAWeek($baseID, $weekID){
     homeWeeklyTasks($baseID);
 }
 
+function modelWeek( $weekID, $model_name){
+    updateTodoSheet($weekID,$model_name);
+    $currentURL = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    header('Location: '.$currentURL);
+}
 
 
 /** ================== Fonctions à vérifier =============== */

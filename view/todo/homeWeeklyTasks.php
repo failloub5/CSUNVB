@@ -27,11 +27,10 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                 }?>
         </select>
     </form>
-    <?php if ($_SESSION['username']['admin'] == 1) { ?>
-        <a href="?action=addWeek&base=<?= $selectedBaseID ?>" class="btn btn-primary m-1 pull-right">Nouvelle semaine</a>
-    <?php } ?>
+        <?php if ($_SESSION['username']['admin'] == 1) { ?>
+            <a href="?action=addWeek&base=<?= $selectedBaseID ?>" class="btn btn-primary m-1 pull-right">Nouvelle semaine</a>
+        <?php } ?>
 </div>
-
 <div>
     <h3>Semaine en cours</h3>
     <?php if(isset($activeWeek['week'])): ?>

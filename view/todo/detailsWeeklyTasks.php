@@ -11,6 +11,14 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                 <input type="hidden" name="selectBaseID" value="<?= $base['id'] ?>">
                 <button type="submit" class='btn btn-primary m-1 float-right'>Retour à la liste</button>
             </form>
+            <form action="?action=modelWeek" method="POST">
+                <input type="hidden" name="weekID" value="<?= $week['id'] ?>">
+                <input type="hidden" name="baseID" value="<?= $base['id'] ?>">
+                <!-- todo -->
+                <input type="text" name="model_name" value="<?= '' ?>">
+
+                <button type="submit" class='btn btn-primary m-1 float-right'>Sauvegarder le nom</button>
+            </form>
         </div>
         <?php if ($_SESSION['username']['admin'] == 1 && $alreadyOpen == false && $week['state'] == "close"): ?>
             <div>
