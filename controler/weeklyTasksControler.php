@@ -30,7 +30,6 @@ function showWeeklyTasks($baseID, $weekID){
         $alreadyOpen = false;
     }
 
-    // toDo : Affichage des tâches (Fusion des 2 vues d'affichage)
     for ($daynight=0; $daynight <= 1; $daynight++) {
         for ($dayofweek = 1; $dayofweek <= 7; $dayofweek++) {
             $todoThings[$daynight][$dayofweek] = readTodoThingsForDay($weekID,$daynight,$dayofweek);
@@ -48,7 +47,6 @@ function showWeeklyTasks($baseID, $weekID){
  * @return array : les dates de la semaine
  */
 function getDatesFromWeekNumber($weekNumber){
-    // ToDo : Valeurs en dur à enlever !
     $year = 2000 + intdiv($weekNumber,100);
     $week = $weekNumber%100;
 
@@ -130,30 +128,3 @@ function closeAWeek($baseID, $weekID){
     $_SESSION['flashmessage'] = "La semaine ".$week['week']." a été clôturée.";
     homeWeeklyTasks($baseID);
 }
-
-
-
-/** ================== Fonctions à vérifier =============== */
-/** Crées par marwan.alhelo, David.Roulet & Gatien.Jayme */
-
-
-function createSheetToDo($base_id)
-{
-    // récupérer la valeur de $item puis transférer les valeurs
-
-    $lastWeek = readLastWeek($base_id);
-    createTodoSheet($base_id, $lastWeek['last_week']);
-    unset($_POST['site']);
-    unset($_POST['base']);
-    todoListHomePage($base_id);
-}
-
-
-function activateSheet($state)
-{
-    $activatestatus = activateTodoSheets($state);
-}
-
-
-
-
