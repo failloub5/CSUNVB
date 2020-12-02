@@ -5,23 +5,8 @@
  **/
 
 
-function getGuardSheets()
-{
-    return selectMany('SELECT * FROM guardsheets', []);
-}
 
-/**
- * Retourne un item précis, identifié par son id
- * ...
- */
-
-function getGuardsheet($id)
-{
-    return selectOne("SELECT * FROM guardsheets where id =:id", ['id' => $id]);
-}
-
-
-function updateGuardsheet($id)
+function updateGuardsheet($id)//todo utilités ?
 {
     return execute("UPDATE bases SET date = :date,state=:state,base_id=:base_id where id = :id", [$id]);
 
@@ -32,7 +17,7 @@ function updateGuardsheet($id)
  * Le paramètre $item est un item complet (donc un tableau associatif)
  * ...
  */
-function updateShiftEndItem($item)
+function updateShiftEndItem($item)//todo utilités ?
 {
     $items = getShiftEndItems();
     // TODO: retrouver l'item donnée en paramètre et le modifier dans le tableau $items
@@ -43,7 +28,7 @@ function openShiftPage($id){
     try {
         $dbh = getPDO();
         $query = "update guardsheets
-set state='open' WHERE id=:id";
+set status_id= 2 WHERE id=:id";
         $statement = $dbh->prepare($query);//prepare query
         $statement->execute(["id" => $id]);//execute query
         //$queryResult = $statement->fetch(PDO::FETCH_ASSOC);//prepare result for client
@@ -61,7 +46,7 @@ function reopenShiftPage($id)
     try {
         $dbh = getPDO();
         $query = "update guardsheets
-set state='reopen' WHERE id=:id";
+set status_id= 4 WHERE id=:id";
         $statement = $dbh->prepare($query);//prepare query
         $statement->execute(["id" => $id]);//execute query
         //$queryResult = $statement->fetch(PDO::FETCH_ASSOC);//prepare result for client
@@ -79,7 +64,7 @@ function closeShiftPage($id)
     try {
         $dbh = getPDO();
         $query = "update guardsheets
-set state='close' WHERE id=:id";
+set status_id= 3 WHERE id=:id";
         $statement = $dbh->prepare($query);//prepare query
         $statement->execute(["id" => $id]);//execute query
         //$queryResult = $statement->fetchAll(PDO::FETCH_ASSOC);//prepare result for client
@@ -93,89 +78,21 @@ set state='close' WHERE id=:id";
 }
 
 
-/**
- * Détruit un item précis, identifié par son id
- * ...
- */
-function destroyGuardsheet($id)
+function getGuardChecksForAction($action_id, $guardsheet_id, $day)
 {
-    return execute("DELETE * From guardsheets where id = :id", [$id]);
-
+    $checks = selectMany('SELECT guardchecks.time, users.initials as initials FROM guardchecks inner join users on users.id = guardchecks.user_id where guardaction_id =:action_id and guardsheet_id =:guardsheet_id and day=:day', ['action_id' => $action_id, 'guardsheet_id' => $guardsheet_id, 'day' => $day]);
+    return $checks;
 }
 
-/**
- * Ajoute un nouvel item
- * Le paramètre $item est un item complet (donc un tableau associatif), sauf que la valeur de son id n'est pas valable
- * puisque le modèle ne l'a pas encore traité
- * ...
- */
-
-function createGuardSheet($item)
+function getGuardCommentsForAction($action_id, $guardsheet_id)
 {
-    $items = getGuardsheets();
-    $newid = max(array_keys($items)) + 1;
-    $item["id"] = $newid;
-    $items[] = $item;
-    updateGuardsheet($items);
-    return $item;
-}
-
-function createShiftEndItem($item)
-{
-    try {
-        $dbh = getPDO();
-        $query = "INSERT INTO guardsheets (base_id,state,date)
-VALUES (:base_id,:state,:date)";
-        $statement = $dbh->prepare($query);//prepare query
-        $statement->execute($item);//execute query
-        $dbh = null;
-    } catch (PDOException $e) {
-        error_log($e->getMessage());
-        return false;
-    }
-    /* $items = getShiftEndItems();
-     // TODO: trouver un id libre pour le nouvel id et ajouter le nouvel item dans le tableau
-     saveShiftEndItem($items);
-     return ($item); // Pour que l'appelant connaisse l'id qui a été donné
-    */
-}
-
-function getRemises()
-{
-    return selectMany('SELECT * FROM guardsections', []);
-}
-
-function getSectionsTitles()
-{
-    return selectMany('SELECT * FROM guardsections', []);
-}
-
-function getGuardLines()
-{
-    return selectMany('SELECT * FROM guardlines', []);
-}
-
-function getGuardContent($ligneID, $guardSheetID)
-{
-    $lineContent = selectOne('SELECT userDay.initials AS dayInitials, userNight.initials AS nightInitials FROM guardcontents LEFT JOIN users userDay ON userDay.id = guardcontents.day_check_user_id LEFT JOIN users userNight ON userNight.id = guardcontents.night_check_user_id WHERE guardcontents.guardsheet_id =:guardSheetID and guardcontents.guard_line_id =:ligneID', ['guardSheetID' => $guardSheetID, 'ligneID' => $ligneID]);
-    return $lineContent;
-}
-
-function getGuardContentID($ligneID, $guardSheetID)
-{
-    $guardcontentID = selectOne('SELECT guardcontents.id AS id FROM guardcontents WHERE guardcontents.guardsheet_id =:guardSheetID and guardcontents.guard_line_id =:ligneID', ['guardSheetID' => $guardSheetID, 'ligneID' => $ligneID]);
-    return $guardcontentID;
-}
-
-function getGuardLineComment($id)
-{
-    $comments = selectMany('SELECT users.initials, comments.comment FROM comments INNER JOIN users ON users.id = comments.users_id WHERE comments.guardcontents_id =:lineID', ['lineID' => $id]);
+    $comments = selectMany('SELECT guardcomments.message, guardcomments.time, users.initials FROM guardcomments inner join users on users.id = guardcomments.user_id where guardaction_id =:action_id and guardsheet_id =:guardsheet_id', ['action_id' => $action_id, 'guardsheet_id' => $guardsheet_id]);
     return $comments;
 }
 
 function getActionsFromSection($sectionID)
 {
-    $sectionActions = selectMany('SELECT id, text FROM guardlines WHERE guard_sections_id =:sectionID', ['sectionID' => $sectionID]);
+    $sectionActions = selectMany('SELECT id, text FROM guardactions WHERE guardsection_id =:sectionID', ['sectionID' => $sectionID]);
     return $sectionActions;
 }
 
@@ -185,81 +102,56 @@ function getGuardSections($shiftSheetID)
     foreach ($guardSections as &$section){
         $section["actions"] = getActionsFromSection($section["id"]);
         foreach ($section["actions"]  as &$action){
-            $action['contentID'] = getGuardContentID($action["id"], $shiftSheetID);
-            $action["line"] = getGuardContent($action["id"], $shiftSheetID);
-            if(isset($action["contentID"]['id'])){
-                $contentID = $action["contentID"]['id'];
-            }
-            else{
-                $contentID = -1;
-            }
-            $action["comments"] = getGuardLineComment($contentID);
+            $action['checksDay'] = getGuardChecksForAction($action["id"], $shiftSheetID,1);
+            $action['checksNight'] = getGuardChecksForAction($action["id"], $shiftSheetID,0);
+            $action["comments"] = getGuardCommentsForAction($action["id"], $shiftSheetID);
         }
     }
-       
     return $guardSections;
 }
 
 
-function getGuardSheetsByBase($base_id)
-{
-    return selectOne('select * from guardsheets where base_id=:base_id', ['base_id' => $base_id]);
-}
-
-function getGuradSheetWeek($week, $base)
-{
-    return selectOne('SELECT * FROM guardsheets INNER JOIN bases ON bases.id=base_id WHERE week =:week AND base_id=:base', ['week' => $week, 'base' => $base]);
-}
-
-function Guardsheet()
-{
-    return selectMany('SELECT * FROM guardsheets;', []);
-}
-
 function getGuardsheetForBase($base_id)
 {
-    return selectMany('select
-	date,
-    state,
-    base_id,
-    id,
-    (select initials from users inner join crews on users.id = crews.user_id where crews.guardsheet_id = guardsheets.id and crews.day = 1 and crews.boss = 1) as bossDay,
-    (select initials from users inner join crews on users.id = crews.user_id where crews.guardsheet_id = guardsheets.id and crews.day = 0 and crews.boss = 1) as bossNight,
-    (select initials from users inner join crews on users.id = crews.user_id where crews.guardsheet_id = guardsheets.id and crews.day = 1 and crews.boss = 0) as teammateDay,
-    (select initials from users inner join crews on users.id = crews.user_id where crews.guardsheet_id = guardsheets.id and crews.day = 0 and crews.boss = 0) as teammateNight,
-    (select number from novas inner join guard_use_nova on novas.id = guard_use_nova.nova_id where guard_use_nova.guardsheet_id = guardsheets.id and  guard_use_nova.day = 0) as novaNight,
-    (select number from novas inner join guard_use_nova on novas.id = guard_use_nova.nova_id where guard_use_nova.guardsheet_id = guardsheets.id and  guard_use_nova.day = 1) as novaDay
-    from guardsheets where base_id=:base_id order by date DESC ', ["base_id" => $base_id]);
+    return selectMany('SELECT guardsheets.id, guardsheets.date, guardsheets.base_id, status.name AS status,novaDay.number AS novaDay, novaNight.number AS novaNight, bossDay.initials AS bossDay, bossNight.initials AS bossNight,teammateDay.initials AS teammateDay, teammateNight.initials AS teammateNight
+FROM guardsheets
+INNER JOIN status ON status.id = guardsheets.status_id
+LEFT JOIN novas novaDay ON novaDay.id = guardsheets.daynova_id
+LEFT JOIN novas novaNight ON novaNight.id = guardsheets.nightnova_id
+LEFT JOIN users bossDay ON bossDay.id = guardsheets.dayboss_id
+LEFT JOIN users bossNight ON bossNight.id = guardsheets.nightboss_id
+LEFT JOIN users teammateDay ON teammateDay.id = guardsheets.dayteammate_id
+LEFT JOIN users teammateNight ON teammateNight.id = guardsheets.nightteammate_id
+WHERE guardsheets.base_id =:base_id order by date DESC;', ["base_id" => $base_id]);
 }
 
-function getGuardsheetDetails($guardsheet_id)
+function getGuardsheetByID($id)
 {
-    return selectOne('select
-	date,
-    state,
-    base_id,
-    name as base,
-    (select initials from users inner join crews on users.id = crews.user_id where crews.guardsheet_id = guardsheets.id and crews.day = 1 and crews.boss = 1) as bossDay,
-    (select initials from users inner join crews on users.id = crews.user_id where crews.guardsheet_id = guardsheets.id and crews.day = 0 and crews.boss = 1) as bossNight,
-    (select initials from users inner join crews on users.id = crews.user_id where crews.guardsheet_id = guardsheets.id and crews.day = 1 and crews.boss = 0) as teammateDay,
-    (select initials from users inner join crews on users.id = crews.user_id where crews.guardsheet_id = guardsheets.id and crews.day = 0 and crews.boss = 0) as teammateNight,
-    (select number from novas inner join guard_use_nova on novas.id = guard_use_nova.nova_id where guard_use_nova.guardsheet_id = guardsheets.id and  guard_use_nova.day = 0) as novaNight,
-    (select number from novas inner join guard_use_nova on novas.id = guard_use_nova.nova_id where guard_use_nova.guardsheet_id = guardsheets.id and  guard_use_nova.day = 1) as novaDay
-    from guardsheets inner join bases on base_id = bases.id where guardsheets.id=:id', ["id" => $guardsheet_id]);
+    return selectOne('SELECT bases.name as baseName, guardsheets.id, guardsheets.date, guardsheets.base_id, status.name AS status,novaDay.number AS novaDay, novaNight.number AS novaNight, bossDay.initials AS bossDay, bossNight.initials AS bossNight,teammateDay.initials AS teammateDay, teammateNight.initials AS teammateNight
+FROM guardsheets
+INNER JOIN bases ON bases.id = guardsheets.base_id
+INNER JOIN status ON status.id = guardsheets.status_id
+LEFT JOIN novas novaDay ON novaDay.id = guardsheets.daynova_id
+LEFT JOIN novas novaNight ON novaNight.id = guardsheets.nightnova_id
+LEFT JOIN users bossDay ON bossDay.id = guardsheets.dayboss_id
+LEFT JOIN users bossNight ON bossNight.id = guardsheets.nightboss_id
+LEFT JOIN users teammateDay ON teammateDay.id = guardsheets.dayteammate_id
+LEFT JOIN users teammateNight ON teammateNight.id = guardsheets.nightteammate_id
+WHERE guardsheets.id =:id;', ["id" => $id]);
 }
+
 
 function addNewShiftSheet($idBase)
 {
     try {
         $date = getNewDate($idBase);
         if($date == null) {
-            $insertGuardSheet = execute("Insert into guardsheets(date,state,base_id)
-        values(current_timestamp(),:state,:idBase)", ['state' => "blank", 'idBase' => $idBase]);
+            $insertGuardSheet = execute("Insert into guardsheets(date,status_id,base_id)
+        values(current_timestamp(),:status_id,:idBase)", ['status_id' => 1, 'idBase' => $idBase]);
         }else{
-            $insertGuardSheet = execute("Insert into guardsheets(date,state,base_id)
-        values(:date,:state,:idBase)", ['date' => $date, 'state' => "blank", 'idBase' => $idBase]);
+            $insertGuardSheet = execute("Insert into guardsheets(date,status_id,base_id)
+        values(:date,:status_id,:idBase)", ['date' => $date, 'status_id' => 1, 'idBase' => $idBase]);
         }
-
         if ($insertGuardSheet == false) {
             throw new Exception("L'enregistrement ne s'est pas effectué correctement");
         }
@@ -270,8 +162,7 @@ function addNewShiftSheet($idBase)
     }
     return true;
 }
-
-function insertDataShiftSheet($sheetID, $sheetline){
+function insertDataShiftSheet($sheetID, $sheetline){//todo remove id useless
     $gid = selectOne("SELECT MAX(id) FROM guardsheets",[]);
     $gid = $gid["MAX(id)"];
     $insertGuardUseNova = execute("Insert into guard_use_nova(nova_id,guardsheet_id,day)
@@ -285,7 +176,6 @@ values(1,0,:guardsheetId,1), (1,1,:guardsheetId,1)", ['guardsheetId'=>$gid]);
 function getDateOfLastSheet($baseID){
     $lastDate = selectOne("SELECT MAX(date) FROM guardsheets where base_id = :baseID",['baseID'=>$baseID])["MAX(date)"];
     return $lastDate;
-    //SELECT DATE_ADD(`your_field_name`, INTERVAL 2 DAY)
 }
 
 function getNewDate($baseID){
@@ -293,7 +183,7 @@ function getNewDate($baseID){
     return $newDate;
 }
 
-function getNbGuardSheet($status){
-    return selectOne("SELECT COUNT(id) as number FROM  guardsheets where state = :status", ['status' => $status])["number"];
+function getNbGuardSheet($status,$base_id){
+    return selectOne("SELECT COUNT(guardsheets.id) as number FROM  guardsheets inner join status on status.id = guardsheets.status_id where status.name = :status and guardsheets.base_id =:base_id", ['status' => $status, 'base_id' => $base_id])["number"];
 }
 

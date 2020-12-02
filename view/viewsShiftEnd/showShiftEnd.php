@@ -3,7 +3,7 @@ ob_start();
 $title = "CSU-NVB - Remise de garde";
 ?>
 <div class="row m-2">
-    <h1>Remise de Garde du <?= date('d.m.Y', strtotime($guardSheet['date'])) ?> à <?= $guardSheet['base'] ?></h1>
+    <h1>Remise de Garde du <?= date('d.m.Y', strtotime($guardSheet['date'])) ?> à <?= $guardSheet['baseName'] ?></h1>
 </div>
 
 <div class="row">
@@ -74,19 +74,19 @@ $title = "CSU-NVB - Remise de garde";
                     </td>
                 <?php else: ?>
                     <td class="ackcell">
-                        <?php if(isset($action["line"]["dayInitials"])) :?>
-                            <?= $action["line"]["dayInitials"]?>
-                        <?php endif; ?>
+                        <?php foreach ($action["checksDay"] as $check):?>
+                        <?=$check["initials"]?>
+                        <?php endforeach; ?>
                     </td>
                     <td class="ackcell">
-                        <?php if(isset($action["line"]["nightInitials"])) :?>
-                            <?= $action["line"]["nightInitials"]?>
-                        <?php endif; ?>
+                        <?php foreach ($action["checksNight"] as $check):?>
+                            <?=$check["initials"]?>
+                        <?php endforeach; ?>
                     </td>
                     <td>
-                        <?php foreach($action['comments'] as $comment) :?>
-                            [<?= $comment['initials']?>, heure ....] : <?= $comment['comment'] ?>
-                        <br>
+                        <?php foreach ($action["comments"] as $comment):?>
+                            [ <?= $comment['initials']?>, <?= $comment['time']?> ] : <?= $comment['message'] ?>
+                            <br>
                         <?php endforeach; ?>
                     </td>
                 <?php endif; ?>

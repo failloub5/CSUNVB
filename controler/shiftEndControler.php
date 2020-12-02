@@ -19,12 +19,6 @@ function newShiftSheet($baseID)
 }
 
 
-function adminGuardSheet()
-{
-    $guardsheets = getGuardSheets();
-    require_once VIEW . 'viewsShiftEnd/shiftEndHome.php';
-}
-
 // blank -> open -> close -> reopen -> close
 function alterGuardSheetStatus(){
     switch ($_POST["status"]) {
@@ -34,7 +28,7 @@ function alterGuardSheetStatus(){
             break;
         case 'blank' :
             if (($_SESSION['username']['admin'] == true)) {
-                if( getNbGuardSheet('open') == 0 ){
+                if( getNbGuardSheet('open',$_SESSION["selectedBase"]) == 0 ){
                     openShiftPage($_POST["id"]);
                 }else{
                     $_SESSION["flashmessage"] = "Une autre feuille est déjà ouverte";
@@ -52,23 +46,19 @@ function alterGuardSheetStatus(){
 
 function listShiftEnd($baseID)
 {
-    $site = getbasebyid($baseID)["name"];
-    $TitlesLines = getGuardLines();
-    $Titles = getSectionsTitles();
-    $admin = getUserAdmin($_SESSION["username"]["admin"]);
     $Bases = getbases();
-    $list = Guardsheet();
     $guardsheets = getGuardsheetForBase($baseID);
+    var_dump(getNbGuardSheet("open",$baseID));
     require_once VIEW . 'viewsShiftEnd/shiftEndHome.php';
+
 }
 
 function showShiftEnd($shiftid)
 {
     $sections = getGuardSections($shiftid);
-    $guardSheet = getGuardsheetDetails($shiftid);
-    $enableGuardSheetUpdate = ($guardSheet['state'] == "open" || ($guardSheet['state'] == "blank" && $_SESSION['username']['admin'] == true));
-    $enableGuardSheetFilling = ($guardSheet['state'] == "open");
-    //echo '<pre>' , var_dump($sections) , '</pre>';
+    $guardSheet = getGuardsheetByID($shiftid);
+    $enableGuardSheetUpdate = ($guardSheet['status'] == "open" || ($guardSheet['status'] == "blank" && $_SESSION['username']['admin'] == true));
+    $enableGuardSheetFilling = ($guardSheet['status'] == "open");
     require_once VIEW . 'viewsShiftEnd/showShiftEnd.php';
 }
 
