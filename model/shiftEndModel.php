@@ -157,30 +157,47 @@ function getGuardLines()
 
 function getGuardContent($ligneID, $guardSheetID)
 {
-    return selectMany('SELECT guardcontents.comment, userDay.initials AS dayInitials, userNignt.initials AS nightInitials
-    FROM guardcontents
-    LEFT JOIN users userDay
-    ON userDay.id = guardcontents.day_check_user_id
-    LEFT JOIN users userNignt
-    ON userNignt.id = guardcontents.night_check_user_id
-    where guardcontents.guardsheet_id =:guardSheetID and guardcontents.guard_line_id =:ligneID', ['guardSheetID' => $guardSheetID, 'ligneID' => $ligneID]);
+    $lineContent = selectOne('SELECT userDay.initials AS dayInitials, userNight.initials AS nightInitials FROM guardcontents LEFT JOIN users userDay ON userDay.id = guardcontents.day_check_user_id LEFT JOIN users userNight ON userNight.id = guardcontents.night_check_user_id WHERE guardcontents.guardsheet_id =:guardSheetID and guardcontents.guard_line_id =:ligneID', ['guardSheetID' => $guardSheetID, 'ligneID' => $ligneID]);
+    return $lineContent;
 }
 
-function getActionFromSection($sectionID)
+function getGuardContentID($ligneID, $guardSheetID)
 {
-    return selectMany('SELECT id, text FROM guardlines where guard_sections_id =:sectionID', ['sectionID' => $sectionID]);
+    $guardcontentID = selectOne('SELECT guardcontents.id AS id FROM guardcontents WHERE guardcontents.guardsheet_id =:guardSheetID and guardcontents.guard_line_id =:ligneID', ['guardSheetID' => $guardSheetID, 'ligneID' => $ligneID]);
+    return $guardcontentID;
 }
 
-function getGuardSections($shiftid)
+function getGuardLineComment($id)
 {
-    $res = selectMany('SELECT id, title FROM guardsections', []);
-    foreach ($res as &$section){
-        $section["actions"] = getActionFromSection($section["id"]);
+    $comments = selectMany('SELECT users.initials, comments.comment FROM comments INNER JOIN users ON users.id = comments.users_id WHERE comments.guardcontents_id =:lineID', ['lineID' => $id]);
+    return $comments;
+}
+
+function getActionsFromSection($sectionID)
+{
+    $sectionActions = selectMany('SELECT id, text FROM guardlines WHERE guard_sections_id =:sectionID', ['sectionID' => $sectionID]);
+    return $sectionActions;
+}
+
+function getGuardSections($shiftSheetID)
+{
+    $guardSections = selectMany('SELECT * FROM guardsections', []);
+    foreach ($guardSections as &$section){
+        $section["actions"] = getActionsFromSection($section["id"]);
         foreach ($section["actions"]  as &$action){
-            $action["lines"] = getGuardContent($action['id'], $shiftid);
+            $action['contentID'] = getGuardContentID($action["id"], $shiftSheetID);
+            $action["line"] = getGuardContent($action["id"], $shiftSheetID);
+            if(isset($action["contentID"]['id'])){
+                $contentID = $action["contentID"]['id'];
+            }
+            else{
+                $contentID = -1;
+            }
+            $action["comments"] = getGuardLineComment($contentID);
         }
     }
-    return $res;
+       
+    return $guardSections;
 }
 
 

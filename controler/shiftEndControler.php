@@ -68,6 +68,7 @@ function showShiftEnd($shiftid)
     $guardSheet = getGuardsheetDetails($shiftid);
     $enableGuardSheetUpdate = ($guardSheet['state'] == "open" || ($guardSheet['state'] == "blank" && $_SESSION['username']['admin'] == true));
     $enableGuardSheetFilling = ($guardSheet['state'] == "open");
+    //echo '<pre>' , var_dump($sections) , '</pre>';
     require_once VIEW . 'viewsShiftEnd/showShiftEnd.php';
 }
 

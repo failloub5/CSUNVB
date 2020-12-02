@@ -107,6 +107,7 @@ function newBase(){
 
 function updateBase()
 {
+    //TODO : A REFAIRE !!! mauvais fonctionnement
     //détermine l'état -> si admin : préparation, si utilisateur : ouvert
 
         $state = "en préparation";

@@ -74,13 +74,20 @@ $title = "CSU-NVB - Remise de garde";
                     </td>
                 <?php else: ?>
                     <td class="ackcell">
-                        <?= $action["lines"][0]["dayInitials"]?>
+                        <?php if(isset($action["line"]["dayInitials"])) :?>
+                            <?= $action["line"]["dayInitials"]?>
+                        <?php endif; ?>
                     </td>
                     <td class="ackcell">
-                        <?= $action["lines"][0]["nightInitials"]?>
+                        <?php if(isset($action["line"]["nightInitials"])) :?>
+                            <?= $action["line"]["nightInitials"]?>
+                        <?php endif; ?>
                     </td>
                     <td>
-                        <?= $action["lines"][0]["comment"]?>
+                        <?php foreach($action['comments'] as $comment) :?>
+                            [<?= $comment['initials']?>, heure ....] : <?= $comment['comment'] ?>
+                        <br>
+                        <?php endforeach; ?>
                     </td>
                 <?php endif; ?>
             </tr>
