@@ -37,12 +37,20 @@ function getVersion()
     return "2.1";
 }
 
-function buttonTask($initials, $desription)
+function buttonTask($initials, $desription, $weekState)
 {
-    if(empty($initials)) {
-        return "<button type='submit' class='btn btn-secondary btn-block m-1'>".$desription."<div class='bg-white rounded mt-1'><br></div></button>";
+    if($weekState == 'open'){
+        if(empty($initials)) {
+            return "<button type='submit' class='btn btn-secondary btn-block m-1'>".$desription."<div class='bg-white rounded mt-1'><br></div></button>";
+        } else {
+            return "<button type='submit' class='btn btn-success btn-block m-1'>".$desription."<div class='text-success bg-white rounded mt-1'>".$initials."</div></button>";
+        }
     } else {
-        return "<button type='submit' class='btn btn-success btn-block m-1'>".$desription."<div class='text-success bg-white rounded mt-1'>".$initials."</div></button>";
+        if(empty($initials)) {
+            return "<button type='submit' class='btn btn-secondary btn-block m-1' disabled >".$desription."<div class='bg-white rounded mt-1'><br></div></button>";
+        } else {
+            return "<button type='submit' class='btn btn-success btn-block m-1' disabled >".$desription."<div class='text-success bg-white rounded mt-1'>".$initials."</div></button>";
+        }
     }
 }
 
