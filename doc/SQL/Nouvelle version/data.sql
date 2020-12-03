@@ -403,7 +403,7 @@ INSERT INTO `guardchecks` (id,DAY,guardsheet_id,user_id,guardaction_id) VALUES
 (20,0,3,24,17);
 
 -- table guardcomments
-insert into `guardcomments` (id,message,user_id,guardsheet_id,guardaction_idd )VALUES
+insert into `guardcomments` (id,message,user_id,guardsheet_id,guardaction_id )VALUES
 (1,'Commentaire', 55,1,2), 
 (2,'Commentaire', 45,1,2),
 (3,'Commentaire', 29,1,4),
