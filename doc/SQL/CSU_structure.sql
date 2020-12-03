@@ -204,15 +204,15 @@ CREATE TABLE `novachecks` (
   `drug_id` int(11) NOT NULL,
   `nova_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `stupsheet_id` int(11) NOT NULL,
+  `drugsheet_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_novachecks_drugs1_idx` (`drug_id`),
   KEY `fk_novachecks_novas1_idx` (`nova_id`),
   KEY `fk_novachecks_users1_idx` (`user_id`),
-  KEY `fk_novachecks_stupsheets1_idx` (`stupsheet_id`),
+  KEY `fk_novachecks_drugsheets1_idx` (`drugsheet_id`),
   CONSTRAINT `fk_novachecks_drugs1` FOREIGN KEY (`drug_id`) REFERENCES `drugs` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_novachecks_novas1` FOREIGN KEY (`nova_id`) REFERENCES `novas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_novachecks_stupsheets1` FOREIGN KEY (`stupsheet_id`) REFERENCES `stupsheets` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_novachecks_drugsheets1` FOREIGN KEY (`drugsheet_id`) REFERENCES `drugsheets` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_novachecks_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=691 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -246,13 +246,13 @@ CREATE TABLE `pharmachecks` (
   `end` int(11) DEFAULT NULL,
   `batch_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `stupsheet_id` int(11) NOT NULL,
+  `drugsheet_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_pharmachecks_batches1_idx` (`batch_id`),
   KEY `fk_pharmachecks_users1_idx` (`user_id`),
-  KEY `fk_pharmachecks_stupsheets1_idx` (`stupsheet_id`),
+  KEY `fk_pharmachecks_drugsheets1_idx` (`drugsheet_id`),
   CONSTRAINT `fk_pharmachecks_batches1` FOREIGN KEY (`batch_id`) REFERENCES `batches` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_pharmachecks_stupsheets1` FOREIGN KEY (`stupsheet_id`) REFERENCES `stupsheets` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pharmachecks_drugsheets1` FOREIGN KEY (`drugsheet_id`) REFERENCES `drugsheets` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_pharmachecks_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=5159 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -282,82 +282,82 @@ CREATE TABLE `restocks` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `stupsheet_use_batch`
+-- Table structure for table `drugsheet_use_batch`
 --
 
-DROP TABLE IF EXISTS `stupsheet_use_batch`;
+DROP TABLE IF EXISTS `drugsheet_use_batch`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `stupsheet_use_batch` (
+CREATE TABLE `drugsheet_use_batch` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `stupsheet_id` int(11) NOT NULL,
+  `drugsheet_id` int(11) NOT NULL,
   `batch_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_use` (`stupsheet_id`,`batch_id`),
-  KEY `fk_stupsheet_use_batch_stupsheets1_idx` (`stupsheet_id`),
-  KEY `fk_stupsheet_use_batch_batches1_idx` (`batch_id`),
-  CONSTRAINT `fk_stupsheet_use_batch_batches1` FOREIGN KEY (`batch_id`) REFERENCES `batches` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_stupsheet_use_batch_stupsheets1` FOREIGN KEY (`stupsheet_id`) REFERENCES `stupsheets` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE KEY `unique_use` (`drugsheet_id`,`batch_id`),
+  KEY `fk_drugsheet_use_batch_drugsheets1_idx` (`drugsheet_id`),
+  KEY `fk_drugsheet_use_batch_batches1_idx` (`batch_id`),
+  CONSTRAINT `fk_drugsheet_use_batch_batches1` FOREIGN KEY (`batch_id`) REFERENCES `batches` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_drugsheet_use_batch_drugsheets1` FOREIGN KEY (`drugsheet_id`) REFERENCES `drugsheets` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `stupsheet_use_nova`
+-- Table structure for table `nova_use_drugsheet`
 --
 
-DROP TABLE IF EXISTS `stupsheet_use_nova`;
+DROP TABLE IF EXISTS `nova_use_drugsheet`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `stupsheet_use_nova` (
+CREATE TABLE `nova_use_drugsheet` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `stupsheet_id` int(11) NOT NULL,
+  `drugsheet_id` int(11) NOT NULL,
   `nova_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_use` (`stupsheet_id`,`nova_id`),
-  KEY `fk_stupsheet_use_nova_stupsheets1_idx` (`stupsheet_id`),
-  KEY `fk_stupsheet_use_nova_novas1_idx` (`nova_id`),
-  CONSTRAINT `fk_stupsheet_use_nova_novas1` FOREIGN KEY (`nova_id`) REFERENCES `novas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_stupsheet_use_nova_stupsheets1` FOREIGN KEY (`stupsheet_id`) REFERENCES `stupsheets` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE KEY `unique_use` (`drugsheet_id`,`nova_id`),
+  KEY `fk_nova_use_drugsheet_drugsheets1_idx` (`drugsheet_id`),
+  KEY `fk_nova_use_drugsheet_novas1_idx` (`nova_id`),
+  CONSTRAINT `fk_nova_use_drugsheet_novas1` FOREIGN KEY (`nova_id`) REFERENCES `novas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_nova_use_drugsheet_drugsheets1` FOREIGN KEY (`drugsheet_id`) REFERENCES `drugsheets` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `stupsheets`
+-- Table structure for table `drugsheets`
 --
 
-DROP TABLE IF EXISTS `stupsheets`;
+DROP TABLE IF EXISTS `drugsheets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `stupsheets` (
+CREATE TABLE `drugsheets` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `week` int(11) NOT NULL,
   `state` varchar(45) NOT NULL,
   `base_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `STUPSHEETUNIQ` (`week`,`base_id`),
-  KEY `fk_stupsheets_bases1_idx` (`base_id`),
-  CONSTRAINT `fk_stupsheets_bases1` FOREIGN KEY (`base_id`) REFERENCES `bases` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE KEY `drugSHEETUNIQ` (`week`,`base_id`),
+  KEY `fk_drugsheets_bases1_idx` (`base_id`),
+  CONSTRAINT `fk_drugsheets_bases1` FOREIGN KEY (`base_id`) REFERENCES `bases` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `stupsignatures`
+-- Table structure for table `drugsignatures`
 --
 
-DROP TABLE IF EXISTS `stupsignatures`;
+DROP TABLE IF EXISTS `drugsignatures`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `stupsignatures` (
+CREATE TABLE `drugsignatures` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `date` datetime NOT NULL,
   `day` int(11) NOT NULL,
-  `stupsheet_id` int(11) NOT NULL,
+  `drugsheet_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_stupsignatures_stupsheets1_idx` (`stupsheet_id`),
-  KEY `fk_stupsignatures_users1_idx` (`user_id`),
-  CONSTRAINT `fk_stupsignatures_stupsheets1` FOREIGN KEY (`stupsheet_id`) REFERENCES `stupsheets` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_stupsignatures_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_drugsignatures_drugsheets1_idx` (`drugsheet_id`),
+  KEY `fk_drugsignatures_users1_idx` (`user_id`),
+  CONSTRAINT `fk_drugsignatures_drugsheets1` FOREIGN KEY (`drugsheet_id`) REFERENCES `drugsheets` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_drugsignatures_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -398,7 +398,7 @@ CREATE TABLE `todosheets` (
   `week` int(11) NOT NULL,
   `state` varchar(45) NOT NULL,
   `base_id` int(11) NOT NULL,
-  `template_name` varchar(45) DEFAULT NULL COMMENT 'The name under which the stupsheet may be identified as a templatre to be create new sheets. Copies will NOT carry that name',
+  `template_name` varchar(45) DEFAULT NULL COMMENT 'The name under which the drugsheet may be identified as a templatre to be create new sheets. Copies will NOT carry that name',
   PRIMARY KEY (`id`),
   UNIQUE KEY `model_name_UNIQUE` (`template_name`),
   KEY `fk_todosheets_bases1_idx` (`base_id`),

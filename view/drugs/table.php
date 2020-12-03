@@ -10,67 +10,68 @@ ob_start();
 <div class="row m-2">
     <h1>Stupéfiants</h1>
 </div>
-<h2>Site de <?= $site ?> , Semaine N° <?= $semaine ?></h2>
-<?php //TODO: RAJOUTER LE BOUT DE CODE POUR GENERER BOUTON ?>
-
-<?php foreach ($jours as $jour) { // vas generer tous les jours de semaine ?>
+<h2>Site de <?= $site ?>, Semaine N°<?= $semaine ?></h2>
+<?php //TODO: RAJOUTER LE BOUT DE CODE POUR GENERER BOUTON?>
+<?php foreach ($jours as $jour): ?>
     <table border="1" class="table table-bordered">
         <thead class="thead-dark">
-        <tr>
-            <th colspan="6" <?= (date("Y-m-d", $date) == date("Y-m-d")) ? "class='today'" : "" ?>>
-                <?= ($jour . " " . date("j M Y", $date)) ?>
+            <tr>
+                <th colspan="6" <?= (date("Y-m-d", $date) == date("Y-m-d")) ? "class='today'" : "" ?>>
+                    <?= date("l j M Y", $date) ?>
+                </th>
+            </tr>
+            <tr>
+            <th>
+                <?php //TODO: th a supprimer? ?>
             </th>
-        </tr>
-        <tr>
-            <th></th>
             <th>Pharmacie (matin)</th>
-            <?php foreach ($novas as $nova) { ?>
+            <?php foreach ($novas as $nova): ?>
                 <th><?= $nova["number"] ?></th>
-            <?php } ?>
+            <?php endforeach; ?>
             <th>Pharmacie (soir)</th>
-        </tr>
+            </tr>
         </thead>
         <tbody>
-        <?php foreach ($drugs as $drug) { ?>
-            <tr>
-                <td class="font-weight-bold"><?= $drug["name"] ?></td>
-                <td></td>
-                <?php foreach ($novas as $nova) { ?>
-                    <td class="text-center">
-                        <?php
-                        $novaCheck = getNovaCheckByDateAndBatch(date("Y-m-d", $date), $drug['id'], $nova['id'], $stupSheetId);
-                        echo $novaCheck["end"] . " / " . $novaCheck["start"];
-                       ?>
-                    </td>
-                <?php } ?>
-                <td></td>
-            </tr>
-            <!-- Plusieurs lignes avec les batches nom de ce médicament, les restocks et les pharmachecks -->
-            <?php foreach ($batchesByDrugId[$drug["id"]] as $batch) { ?>
-                <?php $pharmacheck = getPharmaCheckByDateAndBatch(date("Y-m-d", $date),$batch['batch_id'],$stupSheetId) ?>
+            <?php foreach ($drugs as $drug): ?>
                 <tr>
-                <td class="text-right"><?= $batch['number'] ?></td>
-                <td class="text-center"><?= $pharmacheck['start'] ?></td>
-                <?php foreach ($novas as $nova) { ?>
-                    <td class="text-center"><?= getRestockByDateAndDrug(date("Y-m-d", $date),$batch['batch_id'],$nova['id'])['quantity'] ?></td>
-                <?php } ?>
-                <td class="text-center"><?= $pharmacheck['end'] ?></td>
-            <?php } ?>
+                    <td class="font-weight-bold"><?= $drug["name"] ?></td>
+                    <td><?php //TODO: td a supprimer? ?></td>
+                    <?php foreach ($novas as $nova): ?>
+                        <td>
+                            <div>
+                                <?= $novaCheck["end"] ?>
+                            </div>
+                            <div>
+                                <?= $novaCheck["start"] ?>
+                            </div>
+                        </td>
+                    <?php endforeach; ?>
+                    <td><?php //TODO: td a supprimer? ?></td>
+                </tr>
+                <!-- Plusieurs lignes avec les batches nom de ce médicament, les restocks et les pharmachecks -->
+                <?php foreach ($batchesByDrugId[$drug["id"]] as $batch): ?>
+                    <tr>
+                        <td class="text-right"><?= $batch['number'] ?></td>
+                        <td class="text-center"><?= $pharmacheck['start'] ?></td>
+                        <?php foreach ($novas as $nova): ?>
+                            <td class="text-center"><?= $quantity ?></td>
+                        <?php endforeach; ?>
+                        <td class="text-center"><?= $pharmacheck['end'] ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endforeach; ?>
+            <tr>
+                <td>Signature</td>
+                <td colspan="5"></td>
             </tr>
-        <?php } ?>
-
-        <tr>
-            <td>Signature</td>
-            <td colspan="5"></td>
-        </tr>
         </tbody>
     </table>
     <?php
     $date = strtotime(date("Y-m-d", $date) . " +1 day");
-
     ?>
-<?php }
+<?php endforeach; ?>
+
+<?php
 $content = ob_get_clean();
 require GABARIT;
-
 ?>

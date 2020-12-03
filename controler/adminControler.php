@@ -58,17 +58,17 @@ function resetUserPassword()
     adminCrew();
 }
 
-/** stups Administration */
+/** drugs Administration */
 
 function adminDrugs()
 {
-    $drugs = getStups();
+    $drugs = getDrugs();
     require_once VIEW . 'admin/adminDrugs.php';
 }
 
 function newDrug(){
     if(isset($_POST['nameDrug'])){
-        addNewStup($_POST['nameDrug']);
+        addNewDrug($_POST['nameDrug']);
         adminDrugs();
     }
     else {
@@ -79,7 +79,7 @@ function newDrug(){
 function updateDrug(){
     $idDrug = $_GET['idDrug'];
     if(isset($_POST['updateNameDrug'])){
-        updateStupName($_POST['updateNameDrug'], $idDrug);
+        updateDrugName($_POST['updateNameDrug'], $idDrug);
         adminDrugs();
     }
     else {

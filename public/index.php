@@ -14,19 +14,11 @@ require "../path.php";
 
 require "../helpers.php";
 
-<<<<<<< Updated upstream
 require CONTROLER . "adminControler.php";
-require CONTROLER . "drugControler.php";
+require CONTROLER . "drugsController.php";
 require CONTROLER . "mainControler.php";
 require CONTROLER . "shiftEndControler.php";
 require CONTROLER . "weeklyTasksControler.php";
-=======
-require  CONTROLER . "adminControler.php";
-require CONTROLER . "stupsController.php";
-require  CONTROLER . "mainControler.php";
-require  CONTROLER . "shiftEndControler.php";
-require  CONTROLER . "weeklyTasksControler.php";
->>>>>>> Stashed changes
 
 
 require MODEL . ".const.php";
@@ -34,7 +26,7 @@ require MODEL . "databaseModel.php";
 
 require MODEL . "baseModel.php";
 require MODEL . "userModel.php";
-require MODEL . "stups.php";
+require MODEL . "drugsModel.php";
 require MODEL . "novaModel.php";
 require MODEL . "shiftEndModel.php";
 require MODEL . "weeklyTasksModel.php";
@@ -60,7 +52,6 @@ if (isset($_SESSION["username"])) {
     /** Using mainControler */
     login();
 }
-
 
 function switcherAdmin()
 {
@@ -148,23 +139,17 @@ function switcherUser()
 
         /** Using drugController */
 
-        case 'newStupSheet':;
-            createStupSheet();
+        case 'newDrugSheet':;
+            createDrugSheet();
             break;
-<<<<<<< Updated upstream
-        case 'addNewStup':
-            ;
-            createSheetStup();
-=======
-        case 'openStupSheet' :
-            openStupSheet();
->>>>>>> Stashed changes
+        case 'openDrugSheet' :
+            openDrugSheet();
             break;
-        case 'closeStupSheet':
-            closeStupSheet();
+        case 'closeDrugSheet':
+            closeDrugSheet();
             break;
-        case 'reopenStupSheet':
-            reopenStupSheet();
+        case 'reopenDrugSheet':
+            reopenDrugSheet();
             break;
         case 'updatePharmaCheck':
             pharmacheck();
@@ -172,26 +157,19 @@ function switcherUser()
         case "pharmaUpdate":
             PharmaUpdate();
             break;
-<<<<<<< Updated upstream
-        case 'LogStup':
-            logStup();
-            break;
-        case 'drugs':
-=======
-        case 'showStupSheetList':
->>>>>>> Stashed changes
+        case 'showDrugSheetList':
             if (isset($_POST["site"])) {
                 $baseID = $_POST["site"];
             } else {
                 $baseID = $_SESSION['base']['id'];
             }
-            showStupSheetList($baseID);
+            showDrugSheetList($baseID);
             break;
-        case "showStupSheet":
-            showStupSheet();
+        case "showDrugSheet":
+            showDrugSheet();
             break;
-        /* case 'stupsLog':
-            stupsLog();
+        /* case 'drugLog':
+            drugLog();
             break; */
 
         /** Using shiftEndControler */
