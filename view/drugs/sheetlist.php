@@ -12,13 +12,15 @@ $title = "CSU-NVB - Stupéfiants";
 <div class="row">
     <form action="?action=showStupSheetList" method="post" class="col">
         <select onchange="this.form.submit()" name="site" size="1">
-            <?php
-                foreach ($bases as $base) {
-                    echo "<option value=" . $base["id"];
-                    if($baseID == $base["id"]) echo " selected='selected'";
-                    echo " name='site'>" . $base["name"];
-                }
-            ?>
+            <?php foreach($bases as $base): ?>
+                <option value="<?= $base["id"] ?>"
+                <?php if ($baseID == $base["id"]): ?>
+                     selected
+                <?php endif; ?>
+                name='site'>
+                <?= $base["name"] ?>
+                </option>
+            <?php endforeach; ?>
         </select>
     </form>
     <div class="row m-2">
