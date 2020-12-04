@@ -44,61 +44,47 @@ $title = "CSU-NVB - Remise de garde";
     <th>Équipage</th>
 
 
-        <th>Action</th>
+    <th>Action</th>
     </thead>
     <?php foreach ($guardsheets as $guardSheet) { ?>
         <tr>
             <td><a href='?action=showGuardSheet&id=<?= $guardSheet['id'] ?>'
                    class="btn"><?= date('d.m.Y', strtotime($guardSheet['date'])) ?>  </a></td>
-            <td><?php
-                switch ($guardSheet['state']) {
-                    case 'open' :
-                        echo 'Ouvert';
-                        break;
-                    case 'blank' :
-                        echo 'En préparation';
-                        break;
-                    case 'reopen' :
-                        echo 'Réouvert';
-                        break;
-                    case 'close' :
-                        echo 'Fermé';
-                        break;
-                    default :
-                        echo 'Statut Inconnu';
-                        break;
-                }
-                ?></td>
+            <td>
+                <?php switch ($guardSheet['status']): case 'blank': ?>
+                    En préparation
+                    <?php break; case 'open': ?>
+                    Ouvert
+                    <?php break; case 'close': ?>
+                    Fermé
+                    <?php break; case 'reopen': ?>
+                    Réouvert
+                    <?php break; default: ?>
+                    Status Inconnu
+                <?php endswitch ?>
+            </td>
             <td>Jour : <?= $guardSheet['novaDay'] ?><br>Nuit : <?= $guardSheet['novaNight'] ?></td>
-            <td>Jour :<?= $guardSheet['bossDay'] ?><br>Nuit :<?= $guardSheet['bossNight'] ?> </td>
+            <td>Jour : <?= $guardSheet['bossDay'] ?><br>Nuit : <?= $guardSheet['bossNight'] ?> </td>
             <td>Jour : <?= $guardSheet['teammateDay'] ?><br>Nuit : <?= $guardSheet['teammateNight'] ?></td>
             <td>
-                <?php if ((($_SESSION['username']['admin'] == true and getNbGuardSheet('open') == 0 ) ||
-                    ($_SESSION['username']['admin'] == true and $guardSheet['state'] == 'close') ||
-                    $guardSheet['state'] == 'open' ||
-                    $guardSheet['state'] == 'reopen')) { ?>
+                <?php if ((($_SESSION['username']['admin'] == true and getNbGuardSheet('open',$baseID) == 0) ||
+                    ($_SESSION['username']['admin'] == true and $guardSheet['status'] == 'close') ||
+                    $guardSheet['status'] == 'open' ||
+                    $guardSheet['status'] == 'reopen')) { ?>
                     <form action="?action=alterGuardSheetStatus" method="post">
-                        <input type = hidden name="id" value = <?= $guardSheet['id'] ?>>
-                        <button class="btn btn-primary btn-sm" name="status" value="<?= $guardSheet['state'] ?>"
+                        <input type=hidden name="id" value= <?= $guardSheet['id'] ?>>
+                        <button class="btn btn-primary btn-sm" name="status" value="<?= $guardSheet['status'] ?>"
                         </button>
-                        <?php
-                        switch ($guardSheet['state']) {
-                            case 'open' :
-                            case 'reopen' :
-                                echo 'Fermer';
-                                break;
-                            case 'blank' :
-                                echo 'Ouvrir';
-                                break;
-                            case 'close' :
-                                echo 'Rouvrir';
-                                break;
-                            default :
-                                echo 'erreur';
-                                break;
-                        }?>
+                        <?php switch ($guardSheet['status']): case 'blank': ?>
+                            Ouvrir
+                            <?php break; case 'open':case 'reopen': ?>
+                            Fermer
+                            <?php break; case 'close': ?>
+                            Rouvrir
+                            <?php break; default: ?>
+                            Erreur
+                        <?php endswitch ?>
                     </form>
-
                 <?php } ?>
             </td>
         </tr>
