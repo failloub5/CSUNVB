@@ -4,8 +4,7 @@
  * Open a connection to the database
  * @return PDO
  */
-function getPDO()
-{
+function getPDO() {
     require_once ".const.php";
     $dbh = null;
     try {
@@ -18,9 +17,8 @@ function getPDO()
     return $dbh;
 }
 
-
-function select($query, $params, $multirecord)      //Fontion permettant de selectionner des données
-{
+//Fonction permettant de selectionner des données
+function select($query, $params, $multirecord) {
 
     $dbh = getPDO();
     try {
@@ -40,19 +38,18 @@ function select($query, $params, $multirecord)      //Fontion permettant de sele
     }
 }
 
-function selectMany($query, $params)        //Fonction permettant de récuperer plusieurs données
-{
+//Fonction permettant de récuperer plusieurs données
+function selectMany($query, $params = []) {
     return select($query, $params, true);
 }
 
-function selectOne($query, $params)         //Fontion permettant de récuperer une donnée
-{
+//Fonction permettant de récuperer une donnée
+function selectOne($query, $params = []) {
     return select($query, $params, false);
 }
 
-function insert($query, $params)            //Fontion permettant d'insérer des données
-{
-
+//Fonction permettant d'insérer des données
+function insert($query, $params = []) {
     $dbh = getPDO();
     try {
         $statement = $dbh->prepare($query);     //Préparer la requête
@@ -64,8 +61,8 @@ function insert($query, $params)            //Fontion permettant d'insérer des 
     }
 }
 
-function execute($query, $params)       //Fonction permettant de mettre à jour et d'effacer des données
-{
+//Fonction permettant de mettre à jour et d'effacer des données
+function execute($query, $params = []) {
     $dbh = getPDO();
     try {
         $statement = $dbh->prepare($query);     //Préparer la requête
