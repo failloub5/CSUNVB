@@ -74,6 +74,9 @@ $title = "CSU-NVB - Tâches hebdomadaires";
     </div>
     <br>
 </div>
+<div>
+    <?= popUpValidation("Quittance","sans valeur")?>
+</div>
 <?php
 $content = ob_get_clean();
 require GABARIT;
