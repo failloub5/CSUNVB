@@ -35,25 +35,8 @@ INSERT INTO `drugs` VALUES (1,'Fentanyl'),(2,'Morphine'),(3,'Temesta');
 /*!40000 ALTER TABLE `drugs` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Dumping data for table `guardlines`
---
 
-LOCK TABLES `guardlines` WRITE;
-/*!40000 ALTER TABLE `guardlines` DISABLE KEYS */;
-INSERT INTO `guardlines` VALUES (1,'Radios',1),(2,'Détecteurs CO',1),(3,'Téléphones',1),(4,'Gt info avisé',1),(5,'Annonce 144',1),(6,'Plein essence',2),(7,'Opérationnel',2),(8,'Rdv garage',2),(9,'Gt vhc avisé',2),(10,'50chf présents',2),(11,'Problèmes d’interventions hors véhicules',2),(12,'Info trafic consulté',3),(13,'Report des infos trafic sur plan de secteur',3),(14,'Accueil étudiant ou stagiaire',3),(15,'Lecture journal de bord ',3),(16,'Problème et responsable Gt avisé',3),(17,'Centrale propre',4),(18,'Tâches du jour effectuées',4),(19,'Dimanche ',4);
-/*!40000 ALTER TABLE `guardlines` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Dumping data for table `guardsections`
---
-
-LOCK TABLES `guardsections` WRITE;
-/*!40000 ALTER TABLE `guardsections` DISABLE KEYS */;
-INSERT INTO `guardsections` VALUES (1,'Centrale & Tâches'),(2,'Ecrans de communication & Trafic'),(3,'Matériel & Télécom'),(4,'Véhicules & Interventions');
-/*!40000 ALTER TABLE `guardsections` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Dumping data for table `novas`
@@ -96,3 +79,39 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2020-12-01  7:28:46
+
+-- table status
+INSERT INTO `status` VALUES 
+(1,'blank'),
+(2,'open'),
+(3,'close'),
+(4,'reopen');
+
+-- table guardsections
+INSERT INTO `guardsections` VALUES 
+(1,'Centrale & Tâches'),
+(2,'Ecrans de communication & Trafic'),
+(3,'Matériel & Télécom'),
+(4,'Véhicules & Interventions');
+
+-- table guardactions
+INSERT INTO `guardactions` VALUES 
+(1,'Radios',1),
+(2,'Détecteurs CO',1),
+(3,'Téléphones',1),
+(4,'Gt info avisé',1),
+(5,'Annonce 144',1),
+(6,'Plein essence',2),
+(7,'Opérationnel',2),
+(8,'Rdv garage',2),
+(9,'Gt vhc avisé',2),
+(10,'50chf présents',2),
+(11,'Problèmes d\'interventions hors véhicules',2),
+(12,'Info trafic consulté',3),
+(13,'Report des infos trafic sur plan de secteur',3),
+(14,'Accueil étudiant ou stagiaire',3),
+(15,'Lecture journal de bord ',3),
+(16,'Problème et responsable Gt avisé',3),
+(17,'Centrale propre',4),
+(18,'Tâches du jour effectuées',4),
+(19,'Dimanche ',4);
