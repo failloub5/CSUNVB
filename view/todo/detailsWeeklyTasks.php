@@ -14,8 +14,7 @@ $title = "CSU-NVB - Tâches hebdomadaires";
             <form action="?action=modelWeek" method="POST">
                 <input type="hidden" name="weekID" value="<?= $week['id'] ?>">
                 <input type="hidden" name="baseID" value="<?= $base['id'] ?>">
-                <!-- todo -->
-                <input type="text" name="model_name" value="<?= '' ?>">
+                <input type="hidden" name="template_name" value="<?= $template['template_name'] ?>">
 
                 <button type="submit" class='btn btn-primary m-1 float-right'>Sauvegarder le nom</button>
             </form>
