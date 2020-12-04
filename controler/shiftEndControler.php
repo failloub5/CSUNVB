@@ -48,7 +48,6 @@ function listShiftEnd($baseID)
 {
     $Bases = getbases();
     $guardsheets = getGuardsheetForBase($baseID);
-    var_dump(getNbGuardSheet("open",$baseID));
     require_once VIEW . 'viewsShiftEnd/shiftEndHome.php';
 
 }
