@@ -37,4 +37,15 @@ function getVersion()
     return "2.1";
 }
 
+function getDrugStateButton($state) {
+     switch ($state) {
+         case "closed":
+             return "reopen";
+         case "open":
+         case "reopened":
+             return "close";
+         default:
+             return "open";
+     }
+}
 ?>

@@ -58,15 +58,7 @@ $title = "CSU-NVB - Stupéfiants";
                     <?php if ($_SESSION['username']['admin'] == 1): ?>
                         <td>
                             <div class='row'>
-                                <?php
-                                    if ($week['state'] == "closed")
-                                        $action = "reopen";
-                                    else if (($week['state'] == "open") || ($week['state'] == "reopened"))
-                                        $action = "close";
-                                    else
-                                        $action = "open";
-                                ?>
-                                <a href='?action=<?= $action ?>DrugSheet&site=<?= $baseID ?>&week=<?= $week["week"]?>'>
+                                <a href='?action=<?= getDrugStateButton($week['state']) ?>DrugSheet&site=<?= $baseID ?>&week=<?= $week["week"]?>'>
                                     <button class='btn btn-primary btn-sm ml-3'><?= $action ?></button>
                                 </a>
                             </div>
