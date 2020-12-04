@@ -129,9 +129,14 @@ function closeAWeek($baseID, $weekID){
     homeWeeklyTasks($baseID);
 }
 
-function modelWeek( $weekID, $model_name){
-    updateTodoSheet($weekID,$model_name);
+function modelWeek($weekID, $template_name){
+    updateTodoSheet($weekID,$template_name);
     $currentURL = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     header('Location: '.$currentURL);
+}
+
+function loadAModel($weekID, $template_name){
+
+    $toDos = readTodoForASheet($week['id']);
 }
 

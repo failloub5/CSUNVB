@@ -98,10 +98,10 @@ function addtoDo($todoID, $weekID, $dayOfWeek){
  * Le paramètre $item est un item complet (donc un tableau associatif)
  * ...
  */
-function updateTodoSheet($id, $model_name)
+function updateTodoSheet($id, $template_name)
 {
     return execute(
-        "UPDATE todosheets SET model_name=:model_name WHERE id =:id",['model_name'=>$model_name,'id'=>$id]);
+        "UPDATE todosheets SET template_name=:template_name WHERE id =:id",['template_name'=>$template_name,'id'=>$id]);
 }
 
 
