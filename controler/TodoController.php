@@ -70,7 +70,8 @@ function getDatesFromWeekNumber($weekNumber){
  * Fonction qui ajoute à la bbd dans todosheets les données relative à base_id et week
  * @param $base : id de la base
  */
-function addWeek($base){
+function addWeek(){
+    $base = $_SESSION['base']['id']; // On ne peut ajouter une feuille qu'à la base où on se trouve
     //Lit la dernière semaine
     $week = readLastWeek($base);
 
