@@ -7,15 +7,15 @@
 /**
  * @param $baseID
  */
-function newShiftSheet($baseID)
+function newShiftSheet()
 {
-    $result = addNewShiftSheet($baseID);
+    $result = addNewShiftSheet($_SESSION['base']['id']);
     if ($result == false) {
         $_SESSION['flashmessage'] = "Une erreur est survenue. Impossible d'ajouter la feuille de garde.";
     } else {
         $_SESSION['flashmessage'] = "La feuille de garde a bien été créé !";
     }
-    listshift($_SESSION["selectedBase"]);
+    listshiftforbase($_SESSION["base"]['id']);
 }
 
 

@@ -22,14 +22,15 @@ $title = "CSU-NVB - Remise de garde";
         </select>
     </form>
 
-    <form action="?action=newSheet" method="post">
-        <?php if (($_SESSION['user']['admin'] == true)) { ?>
-            <div class="col">
-                <input type="hidden" name="site" value="<?= $baseID ?>">
+    <?php if (($_SESSION['user']['admin'] == true) && ($_SESSION['base']['id'] == $baseID)) : ?>
+        <div class="col">
+            <form>
+                <input type="hidden" name="action" value="newShiftSheet">
+                <input type="hidden" name="id" value="<?= $baseID ?>">
                 <button type="submit" class='btn btn-primary m-1 float-right'>Nouvelle Feuille de garde</button>
-            </div>
-        <?php } ?>
-    </form>
+            </form>
+        </div>
+    <?php endif; ?>
 </div>
 
 
