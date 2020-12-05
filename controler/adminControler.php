@@ -108,19 +108,6 @@ function newBase(){
 function updateBase()
 {
     //TODO : A REFAIRE !!! mauvais fonctionnement
-    //détermine l'état -> si admin : préparation, si utilisateur : ouvert
-
-        $state = "en préparation";
-
-    //récupération de l'id de la base selon liste affichée. Ne fonctionne pas pour le moment, renvoie le mauvais ID
-    // $baseID = $_SESSION["Selectsite"];
-    //retourne si la création a fonctionnée ou pas (booléen)
-    $result = addNewGuardsheet($state, $baseID);
-    if ($result == false) {
-        $_SESSION['flashmessage'] = "Une erreur est survenue. Impossible de créer la feuille de rapport";
-    } else {
-        $_SESSION['flashmessage'] = "La feuille de rapport a bien été créé !";
-    }
 }
 
 /** Nova Administration */

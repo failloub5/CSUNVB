@@ -45,11 +45,6 @@ function getUser($id)     //Récupère l'utilisateur qui a cet $id
     return selectOne("SELECT * FROM users where id=:id", ['id' => $id]);
 }
 
-function getUserAdmin($admin)
-{
-    return selectOne("SELECT * FROM users where admin = :admin", ['admin' => $admin]);
-}
-
 function SaveUser($user)       //Met à jour un utilisateur
 {
     unset($user['password']);
@@ -60,11 +55,6 @@ function SaveUser($user)       //Met à jour un utilisateur
 function SaveUserPassword($hash, $id)       //Met à jour le mdp d'un utilisateur
 {
     return execute("UPDATE users SET password= :password, firstconnect= :firstconnect where id = :id", ['password' => $hash, 'firstconnect' => 0, 'id' => $id]);
-}
-
-function SaveBase($bases)       //Met à jour les informations d'une base
-{
-    return execute("UPDATE bases SET name= :name where id = :bases", [$bases]);
 }
 
 function addNewDrug($nameDrug)
@@ -93,59 +83,6 @@ function changePwdState($changeUser)
 function addNewNova($nameNova)
 {
     return intval(insert("INSERT INTO novas (number) values (:nameNovas) ", ['nameNovas' => $nameNova]));
-}
-
-function saveModifDrug($modifNameDrug, $idDrug)
-{
-    return execute("UPDATE drugs SET name= :name WHERE id= :id", ['name' => $modifNameDrug, 'id' => $idDrug]);
-}
-
-function saveModifBase($modifNameBase, $idBase)
-{
-    return execute("UPDATE bases SET name= :name WHERE id= :id", ['name' => $modifNameBase, 'id' => $idBase]);
-}
-
-function saveModifNova($modifNameNova, $idNova)
-{
-    return execute("UPDATE novas SET number= :number WHERE id= :id", ['number' => $modifNameNova, 'id' => $idNova]);
-}
-
-// TODO : voir où le code est appelé et modifié -> but : supprimer la fonction
-function addNewGuardsheet($state, $idBase)
-{
-
-    return execute("Insert into guardsheets(date,state,base_id)
-values(current_timestamp(),:state,:idBase)", ['state' => $state, 'idBase' => $idBase]);
-    $gid = $dbh->LastindexOfid();
-
-    return execute("Insert into guard_use_nova(nova_id,guardsheet_id,day)
-values(1,:guardsheetId,1)",['guardhseetId'=>$gid]);
-
-    return execute("Insert into guard_use_nova(nova_id,guardsheet_id,day)
-values(1,:guardsheetId,0)['guardsheetId'=>$gid]");
-
-    return execute("Insert into crews(boss,day,guardsheet_id,user_id)
-values(0,0,:guardsheetId,1)['guardsheetId'=>$gid]");
-
-    return execute("Insert into crews(boss,day,guardsheet_id,user_id)
-values(1,1,:guardsheetId,1)['guardsheetId'=>$gid]");
-
-    /*Insert into guardsheets(date,state,base_id)
-values(current_timestamp(),"blank",1)
-;
-Insert into guard_use_nova(nova_id,guardsheet_id,day)
-values(1,151,1)
-;
-Insert into guard_use_nova(nova_id,guardsheet_id,day)
-values(1,151,0)
-;
-Insert into crews(boss,day,guardsheet_id,user_id)
-values(0,0,151,1)
-;
-Insert into crews(boss,day,guardsheet_id,user_id)
-values(1,1,151,1)
-;
-*/
 }
 
 ?>

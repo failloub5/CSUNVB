@@ -9,14 +9,6 @@ function getUserByInitials($initials)       //Récupère un utilisateur en fonct
     return selectOne("SELECT * FROM users where initials =:initials", ['initials' => $initials]);
 }
 
-/**
- * @return array|mixed|null
- */
-function getUsers()
-{
-    return selectMany("SELECT * FROM users", []);
-}
-
 function addNewUser($prenomUser, $nomUser, $initialesUser, $hash, $admin, $firstconnect)
 {
     return intval(insert("INSERT INTO users (firstname, lastname, initials, password, admin, firstconnect) VALUES (:firstname, :lastname, :initials, :password, :admin, :firstconnect)", ['firstname' => $prenomUser, 'lastname' => $nomUser, 'initials' => $initialesUser, 'password' => $hash, 'admin' => $admin, 'firstconnect' => $firstconnect]));       //à optimiser/simplifier avec un tableau
@@ -57,8 +49,4 @@ function changePwdState($changeUser)
     $hash = password_hash($newpassw, PASSWORD_DEFAULT);
     execute("UPDATE users SET firstconnect= :firstconnect, password = :hash WHERE id= :id", ['firstconnect' => 1, 'id' => $changeUser, 'hash' => $hash]);
     return $newpassw;
-}
-
-function getUserAdmin($admin){
-    return selectOne("SELECT * FROM users where admin = :admin", ['admin' => $admin]);
 }

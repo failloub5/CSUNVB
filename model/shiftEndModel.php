@@ -5,30 +5,10 @@
  **/
 
 
-
-function updateGuardsheet($id)//todo utilités ?
-{
-    return execute("UPDATE bases SET date = :date,state=:state,base_id=:base_id where id = :id", [$id]);
-
-}
-
-/**
- * Modifie un item précis
- * Le paramètre $item est un item complet (donc un tableau associatif)
- * ...
- */
-function updateShiftEndItem($item)//todo utilités ?
-{
-    $items = getShiftEndItems();
-    // TODO: retrouver l'item donnée en paramètre et le modifier dans le tableau $items
-    saveShiftEndItem($items);
-}
-
 function openShiftPage($id){
     try {
         $dbh = getPDO();
-        $query = "update guardsheets
-set status_id= 2 WHERE id=:id";
+        $query = "update guardsheets set status_id= 2 WHERE id=:id";
         $statement = $dbh->prepare($query);//prepare query
         $statement->execute(["id" => $id]);//execute query
         //$queryResult = $statement->fetch(PDO::FETCH_ASSOC);//prepare result for client
@@ -45,8 +25,7 @@ function reopenShiftPage($id)
 {
     try {
         $dbh = getPDO();
-        $query = "update guardsheets
-set status_id= 4 WHERE id=:id";
+        $query = "update guardsheets set status_id= 4 WHERE id=:id";
         $statement = $dbh->prepare($query);//prepare query
         $statement->execute(["id" => $id]);//execute query
         //$queryResult = $statement->fetch(PDO::FETCH_ASSOC);//prepare result for client
@@ -63,8 +42,7 @@ function closeShiftPage($id)
 {
     try {
         $dbh = getPDO();
-        $query = "update guardsheets
-set status_id= 3 WHERE id=:id";
+        $query = "update guardsheets set status_id= 3 WHERE id=:id";
         $statement = $dbh->prepare($query);//prepare query
         $statement->execute(["id" => $id]);//execute query
         //$queryResult = $statement->fetchAll(PDO::FETCH_ASSOC);//prepare result for client
@@ -161,16 +139,6 @@ function addNewShiftSheet($idBase)
         return false;
     }
     return true;
-}
-function insertDataShiftSheet($sheetID, $sheetline){//todo remove id useless
-    $gid = selectOne("SELECT MAX(id) FROM guardsheets",[]);
-    $gid = $gid["MAX(id)"];
-    $insertGuardUseNova = execute("Insert into guard_use_nova(nova_id,guardsheet_id,day)
-        values(1,:guardsheetId,1), (1,:guardsheetId,0)", ['guardsheetId'=>$gid]);
-
-    $insertCrews = execute("Insert into crews(boss,day,guardsheet_id,user_id)
-values(1,0,:guardsheetId,1), (1,1,:guardsheetId,1)", ['guardsheetId'=>$gid]);
-
 }
 
 function getDateOfLastSheet($baseID){
