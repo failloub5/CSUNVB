@@ -44,12 +44,18 @@ function altershiftsheetStatus(){
     listshift($_SESSION["selectedBase"]);
 }
 
-function listshift($baseID)
+// default: the base where the user logged
+function listshift()
+{
+    listshiftforbase($_SESSION['base']['id']);
+}
+
+// List shifts for a specific base
+function listshiftforbase($baseID)
 {
     $Bases = getbases();
     $shiftsheets = getshiftsheetForBase($baseID);
     require_once VIEW . 'shift/list.php';
-
 }
 
 function showshift($shiftid)

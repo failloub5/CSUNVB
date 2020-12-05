@@ -13,16 +13,14 @@ $title = "CSU-NVB - Remise de garde";
 </div>
 
 <div class="row">
-    <FORM action="?action=listshift" method="post" class="col">
-        <SELECT onchange="this.form.submit()" name="selectedBase" size="1">
-            <?php foreach ($Bases as $base) { ?>
-            <OPTION value="<?= $base['id'] ?>" <?php if ($baseID == $base['id']) { ?>
-                selected="selected"
-            <?php } ?>
-                    name="site"><?= $base['name'] ?>
-                <?php } ?>
-        </SELECT>
-    </FORM>
+    <form action="?action=listshift" class="col">
+        <input type="hidden" name="action" value="listshiftforbase">
+        <select onchange="this.form.submit()" name="id" size="1">
+            <?php foreach ($Bases as $base) : ?>
+                <option value="<?= $base['id'] ?>" <?= ($baseID == $base['id']) ? 'selected' : '' ?> name="site"><?= $base['name'] ?></option>
+            <?php endforeach; ?>
+        </select>
+    </form>
 
     <form action="?action=newSheet" method="post">
         <?php if (($_SESSION['user']['admin'] == true)) { ?>
@@ -57,7 +55,7 @@ $title = "CSU-NVB - Remise de garde";
             <td>Jour : <?= $shiftsheet['bossDay'] ?><br>Nuit : <?= $shiftsheet['bossNight'] ?> </td>
             <td>Jour : <?= $shiftsheet['teammateDay'] ?><br>Nuit : <?= $shiftsheet['teammateNight'] ?></td>
             <td>
-                <?php if ((($_SESSION['user']['admin'] == true and getNbshiftsheet('open',$baseID) == 0) ||
+                <?php if ((($_SESSION['user']['admin'] == true and getNbshiftsheet('open', $baseID) == 0) ||
                     ($_SESSION['user']['admin'] == true and $shiftsheet['statusslug'] == 'close') ||
                     $shiftsheet['statusslug'] == 'open' ||
                     $shiftsheet['statusslug'] == 'reopen')) { ?>
