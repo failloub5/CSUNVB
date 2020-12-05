@@ -114,10 +114,10 @@ function nextWeekNumber($weekNbr){
  * @param $baseID : l'ID de la base à laquelle appartient la semaine
  * @param $weekID : l'ID de la semaine a ouvrir
  */
-function openAWeek($baseID, $weekID){
-    openWeeklyTasks($weekID);
+function reopenweek($todo_id){
+    openWeeklyTasks($todo_id);
     $_SESSION['flashmessage'] = "La semaine a été ouverte.";
-    showWeeklyTasks($baseID, $weekID);
+    showtodo($todo_id);
 }
 
 /**

@@ -82,10 +82,9 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                     <td>Semaine <?=$week['week']?></td>
                     <td>Cloturé</td>
                     <td>
-                        <form action="?action=toDoDetails" method="POST">
-                            <input type="hidden" name="weekID" value="<?= $week['id'] ?>">
-                            <input type="hidden" name="weekNbr" value="<?= $week['week'] ?>">
-                            <input type="hidden" name="baseID" value="<?= $selectedBaseID ?>">
+                        <form>
+                            <input type="hidden" name="action" value="showtodo">
+                            <input type="hidden" name="id" value="<?= $week['id'] ?>">
                             <button type="submit" class='btn btn-primary m-1 float-right'>Détails</button>
                         </form>
                     </td>
