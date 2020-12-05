@@ -38,7 +38,7 @@ function pharmacheck() {
     $sheet = readSheet($sheet);
     $druguse = readDrug($batch["drug_id"]);
     $base = getbasebyid($sheet["base_id"]);
-    $user = $_SESSION["username"];
+    $user = $_SESSION['user'];
     $pharmacheck = getPharmaCheckByDateAndBatch($date, $batch["id"], $sheet["id"]);
     $date = strtotime("$date");
     $datefrom = date("Y-m-d", $date);

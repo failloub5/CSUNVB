@@ -58,9 +58,9 @@
         </div>
         <div>
             <a href="?action=home" class="btn btn-primary m-1 pull-right">Accueil</a>
-            <?php if (isset($_SESSION['username'])) : ?>
+            <?php if (isset($_SESSION['user'])) : ?>
                 <a href="?action=disconnect" class="btn btn-primary m-1 pull-right">Se déconnecter</a>
-                <p>Connecté en tant que : <strong><?= $_SESSION['username']['initials'] ?></strong> à
+                <p>Connecté en tant que : <strong><?= $_SESSION['user']['initials'] ?></strong> à
                     <strong><?= $_SESSION['base']['name'] ?></strong>
                 </p>
             <?php endif; ?>

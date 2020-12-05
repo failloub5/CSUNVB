@@ -19,7 +19,7 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                 <button type="submit" class='btn btn-primary m-1 float-right'>Sauvegarder le nom</button>
             </form>
         </div>
-        <?php if ($_SESSION['username']['admin'] == 1 && $alreadyOpen == false && $week['state'] == "close"): ?>
+        <?php if ($_SESSION['user']['admin'] == 1 && $alreadyOpen == false && $week['state'] == "close"): ?>
             <div>
                 <form action="?action=openWeek" method="POST">
                     <input type="hidden" name="weekID" value="<?= $week['id'] ?>">
@@ -27,7 +27,7 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                     <button type="submit" class='btn btn-primary m-1 float-right'>Ouvrir</button>
                 </form>
             </div>
-        <?php elseif ($_SESSION['username']['admin'] == 1 && $week['state'] == "open"): ?>
+        <?php elseif ($_SESSION['user']['admin'] == 1 && $week['state'] == "open"): ?>
             <div>
                 <form action="?action=closeWeek" method="POST">
                     <input type="hidden" name="weekID" value="<?= $week['id'] ?>">

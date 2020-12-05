@@ -12,7 +12,7 @@ $title = "CSU-NVB - Accueil";
 
 <div class="container ">
     <div class="row m-4 d-flex justify-content-center">
-        <?php if ($_SESSION['username']['admin'] == true): ?>
+        <?php if ($_SESSION['user']['admin'] == true): ?>
             <a class="col-4 bigfont btn btn-primary btn-large p-5 m-5 font-weight-bolder" href="?action=adminHome">Administration</a>
         <?php endif; ?>
         <a class="col-4 bigfont btn btn-primary btn-large p-5 m-5 font-weight-bolder" href="?action=listshift">Remise de garde</a>

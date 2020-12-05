@@ -27,7 +27,7 @@ function altershiftsheetStatus(){
             closeShiftPage($_POST["id"]);
             break;
         case 'blank' :
-            if (($_SESSION['username']['admin'] == true)) {
+            if (($_SESSION['user']['admin'] == true)) {
                 if( getNbshiftsheet('open',$_SESSION["selectedBase"]) == 0 ){
                     openShiftPage($_POST["id"]);
                 }else{
@@ -36,7 +36,7 @@ function altershiftsheetStatus(){
             }
             break;
         case 'close' :
-            if (($_SESSION['username']['admin'] == true)) reopenShiftPage($_POST["id"]);
+            if (($_SESSION['user']['admin'] == true)) reopenShiftPage($_POST["id"]);
             break;
         default :
             break;
@@ -56,7 +56,7 @@ function showshift($shiftid)
 {
     $sections = getshiftsections($shiftid);
     $shiftsheet = getshiftsheetByID($shiftid);
-    $enableshiftsheetUpdate = ($shiftsheet['status'] == "open" || ($shiftsheet['status'] == "blank" && $_SESSION['username']['admin'] == true));
+    $enableshiftsheetUpdate = ($shiftsheet['status'] == "open" || ($shiftsheet['status'] == "blank" && $_SESSION['user']['admin'] == true));
     $enableshiftsheetFilling = ($shiftsheet['status'] == "open");
     require_once VIEW . 'shift/show.php';
 }

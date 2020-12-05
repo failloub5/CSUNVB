@@ -36,7 +36,7 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                 echo ">".$base['name'];
             }?>
         </select>
-        <?php if ($_SESSION['username']['admin'] == 1) { ?>
+        <?php if ($_SESSION['user']['admin'] == 1) { ?>
             <a href="?action=addWeek&base=<?= $selectedBaseID ?>" class="btn btn-primary m-1 pull-right">Nouvelle semaine</a>
         <?php } ?>
     </form>

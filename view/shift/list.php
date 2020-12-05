@@ -25,7 +25,7 @@ $title = "CSU-NVB - Remise de garde";
     </FORM>
 
     <form action="?action=newSheet" method="post">
-        <?php if (($_SESSION['username']['admin'] == true)) { ?>
+        <?php if (($_SESSION['user']['admin'] == true)) { ?>
             <div class="col">
                 <input type="hidden" name="site" value="<?= $baseID ?>">
                 <button type="submit" class='btn btn-primary m-1 float-right'>Nouvelle Feuille de garde</button>
@@ -57,8 +57,8 @@ $title = "CSU-NVB - Remise de garde";
             <td>Jour : <?= $shiftsheet['bossDay'] ?><br>Nuit : <?= $shiftsheet['bossNight'] ?> </td>
             <td>Jour : <?= $shiftsheet['teammateDay'] ?><br>Nuit : <?= $shiftsheet['teammateNight'] ?></td>
             <td>
-                <?php if ((($_SESSION['username']['admin'] == true and getNbshiftsheet('open',$baseID) == 0) ||
-                    ($_SESSION['username']['admin'] == true and $shiftsheet['statusslug'] == 'close') ||
+                <?php if ((($_SESSION['user']['admin'] == true and getNbshiftsheet('open',$baseID) == 0) ||
+                    ($_SESSION['user']['admin'] == true and $shiftsheet['statusslug'] == 'close') ||
                     $shiftsheet['statusslug'] == 'open' ||
                     $shiftsheet['statusslug'] == 'reopen')) { ?>
                     <form action="?action=altershiftsheetStatus" method="post">
