@@ -11,6 +11,13 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                 <input type="hidden" name="selectBaseID" value="<?= $base['id'] ?>">
                 <button type="submit" class='btn btn-primary m-1 float-right'>Retour à la liste</button>
             </form>
+            <form action="?action=modelWeek" method="POST">
+                <input type="hidden" name="weekID" value="<?= $week['id'] ?>">
+                <input type="hidden" name="baseID" value="<?= $base['id'] ?>">
+                <input type="hidden" name="template_name" value="<?= $template['template_name'] ?>">
+
+                <button type="submit" class='btn btn-primary m-1 float-right'>Sauvegarder le nom</button>
+            </form>
         </div>
         <?php if ($_SESSION['username']['admin'] == 1 && $alreadyOpen == false && $week['state'] == "close"): ?>
             <div>
@@ -46,18 +53,8 @@ $title = "CSU-NVB - Tâches hebdomadaires";
         <?php foreach ($dates as $index => $date) : ?>
             <div class="col p-1">
                 <?php foreach ($todoThings[1][$index + 1] as $todothing): ?>
-                    <div class="todothing mb-1">
-                        <?= $todothing['description'] ?>
-                        <br>
-                        <div clase="text-primary">
-                            <?php if (empty($todothing['initials'])): ?>
-                                <br>
-                            <?php else: ?>
-                                <?= $todothing['initials'] ?>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
+                    <?= buttonTask($todothing['initials'], $todothing['description'], $week['state']) ?>
+                <?php endforeach;?>
             </div>
         <?php endforeach; ?>
     </div>
@@ -69,24 +66,15 @@ $title = "CSU-NVB - Tâches hebdomadaires";
         <?php foreach ($dates as $index => $date) : ?>
             <div class="col p-1">
                 <?php foreach ($todoThings[0][$index + 1] as $todothing): ?>
-                    <div class="todothing mb-1">
-                        <?= $todothing['description'] ?>
-                        <br>
-                        <div>
-                            <?php if (empty($todothing['initials'])): ?>
-                                <br>
-                            <?php else: ?>
-                                <?= $todothing['initials'] ?>
-                            <?php endif; ?>
-
-                        </div>
-
-                    </div>
-                <?php endforeach; ?>
+                    <?= buttonTask($todothing['initials'], $todothing['description'], $week['state']) ?>
+                <?php endforeach;?>
             </div>
         <?php endforeach; ?>
     </div>
     <br>
+</div>
+<div>
+    <?= popUpValidation("Quittance","sans valeur")?>
 </div>
 <?php
 $content = ob_get_clean();

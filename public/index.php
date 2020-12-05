@@ -217,6 +217,12 @@ function switcherUser()
         case 'openWeek':
             openAWeek($_POST['baseID'],$_POST['weekID']);
             break;
+        case 'modelWeek' :
+            modelWeek($_POST['weekID'],$_POST['template_name']);
+            break;
+        case 'loadAModel':
+            loadAModel($_GET['base'],$_POST['weekID'],$_POST['template_name']);
+            break;
         default :
             unknownPage();
             break;

@@ -26,12 +26,21 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                     echo ">".$base['name'];
                 }?>
         </select>
+        <select onchange="this.form.submit()" name="selectModel">
+            <?php
+            foreach ($baseList as $base) {
+                echo "<option value='".$base['id']."'";
+                if($base['id'] == $selectedBaseID){
+                    echo "selected='selected'";
+                }
+                echo ">".$base['name'];
+            }?>
+        </select>
+        <?php if ($_SESSION['username']['admin'] == 1) { ?>
+            <a href="?action=addWeek&base=<?= $selectedBaseID ?>" class="btn btn-primary m-1 pull-right">Nouvelle semaine</a>
+        <?php } ?>
     </form>
-    <?php if ($_SESSION['username']['admin'] == 1) { ?>
-        <a href="?action=addWeek&base=<?= $selectedBaseID ?>" class="btn btn-primary m-1 pull-right">Nouvelle semaine</a>
-    <?php } ?>
 </div>
-
 <div>
     <h3>Semaine en cours</h3>
     <?php if(isset($activeWeek['week'])): ?>
