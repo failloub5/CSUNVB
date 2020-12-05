@@ -89,17 +89,17 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `csunvb_csu`.`stupsheets`
+-- Table `csunvb_csu`.`drugsheets`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `csunvb_csu`.`stupsheets` (
+CREATE TABLE IF NOT EXISTS `csunvb_csu`.`drugsheets` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `week` INT NOT NULL,
   `state` VARCHAR(45) NOT NULL,
   `base_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_stupsheets_bases1_idx` (`base_id` ASC) VISIBLE,
-  UNIQUE INDEX `STUPSHEETUNIQ` (`week` ASC, `base_id` ASC) VISIBLE,
-  CONSTRAINT `fk_stupsheets_bases1`
+  INDEX `fk_drugsheets_bases1_idx` (`base_id` ASC) VISIBLE,
+  UNIQUE INDEX `drugSHEETUNIQ` (`week` ASC, `base_id` ASC) VISIBLE,
+  CONSTRAINT `fk_drugsheets_bases1`
     FOREIGN KEY (`base_id`)
     REFERENCES `csunvb_csu`.`bases` (`id`)
     ON DELETE NO ACTION
@@ -117,11 +117,11 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`pharmachecks` (
   `end` INT NULL,
   `batch_id` INT NOT NULL,
   `user_id` INT NOT NULL,
-  `stupsheet_id` INT NOT NULL,
+  `drugsheet_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_pharmachecks_batches1_idx` (`batch_id` ASC) VISIBLE,
   INDEX `fk_pharmachecks_users1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_pharmachecks_stupsheets1_idx` (`stupsheet_id` ASC) VISIBLE,
+  INDEX `fk_pharmachecks_drugsheets1_idx` (`drugsheet_id` ASC) VISIBLE,
   CONSTRAINT `fk_pharmachecks_batches1`
     FOREIGN KEY (`batch_id`)
     REFERENCES `csunvb_csu`.`batches` (`id`)
@@ -132,9 +132,9 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`pharmachecks` (
     REFERENCES `csunvb_csu`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_pharmachecks_stupsheets1`
-    FOREIGN KEY (`stupsheet_id`)
-    REFERENCES `csunvb_csu`.`stupsheets` (`id`)
+  CONSTRAINT `fk_pharmachecks_drugsheets1`
+    FOREIGN KEY (`drugsheet_id`)
+    REFERENCES `csunvb_csu`.`drugsheets` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -151,12 +151,12 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`novachecks` (
   `drug_id` INT NOT NULL,
   `nova_id` INT NOT NULL,
   `user_id` INT NOT NULL,
-  `stupsheet_id` INT NOT NULL,
+  `drugsheet_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_novachecks_drugs1_idx` (`drug_id` ASC) VISIBLE,
   INDEX `fk_novachecks_novas1_idx` (`nova_id` ASC) VISIBLE,
   INDEX `fk_novachecks_users1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_novachecks_stupsheets1_idx` (`stupsheet_id` ASC) VISIBLE,
+  INDEX `fk_novachecks_drugsheets1_idx` (`drugsheet_id` ASC) VISIBLE,
   CONSTRAINT `fk_novachecks_drugs1`
     FOREIGN KEY (`drug_id`)
     REFERENCES `csunvb_csu`.`drugs` (`id`)
@@ -172,9 +172,9 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`novachecks` (
     REFERENCES `csunvb_csu`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_novachecks_stupsheets1`
-    FOREIGN KEY (`stupsheet_id`)
-    REFERENCES `csunvb_csu`.`stupsheets` (`id`)
+  CONSTRAINT `fk_novachecks_drugsheets1`
+    FOREIGN KEY (`drugsheet_id`)
+    REFERENCES `csunvb_csu`.`drugsheets` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -213,23 +213,23 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `csunvb_csu`.`stupsignatures`
+-- Table `csunvb_csu`.`drugsignatures`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `csunvb_csu`.`stupsignatures` (
+CREATE TABLE IF NOT EXISTS `csunvb_csu`.`drugsignatures` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `date` DATETIME NOT NULL,
   `day` INT NOT NULL,
-  `stupsheet_id` INT NOT NULL,
+  `drugsheet_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_stupsignatures_stupsheets1_idx` (`stupsheet_id` ASC) VISIBLE,
-  INDEX `fk_stupsignatures_users1_idx` (`user_id` ASC) VISIBLE,
-  CONSTRAINT `fk_stupsignatures_stupsheets1`
-    FOREIGN KEY (`stupsheet_id`)
-    REFERENCES `csunvb_csu`.`stupsheets` (`id`)
+  INDEX `fk_drugsignatures_drugsheets1_idx` (`drugsheet_id` ASC) VISIBLE,
+  INDEX `fk_drugsignatures_users1_idx` (`user_id` ASC) VISIBLE,
+  CONSTRAINT `fk_drugsignatures_drugsheets1`
+    FOREIGN KEY (`drugsheet_id`)
+    REFERENCES `csunvb_csu`.`drugsheets` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_stupsignatures_users1`
+  CONSTRAINT `fk_drugsignatures_users1`
     FOREIGN KEY (`user_id`)
     REFERENCES `csunvb_csu`.`users` (`id`)
     ON DELETE NO ACTION
@@ -238,22 +238,22 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `csunvb_csu`.`stupsheet_use_nova`
+-- Table `csunvb_csu`.`drugsheet_use_nova`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `csunvb_csu`.`stupsheet_use_nova` (
+CREATE TABLE IF NOT EXISTS `csunvb_csu`.`drugsheet_use_nova` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `stupsheet_id` INT NOT NULL,
+  `drugsheet_id` INT NOT NULL,
   `nova_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_stupsheet_use_nova_stupsheets1_idx` (`stupsheet_id` ASC) VISIBLE,
-  INDEX `fk_stupsheet_use_nova_novas1_idx` (`nova_id` ASC) VISIBLE,
-  UNIQUE INDEX `unique_use` (`stupsheet_id` ASC, `nova_id` ASC) VISIBLE,
-  CONSTRAINT `fk_stupsheet_use_nova_stupsheets1`
-    FOREIGN KEY (`stupsheet_id`)
-    REFERENCES `csunvb_csu`.`stupsheets` (`id`)
+  INDEX `fk_drugsheet_use_nova_drugsheets1_idx` (`drugsheet_id` ASC) VISIBLE,
+  INDEX `fk_drugsheet_use_nova_novas1_idx` (`nova_id` ASC) VISIBLE,
+  UNIQUE INDEX `unique_use` (`drugsheet_id` ASC, `nova_id` ASC) VISIBLE,
+  CONSTRAINT `fk_drugsheet_use_nova_drugsheets1`
+    FOREIGN KEY (`drugsheet_id`)
+    REFERENCES `csunvb_csu`.`drugsheets` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_stupsheet_use_nova_novas1`
+  CONSTRAINT `fk_drugsheet_use_nova_novas1`
     FOREIGN KEY (`nova_id`)
     REFERENCES `csunvb_csu`.`novas` (`id`)
     ON DELETE NO ACTION
@@ -262,22 +262,22 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `csunvb_csu`.`stupsheet_use_batch`
+-- Table `csunvb_csu`.`drugsheet_use_batch`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `csunvb_csu`.`stupsheet_use_batch` (
+CREATE TABLE IF NOT EXISTS `csunvb_csu`.`drugsheet_use_batch` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `stupsheet_id` INT NOT NULL,
+  `drugsheet_id` INT NOT NULL,
   `batch_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_stupsheet_use_batch_stupsheets1_idx` (`stupsheet_id` ASC) VISIBLE,
-  INDEX `fk_stupsheet_use_batch_batches1_idx` (`batch_id` ASC) VISIBLE,
-  UNIQUE INDEX `unique_use` (`stupsheet_id` ASC, `batch_id` ASC) VISIBLE,
-  CONSTRAINT `fk_stupsheet_use_batch_stupsheets1`
-    FOREIGN KEY (`stupsheet_id`)
-    REFERENCES `csunvb_csu`.`stupsheets` (`id`)
+  INDEX `fk_drugsheet_use_batch_drugsheets1_idx` (`drugsheet_id` ASC) VISIBLE,
+  INDEX `fk_drugsheet_use_batch_batches1_idx` (`batch_id` ASC) VISIBLE,
+  UNIQUE INDEX `unique_use` (`drugsheet_id` ASC, `batch_id` ASC) VISIBLE,
+  CONSTRAINT `fk_drugsheet_use_batch_drugsheets1`
+    FOREIGN KEY (`drugsheet_id`)
+    REFERENCES `csunvb_csu`.`drugsheets` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_stupsheet_use_batch_batches1`
+  CONSTRAINT `fk_drugsheet_use_batch_batches1`
     FOREIGN KEY (`batch_id`)
     REFERENCES `csunvb_csu`.`batches` (`id`)
     ON DELETE NO ACTION
@@ -293,7 +293,7 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`todosheets` (
   `week` INT NOT NULL,
   `state` VARCHAR(45) NOT NULL,
   `base_id` INT NOT NULL,
-  `template_name` VARCHAR(45) NULL DEFAULT NULL COMMENT 'The name under which the stupsheet may be identified as a templatre to be create new sheets. Copies will NOT carry that name',
+  `template_name` VARCHAR(45) NULL DEFAULT NULL COMMENT 'The name under which the drugsheet may be identified as a templatre to be create new sheets. Copies will NOT carry that name',
   PRIMARY KEY (`id`),
   UNIQUE INDEX `model_name_UNIQUE` (`template_name` ASC) VISIBLE,
   INDEX `fk_todosheets_bases1_idx` (`base_id` ASC) VISIBLE,

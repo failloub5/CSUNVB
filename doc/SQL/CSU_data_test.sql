@@ -57,42 +57,42 @@ INSERT INTO `restocks` VALUES (5,'2020-10-26 00:00:00',1,4,5,2),(6,'2020-10-26 0
 UNLOCK TABLES;
 
 --
--- Dumping data for table `stupsheet_use_batch`
+-- Dumping data for table `drugsheet_use_batch`
 --
 
-LOCK TABLES `stupsheet_use_batch` WRITE;
-/*!40000 ALTER TABLE `stupsheet_use_batch` DISABLE KEYS */;
-INSERT INTO `stupsheet_use_batch` VALUES (109,23,4),(110,23,8),(111,23,13);
-/*!40000 ALTER TABLE `stupsheet_use_batch` ENABLE KEYS */;
+LOCK TABLES `drugsheet_use_batch` WRITE;
+/*!40000 ALTER TABLE `drugsheet_use_batch` DISABLE KEYS */;
+INSERT INTO `drugsheet_use_batch` VALUES (109,23,4),(110,23,8),(111,23,13);
+/*!40000 ALTER TABLE `drugsheet_use_batch` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Dumping data for table `stupsheet_use_nova`
+-- Dumping data for table `drugsheet_use_nova`
 --
 
-LOCK TABLES `stupsheet_use_nova` WRITE;
-/*!40000 ALTER TABLE `stupsheet_use_nova` DISABLE KEYS */;
-INSERT INTO `stupsheet_use_nova` VALUES (51,23,3),(52,23,5);
-/*!40000 ALTER TABLE `stupsheet_use_nova` ENABLE KEYS */;
+LOCK TABLES `drugsheet_use_nova` WRITE;
+/*!40000 ALTER TABLE `drugsheet_use_nova` DISABLE KEYS */;
+INSERT INTO `drugsheet_use_nova` VALUES (51,23,3),(52,23,5);
+/*!40000 ALTER TABLE `drugsheet_use_nova` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Dumping data for table `stupsheets`
+-- Dumping data for table `drugsheets`
 --
 
-LOCK TABLES `stupsheets` WRITE;
-/*!40000 ALTER TABLE `stupsheets` DISABLE KEYS */;
-INSERT INTO `stupsheets` VALUES (23,2044,'open',2);
-/*!40000 ALTER TABLE `stupsheets` ENABLE KEYS */;
+LOCK TABLES `drugsheets` WRITE;
+/*!40000 ALTER TABLE `drugsheets` DISABLE KEYS */;
+INSERT INTO `drugsheets` VALUES (23,2044,'open',2);
+/*!40000 ALTER TABLE `drugsheets` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Dumping data for table `stupsignatures`
+-- Dumping data for table `drugsignatures`
 --
 
-LOCK TABLES `stupsignatures` WRITE;
-/*!40000 ALTER TABLE `stupsignatures` DISABLE KEYS */;
-/*!40000 ALTER TABLE `stupsignatures` ENABLE KEYS */;
+LOCK TABLES `drugsignatures` WRITE;
+/*!40000 ALTER TABLE `drugsignatures` DISABLE KEYS */;
+/*!40000 ALTER TABLE `drugsignatures` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
