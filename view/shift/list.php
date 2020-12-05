@@ -58,12 +58,12 @@ $title = "CSU-NVB - Remise de garde";
             <td>Jour : <?= $shiftsheet['teammateDay'] ?><br>Nuit : <?= $shiftsheet['teammateNight'] ?></td>
             <td>
                 <?php if ((($_SESSION['username']['admin'] == true and getNbshiftsheet('open',$baseID) == 0) ||
-                    ($_SESSION['username']['admin'] == true and $shiftsheet['status'] == 'close') ||
-                    $shiftsheet['status'] == 'open' ||
-                    $shiftsheet['status'] == 'reopen')) { ?>
+                    ($_SESSION['username']['admin'] == true and $shiftsheet['statusslug'] == 'close') ||
+                    $shiftsheet['statusslug'] == 'open' ||
+                    $shiftsheet['statusslug'] == 'reopen')) { ?>
                     <form action="?action=altershiftsheetStatus" method="post">
                         <input type=hidden name="id" value= <?= $shiftsheet['id'] ?>>
-                        <button class="btn btn-primary btn-sm" name="status" value="<?= $shiftsheet['status'] ?>"
+                        <button class="btn btn-primary btn-sm" name="status" value="<?= $shiftsheet['statusslug'] ?>"
                         </button>
                         <?= $shiftsheet['status'] ?>
                     </form>

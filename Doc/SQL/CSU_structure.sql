@@ -365,9 +365,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `csunvb_csu`.`guardsheets`
+-- Table `csunvb_csu`.`shiftsheets`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `csunvb_csu`.`guardsheets` (
+CREATE TABLE IF NOT EXISTS `csunvb_csu`.`shiftsheets` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `date` DATETIME NOT NULL,
   `base_id` INT NOT NULL,
@@ -379,52 +379,52 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`guardsheets` (
   `daynova_id` INT NULL,
   `nightnova_id` INT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_guardsheets_bases1_idx` (`base_id` ASC) VISIBLE,
+  INDEX `fk_shiftsheets_bases1_idx` (`base_id` ASC) VISIBLE,
   UNIQUE INDEX `uniq` (`base_id` ASC, `date` ASC) VISIBLE,
-  INDEX `fk_guardSheets_status1_idx` (`status_id` ASC) VISIBLE,
-  INDEX `fk_guardSheets_users1_idx` (`dayboss_id` ASC) VISIBLE,
-  INDEX `fk_guardSheets_users2_idx` (`nightboss_id` ASC) VISIBLE,
-  INDEX `fk_guardSheets_users3_idx` (`dayteammate_id` ASC) VISIBLE,
-  INDEX `fk_guardSheets_users4_idx` (`nightteammate_id` ASC) VISIBLE,
-  INDEX `fk_guardSheets_novas1_idx` (`daynova_id` ASC) VISIBLE,
-  INDEX `fk_guardSheets_novas2_idx` (`nightnova_id` ASC) VISIBLE,
+  INDEX `fk_shiftSheets_status1_idx` (`status_id` ASC) VISIBLE,
+  INDEX `fk_shiftSheets_users1_idx` (`dayboss_id` ASC) VISIBLE,
+  INDEX `fk_shiftSheets_users2_idx` (`nightboss_id` ASC) VISIBLE,
+  INDEX `fk_shiftSheets_users3_idx` (`dayteammate_id` ASC) VISIBLE,
+  INDEX `fk_shiftSheets_users4_idx` (`nightteammate_id` ASC) VISIBLE,
+  INDEX `fk_shiftSheets_novas1_idx` (`daynova_id` ASC) VISIBLE,
+  INDEX `fk_shiftSheets_novas2_idx` (`nightnova_id` ASC) VISIBLE,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  CONSTRAINT `fk_guardsheets_bases1`
+  CONSTRAINT `fk_shiftsheets_bases1`
     FOREIGN KEY (`base_id`)
     REFERENCES `csunvb_csu`.`bases` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_guardSheets_status1`
+  CONSTRAINT `fk_shiftSheets_status1`
     FOREIGN KEY (`status_id`)
     REFERENCES `csunvb_csu`.`status` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_guardSheets_users1`
+  CONSTRAINT `fk_shiftSheets_users1`
     FOREIGN KEY (`dayboss_id`)
     REFERENCES `csunvb_csu`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_guardSheets_users2`
+  CONSTRAINT `fk_shiftSheets_users2`
     FOREIGN KEY (`nightboss_id`)
     REFERENCES `csunvb_csu`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_guardSheets_users3`
+  CONSTRAINT `fk_shiftSheets_users3`
     FOREIGN KEY (`dayteammate_id`)
     REFERENCES `csunvb_csu`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_guardSheets_users4`
+  CONSTRAINT `fk_shiftSheets_users4`
     FOREIGN KEY (`nightteammate_id`)
     REFERENCES `csunvb_csu`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_guardSheets_novas1`
+  CONSTRAINT `fk_shiftSheets_novas1`
     FOREIGN KEY (`daynova_id`)
     REFERENCES `csunvb_csu`.`novas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_guardSheets_novas2`
+  CONSTRAINT `fk_shiftSheets_novas2`
     FOREIGN KEY (`nightnova_id`)
     REFERENCES `csunvb_csu`.`novas` (`id`)
     ON DELETE NO ACTION
@@ -433,9 +433,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `csunvb_csu`.`guardsections`
+-- Table `csunvb_csu`.`shiftsections`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `csunvb_csu`.`guardsections` (
+CREATE TABLE IF NOT EXISTS `csunvb_csu`.`shiftsections` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
@@ -445,85 +445,85 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `csunvb_csu`.`guardactions`
+-- Table `csunvb_csu`.`shiftactions`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `csunvb_csu`.`guardactions` (
+CREATE TABLE IF NOT EXISTS `csunvb_csu`.`shiftactions` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `text` VARCHAR(45) NOT NULL,
-  `guardsection_id` INT NOT NULL,
+  `shiftsection_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_guard_lines_guard_sections1_idx` (`guardsection_id` ASC) VISIBLE,
+  INDEX `fk_shift_lines_shift_sections1_idx` (`shiftsection_id` ASC) VISIBLE,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  CONSTRAINT `fk_guard_lines_guard_sections1`
-    FOREIGN KEY (`guardsection_id`)
-    REFERENCES `csunvb_csu`.`guardsections` (`id`)
+  CONSTRAINT `fk_shift_lines_shift_sections1`
+    FOREIGN KEY (`shiftsection_id`)
+    REFERENCES `csunvb_csu`.`shiftsections` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `csunvb_csu`.`guardcomments`
+-- Table `csunvb_csu`.`shiftcomments`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `csunvb_csu`.`guardcomments` (
+CREATE TABLE IF NOT EXISTS `csunvb_csu`.`shiftcomments` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `message` VARCHAR(200) NOT NULL,
   `time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `carryOn` TINYINT(1) NOT NULL DEFAULT 0,
   `user_id` INT NOT NULL,
-  `guardsheet_id` INT NOT NULL,
-  `guardaction_id` INT NOT NULL,
+  `shiftsheet_id` INT NOT NULL,
+  `shiftaction_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_comments_users1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_comments_guardSheets1_idx` (`guardsheet_id` ASC) VISIBLE,
-  INDEX `fk_comments_guardActions1_idx` (`guardaction_id` ASC) VISIBLE,
+  INDEX `fk_comments_shiftSheets1_idx` (`shiftsheet_id` ASC) VISIBLE,
+  INDEX `fk_comments_shiftActions1_idx` (`shiftaction_id` ASC) VISIBLE,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   CONSTRAINT `fk_comments_users1`
     FOREIGN KEY (`user_id`)
     REFERENCES `csunvb_csu`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_comments_guardSheets1`
-    FOREIGN KEY (`guardsheet_id`)
-    REFERENCES `csunvb_csu`.`guardsheets` (`id`)
+  CONSTRAINT `fk_comments_shiftSheets1`
+    FOREIGN KEY (`shiftsheet_id`)
+    REFERENCES `csunvb_csu`.`shiftsheets` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_comments_guardActions1`
-    FOREIGN KEY (`guardaction_id`)
-    REFERENCES `csunvb_csu`.`guardactions` (`id`)
+  CONSTRAINT `fk_comments_shiftActions1`
+    FOREIGN KEY (`shiftaction_id`)
+    REFERENCES `csunvb_csu`.`shiftactions` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `csunvb_csu`.`guardchecks`
+-- Table `csunvb_csu`.`shiftchecks`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `csunvb_csu`.`guardchecks` (
+CREATE TABLE IF NOT EXISTS `csunvb_csu`.`shiftchecks` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `day` TINYINT(1) NOT NULL,
   `time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `guardsheet_id` INT NOT NULL,
+  `shiftsheet_id` INT NOT NULL,
   `user_id` INT NOT NULL,
-  `guardaction_id` INT NOT NULL,
+  `shiftaction_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_guardChecks_guardSheets1_idx` (`guardsheet_id` ASC) VISIBLE,
-  INDEX `fk_guardChecks_users1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_guardChecks_guardActions1_idx` (`guardaction_id` ASC) VISIBLE,
-  CONSTRAINT `fk_guardChecks_guardSheets1`
-    FOREIGN KEY (`guardsheet_id`)
-    REFERENCES `csunvb_csu`.`guardsheets` (`id`)
+  INDEX `fk_shiftChecks_shiftSheets1_idx` (`shiftsheet_id` ASC) VISIBLE,
+  INDEX `fk_shiftChecks_users1_idx` (`user_id` ASC) VISIBLE,
+  INDEX `fk_shiftChecks_shiftActions1_idx` (`shiftaction_id` ASC) VISIBLE,
+  CONSTRAINT `fk_shiftChecks_shiftSheets1`
+    FOREIGN KEY (`shiftsheet_id`)
+    REFERENCES `csunvb_csu`.`shiftsheets` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_guardChecks_users1`
+  CONSTRAINT `fk_shiftChecks_users1`
     FOREIGN KEY (`user_id`)
     REFERENCES `csunvb_csu`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_guardChecks_guardActions1`
-    FOREIGN KEY (`guardaction_id`)
-    REFERENCES `csunvb_csu`.`guardactions` (`id`)
+  CONSTRAINT `fk_shiftChecks_shiftActions1`
+    FOREIGN KEY (`shiftaction_id`)
+    REFERENCES `csunvb_csu`.`shiftactions` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

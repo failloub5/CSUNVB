@@ -91,7 +91,7 @@ function getshiftsections($shiftSheetID)
 
 function getshiftsheetForBase($base_id)
 {
-    return selectMany('SELECT shiftsheets.id, shiftsheets.date, shiftsheets.base_id, status.displayname AS status,novaDay.number AS novaDay, novaNight.number AS novaNight, bossDay.initials AS bossDay, bossNight.initials AS bossNight,teammateDay.initials AS teammateDay, teammateNight.initials AS teammateNight
+    return selectMany('SELECT shiftsheets.id, shiftsheets.date, shiftsheets.base_id, status.displayname AS status, status.slug AS statusslug,novaDay.number AS novaDay, novaNight.number AS novaNight, bossDay.initials AS bossDay, bossNight.initials AS bossNight,teammateDay.initials AS teammateDay, teammateNight.initials AS teammateNight
 FROM shiftsheets
 INNER JOIN status ON status.id = shiftsheets.status_id
 LEFT JOIN novas novaDay ON novaDay.id = shiftsheets.daynova_id
