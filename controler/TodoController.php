@@ -3,42 +3,46 @@ COMMENTAIRES
 -->
 <?php
 
+/** Fonction qui permet l'affichage des semaines de tâches pour la base par défaut (où on est loggé)
+ */
+function listtodo(){
+    listtodoforbase($_SESSION['base']['id']);
+}
+
 /** Fonction qui permet l'affichage des semaines de tâches pour une base spécifique
  * @param $selectedBaseID : l'ID de la base dont les semaines sont à afficher
  */
-function homeWeeklyTasks($selectedBaseID){
+function listtodoforbase($selectedBaseID){
     $weeksNbrList = getClosedWeeks($selectedBaseID); // La liste des numéros de semaines qui sont fermées
     $activeWeek = getOpenedWeeks($selectedBaseID);  // Le numero de la semaine active
-
     $baseList = getbases();
-    require_once VIEW . 'todo/homeWeeklyTasks.php';
+    require_once VIEW . 'todo/list.php';
 }
 
 /**
  * Fonction qui affiche les tâches d'une semaine spécifique
- * @param $baseID : l'ID de la base à laquelle appartient la semaine à afficher
- * @param $weekID : l'ID de la semaine à afficher
+ * @param $todo_id : l'ID de la feuille de tâche à afficher
  */
-function showWeeklyTasks($baseID, $weekID){
-    $base = getbasebyid($baseID);
-    $week = getTodosheetsByID($weekID);
+function showtodo($todo_id){
+    $week = getTodosheetByID($todo_id);
+    $base = getbasebyid($week['base_id']);
     $dates = getDatesFromWeekNumber($week['week']);
 
     /** Test pour vérifier si une autre feuille est déjà ouverte */
     $alreadyOpen = true;
-    if(empty(getOpenedWeeks($baseID))){
+    if(empty(getOpenedWeeks($base['id']))){
         $alreadyOpen = false;
     }
 
     for ($daynight=0; $daynight <= 1; $daynight++) {
         for ($dayofweek = 1; $dayofweek <= 7; $dayofweek++) {
-            $todoThings[$daynight][$dayofweek] = readTodoThingsForDay($weekID,$daynight,$dayofweek);
+            $todoThings[$daynight][$dayofweek] = readTodoThingsForDay($todo_id,$daynight,$dayofweek);
         }
     }
 
     $days = [1 => "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
 
-    require_once VIEW . 'todo/detailsWeeklyTasks.php';
+    require_once VIEW . 'todo/show.php';
 }
 
 /**
@@ -87,7 +91,7 @@ function addWeek($base){
     }
 
     $_SESSION['flashmessage'] = "La semaine ".$week['last_week']." a été créée.";
-    homeWeeklyTasks($base);
+    listtodoforbase($base);
 }
 
 /**
@@ -122,11 +126,11 @@ function openAWeek($baseID, $weekID){
  * @param $weekID : l'ID de la semaine a fermer
  */
 function closeAWeek($baseID, $weekID){
-    $week = getTodosheetsByID($weekID);
+    $week = getTodosheetByID($weekID);
 
     closeWeeklyTasks($weekID);
     $_SESSION['flashmessage'] = "La semaine ".$week['week']." a été clôturée.";
-    homeWeeklyTasks($baseID);
+    listtodoforbase($baseID);
 }
 
 function modelWeek($weekID, $template_name){

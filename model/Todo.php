@@ -5,8 +5,17 @@
  * @param $id : l'ID de la semaine à retrouver
  * @return array|mixed|null
  */
-function getTodosheetsByID($id){
+function getTodosheetByID($id){
     return selectOne("SELECT * FROM todosheets where id =:id", ['id' => $id]);
+}
+
+/**
+ * Fonction permettant de récupérer l'ensemble des informations d'une semaine pour une base et une semaine précise
+ * @param $id : l'ID de la semaine à retrouver
+ * @return array|mixed|null
+ */
+function getTodosheetByBaseAndWeek($base_id,$weeknb){
+    return selectOne("SELECT * FROM todosheets where base_id =:id and week = :weeknb", ['id' => $baseid, 'week' => $weeknb]);
 }
 
 /**
