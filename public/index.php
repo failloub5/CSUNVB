@@ -15,7 +15,7 @@ require "../path.php";
 require "../helpers.php";
 
 require CONTROLER . "adminControler.php";
-require CONTROLER . "drugControler.php";
+require CONTROLER . "drugsController.php";
 require CONTROLER . "mainControler.php";
 require CONTROLER . "shiftEndControler.php";
 require CONTROLER . "weeklyTasksControler.php";
@@ -26,7 +26,7 @@ require MODEL . "databaseModel.php";
 
 require MODEL . "baseModel.php";
 require MODEL . "userModel.php";
-require MODEL . "drugModel.php";
+require MODEL . "drugsModel.php";
 require MODEL . "novaModel.php";
 require MODEL . "shiftEndModel.php";
 require MODEL . "weeklyTasksModel.php";
@@ -52,7 +52,6 @@ if (isset($_SESSION["username"])) {
     /** Using mainControler */
     login();
 }
-
 
 function switcherAdmin()
 {
@@ -138,49 +137,40 @@ function switcherUser()
             disconnect();
             break;
 
-        /** Using drugControler */
+        /** Using drugController */
 
-        case 'closeStupFromTable' :
-            $baseId = $_GET['stupBaseId'];
-            $week = $_GET['stupPageWeek'];
-            closedStupFromTable($baseId, $week);
+        case 'newDrugSheet':;
+            createDrugSheet();
             break;
-        case 'addNewStup':
-            ;
-            createSheetStup();
+        case 'openDrugSheet' :
+            openDrugSheet();
             break;
-        case 'activateStup' :
-            activateStup();
+        case 'closeDrugSheet':
+            closeDrugSheet();
             break;
-        case 'activateStupFromTable' :
-            activateStupFromTable();
-            break;
-        case "drugSiteTable":
-            drugSiteTable();
+        case 'reopenDrugSheet':
+            reopenDrugSheet();
             break;
         case 'updatePharmaCheck':
             pharmacheck();
             break;
-        case "PharmaUpdate":
+        case "pharmaUpdate":
             PharmaUpdate();
             break;
-        case 'LogStup':
-            logStup();
-            break;
-        case 'drugs':
+        case 'showDrugSheetList':
             if (isset($_POST["site"])) {
-                $base_id = $_POST["site"];
+                $baseID = $_POST["site"];
             } else {
-                $base_id = $_SESSION['base']['id'];
+                $baseID = $_SESSION['base']['id'];
             }
-            drugHomePage($base_id);
+            showDrugSheetList($baseID);
             break;
-        case 'reopenStup':
-            reopenStup();
+        case "showDrugSheet":
+            showDrugSheet();
             break;
-        case 'closedStup':
-            closedStup();
-            break;
+        /* case 'drugLog':
+            drugLog();
+            break; */
 
         /** Using shiftEndControler */
 

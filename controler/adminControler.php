@@ -1,6 +1,6 @@
 <?php
 
-/** Display Admin page */
+/** Display admin page */
 function adminHome()
 {
     require VIEW . 'admin/adminHome.php';
@@ -58,7 +58,7 @@ function resetUserPassword()
     adminCrew();
 }
 
-/** Drug Administration */
+/** drugs Administration */
 
 function adminDrugs()
 {
@@ -79,7 +79,7 @@ function newDrug(){
 function updateDrug(){
     $idDrug = $_GET['idDrug'];
     if(isset($_POST['updateNameDrug'])){
-        updateNameDrug($_POST['updateNameDrug'], $idDrug);
+        updateDrugName($_POST['updateNameDrug'], $idDrug);
         adminDrugs();
     }
     else {
