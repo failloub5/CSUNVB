@@ -46,7 +46,7 @@ $title = "CSU-NVB - Remise de garde";
     </thead>
     <?php foreach ($shiftsheets as $shiftsheet) { ?>
         <tr>
-            <td><a href='?action=showshiftsheet&id=<?= $shiftsheet['id'] ?>'
+            <td><a href='?action=showshift&id=<?= $shiftsheet['id'] ?>'
                    class="btn"><?= date('d.m.Y', strtotime($shiftsheet['date'])) ?>  </a></td>
             <td>
                 <?= $shiftsheet['status'] ?>
