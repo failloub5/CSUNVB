@@ -37,7 +37,6 @@ function getVersion()
     return "2.1";
 }
 
-<<<<<<< HEAD
 function getDrugStateButton($state) {
      switch ($state) {
          case "closed":
@@ -49,7 +48,7 @@ function getDrugStateButton($state) {
              return "open";
      }
 }
-=======
+
 function buttonTask($initials, $desription, $weekState)
 {
     if($weekState == 'open'){
@@ -90,6 +89,4 @@ function popUpValidation($title, $message){
                 </div>
             </div>";
 }
-
->>>>>>> todo
 ?>

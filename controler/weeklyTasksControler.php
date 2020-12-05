@@ -136,14 +136,5 @@ function modelWeek($weekID, $template_name){
 }
 
 function loadAModel($weekID, $template_name){
-
-<<<<<<< HEAD
-function activateSheet($state)
-{
-    $activatestatus = activateTodoSheets($state);
+    $toDos = readTodoForASheet($week['id']);  // TODO (noté par XCL) : corriger ce code qui ne fait rien
 }
-=======
-    $toDos = readTodoForASheet($week['id']);
-}
-
->>>>>>> todo
