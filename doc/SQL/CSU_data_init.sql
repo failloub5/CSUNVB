@@ -87,15 +87,15 @@ INSERT INTO `status` VALUES
 (3,'close','Fermé'),
 (4,'reopen','Réouvert');
 
--- table guardsections
-INSERT INTO `guardsections` VALUES
+-- table shiftsections
+INSERT INTO `shiftsections` VALUES
 (1,'Centrale & Tâches'),
 (2,'Ecrans de communication & Trafic'),
 (3,'Matériel & Télécom'),
 (4,'Véhicules & Interventions');
 
 -- table guardactions
-INSERT INTO `guardactions` VALUES
+INSERT INTO `shiftactions` VALUES
 (1,'Radios',1),
 (2,'Détecteurs CO',1),
 (3,'Téléphones',1),

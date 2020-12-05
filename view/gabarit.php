@@ -18,7 +18,7 @@
     <link href="node_modules/bootstrap/dist/css/bootstrap-reboot.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
-    <link href="css/ShiftEnd.css" rel="stylesheet">
+    <link href="css/shift.css" rel="stylesheet">
 
     <!-- Icons -->
     <link href="assets/icons/general/stylesheets/general_foundicons.css" media="screen" rel="stylesheet"
@@ -39,7 +39,7 @@
 
 
     <!-- Javascript  -->
-    <script src="js/shiftEnd.js"></script>
+    <script src="js/shift.js"></script>
 
 </head>
 <body>

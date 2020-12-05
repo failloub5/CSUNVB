@@ -3,7 +3,7 @@ ob_start();
 $title = "CSU-NVB - Remise de garde";
 ?>
 <div class="row m-2">
-    <h1>Remise de Garde du <?= date('d.m.Y', strtotime($guardSheet['date'])) ?> à <?= $guardSheet['baseName'] ?></h1>
+    <h1>Remise de Garde du <?= date('d.m.Y', strtotime($shiftsheet['date'])) ?> à <?= $shiftsheet['baseName'] ?></h1>
 </div>
 
 <div class="row">
@@ -11,7 +11,7 @@ $title = "CSU-NVB - Remise de garde";
     <div class="col-1 text-center">Jour</div>
     <div class="col-1 text-center">Nuit</div>
 </div>
-<?php if ($enableGuardSheetUpdate): //TODO à modifier pour pour pouvoir modifier les valeurs ?>
+<?php if ($enableshiftsheetUpdate): //TODO à modifier pour pour pouvoir modifier les valeurs ?>
     <div class="row">
         <div class="col-3 text-right">Novas</div>
         <div class="col-1 text-center">todo</div>
@@ -30,18 +30,18 @@ $title = "CSU-NVB - Remise de garde";
 <?php else: ?>
     <div class="row">
         <div class="col-3 text-right">Novas</div>
-        <div class="col-1 text-center"><?= $guardSheet['novaDay'] ?></div>
-        <div class="col-1 text-center"><?= $guardSheet['novaNight'] ?></div>
+        <div class="col-1 text-center"><?= $shiftsheet['novaDay'] ?></div>
+        <div class="col-1 text-center"><?= $shiftsheet['novaNight'] ?></div>
     </div>
     <div class="row">
         <div class="col-3 text-right">Responsable</div>
-        <div class="col-1 text-center"><?= $guardSheet['bossDay'] ?></div>
-        <div class="col-1 text-center"><?= $guardSheet['bossNight'] ?></div>
+        <div class="col-1 text-center"><?= $shiftsheet['bossDay'] ?></div>
+        <div class="col-1 text-center"><?= $shiftsheet['bossNight'] ?></div>
     </div>
     <div class="row">
         <div class="col-3 text-right">Equipier</div>
-        <div class="col-1 text-center"><?= $guardSheet['teammateDay'] ?></div>
-        <div class="col-1 text-center"><?= $guardSheet['teammateNight'] ?></div>
+        <div class="col-1 text-center"><?= $shiftsheet['teammateDay'] ?></div>
+        <div class="col-1 text-center"><?= $shiftsheet['teammateNight'] ?></div>
     </div>
 <?php endif; ?>
 
@@ -62,7 +62,7 @@ $title = "CSU-NVB - Remise de garde";
                 <td class="actionname">
                     <?= $action['text'] ?>
                 </td>
-                <?php if ($enableGuardSheetFilling): //TODO à modifier pour pour pouvoir modifier les valeurs ?>
+                <?php if ($enableshiftsheetFilling): //TODO à modifier pour pour pouvoir modifier les valeurs ?>
                     <td class="ackcell">
                         todo
                     </td>

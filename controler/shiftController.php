@@ -15,12 +15,12 @@ function newShiftSheet($baseID)
     } else {
         $_SESSION['flashmessage'] = "La feuille de garde a bien été créé !";
     }
-    listShiftEnd($_SESSION["selectedBase"]);
+    listshift($_SESSION["selectedBase"]);
 }
 
 
 // blank -> open -> close -> reopen -> close
-function alterGuardSheetStatus(){
+function altershiftsheetStatus(){
     switch ($_POST["status"]) {
         case 'open' :
         case 'reopen' :
@@ -28,7 +28,7 @@ function alterGuardSheetStatus(){
             break;
         case 'blank' :
             if (($_SESSION['username']['admin'] == true)) {
-                if( getNbGuardSheet('open',$_SESSION["selectedBase"]) == 0 ){
+                if( getNbshiftsheet('open',$_SESSION["selectedBase"]) == 0 ){
                     openShiftPage($_POST["id"]);
                 }else{
                     $_SESSION["flashmessage"] = "Une autre feuille est déjà ouverte";
@@ -41,23 +41,23 @@ function alterGuardSheetStatus(){
         default :
             break;
     }
-    listShiftEnd($_SESSION["selectedBase"]);
+    listshift($_SESSION["selectedBase"]);
 }
 
-function listShiftEnd($baseID)
+function listshift($baseID)
 {
     $Bases = getbases();
-    $guardsheets = getGuardsheetForBase($baseID);
-    require_once VIEW . 'viewsShiftEnd/shiftEndHome.php';
+    $shiftsheets = getshiftsheetForBase($baseID);
+    require_once VIEW . 'shift/list.php';
 
 }
 
-function showShiftEnd($shiftid)
+function showshift($shiftid)
 {
-    $sections = getGuardSections($shiftid);
-    $guardSheet = getGuardsheetByID($shiftid);
-    $enableGuardSheetUpdate = ($guardSheet['status'] == "open" || ($guardSheet['status'] == "blank" && $_SESSION['username']['admin'] == true));
-    $enableGuardSheetFilling = ($guardSheet['status'] == "open");
-    require_once VIEW . 'viewsShiftEnd/showShiftEnd.php';
+    $sections = getshiftsections($shiftid);
+    $shiftsheet = getshiftsheetByID($shiftid);
+    $enableshiftsheetUpdate = ($shiftsheet['status'] == "open" || ($shiftsheet['status'] == "blank" && $_SESSION['username']['admin'] == true));
+    $enableshiftsheetFilling = ($shiftsheet['status'] == "open");
+    require_once VIEW . 'shift/show.php';
 }
 

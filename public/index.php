@@ -172,9 +172,9 @@ function switcherUser()
             drugLog();
             break; */
 
-        /** Using shiftEndControler */
+        /** Using shiftControler */
 
-        case 'listShiftEnd':
+        case 'listshift':
             if(isset($_POST["selectedBase"]))$_SESSION["selectedBase"] = $_POST["selectedBase"];
             if (isset($_SESSION["selectedBase"])) {
                 $baseID = $_SESSION["selectedBase"];
@@ -182,14 +182,14 @@ function switcherUser()
                 $_SESSION["selectedBase"] = $_SESSION['base']['id'];
             }
             $baseID = $_SESSION["selectedBase"];
-            listShiftEnd($baseID);
+            listshift($baseID);
             break;
-        case 'showGuardSheet':
+        case 'showshiftsheet':
             $sheetid = $_GET['id'];
-            showShiftEnd($sheetid);
+            showshift($sheetid);
             break;
-        case 'alterGuardSheetStatus':
-            alterGuardSheetStatus();
+        case 'altershiftsheetStatus':
+            altershiftsheetStatus();
             break;
         case 'newSheet':
             newShiftSheet($_SESSION["selectedBase"]);

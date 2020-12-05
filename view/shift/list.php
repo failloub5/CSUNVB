@@ -7,13 +7,13 @@
 ob_start();
 $title = "CSU-NVB - Remise de garde";
 ?>
-<script src="js/shiftEnd.js"></script>
+<script src="js/shift.js"></script>
 <div class="row m-2">
     <h1>Remise de Garde</h1>
 </div>
 
 <div class="row">
-    <FORM action="?action=listShiftEnd" method="post" class="col">
+    <FORM action="?action=listshift" method="post" class="col">
         <SELECT onchange="this.form.submit()" name="selectedBase" size="1">
             <?php foreach ($Bases as $base) { ?>
             <OPTION value="<?= $base['id'] ?>" <?php if ($baseID == $base['id']) { ?>
@@ -46,26 +46,26 @@ $title = "CSU-NVB - Remise de garde";
 
     <th>Action</th>
     </thead>
-    <?php foreach ($guardsheets as $guardSheet) { ?>
+    <?php foreach ($shiftsheets as $shiftsheet) { ?>
         <tr>
-            <td><a href='?action=showGuardSheet&id=<?= $guardSheet['id'] ?>'
-                   class="btn"><?= date('d.m.Y', strtotime($guardSheet['date'])) ?>  </a></td>
+            <td><a href='?action=showshiftsheet&id=<?= $shiftsheet['id'] ?>'
+                   class="btn"><?= date('d.m.Y', strtotime($shiftsheet['date'])) ?>  </a></td>
             <td>
-                <?= $guardSheet['status'] ?>
+                <?= $shiftsheet['status'] ?>
             </td>
-            <td>Jour : <?= $guardSheet['novaDay'] ?><br>Nuit : <?= $guardSheet['novaNight'] ?></td>
-            <td>Jour : <?= $guardSheet['bossDay'] ?><br>Nuit : <?= $guardSheet['bossNight'] ?> </td>
-            <td>Jour : <?= $guardSheet['teammateDay'] ?><br>Nuit : <?= $guardSheet['teammateNight'] ?></td>
+            <td>Jour : <?= $shiftsheet['novaDay'] ?><br>Nuit : <?= $shiftsheet['novaNight'] ?></td>
+            <td>Jour : <?= $shiftsheet['bossDay'] ?><br>Nuit : <?= $shiftsheet['bossNight'] ?> </td>
+            <td>Jour : <?= $shiftsheet['teammateDay'] ?><br>Nuit : <?= $shiftsheet['teammateNight'] ?></td>
             <td>
-                <?php if ((($_SESSION['username']['admin'] == true and getNbGuardSheet('open',$baseID) == 0) ||
-                    ($_SESSION['username']['admin'] == true and $guardSheet['status'] == 'close') ||
-                    $guardSheet['status'] == 'open' ||
-                    $guardSheet['status'] == 'reopen')) { ?>
-                    <form action="?action=alterGuardSheetStatus" method="post">
-                        <input type=hidden name="id" value= <?= $guardSheet['id'] ?>>
-                        <button class="btn btn-primary btn-sm" name="status" value="<?= $guardSheet['status'] ?>"
+                <?php if ((($_SESSION['username']['admin'] == true and getNbshiftsheet('open',$baseID) == 0) ||
+                    ($_SESSION['username']['admin'] == true and $shiftsheet['status'] == 'close') ||
+                    $shiftsheet['status'] == 'open' ||
+                    $shiftsheet['status'] == 'reopen')) { ?>
+                    <form action="?action=altershiftsheetStatus" method="post">
+                        <input type=hidden name="id" value= <?= $shiftsheet['id'] ?>>
+                        <button class="btn btn-primary btn-sm" name="status" value="<?= $shiftsheet['status'] ?>"
                         </button>
-                        <?= $guardSheet['status'] ?>
+                        <?= $shiftsheet['status'] ?>
                     </form>
                 <?php } ?>
             </td>
