@@ -56,6 +56,7 @@ $title = "CSU-NVB - Remise de garde";
             <td>Jour : <?= $shiftsheet['bossDay'] ?><br>Nuit : <?= $shiftsheet['bossNight'] ?> </td>
             <td>Jour : <?= $shiftsheet['teammateDay'] ?><br>Nuit : <?= $shiftsheet['teammateNight'] ?></td>
             <td>
+                <!-- TODO (XCL): faire un helper qui donne l'action correspondante à l'état actuel -->
                 <?php if ((($_SESSION['user']['admin'] == true and getNbshiftsheet('open', $baseID) == 0) ||
                     ($_SESSION['user']['admin'] == true and $shiftsheet['statusslug'] == 'close') ||
                     $shiftsheet['statusslug'] == 'open' ||

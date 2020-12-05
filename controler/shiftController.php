@@ -41,7 +41,7 @@ function altershiftsheetStatus(){
         default :
             break;
     }
-    listshift($_SESSION["selectedBase"]);
+    listshiftforbase($_SESSION["base"]['id']);
 }
 
 // default: the base where the user logged
