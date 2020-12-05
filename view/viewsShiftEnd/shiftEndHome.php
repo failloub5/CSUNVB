@@ -51,17 +51,7 @@ $title = "CSU-NVB - Remise de garde";
             <td><a href='?action=showGuardSheet&id=<?= $guardSheet['id'] ?>'
                    class="btn"><?= date('d.m.Y', strtotime($guardSheet['date'])) ?>  </a></td>
             <td>
-                <?php switch ($guardSheet['status']): case 'blank': ?>
-                    En préparation
-                    <?php break; case 'open': ?>
-                    Ouvert
-                    <?php break; case 'close': ?>
-                    Fermé
-                    <?php break; case 'reopen': ?>
-                    Réouvert
-                    <?php break; default: ?>
-                    Status Inconnu
-                <?php endswitch ?>
+                <?= $guardSheet['status'] ?>
             </td>
             <td>Jour : <?= $guardSheet['novaDay'] ?><br>Nuit : <?= $guardSheet['novaNight'] ?></td>
             <td>Jour : <?= $guardSheet['bossDay'] ?><br>Nuit : <?= $guardSheet['bossNight'] ?> </td>
@@ -75,15 +65,7 @@ $title = "CSU-NVB - Remise de garde";
                         <input type=hidden name="id" value= <?= $guardSheet['id'] ?>>
                         <button class="btn btn-primary btn-sm" name="status" value="<?= $guardSheet['status'] ?>"
                         </button>
-                        <?php switch ($guardSheet['status']): case 'blank': ?>
-                            Ouvrir
-                            <?php break; case 'open':case 'reopen': ?>
-                            Fermer
-                            <?php break; case 'close': ?>
-                            Rouvrir
-                            <?php break; default: ?>
-                            Erreur
-                        <?php endswitch ?>
+                        <?= $guardSheet['status'] ?>
                     </form>
                 <?php } ?>
             </td>
