@@ -113,7 +113,7 @@ function getGuardSections($shiftSheetID)
 
 function getGuardsheetForBase($base_id)
 {
-    return selectMany('SELECT guardsheets.id, guardsheets.date, guardsheets.base_id, status.name AS status,novaDay.number AS novaDay, novaNight.number AS novaNight, bossDay.initials AS bossDay, bossNight.initials AS bossNight,teammateDay.initials AS teammateDay, teammateNight.initials AS teammateNight
+    return selectMany('SELECT guardsheets.id, guardsheets.date, guardsheets.base_id, status.displayname AS status,novaDay.number AS novaDay, novaNight.number AS novaNight, bossDay.initials AS bossDay, bossNight.initials AS bossNight,teammateDay.initials AS teammateDay, teammateNight.initials AS teammateNight
 FROM guardsheets
 INNER JOIN status ON status.id = guardsheets.status_id
 LEFT JOIN novas novaDay ON novaDay.id = guardsheets.daynova_id
@@ -184,6 +184,6 @@ function getNewDate($baseID){
 }
 
 function getNbGuardSheet($status,$base_id){
-    return selectOne("SELECT COUNT(guardsheets.id) as number FROM  guardsheets inner join status on status.id = guardsheets.status_id where status.name = :status and guardsheets.base_id =:base_id", ['status' => $status, 'base_id' => $base_id])["number"];
+    return selectOne("SELECT COUNT(guardsheets.id) as number FROM  guardsheets inner join status on status.id = guardsheets.status_id where status.slug = :status and guardsheets.base_id =:base_id", ['status' => $status, 'base_id' => $base_id])["number"];
 }
 
