@@ -7,8 +7,9 @@ $title = "CSU-NVB - Tâches hebdomadaires";
     <h2>Semaine <?= $week['week'] ?> - Base de <?= $base['name'] ?></h2>
     <div>
         <div>
-            <form action="?action=homeWeeklyTasks" method="POST">
-                <input type="hidden" name="selectBaseID" value="<?= $base['id'] ?>">
+            <form>
+                <input type="hidden" name="action" value="listtodoforbase">
+                <input type="hidden" name="id" value="<?= $base['id'] ?>">
                 <button type="submit" class='btn btn-primary m-1 float-right'>Retour à la liste</button>
             </form>
             <form action="?action=modelWeek" method="POST">
@@ -21,10 +22,10 @@ $title = "CSU-NVB - Tâches hebdomadaires";
         </div>
         <?php if ($_SESSION['user']['admin'] == 1 && $alreadyOpen == false && $week['state'] == "close"): ?>
             <div>
-                <form action="?action=openWeek" method="POST">
-                    <input type="hidden" name="weekID" value="<?= $week['id'] ?>">
-                    <input type="hidden" name="baseID" value="<?= $base['id'] ?>">
-                    <button type="submit" class='btn btn-primary m-1 float-right'>Ouvrir</button>
+                <form>
+                    <input type="hidden" name="action" value="reopenweek">
+                    <input type="hidden" name="id" value="<?= $week['id'] ?>">
+                    <button type="submit" class='btn btn-primary m-1 float-right'>Réouvrir</button>
                 </form>
             </div>
         <?php elseif ($_SESSION['user']['admin'] == 1 && $week['state'] == "open"): ?>
