@@ -29,9 +29,9 @@ $title = "CSU-NVB - Tâches hebdomadaires";
             </div>
         <?php elseif ($_SESSION['user']['admin'] == 1 && $week['state'] == "open"): ?>
             <div>
-                <form action="?action=closeWeek" method="POST">
-                    <input type="hidden" name="weekID" value="<?= $week['id'] ?>">
-                    <input type="hidden" name="baseID" value="<?= $base['id'] ?>">
+                <form>
+                    <input type="hidden" name="action" value="closeweek">
+                    <input type="hidden" name="id" value="<?= $week['id'] ?>">
                     <button type="submit" class='btn btn-primary m-1 float-right'>Clôturer</button>
                 </form>
             </div>

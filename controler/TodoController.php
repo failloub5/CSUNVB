@@ -125,12 +125,12 @@ function openAWeek($baseID, $weekID){
  * @param $baseID : l'ID de la base à laquelle appartient la semaine
  * @param $weekID : l'ID de la semaine a fermer
  */
-function closeAWeek($baseID, $weekID){
-    $week = getTodosheetByID($weekID);
+function closeweek($todo_id){
+    $week = getTodosheetByID($todo_id);
 
-    closeWeeklyTasks($weekID);
+    closeWeeklyTasks($todo_id);
     $_SESSION['flashmessage'] = "La semaine ".$week['week']." a été clôturée.";
-    listtodoforbase($baseID);
+    listtodoforbase($week['base_id']);
 }
 
 function modelWeek($weekID, $template_name){
