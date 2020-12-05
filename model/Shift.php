@@ -105,7 +105,7 @@ WHERE guardsheets.base_id =:base_id order by date DESC;', ["base_id" => $base_id
 
 function getGuardsheetByID($id)
 {
-    return selectOne('SELECT bases.name as baseName, guardsheets.id, guardsheets.date, guardsheets.base_id, status.name AS status,novaDay.number AS novaDay, novaNight.number AS novaNight, bossDay.initials AS bossDay, bossNight.initials AS bossNight,teammateDay.initials AS teammateDay, teammateNight.initials AS teammateNight
+    return selectOne('SELECT bases.name as baseName, guardsheets.id, guardsheets.date, guardsheets.base_id, status.slug AS status,novaDay.number AS novaDay, novaNight.number AS novaNight, bossDay.initials AS bossDay, bossNight.initials AS bossNight,teammateDay.initials AS teammateDay, teammateNight.initials AS teammateNight
 FROM guardsheets
 INNER JOIN bases ON bases.id = guardsheets.base_id
 INNER JOIN status ON status.id = guardsheets.status_id

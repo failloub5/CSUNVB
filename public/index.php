@@ -14,22 +14,22 @@ require "../path.php";
 
 require "../helpers.php";
 
-require CONTROLER . "adminControler.php";
+require CONTROLER . "adminController.php";
 require CONTROLER . "drugsController.php";
-require CONTROLER . "mainControler.php";
-require CONTROLER . "shiftEndControler.php";
-require CONTROLER . "weeklyTasksControler.php";
+require CONTROLER . "mainController.php";
+require CONTROLER . "shiftController.php";
+require CONTROLER . "todoController.php";
 
 
 require MODEL . ".const.php";
-require MODEL . "databaseModel.php";
+require MODEL . "db_crud.php";
 
-require MODEL . "baseModel.php";
-require MODEL . "userModel.php";
-require MODEL . "drugsModel.php";
-require MODEL . "novaModel.php";
-require MODEL . "shiftEndModel.php";
-require MODEL . "weeklyTasksModel.php";
+require MODEL . "Base.php";
+require MODEL . "User.php";
+require MODEL . "Drugs.php";
+require MODEL . "Nova.php";
+require MODEL . "Shift.php";
+require MODEL . "Todo.php";
 
 
 if (isset($_SESSION["username"])) {

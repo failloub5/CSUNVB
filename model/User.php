@@ -3,10 +3,9 @@
  *
  */
 
-
-function getUserByInitials($initials)       //Récupère un utilisateur en fonction de ses initiales
+function getUsers()     //Récupère tous les utilisateurs
 {
-    return selectOne("SELECT * FROM users where initials =:initials", ['initials' => $initials]);
+    return selectMany("SELECT * FROM users", []);
 }
 
 function addNewUser($prenomUser, $nomUser, $initialesUser, $hash, $admin, $firstconnect)
@@ -29,7 +28,6 @@ function SaveUser($user)
     return execute("UPDATE users SET firstname= :firstname, lastname= :lastname, initials = :initials, admin = :admin where id = :id", $user);
 }
 
-
 /** return the user from database
  * @param $id id of the user
  * @return array|mixed|null
@@ -37,6 +35,15 @@ function SaveUser($user)
 function getUser($id)
 {
     return selectOne("SELECT * FROM users where id=:id", ['id' => $id]);
+}
+
+/** return the user from database
+ * @param $initials initials of the user
+ * @return array|mixed|null
+ */
+function getUserByInitials($initials)       //Récupère un utilisateur en fonction de ses initiales
+{
+    return selectOne("SELECT * FROM users where initials =:initials", ['initials' => $initials]);
 }
 
 /** change password of a user ( a radom one )
