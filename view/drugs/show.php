@@ -10,9 +10,9 @@ ob_start();
 <div class="row m-2">
     <h1>Stupéfiants</h1>
 </div>
-<h2>Site de <?= $site ?>, Semaine N°<?= $semaine ?></h2>
+<h2>Site de <?= $site ?>, Semaine N°<?= $drugsheet["week"] ?></h2>
 <?php //TODO: RAJOUTER LE BOUT DE CODE POUR GENERER BOUTON?>
-<?php foreach ($jours as $jour): ?>
+<?php foreach ($dates as $date): ?>
     <table border="1" class="table table-bordered">
         <thead class="thead-dark">
             <tr>
@@ -39,10 +39,10 @@ ob_start();
                     <?php foreach ($novas as $nova): ?>
                         <td>
                             <div>
-                                <?= $novaCheck["end"] ?>
+                                <?= getNovaCheckByDateAndBatch(date("Y-m-d", $date), $drug['id'], $nova['id'], $drugsheet['id'])["start"] ?>
                             </div>
                             <div>
-                                <?= $novaCheck["start"] ?>
+                                <?= getNovaCheckByDateAndBatch(date("Y-m-d", $date), $drug['id'], $nova['id'], $drugsheet['id'])["end"] ?>
                             </div>
                         </td>
                     <?php endforeach; ?>

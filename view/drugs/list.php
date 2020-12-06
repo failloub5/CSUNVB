@@ -10,9 +10,10 @@ $title = "CSU-NVB - Stupéfiants";
     <h1>Stupéfiants</h1>
 </div>
 <div class="row">
-    <form action="?action=showDrugSheetList" method="post" class="col">
+    <form class="col">
+        <input type="hidden" name="action" value="listdrugforbase">
         <label>
-            <select onchange="this.form.submit()" name="site" size="1">
+            <select onchange="this.form.submit()" name="id" size="1">
                 <?php foreach($bases as $base): ?>
                     <option value="<?= $base["id"] ?>"
                     <?php if ($baseID == $base["id"]): ?>
@@ -48,7 +49,7 @@ $title = "CSU-NVB - Stupéfiants";
             <?php foreach ($drugSheetList as $week): ?>
                 <tr>
                     <td>
-                        <a href='?action=showDrugSheet&site=<?= $baseID ?>&week=<?= $week["week"] ?>'>
+                        <a href='?action=showdrug&id=<?= $week['id'] ?>'>
                             Semaine <?= $week["week"] ?>
                         </a>
                     </td>

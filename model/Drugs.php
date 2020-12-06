@@ -25,10 +25,17 @@ function getSheetByWeek($week, $base) {
 }
 
 /**
+ *  Retourne une sheet précise
+ */
+function getDrugSheetById($sheet_id) {
+    return selectOne("SELECT * FROM drugsheets WHERE id = :id",['id' => $sheet_id]);
+}
+
+/**
  * Retourne la liste des drugsheets pour une base donnée.
  */
-function getDrugSheets($base) {
-    return selectMany("SELECT * FROM drugsheets INNER JOIN bases ON bases.id=base_id WHERE base_id='$base'");
+function getDrugSheets($base_id) {
+    return selectMany("SELECT id, week, state FROM drugsheets WHERE base_id=:id", ['id' => $base_id]);
 }
 
 /**
@@ -36,7 +43,7 @@ function getDrugSheets($base) {
  * Les données retournées sont dans un tableau indexé par id (i.e: [ 12 => [ "id" => 12, "value" => ...], 17 => [ "id" => 17, "value" => ...] ]
  */
 function getNovasForSheet($drugSheetID) {
-    return selectMany("SELECT novas.id as id, number FROM novas INNER JOIN nova_use_drugsheet ON nova_id = novas.id WHERE drugsheet_id ='$drugSheetID'");
+    return selectMany("SELECT novas.id as id, number FROM novas INNER JOIN drugsheet_use_nova ON nova_id = novas.id WHERE drugsheet_id ='$drugSheetID'");
 }
 
 function getBatches() {

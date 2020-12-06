@@ -4,29 +4,33 @@
  * Date: Avril 2020 + 2020/11
  **/
 
-//Affiche la page de selection de la semaine
-function showDrugSheetList($baseID) {
+//Affiche la page de selection de la semaine pour la base par défaut (du login)
+function listdrug() {
+    listdrugforbase($_SESSION['base']['id']);
+}
+
+//Affiche la page de selection de la semaine pour une base choisie
+function listdrugforbase($baseID) {
     $bases = getbases();
     $drugSheetList = getDrugSheets($baseID);
-    require_once VIEW . 'drugs/sheetlist.php';
+    require_once VIEW . 'drugs/list.php';
 }
 
 // Affichage de la page finale
-function showDrugSheet() {
-    $jourDebutSemaine = gDFWN($_GET["week"]);
-    $drugSheetID = getSheetByWeek($_GET["week"], $_GET["site"])["drugsheet_id"]; //TODO: site or base??
-    $novas = getNovasForSheet($drugSheetID);
-    $novaCheck = getNovaCheckByDateAndBatch(date("Y-m-d", $date), $drug['id'], $nova['id'], $drugSheetID);
-    $BatchesForSheet = getBatchesForSheet($drugSheetID); // Obtient la liste des batches utilisées par cette feuille
-    $pharmacheck = getPharmaCheckByDateAndBatch(date("Y-m-d", $date),$batch['batch_id'],$drugSheetID);
-    $quantity = getRestockByDateAndDrug(date("Y-m-d", $date),$batch['batch_id'],$nova['id'])['quantity'];
+function showdrug($drugsheet_id) {
+    $drugsheet = getDrugSheetById($drugsheet_id);
+    $dates = gDFWN($drugsheet["week"]);
+    $novas = getNovasForSheet($drugsheet_id);
+    // TODO (XCL) : appeler get*check directement depuis la vue. Ce n'est pas très propre du point de vue MVC, mais ça simplifie le job
+    // $novaCheck = getNovaCheckByDateAndBatch(date("Y-m-d", $date), $drug['id'], $nova['id'], $drugsheet_id);
+    // $pharmacheck = getPharmaCheckByDateAndBatch(date("Y-m-d", $date),$batch['batch_id'],$drugSheetID);
+    $BatchesForSheet = getBatchesForSheet($drugsheet_id); // Obtient la liste des batches utilisées par cette feuille
     foreach ($BatchesForSheet as $p) {
         $batchesByDrugId[$p["drug_id"]][] = $p;
     }
-    $listofbaseid = getDrugSheets($_GET["site"]);
     $drugs = getDrugs();
-    $site = getbasebyid($_GET["site"])["name"];
-    require_once VIEW . 'drugs/table.php';
+    $site = getbasebyid($drugsheet['base_id'])['name'];
+    require_once VIEW . 'drugs/show.php';
 }
 
 // Affiche le formulaire des pharmacheck et donne tout les ^donnée nessaiare
