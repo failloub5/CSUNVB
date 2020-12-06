@@ -19,7 +19,8 @@ function listdrugforbase($baseID) {
 // Affichage de la page finale
 function showdrug($drugsheet_id) {
     $drugsheet = getDrugSheetById($drugsheet_id);
-    $dates = gDFWN($drugsheet["week"]);
+    $dates = getDaysForWeekNumber($drugsheet["week"]);
+    $first = displayDate($dates[0],1);
     $novas = getNovasForSheet($drugsheet_id);
     // TODO (XCL) : appeler get*check directement depuis la vue. Ce n'est pas très propre du point de vue MVC, mais ça simplifie le job
     // $novaCheck = getNovaCheckByDateAndBatch(date("Y-m-d", $date), $drug['id'], $nova['id'], $drugsheet_id);
@@ -104,23 +105,4 @@ function closeDrugSheet() {
 function reopenDrugSheet() {
     updateSheetState($_POST["baseID"], $_POST["week"], "reopened");
     require_once VIEW . 'main/home.php';
-}
-
-//Fonction groupe todolist
-//TODO: remplacer par une seule fonction unifiée dans un même fichier
-function gDFWN($weekNumber){
-    // ToDo : Valeurs en dur à enlever !
-    $year = 2000 + intdiv($weekNumber,100);
-    $week = $weekNumber%100;
-
-    $dates = Array();
-    $time = strtotime(sprintf("%4dW%02d", $year, $week));
-
-    for($i = 0; $i < 7; $i++){
-        $day = date(strtotime("+".$i." day", $time));
-        $fullDate = strftime(' %A %e %b %Y', $day);
-        $dates[] = $fullDate;
-    }
-
-    return $dates;
 }

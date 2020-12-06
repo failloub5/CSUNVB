@@ -1,8 +1,11 @@
 <?php
-/**
- * Auteur: Thomas Grossmann
- * Date: Mars 2020
- **/
+
+setlocale(LC_ALL, 'fr_CH'); // pour les format de dates
+
+function getVersion()
+{
+    return "2.1";
+}
 
 /**
  * inspired by source https://stackoverflow.com/questions/7447472/how-could-i-display-the-current-git-branch-name-at-the-top-of-the-page-of-my-de
@@ -21,9 +24,23 @@ function gitBranchTag()
     return "<div style='clear: both; width: 100%; font-size: 14px; font-family: Helvetica; color: #8d8d8d; background: transparent; text-align: right;'>version " . getVersion() . " sur " . $branchname . "</div>"; //show it on the page
 }
 
-function getVersion()
-{
-    return "2.1";
+/**
+ * Retourne un tableau des 7 dates de la semaine donnée
+ * @param $weekNumber format AASS
+ * @return array
+ */
+function getDaysForWeekNumber($weekNumber){
+    $year = 2000 + intdiv($weekNumber,100);
+    $week = $weekNumber%100;
+
+    $dates = [];
+    $time = strtotime(sprintf("%4dW%02d", $year, $week));
+
+    for($i = 0; $i < 7; $i++){
+        $dates[] = date("Y-m-d",strtotime("+".$i." day", $time));
+    }
+
+    return $dates;
 }
 
 ?>

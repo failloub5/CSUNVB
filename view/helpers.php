@@ -67,4 +67,17 @@ function popUpValidation($title, $message){
                 </div>
             </div>";
 }
+
+/**
+ * Retourne la date formatée pour l'affichage
+ * @param $date au format standard YYYY-MM-DD HH:ii:ss
+ * @param $format un de quelques formats prédéfinis que l'on utilise dans l'appli
+ */
+function displayDate ($date, $format)
+{
+    switch ($format) {
+        case 1: return strftime('%A %e %b %Y', strtotime($date)); // Complet avec le jour
+        default: return strftime('%e %b %Y', strtotime($date)); // Complet sans le jour
+    }
+}
 ?>
