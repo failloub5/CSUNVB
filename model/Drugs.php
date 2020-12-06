@@ -51,20 +51,12 @@ function getBatches() {
 }
 
 /**
- * Retourne la liste des batches 'utilisés' par cette feuille
- * Les données retournées sont dans un tableau indexé par drug_id
- * [
- *     12 => [
- *         ["id" => 32, "number" => "345543", "drug_id" => 12],
- *         ["id" => 12, "number" => "989966", "drug_id" => 12]
- *     ],
- *     15 => [
- *         ["id" => 6, "number" => "46328", "durg_id" => 15]
- *     ]
- * ]
+ * Retourne les batches de médicaments utilisés sur un rapport précis
+ * @param $drugSheetID
+ * @return array|mixed|null
  */
 function getBatchesForSheet($drugSheetID) {
-    return selectMany("SELECT * FROM batches INNER JOIN drugsheet_use_batch ON batches.id = batch_id WHERE drugsheet_id='$drugSheetID'");
+    return selectMany("SELECT batches.id AS id, number, drug_id FROM batches INNER JOIN drugsheet_use_batch ON batches.id = batch_id WHERE drugsheet_id='$drugSheetID'");
 }
 
 /**
@@ -101,7 +93,8 @@ function readDrug($id) {
  * Retourne le pharmacheck du jour donné pour un batch précis lors de son utilisation dans une drugsheet
  */
 function getPharmaCheckByDateAndBatch($date, $batch, $drugSheetID) {
-    return selectOne("SELECT start,end FROM pharmachecks WHERE date='$date' AND batch_id='$batch' AND drugsheet_id='$drugSheetID'");
+    $res = selectOne("SELECT start,end FROM pharmachecks WHERE date='$date' AND batch_id='$batch' AND drugsheet_id='$drugSheetID'");
+    return $res;
 }
 
 /**
@@ -115,7 +108,8 @@ function getNovaCheckByDateAndBatch($date, $drug, $nova, $drugSheetID) {
  * Retourne le restock du jour donné pour un batch précis dans une nova lors de son utilisation dans une drugsheet
  */
 function getRestockByDateAndDrug($date, $batch, $nova) {
-    return selectOne("SELECT quantity FROM restocks WHERE date='$date' AND batch_id='$batch' AND nova_id='$nova'");
+    $res = selectOne("SELECT quantity FROM restocks WHERE date='$date' AND batch_id='$batch' AND nova_id='$nova'");
+    return $res ? $res['quantity'] : ''; // chaîne vide si pas de restock
 }
 
 /**

@@ -16,8 +16,8 @@ ob_start();
     <table border="1" class="table table-bordered">
         <thead class="thead-dark">
             <tr>
-                <th colspan="6" <?= (date("Y-m-d", $date) == date("Y-m-d")) ? "class='today'" : "" ?>>
-                    <?= date("l j M Y", $date) ?>
+                <th colspan="6" <?= ($date == date("Y-m-d")) ? "class='today'" : "" ?>>
+                    <?= displayDate($date,1) ?>
                 </th>
             </tr>
             <tr>
@@ -37,12 +37,10 @@ ob_start();
                     <td class="font-weight-bold"><?= $drug["name"] ?></td>
                     <td><?php //TODO: td a supprimer? ?></td>
                     <?php foreach ($novas as $nova): ?>
+                        <?php $ncheck = getNovaCheckByDateAndBatch($date, $drug['id'], $nova['id'], $drugsheet['id']); // not great practice, but it spares repeated queries on the db ?>
                         <td>
-                            <div>
-                                <?= getNovaCheckByDateAndBatch(date("Y-m-d", $date), $drug['id'], $nova['id'], $drugsheet['id'])["start"] ?>
-                            </div>
-                            <div>
-                                <?= getNovaCheckByDateAndBatch(date("Y-m-d", $date), $drug['id'], $nova['id'], $drugsheet['id'])["end"] ?>
+                            <div class="text-center">
+                                <?= $ncheck ? $ncheck["start"] : ''?> - <?= $ncheck ? $ncheck["end"] : ''?>
                             </div>
                         </td>
                     <?php endforeach; ?>
@@ -50,13 +48,14 @@ ob_start();
                 </tr>
                 <!-- Plusieurs lignes avec les batches nom de ce médicament, les restocks et les pharmachecks -->
                 <?php foreach ($batchesByDrugId[$drug["id"]] as $batch): ?>
+                    <?php $pcheck = getPharmaCheckByDateAndBatch($date, $batch['id'], $drugsheet['id']); // not great practice, but  it spares repeated queries on the db ?>
                     <tr>
                         <td class="text-right"><?= $batch['number'] ?></td>
-                        <td class="text-center"><?= $pharmacheck['start'] ?></td>
+                        <td class="text-center"><?= $pcheck ? $pcheck['start'] : '' ?></td>
                         <?php foreach ($novas as $nova): ?>
-                            <td class="text-center"><?= $quantity ?></td>
+                            <td class="text-center"><?= getRestockByDateAndDrug($date,$batch['id'],$nova['id']) ?></td>
                         <?php endforeach; ?>
-                        <td class="text-center"><?= $pharmacheck['end'] ?></td>
+                        <td class="text-center"><?= $pcheck ? $pcheck['end'] : '' ?></td>
                     </tr>
                 <?php endforeach; ?>
             <?php endforeach; ?>
@@ -66,9 +65,6 @@ ob_start();
             </tr>
         </tbody>
     </table>
-    <?php
-    $date = strtotime(date("Y-m-d", $date) . " +1 day");
-    ?>
 <?php endforeach; ?>
 
 <?php

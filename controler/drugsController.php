@@ -20,11 +20,7 @@ function listdrugforbase($baseID) {
 function showdrug($drugsheet_id) {
     $drugsheet = getDrugSheetById($drugsheet_id);
     $dates = getDaysForWeekNumber($drugsheet["week"]);
-    $first = displayDate($dates[0],1);
     $novas = getNovasForSheet($drugsheet_id);
-    // TODO (XCL) : appeler get*check directement depuis la vue. Ce n'est pas très propre du point de vue MVC, mais ça simplifie le job
-    // $novaCheck = getNovaCheckByDateAndBatch(date("Y-m-d", $date), $drug['id'], $nova['id'], $drugsheet_id);
-    // $pharmacheck = getPharmaCheckByDateAndBatch(date("Y-m-d", $date),$batch['batch_id'],$drugSheetID);
     $BatchesForSheet = getBatchesForSheet($drugsheet_id); // Obtient la liste des batches utilisées par cette feuille
     foreach ($BatchesForSheet as $p) {
         $batchesByDrugId[$p["drug_id"]][] = $p;
