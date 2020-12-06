@@ -81,21 +81,21 @@ UNLOCK TABLES;
 -- Dump completed on 2020-12-01  7:28:46
 
 -- table status
-INSERT INTO `status` VALUES 
-(1,'blank'),
-(2,'open'),
-(3,'close'),
-(4,'reopen');
+INSERT INTO `status` VALUES
+(1,'blank','Vierge'),
+(2,'open','Ouvert'),
+(3,'close','Fermé'),
+(4,'reopen','Réouvert');
 
--- table guardsections
-INSERT INTO `guardsections` VALUES 
+-- table shiftsections
+INSERT INTO `shiftsections` VALUES
 (1,'Centrale & Tâches'),
 (2,'Ecrans de communication & Trafic'),
 (3,'Matériel & Télécom'),
 (4,'Véhicules & Interventions');
 
 -- table guardactions
-INSERT INTO `guardactions` VALUES 
+INSERT INTO `shiftactions` VALUES
 (1,'Radios',1),
 (2,'Détecteurs CO',1),
 (3,'Téléphones',1),

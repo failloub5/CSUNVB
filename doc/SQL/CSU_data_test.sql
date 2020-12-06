@@ -57,42 +57,42 @@ INSERT INTO `restocks` VALUES (5,'2020-10-26 00:00:00',1,4,5,2),(6,'2020-10-26 0
 UNLOCK TABLES;
 
 --
--- Dumping data for table `stupsheet_use_batch`
+-- Dumping data for table `drugsheet_use_batch`
 --
 
-LOCK TABLES `stupsheet_use_batch` WRITE;
-/*!40000 ALTER TABLE `stupsheet_use_batch` DISABLE KEYS */;
-INSERT INTO `stupsheet_use_batch` VALUES (109,23,4),(110,23,8),(111,23,13);
-/*!40000 ALTER TABLE `stupsheet_use_batch` ENABLE KEYS */;
+LOCK TABLES `drugsheet_use_batch` WRITE;
+/*!40000 ALTER TABLE `drugsheet_use_batch` DISABLE KEYS */;
+INSERT INTO `drugsheet_use_batch` VALUES (109,23,4),(110,23,8),(111,23,13);
+/*!40000 ALTER TABLE `drugsheet_use_batch` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Dumping data for table `stupsheet_use_nova`
+-- Dumping data for table `drugsheet_use_nova`
 --
 
-LOCK TABLES `stupsheet_use_nova` WRITE;
-/*!40000 ALTER TABLE `stupsheet_use_nova` DISABLE KEYS */;
-INSERT INTO `stupsheet_use_nova` VALUES (51,23,3),(52,23,5);
-/*!40000 ALTER TABLE `stupsheet_use_nova` ENABLE KEYS */;
+LOCK TABLES `drugsheet_use_nova` WRITE;
+/*!40000 ALTER TABLE `drugsheet_use_nova` DISABLE KEYS */;
+INSERT INTO `drugsheet_use_nova` VALUES (51,23,3),(52,23,5);
+/*!40000 ALTER TABLE `drugsheet_use_nova` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Dumping data for table `stupsheets`
+-- Dumping data for table `drugsheets`
 --
 
-LOCK TABLES `stupsheets` WRITE;
-/*!40000 ALTER TABLE `stupsheets` DISABLE KEYS */;
-INSERT INTO `stupsheets` VALUES (23,2044,'open',2);
-/*!40000 ALTER TABLE `stupsheets` ENABLE KEYS */;
+LOCK TABLES `drugsheets` WRITE;
+/*!40000 ALTER TABLE `drugsheets` DISABLE KEYS */;
+INSERT INTO `drugsheets` VALUES (23,2044,'open',2);
+/*!40000 ALTER TABLE `drugsheets` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Dumping data for table `stupsignatures`
+-- Dumping data for table `drugsignatures`
 --
 
-LOCK TABLES `stupsignatures` WRITE;
-/*!40000 ALTER TABLE `stupsignatures` DISABLE KEYS */;
-/*!40000 ALTER TABLE `stupsignatures` ENABLE KEYS */;
+LOCK TABLES `drugsignatures` WRITE;
+/*!40000 ALTER TABLE `drugsignatures` DISABLE KEYS */;
+/*!40000 ALTER TABLE `drugsignatures` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -136,16 +136,16 @@ UNLOCK TABLES;
 
 -- Dump completed on 2020-12-01  7:28:46
 
--- table guardsheets
-INSERT INTO `guardsheets` VALUES 
+-- table shiftsheets
+INSERT INTO `shiftsheets` VALUES
 (1,'2020-10-26 00:00:00',2,3,43,32,34,23,1,2),
 (2,'2020-10-27 00:00:00',2,3,53,42,35,24,3,4),
 (3,'2020-10-28 00:00:00',2,2,63,52,36,25,5,6),
 (4,'2020-10-29 00:00:00',2,1,null,null,null,null,null,null),
 (5,'2020-10-30 00:00:00',2,1,null,null,null,null,null,NULL);
 
--- table guardchecks
-INSERT INTO `guardchecks` (id,DAY,guardsheet_id,user_id,guardaction_id) VALUES
+-- table shiftchecks
+INSERT INTO `shiftchecks` (id,DAY,shiftsheet_id,user_id,shiftaction_id) VALUES
 (1,1,1,54,6),
 (2,1,1,54,5),
 (3,0,1,33,5),
@@ -167,9 +167,9 @@ INSERT INTO `guardchecks` (id,DAY,guardsheet_id,user_id,guardaction_id) VALUES
 (19,0,2,24,16),
 (20,0,3,24,17);
 
--- table guardcomments
-insert into `guardcomments` (id,message,user_id,guardsheet_id,guardaction_id )VALUES
-(1,'Commentaire', 55,1,2), 
+-- table shiftcomments
+insert into `shiftcomments` (id,message,user_id,shiftsheet_id,shiftaction_id )VALUES
+(1,'Commentaire', 55,1,2),
 (2,'Commentaire', 45,1,2),
 (3,'Commentaire', 29,1,4),
 (4,'Commentaire', 15,2,1),
