@@ -8,6 +8,19 @@ function getVersion()
 }
 
 /**
+ * Permet de renvoyer le navigateur à une route précise, avec un id en paramètre ou non
+ * @param $action l'action à laquelle renvoyer
+ * @param int $id paramètre facultatif
+ */
+function redirect ($action, $id=0)
+{
+    if ($id > 0) {
+        header('Location: ?action='.$action.'&id='.$id);
+    } else {
+        header('Location: ?action='.$action);
+    }
+}
+/**
  * inspired by source https://stackoverflow.com/questions/7447472/how-could-i-display-the-current-git-branch-name-at-the-top-of-the-page-of-my-de
  * @author Kevin Ridgway
  */
