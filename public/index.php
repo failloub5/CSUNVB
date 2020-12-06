@@ -12,7 +12,8 @@ session_start();
 
 require "../path.php";
 
-require "../helpers.php";
+require VIEW . "helpers.php";
+require "../globalhelpers.php";
 
 require CONTROLER . "adminController.php";
 require CONTROLER . "drugsController.php";
