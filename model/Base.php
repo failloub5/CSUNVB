@@ -14,3 +14,8 @@ function addNewBase($nameBase)
 {
     return intval (insert("INSERT INTO bases (name) values (:nameBase) ",['nameBase'=>$nameBase] ));
 }
+
+function renameBase($id, $name)
+{
+    return execute("UPDATE bases SET name=:name WHERE id=:id",['name' => $name, 'id' => $id]);
+}
