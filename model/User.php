@@ -3,16 +3,7 @@
  *
  */
 
-
-function getUserByInitials($initials)       //Récupère un utilisateur en fonction de ses initiales
-{
-    return selectOne("SELECT * FROM users where initials =:initials", ['initials' => $initials]);
-}
-
-/**
- * @return array|mixed|null
- */
-function getUsers()
+function getUsers()     //Récupère tous les utilisateurs
 {
     return selectMany("SELECT * FROM users", []);
 }
@@ -37,7 +28,6 @@ function SaveUser($user)
     return execute("UPDATE users SET firstname= :firstname, lastname= :lastname, initials = :initials, admin = :admin where id = :id", $user);
 }
 
-
 /** return the user from database
  * @param $id id of the user
  * @return array|mixed|null
@@ -45,6 +35,15 @@ function SaveUser($user)
 function getUser($id)
 {
     return selectOne("SELECT * FROM users where id=:id", ['id' => $id]);
+}
+
+/** return the user from database
+ * @param $initials initials of the user
+ * @return array|mixed|null
+ */
+function getUserByInitials($initials)       //Récupère un utilisateur en fonction de ses initiales
+{
+    return selectOne("SELECT * FROM users where initials =:initials", ['initials' => $initials]);
 }
 
 /** change password of a user ( a radom one )
@@ -57,8 +56,4 @@ function changePwdState($changeUser)
     $hash = password_hash($newpassw, PASSWORD_DEFAULT);
     execute("UPDATE users SET firstconnect= :firstconnect, password = :hash WHERE id= :id", ['firstconnect' => 1, 'id' => $changeUser, 'hash' => $hash]);
     return $newpassw;
-}
-
-function getUserAdmin($admin){
-    return selectOne("SELECT * FROM users where admin = :admin", ['admin' => $admin]);
 }

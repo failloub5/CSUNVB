@@ -29,9 +29,9 @@ function saveNewUser()         //Crée un utilisateur
     $hash = password_hash($startPassword, PASSWORD_DEFAULT);
     $result = addNewUser($prenomUser, $nomUser, $initialesUser, $hash, 0, 1);
     if ($result == 0) {
-        $_SESSION['flashmessage'] = "Une erreur est survenue. Impossible d'ajouter l'utilisateur.";
+        setFlashMessage("Une erreur est survenue. Impossible d'ajouter l'utilisateur.");
     } else {
-        $_SESSION['flashmessage'] = "L'utilisateur a bien été créé !";
+        setFlashMessage("L'utilisateur a bien été créé !");
     }
     adminCrew();
 }
@@ -42,10 +42,10 @@ function changeUserAdmin()       //Change un user en admin (et inversément)
     $user = getUser($changeUser);
     if ($user['admin']) {
         $user['admin'] = 0;
-        $_SESSION['flashmessage'] = $user['initials'] . " est désormais un utilisateur.";
+        setFlashMessage($user['initials'] . " est désormais un utilisateur.");
     } else {
         $user['admin'] = 1;
-        $_SESSION['flashmessage'] = $user['initials'] . " est désormais un administrateur.";
+        setFlashMessage($user['initials'] . " est désormais un administrateur.");
     }
     SaveUser($user);
     adminCrew();
@@ -54,7 +54,7 @@ function changeUserAdmin()       //Change un user en admin (et inversément)
 function resetUserPassword()
 {
     $newpassword = changePwdState($_GET['idUser']);
-    $_SESSION['flashmessage'] = "Le nouveau mot de passe est: $newpassword";
+    setFlashMessage("Le nouveau mot de passe est: $newpassword");
     adminCrew();
 }
 
@@ -105,21 +105,18 @@ function newBase(){
     }
 }
 
+function editbase($id)
+{
+    $base = getbasebyid($id);
+    require_once VIEW . 'admin/updateBase.php';
+}
+
 function updateBase()
 {
-    //détermine l'état -> si admin : préparation, si utilisateur : ouvert
-
-        $state = "en préparation";
-
-    //récupération de l'id de la base selon liste affichée. Ne fonctionne pas pour le moment, renvoie le mauvais ID
-    // $baseID = $_SESSION["Selectsite"];
-    //retourne si la création a fonctionnée ou pas (booléen)
-    $result = addNewGuardsheet($state, $baseID);
-    if ($result == false) {
-        $_SESSION['flashmessage'] = "Une erreur est survenue. Impossible de créer la feuille de rapport";
-    } else {
-        $_SESSION['flashmessage'] = "La feuille de rapport a bien été créé !";
-    }
+    extract($_POST); // crée les variables $id et $updateNameBase qui sont les clés du POST
+    renameBase($id, $updateNameBase);
+    setFlashMessage("La base a été renommée");
+    redirect('adminBases');
 }
 
 /** Nova Administration */

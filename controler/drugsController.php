@@ -4,29 +4,30 @@
  * Date: Avril 2020 + 2020/11
  **/
 
-//Affiche la page de selection de la semaine
-function showDrugSheetList($baseID) {
+//Affiche la page de selection de la semaine pour la base par défaut (du login)
+function listdrug() {
+    listdrugforbase($_SESSION['base']['id']);
+}
+
+//Affiche la page de selection de la semaine pour une base choisie
+function listdrugforbase($baseID) {
     $bases = getbases();
     $drugSheetList = getDrugSheets($baseID);
-    require_once VIEW . 'drugs/sheetlist.php';
+    require_once VIEW . 'drugs/list.php';
 }
 
 // Affichage de la page finale
-function showDrugSheet() {
-    $jourDebutSemaine = gDFWN($_GET["week"]);
-    $drugSheetID = getSheetByWeek($_GET["week"], $_GET["site"])["drugsheet_id"]; //TODO: site or base??
-    $novas = getNovasForSheet($drugSheetID);
-    $novaCheck = getNovaCheckByDateAndBatch(date("Y-m-d", $date), $drug['id'], $nova['id'], $drugSheetID);
-    $BatchesForSheet = getBatchesForSheet($drugSheetID); // Obtient la liste des batches utilisées par cette feuille
-    $pharmacheck = getPharmaCheckByDateAndBatch(date("Y-m-d", $date),$batch['batch_id'],$drugSheetID);
-    $quantity = getRestockByDateAndDrug(date("Y-m-d", $date),$batch['batch_id'],$nova['id'])['quantity'];
+function showdrug($drugsheet_id) {
+    $drugsheet = getDrugSheetById($drugsheet_id);
+    $dates = getDaysForWeekNumber($drugsheet["week"]);
+    $novas = getNovasForSheet($drugsheet_id);
+    $BatchesForSheet = getBatchesForSheet($drugsheet_id); // Obtient la liste des batches utilisées par cette feuille
     foreach ($BatchesForSheet as $p) {
         $batchesByDrugId[$p["drug_id"]][] = $p;
     }
-    $listofbaseid = getDrugSheets($_GET["site"]);
     $drugs = getDrugs();
-    $site = getbasebyid($_GET["site"])["name"];
-    require_once VIEW . 'drugs/table.php';
+    $site = getbasebyid($drugsheet['base_id'])['name'];
+    require_once VIEW . 'drugs/show.php';
 }
 
 // Affiche le formulaire des pharmacheck et donne tout les ^donnée nessaiare
@@ -38,7 +39,7 @@ function pharmacheck() {
     $sheet = readSheet($sheet);
     $druguse = readDrug($batch["drug_id"]);
     $base = getbasebyid($sheet["base_id"]);
-    $user = $_SESSION["username"];
+    $user = $_SESSION['user'];
     $pharmacheck = getPharmaCheckByDateAndBatch($date, $batch["id"], $sheet["id"]);
     $date = strtotime("$date");
     $datefrom = date("Y-m-d", $date);
@@ -100,23 +101,4 @@ function closeDrugSheet() {
 function reopenDrugSheet() {
     updateSheetState($_POST["baseID"], $_POST["week"], "reopened");
     require_once VIEW . 'main/home.php';
-}
-
-//Fonction groupe todolist
-//TODO: remplacer par une seule fonction unifiée dans un même fichier
-function gDFWN($weekNumber){
-    // ToDo : Valeurs en dur à enlever !
-    $year = 2000 + intdiv($weekNumber,100);
-    $week = $weekNumber%100;
-
-    $dates = Array();
-    $time = strtotime(sprintf("%4dW%02d", $year, $week));
-
-    for($i = 0; $i < 7; $i++){
-        $day = date(strtotime("+".$i." day", $time));
-        $fullDate = strftime(' %A %e %b %Y', $day);
-        $dates[] = $fullDate;
-    }
-
-    return $dates;
 }

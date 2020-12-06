@@ -5,8 +5,17 @@
  * @param $id : l'ID de la semaine à retrouver
  * @return array|mixed|null
  */
-function getTodosheetsByID($id){
+function getTodosheetByID($id){
     return selectOne("SELECT * FROM todosheets where id =:id", ['id' => $id]);
+}
+
+/**
+ * Fonction permettant de récupérer l'ensemble des informations d'une semaine pour une base et une semaine précise
+ * @param $id : l'ID de la semaine à retrouver
+ * @return array|mixed|null
+ */
+function getTodosheetByBaseAndWeek($base_id,$weeknb){
+    return selectOne("SELECT * FROM todosheets where base_id =:id and week = :weeknb", ['id' => $baseid, 'week' => $weeknb]);
 }
 
 /**
@@ -93,128 +102,20 @@ function addtoDo($todoID, $weekID, $dayOfWeek){
     execute($query, ['todoID' =>$todoID, 'sheetID' =>$weekID, 'day'=>$dayOfWeek]);
 }
 
-
-/** ================== Fonctions à vérifier =============== */
-/** Crées par marwan.alhelo, David.Roulet & Gatien.Jayme */
-
-
-function readTodoSheets()
-{
-
-    return selectMany("SELECT * FROM todosheets;", []);
-}
-
-/**
- * Retourne un item précis, identifié par son id
- * ...
- */
-
-function readTodoSheet($id)
-{
-    return selectMany("SELECT * FROM todosheets where id='$id';", []);
-}
-
 /**
  * Modifie un item précis
  * Le paramètre $item est un item complet (donc un tableau associatif)
  * ...
  */
-function updateTodoSheet($item)
+function updateTodoSheet($id, $template_name)
 {
-    return execute("UPDATE todosheets SET
-                    base_id=:base_id,
-             state=:state,
-                    week=:week,
-                    WHERE id =:id", $item);
+    return execute(
+        "UPDATE todosheets SET template_name=:template_name WHERE id =:id",['template_name'=>$template_name,'id'=>$id]);
 }
-
-
-/**
- * Détruit un item précis, identifié par son id
- * ...
- */
-function destroyTodoSheet($id)
-{
-
-    return execute("DELETE FROM todosheet WHERE id=:id", ["id" => $id]);
-}
-
 
 function createTodoSheet($base_id, $lastWeek)
 {
     return insert("INSERT INTO todosheets (base_id,state,week) VALUES (:base_id, 'blank', :lastWeek)", ["base_id" => $base_id, "lastWeek" => $lastWeek + 1]);
-}
-
-function readTodoSheetsForBase($base_id)
-{
-    return selectMany("SELECT * FROM todosheets WHERE todosheets.base_id=:base_id", ["base_id" => $base_id]);
-}
-
-/** ------------------TODOS---------------------- */
-
-/**
- * Retourne tous les todos
- *
- */
-function todos()
-{
-    return selectMany("SELECT * FROM todos", []);
-}
-
-/** ------------------TODOTHINGS---------------------- */
-
-/**
- * Retourne tous les todothings
- *
- */
-function readTodoThings()
-{
-    return selectMany("SELECT * FROM todothings;", []);
-}
-
-/**
- * Retourne un item précis, identifié par son id
- * ...
- */
-function readTodoThing($id)
-{
-    return selectMany("SELECT * FROM todothings where id=:id;", ["id" => $id]);
-}
-
-/**
- * Modifie un item précis
- * Le paramètre $item est un item complet (donc un tableau associatif)
- * ...
- */
-function updateTodoThing($item)
-{
-
-    return execute("UPDATE todothings SET
-                    daything=:daything,
-             description=:description,
-                    type=:type,
-                    display_order=:display_order
-                    WHERE id =:id", $item);
-}
-
-/**
- * Détruit un item précis, identifié par son id
- * ...
- */
-function destroyTodoThing($id)
-{
-    return execute("DELETE FROM todothing WHERE id=:id", ["id" => $id]);
-}
-
-/**
- * Ajoute un nouvel item
- * Le paramètre $item est un item complet (donc un tableau associatif), sauf que la valeur de son id n'est pas valable
- * puisque le modèle ne l'a pas encore traité
- * ...
- */
-function createTodoThing($item)
-{
-    return insert("INSERT INTO todothing (daything,description,type,display_order) VALUES (:daything,:description,:type,:display_order)", $item);
 }
 
 ?>

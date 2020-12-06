@@ -15,8 +15,9 @@ $title = "CSU-NVB - Tâches hebdomadaires";
 </div>
 
 <div>
-    <form method='POST' action="?action=homeWeeklyTasks">
-        <select onchange="this.form.submit()" name="selectBaseID">
+    <form>
+        <input type="hidden" name="action" value="listtodoforbase">
+        <select onchange="this.form.submit()" name="id">
             <?php
                 foreach ($baseList as $base) {
                     echo "<option value='".$base['id']."'";
@@ -26,12 +27,17 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                     echo ">".$base['name'];
                 }?>
         </select>
+        <select onchange="this.form.submit()" name="selectModel">
+            <!-- TODO (XCL) : faire une fonction getTemplates() qui retourne un tableau des noms de modèles connus -->
+            <?php foreach ($templates as $template): ?>
+                <option><?= $template['name'] ?></option>
+            <?php endforeach; ?>
+        </select>
+        <?php if ($_SESSION['user']['admin'] == 1) { ?>
+            <a href="?action=addWeek&base=<?= $selectedBaseID ?>" class="btn btn-primary m-1 pull-right">Nouvelle semaine</a>
+        <?php } ?>
     </form>
-    <?php if ($_SESSION['username']['admin'] == 1) { ?>
-        <a href="?action=addWeek&base=<?= $selectedBaseID ?>" class="btn btn-primary m-1 pull-right">Nouvelle semaine</a>
-    <?php } ?>
 </div>
-
 <div>
     <h3>Semaine en cours</h3>
     <?php if(isset($activeWeek['week'])): ?>
@@ -46,10 +52,9 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                 <td>Semaine <?=$activeWeek['week']?></td>
                 <td>En cours</td>
                 <td>
-                    <form action="?action=toDoDetails" method="POST">
-                        <input type="hidden" name="weekID" value="<?= $activeWeek['id'] ?>">
-                        <input type="hidden" name="weekNbr" value="<?= $activeWeek['week'] ?>">
-                        <input type="hidden" name="baseID" value="<?= $selectedBaseID ?>">
+                    <form>
+                        <input type="hidden" name="action" value="showtodo">
+                        <input type="hidden" name="id" value="<?= $activeWeek['id'] ?>">
                         <button type="submit" class='btn btn-primary m-1 float-right'>Détails</button>
                     </form>
                 </td>
@@ -77,10 +82,9 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                     <td>Semaine <?=$week['week']?></td>
                     <td>Cloturé</td>
                     <td>
-                        <form action="?action=toDoDetails" method="POST">
-                            <input type="hidden" name="weekID" value="<?= $week['id'] ?>">
-                            <input type="hidden" name="weekNbr" value="<?= $week['week'] ?>">
-                            <input type="hidden" name="baseID" value="<?= $selectedBaseID ?>">
+                        <form>
+                            <input type="hidden" name="action" value="showtodo">
+                            <input type="hidden" name="id" value="<?= $week['id'] ?>">
                             <button type="submit" class='btn btn-primary m-1 float-right'>Détails</button>
                         </form>
                     </td>

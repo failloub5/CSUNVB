@@ -10,9 +10,10 @@ $title = "CSU-NVB - Stupéfiants";
     <h1>Stupéfiants</h1>
 </div>
 <div class="row">
-    <form action="?action=showDrugSheetList" method="post" class="col">
+    <form class="col">
+        <input type="hidden" name="action" value="listdrugforbase">
         <label>
-            <select onchange="this.form.submit()" name="site" size="1">
+            <select onchange="this.form.submit()" name="id" size="1">
                 <?php foreach($bases as $base): ?>
                     <option value="<?= $base["id"] ?>"
                     <?php if ($baseID == $base["id"]): ?>
@@ -28,7 +29,7 @@ $title = "CSU-NVB - Stupéfiants";
     <div class="row m-2">
     </div>
     <a class="col">
-        <?php if ($_SESSION['username']['admin'] == 1): ?>
+        <?php if ($_SESSION['user']['admin'] == 1): ?>
             <a href="?action=newDrugSheet&base=<?= $baseID ?>">
                 <button class='btn btn-primary m-1 float-right'>Nouvelle feuille de stupéfiants</button>
             </a>
@@ -40,7 +41,7 @@ $title = "CSU-NVB - Stupéfiants";
         <thead class="thead-dark">
         <th>Date</th>
         <th>État</th>
-        <?php if ($_SESSION['username']['admin'] == 1): ?>
+        <?php if ($_SESSION['user']['admin'] == 1): ?>
             <th>Action</th>
         <?php endif; ?>
         </thead>
@@ -48,14 +49,14 @@ $title = "CSU-NVB - Stupéfiants";
             <?php foreach ($drugSheetList as $week): ?>
                 <tr>
                     <td>
-                        <a href='?action=showDrugSheet&site=<?= $baseID ?>&week=<?= $week["week"] ?>'>
+                        <a href='?action=showdrug&id=<?= $week['id'] ?>'>
                             Semaine <?= $week["week"] ?>
                         </a>
                     </td>
                     <td>
                         <?= $week['state'] ?>
                     </td>
-                    <?php if ($_SESSION['username']['admin'] == 1): ?>
+                    <?php if ($_SESSION['user']['admin'] == 1): ?>
                         <td>
                             <div class='row'>
                                 <a href='?action=<?= getDrugStateButton($week['state']) ?>DrugSheet&site=<?= $baseID ?>&week=<?= $week["week"]?>'>

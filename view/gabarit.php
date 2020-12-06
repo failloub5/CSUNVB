@@ -18,7 +18,7 @@
     <link href="node_modules/bootstrap/dist/css/bootstrap-reboot.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
-    <link href="css/ShiftEnd.css" rel="stylesheet">
+    <link href="css/shift.css" rel="stylesheet">
 
     <!-- Icons -->
     <link href="assets/icons/general/stylesheets/general_foundicons.css" media="screen" rel="stylesheet"
@@ -39,7 +39,7 @@
 
 
     <!-- Javascript  -->
-    <script src="js/shiftEnd.js"></script>
+    <script src="js/shift.js"></script>
 
 </head>
 <body>
@@ -57,15 +57,13 @@
             </div>
         </div>
         <div>
-            <?php if (isset($_SESSION['username'])) { ?>
-                <a href="?action=home" class="btn btn-primary m-1 pull-right">Home</a>
-                <a href="?action=disconnect" class="btn btn-primary m-1 pull-right">Logout</a>
-                <p>Connecté en tant que : <strong><?= $_SESSION['username']['initials'] ?></strong> à
-                    <strong><?= $_SESSION['base']['name']?></strong>
+            <a href="?action=home" class="btn btn-primary m-1 pull-right">Accueil</a>
+            <?php if (isset($_SESSION['user'])) : ?>
+                <a href="?action=disconnect" class="btn btn-primary m-1 pull-right">Se déconnecter</a>
+                <p>Connecté en tant que : <strong><?= $_SESSION['user']['initials'] ?></strong> à
+                    <strong><?= $_SESSION['base']['name'] ?></strong>
                 </p>
-            <?php } else { ?>
-                <a href="?action=login" class="btn btn-primary m-1 pull-right">Login</a>
-            <?php } ?>
+            <?php endif; ?>
         </div>
     </header>
 </div>
