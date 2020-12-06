@@ -61,11 +61,10 @@ $title = "CSU-NVB - Remise de garde";
                     ($_SESSION['user']['admin'] == true and $shiftsheet['statusslug'] == 'close') ||
                     $shiftsheet['statusslug'] == 'open' ||
                     $shiftsheet['statusslug'] == 'reopen')) { ?>
-                    <form action="?action=altershiftsheetStatus" method="post">
+                    <form>
+                        <input type="hidden" name="action" value="altershiftsheetStatus">
                         <input type=hidden name="id" value= <?= $shiftsheet['id'] ?>>
-                        <button class="btn btn-primary btn-sm" name="status" value="<?= $shiftsheet['statusslug'] ?>"
-                        </button>
-                        <?= $shiftsheet['status'] ?>
+                        <button class="btn btn-primary btn-sm"><?= $shiftsheet['status'] ?></button>
                     </form>
                 <?php } ?>
             </td>

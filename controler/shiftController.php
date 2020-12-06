@@ -18,25 +18,27 @@ function newShiftSheet()
     listshiftforbase($_SESSION["base"]['id']);
 }
 
-
+// Attention: cette fonction se base sur un diagramme d'état simplifié:
 // blank -> open -> close -> reopen -> close
-function altershiftsheetStatus(){
-    switch ($_POST["status"]) {
+// Elle ne fonctionnera pas le jour où on pourra passer d'un état à un autre parmi plusieurs
+function altershiftsheetStatus($sheet_id){
+    $sheet = getshiftsheetByID($sheet_id);
+    switch ($sheet["status"]) {
         case 'open' :
         case 'reopen' :
-            closeShiftPage($_POST["id"]);
+            closeShiftPage($sheet["id"]);
             break;
         case 'blank' :
             if (($_SESSION['user']['admin'] == true)) {
-                if( getNbshiftsheet('open',$_SESSION["selectedBase"]) == 0 ){
-                    openShiftPage($_POST["id"]);
+                if( getNbshiftsheet('open',$sheet["base_id"]) == 0 ){
+                    openShiftPage($sheet["id"]);
                 }else{
                     $_SESSION["flashmessage"] = "Une autre feuille est déjà ouverte";
                 }
             }
             break;
         case 'close' :
-            if (($_SESSION['user']['admin'] == true)) reopenShiftPage($_POST["id"]);
+            if (($_SESSION['user']['admin'] == true)) reopenShiftPage($sheet["id"]);
             break;
         default :
             break;

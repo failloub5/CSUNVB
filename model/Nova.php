@@ -1,18 +1,7 @@
 <?php
 function getNovas()
 {
-    try {
-        $dbh = getPDO();
-        $query = 'SELECT * FROM novas';
-        $statement = $dbh->prepare($query);//prepare query
-        $statement->execute();//execute query
-        $queryResult = $statement->fetchAll(PDO::FETCH_ASSOC);//prepare result for client
-        $dbh = null;
-        return $queryResult;
-    } catch (PDOException $e) {
-        error_log($e->getMessage());
-        return null;
-    }
+    return selectMany('SELECT * FROM novas',[]);
 }
 
 function addNewNova($nameNova)

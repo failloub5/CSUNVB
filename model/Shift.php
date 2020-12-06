@@ -6,53 +6,17 @@
 
 
 function openShiftPage($id){
-    try {
-        $dbh = getPDO();
-        $query = "update shiftsheets set status_id= 2 WHERE id=:id";
-        $statement = $dbh->prepare($query);//prepare query
-        $statement->execute(["id" => $id]);//execute query
-        //$queryResult = $statement->fetch(PDO::FETCH_ASSOC);//prepare result for client
-        $dbh = null;
-        return true;
-        //return $queryResult;
-    } catch (PDOException $e) {
-        error_log($e->getMessage());
-        return null;
-    }
+    return execute("update shiftsheets set status_id= (select id from status where slug = 'open') WHERE id=:id",["id" => $id]);
 }
 
 function reopenShiftPage($id)
 {
-    try {
-        $dbh = getPDO();
-        $query = "update shiftsheets set status_id= 4 WHERE id=:id";
-        $statement = $dbh->prepare($query);//prepare query
-        $statement->execute(["id" => $id]);//execute query
-        //$queryResult = $statement->fetch(PDO::FETCH_ASSOC);//prepare result for client
-        $dbh = null;
-        return true;
-        //return $queryResult;
-    } catch (PDOException $e) {
-        error_log($e->getMessage());
-        return null;
-    }
+    return execute("update shiftsheets set status_id= (select id from status where slug = 'open') WHERE id=:id",["id" => $id]);
 }
 
 function closeShiftPage($id)
 {
-    try {
-        $dbh = getPDO();
-        $query = "update shiftsheets set status_id= 3 WHERE id=:id";
-        $statement = $dbh->prepare($query);//prepare query
-        $statement->execute(["id" => $id]);//execute query
-        //$queryResult = $statement->fetchAll(PDO::FETCH_ASSOC);//prepare result for client
-        $dbh = null;
-        return true;
-        //return $queryResult;
-    } catch (PDOException $e) {
-        error_log($e->getMessage());
-        return null;
-    }
+    return execute("update shiftsheets set status_id= (select id from status where slug = 'close') WHERE id=:id",["id" => $id]);
 }
 
 
