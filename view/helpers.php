@@ -15,6 +15,11 @@ function getFlashMessage()
     }
 }
 
+function setFlashMessage($message)
+{
+    $_SESSION['flashmessage']=$message;
+}
+
 function getDrugStateButton($state) {
      switch ($state) {
          case "closed":

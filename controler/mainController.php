@@ -42,11 +42,11 @@ function tryLogin()
         if ($user['firstconnect'] == true) {
             firstLogin();
         } else {
-            $_SESSION['flashmessage'] = 'Bienvenue ' . $user['firstname'] . ' ' . $user['lastname'] . ' !';
+            setFlashMessage('Bienvenue ' . $user['firstname'] . ' ' . $user['lastname'] . ' !');
             home();
         }
     } else {
-        $_SESSION['flashmessage'] = 'Identifiants incorrects ...';
+        setFlashMessage('Identifiants incorrects ...');
         displayLoginPage();
     }
 }
@@ -69,17 +69,17 @@ function changeFirstPassword()         //Oblige le nouvel user à changer son md
     //TODO Condtion à refaire ( michael )
     if ($passwordchange != $_SESSION['user']['password']) {
         if ($confirmpassword != $passwordchange) {
-            $_SESSION['flashmessage'] = "Erreur lors de la confirmation du mot de passe";
+            setFlashMessage("Erreur lors de la confirmation du mot de passe");
             firstLoginPage();
         } else {
-            $_SESSION['flashmessage'] = "Mot de passe modifié";
+            setFlashMessage("Mot de passe modifié");
             $id = $_SESSION['user']['id'];
             $hash = password_hash($confirmpassword, PASSWORD_DEFAULT);
             SaveUserPassword($hash, $id);
             disconnect();
         }
     } else {
-        $_SESSION['flashmessage'] = "Le nouveau mot de passe doit être différent de l'ancien !";
+        setFlashMessage("Le nouveau mot de passe doit être différent de l'ancien !");
         firstLoginPage();
     }
 }

@@ -91,7 +91,7 @@ function addWeek(){
         addtoDo($todo['todothing_id'], $newWeek['id'],  $todo['day_of_week']);
     }
 
-    $_SESSION['flashmessage'] = "La semaine ".$week['last_week']." a été créée.";
+    setFlashMessage("La semaine ".$week['last_week']." a été créée.");
     listtodoforbase($base);
 }
 
@@ -117,7 +117,7 @@ function nextWeekNumber($weekNbr){
  */
 function reopenweek($todo_id){
     openWeeklyTasks($todo_id);
-    $_SESSION['flashmessage'] = "La semaine a été ouverte.";
+    setFlashMessage("La semaine a été ouverte.");
     showtodo($todo_id);
 }
 
@@ -130,7 +130,7 @@ function closeweek($todo_id){
     $week = getTodosheetByID($todo_id);
 
     closeWeeklyTasks($todo_id);
-    $_SESSION['flashmessage'] = "La semaine ".$week['week']." a été clôturée.";
+    setFlashMessage("La semaine ".$week['week']." a été clôturée.");
     listtodoforbase($week['base_id']);
 }
 
