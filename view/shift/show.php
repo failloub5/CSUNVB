@@ -63,14 +63,44 @@ $title = "CSU-NVB - Remise de garde";
                     <?= $action['text'] ?>
                 </td>
                 <?php if ($enableshiftsheetFilling): //TODO à modifier pour pour pouvoir modifier les valeurs ?>
-                    <td class="ackcell">
-                        todo
+                    <td class="ackcell" style="padding : 3px; width: 110px;">
+                        <?php if (count($action["checksDay"])==0): ?>
+                            <button type="submit" class="btn btn-warning" style=" width: 100%;">Valider
+                                <div class="text-success bg-white rounded mt-1">
+                                </div>
+                            </button>
+                        <?php else: ?>
+                            <button type="submit" class="btn btn-success">Re-Valider
+                                <div class="text-success bg-white rounded mt-1">
+                                    <?php foreach ($action["checksDay"] as $check):?>
+                                        <?=$check["initials"]?>
+                                    <?php endforeach; ?>
+                                </div>
+                            </button>
+                        <?php endif; ?>
                     </td>
-                    <td class="ackcell">
-                        todo
+                    <td class="ackcell" style="padding : 3px; width: 110px;">
+                        <?php if (count($action["checksNight"])==0): ?>
+                            <button type="submit" class="btn btn-warning" style=" width: 100%;">Valider
+                                <div class="text-success bg-white rounded mt-1">
+                                </div>
+                            </button>
+                        <?php else: ?>
+                            <button type="submit" class="btn btn-success">Re-Valider
+                                <div class="text-success bg-white rounded mt-1">
+                                    <?php foreach ($action["checksNight"] as $check):?>
+                                        <?=$check["initials"]?>
+                                    <?php endforeach; ?>
+                                </div>
+                            </button>
+                        <?php endif; ?>
                     </td>
                     <td>
-                        todo
+                        <?php foreach ($action["comments"] as $comment):?>
+                            [ <?= $comment['initials']?>, <?= $comment['time']?> ] : <?= $comment['message'] ?>
+                            <br>
+                        <?php endforeach; ?>
+                        <button type="submit" class="btn bg-white btn-block m-1" style="width:50px;">+</button>
                     </td>
                 <?php else: ?>
                     <td class="ackcell">

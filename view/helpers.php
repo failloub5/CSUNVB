@@ -85,4 +85,15 @@ function displayDate ($date, $format)
         default: return strftime('%e %b %Y', strtotime($date)); // Complet sans le jour
     }
 }
+
+/**
+ * Si l'utilisateur n'est pas administrateur, affiche une erreur et le redirige sur la page d'accueil
+ */
+function isAdmin(){
+    if($_SESSION['user']['admin'] == false){
+        setFlashMessage("Vous n'êtes pas autorisé à effectuer cette action !");
+        return true;
+    }
+    return false;
+}
 ?>
