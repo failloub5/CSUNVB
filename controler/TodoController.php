@@ -26,7 +26,7 @@ function listtodoforbase($selectedBaseID){
 function showtodo($todo_id){
     $week = getTodosheetByID($todo_id);
     $base = getbasebyid($week['base_id']);
-    $dates = getDatesFromWeekNumber($week['week']);
+    $dates = getDaysForWeekNumber($week['week']);
 
     /** Test pour vérifier si une autre feuille est déjà ouverte */
     $alreadyOpen = true;
@@ -37,6 +37,12 @@ function showtodo($todo_id){
     for ($daynight=0; $daynight <= 1; $daynight++) {
         for ($dayofweek = 1; $dayofweek <= 7; $dayofweek++) {
             $todoThings[$daynight][$dayofweek] = readTodoThingsForDay($todo_id,$daynight,$dayofweek);
+            foreach ($todoThings[$daynight][$dayofweek] as $key => $todoThing){
+                if($todoThing['type'] == "2" && !is_null($todoThing['value'])){
+                    $todoThings[$daynight][$dayofweek][$key]['description'] = str_replace("....", "".$todoThing['value']."", "".$todoThing['description']."");
+                }
+            }
+
         }
     }
 
@@ -45,26 +51,6 @@ function showtodo($todo_id){
     require_once VIEW . 'todo/show.php';
 }
 
-/**
- * Fonction qui retourne les dates des jours de la semaine, à partir d'un numéro de semaine
- * @param $weekNumber : Le numéro de la semaine dont on veut connaitre les dates
- * @return array : les dates de la semaine
- */
-function getDatesFromWeekNumber($weekNumber){
-    $year = 2000 + intdiv($weekNumber,100);
-    $week = $weekNumber%100;
-
-    $dates = Array();
-    $time = strtotime(sprintf("%4dW%02d", $year, $week));
-
-    for($i = 0; $i < 7; $i++){
-        $day = date(strtotime("+".$i." day", $time));
-        $fullDate = strftime('%e %b %Y', $day);
-        $dates[] = $fullDate;
-    }
-
-    return $dates;
-}
 
 /**
  * Fonction qui ajoute à la bbd dans todosheets les données relative à base_id et week

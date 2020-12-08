@@ -68,6 +68,7 @@ function readLastWeek($base_id)
 
 function weeknew($base,$week)
 {
+    // todo : remplacer la requete execute par une requete insert !
     execute("INSERT INTO todosheets(week,state ,base_id)
                    VALUES('$week','close','$base')", []);
 
@@ -79,7 +80,7 @@ function weeknew($base,$week)
 
 function readTodoThingsForDay($sid, $day, $dayOfWeek)
 {
-    $res = selectMany("SELECT description, type, u.initials AS 'initials'
+    $res = selectMany("SELECT description, type, value, u.initials AS 'initials'
                              FROM todos 
                              INNER JOIN todothings t ON todos.todothing_id = t.id
                              LEFT JOIN users u ON todos.user_id = u.id
