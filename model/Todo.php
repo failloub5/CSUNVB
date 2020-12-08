@@ -68,6 +68,7 @@ function readLastWeek($base_id)
 
 function weeknew($base,$week)
 {
+    // todo : remplacer la requete execute par une requete insert !
     execute("INSERT INTO todosheets(week,state ,base_id)
                    VALUES('$week','close','$base')", []);
 
