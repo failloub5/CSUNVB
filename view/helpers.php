@@ -38,13 +38,13 @@ function buttonTask($initials, $desription, $weekState)
         if(empty($initials)) {
             return "<button type='submit' class='btn btn-secondary btn-block m-1' data-toggle='modal' data-target='#popUpValidation'>".$desription."<div class='bg-white rounded mt-1'><br></div></button>";
         } else {
-            return "<button type='submit' class='btn btn-success btn-block m-1'>".$desription."<div class='text-success bg-white rounded mt-1'>".$initials."</div></button>";
+            return "<button type='submit' class='btn btn-success btn-block m-1'>".$desription."<div class='text-dark bg-white rounded mt-1'>".$initials."</div></button>";
         }
     } else {
         if(empty($initials)) {
             return "<button type='submit' class='btn btn-warning btn-block m-1' disabled >".$desription."<div class='bg-white rounded mt-1'><br></div></button>";
         } else {
-            return "<button type='submit' class='btn btn-success btn-block m-1' disabled >".$desription."<div class='text-success bg-white rounded mt-1'>".$initials."</div></button>";
+            return "<button type='submit' class='btn btn-success btn-block m-1' disabled >".$desription."<div class='text-dark bg-white rounded mt-1'>".$initials."</div></button>";
         }
     }
 }

@@ -80,7 +80,7 @@ function weeknew($base,$week)
 
 function readTodoThingsForDay($sid, $day, $dayOfWeek)
 {
-    $res = selectMany("SELECT description, type, u.initials AS 'initials'
+    $res = selectMany("SELECT description, type, value, u.initials AS 'initials'
                              FROM todos 
                              INNER JOIN todothings t ON todos.todothing_id = t.id
                              LEFT JOIN users u ON todos.user_id = u.id

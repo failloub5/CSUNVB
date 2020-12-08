@@ -37,6 +37,12 @@ function showtodo($todo_id){
     for ($daynight=0; $daynight <= 1; $daynight++) {
         for ($dayofweek = 1; $dayofweek <= 7; $dayofweek++) {
             $todoThings[$daynight][$dayofweek] = readTodoThingsForDay($todo_id,$daynight,$dayofweek);
+            foreach ($todoThings[$daynight][$dayofweek] as $key => $todoThing){
+                if($todoThing['type'] == "2" && !is_null($todoThing['value'])){
+                    $todoThings[$daynight][$dayofweek][$key]['description'] = str_replace("....", "".$todoThing['value']."", "".$todoThing['description']."");
+                }
+            }
+
         }
     }
 
