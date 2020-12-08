@@ -64,7 +64,7 @@ $title = "CSU-NVB - Remise de garde";
                     <form>
                         <input type="hidden" name="action" value="altershiftsheetStatus">
                         <input type=hidden name="id" value= <?= $shiftsheet['id'] ?>>
-                        <button class="btn btn-primary btn-sm"><?= actionOnStatus($shiftsheet['statusslug'])?></button>
+                        <button class="btn btn-primary btn-sm"><?= actionForStatus($shiftsheet['statusslug'])?></button>
                     </form>
                 <?php } ?>
 

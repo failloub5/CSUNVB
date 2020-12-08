@@ -36,7 +36,7 @@ function buttonTask($initials, $desription, $weekState)
 {
     if($weekState == 'open'){
         if(empty($initials)) {
-            return "<button type='submit' class='btn btn-secondary btn-block m-1' data-toggle='modal' data-target='#popUpValidation'>".$desription."<div class='bg-white rounded mt-1'><br></div></button>";
+            return "<button type='submit' class='btn btn-secondary btn-block m-1' data-toggle='modal' onclick='myFunction()'>".$desription."<div class='bg-white rounded mt-1'><br></div></button>";
         } else {
             return "<button type='submit' class='btn btn-success btn-block m-1'>".$desription."<div class='text-success bg-white rounded mt-1'>".$initials."</div></button>";
         }

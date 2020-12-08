@@ -40,6 +40,7 @@
 
     <!-- Javascript  -->
     <script src="js/shift.js"></script>
+    <script src="js/helper.js"></script>
 
 </head>
 <body>
