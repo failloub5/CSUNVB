@@ -96,4 +96,19 @@ function isAdmin(){
     }
     return false;
 }
+function actionForStatus($status){
+    switch ($status){
+        case "blank":
+            return "Ouvrir";
+        case "open":
+            return "Fermer";
+        case "close":
+            return "Réouvrir";
+        case "reopen":
+            return "Fermer";
+        default:
+            return "action indéterminée";
+    }
+}
+
 ?>
