@@ -15,7 +15,9 @@ $title = "CSU-NVB - Tâches hebdomadaires";
             <form action="?action=modelWeek" method="POST">
                 <input type="hidden" name="weekID" value="<?= $week['id'] ?>">
                 <input type="hidden" name="baseID" value="<?= $base['id'] ?>">
-                <input type="hidden" name="template_name" value="<?= $template['template_name'] ?>">
+
+                <input type="text" name="template_name" value="<?= $template['template_name'] ?>">
+
 
                 <button type="submit" class='btn btn-primary m-1 float-right'>Sauvegarder le nom</button>
             </form>
@@ -44,7 +46,7 @@ $title = "CSU-NVB - Tâches hebdomadaires";
 <div>
     <div class="week text-center p-0">
         <?php foreach ($dates as $index => $date) : ?>
-            <div class='bg-dark text-white col-md font-weight-bold'><?= $days[$index + 1] ?><br><?= $date ?></div>
+            <div class='bg-dark text-white col-md font-weight-bold'><?= $days[$index + 1] ?><br><?= displayDate($date, 0) ?></div>
         <?php endforeach; ?>
     </div>
     <div class="week text-center bg-secondary">
