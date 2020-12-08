@@ -76,9 +76,29 @@ $title = "CSU-NVB - Tâches hebdomadaires";
     </div>
     <br>
 </div>
-<div>
-    <?= popUpValidation("Quittance","sans valeur")?>
+
+
+<div class="modal fade" id="todoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form method="get" action="?action=          -- à faire --           ">
+                <div class="modal-header">
+                    <h5 class="modal-title" id = "modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id = "modal-content"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-primary">Valider</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+<script src="js/todo.js"></script>
 <?php
 $content = ob_get_clean();
 require GABARIT;
