@@ -36,12 +36,6 @@
 
     <script src="node_modules/jquery/dist/jquery.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
-
-
-    <!-- Javascript  -->
-    <script src="js/shift.js"></script>
-    <script src="js/helper.js"></script>
-
 </head>
 <body>
 

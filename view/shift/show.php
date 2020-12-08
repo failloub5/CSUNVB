@@ -100,12 +100,12 @@ $title = "CSU-NVB - Remise de garde";
                 <?php if ($enableshiftsheetFilling): //TODO à modifier pour pour pouvoir modifier les valeurs ?>
                     <td class="ackcell" style="padding : 3px; width: 110px;">
                         <?php if (count($action["checksDay"])==0): ?>
-                            <button type="submit" class="btn btn-warning" style=" width: 100%;">Valider
+                            <button type="submit" class="btn btn-warning toggleShiftModal" style=" width: 100%;">Valider
                                 <div class="text-success bg-white rounded mt-1">
                                 </div>
                             </button>
                         <?php else: ?>
-                            <button type="submit" class="btn btn-success">Re-Valider
+                            <button type="submit" class="btn btn-success toggleShiftModal">Re-Valider
                                 <div class="text-success bg-white rounded mt-1">
                                     <?php foreach ($action["checksDay"] as $check):?>
                                         <?=$check["initials"]?>
@@ -116,12 +116,12 @@ $title = "CSU-NVB - Remise de garde";
                     </td>
                     <td class="ackcell" style="padding : 3px; width: 110px;">
                         <?php if (count($action["checksNight"])==0): ?>
-                            <button type="submit" class="btn btn-warning" style=" width: 100%;">Valider
+                            <button type="submit" class="btn btn-warning toggleShiftModal" style=" width: 100%;">Valider
                                 <div class="text-success bg-white rounded mt-1">
                                 </div>
                             </button>
                         <?php else: ?>
-                            <button type="submit" class="btn btn-success">Re-Valider
+                            <button type="submit" class="btn btn-success toggleShiftModal">Re-Valider
                                 <div class="text-success bg-white rounded mt-1">
                                     <?php foreach ($action["checksNight"] as $check):?>
                                         <?=$check["initials"]?>
@@ -161,6 +161,26 @@ $title = "CSU-NVB - Remise de garde";
     </table>
 <?php endforeach; ?>
 
+<div class="modal fade" id="shiftModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form method="get" action="?action=          -- à faire --           ">
+                <div class="modal-header">
+                    <h5 class="modal-title" id = "modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id = "modal-content"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-primary">Valider</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="js/shift.js"></script>
 <?php
 $content = ob_get_clean();
 require GABARIT;
