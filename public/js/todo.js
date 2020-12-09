@@ -6,6 +6,8 @@ buttons.forEach((item) => {
         $("#todoModal").modal("toggle");
         document.getElementById("modal-title").innerHTML = this.getAttribute("data-title");
         document.getElementById("modal-content").innerHTML = this.getAttribute("data-content");
+        document.getElementById("modal-todoID").value = this.getAttribute("data-id");
+        document.getElementById("modal-todoStatus").value = this.getAttribute("data-status");
     }, false);
 })
 console.log(buttons.length);

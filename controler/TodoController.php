@@ -129,3 +129,14 @@ function modelWeek($weekID, $template_name){
 function loadAModel($weekID, $template_name){
     $toDos = readTodoForASheet($week['id']);  // TODO (noté par XCL) : corriger ce code qui ne fait rien
 }
+
+function switchTodoStatus(){
+    $status = $_POST['modal-todoStatus'];
+    $todoID = $_POST['modal-todoID'];
+
+    if($status == 'open'){
+        unvalidateTodo($todoID);
+    } else {
+        validateTodo($todoID);
+    }
+}

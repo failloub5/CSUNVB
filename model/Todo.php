@@ -80,7 +80,7 @@ function weeknew($base,$week)
 
 function readTodoThingsForDay($sid, $day, $dayOfWeek)
 {
-    $res = selectMany("SELECT description, type, value, u.initials AS 'initials'
+    $res = selectMany("SELECT description, type, value, u.initials AS 'initials', todos.id AS id
                              FROM todos 
                              INNER JOIN todothings t ON todos.todothing_id = t.id
                              LEFT JOIN users u ON todos.user_id = u.id
@@ -117,6 +117,17 @@ function updateTodoSheet($id, $template_name)
 function createTodoSheet($base_id, $lastWeek)
 {
     return insert("INSERT INTO todosheets (base_id,state,week) VALUES (:base_id, 'blank', :lastWeek)", ["base_id" => $base_id, "lastWeek" => $lastWeek + 1]);
+}
+
+function unvalidateTodo($id){
+    return execute("UPDATE todos SET user_id=NULL WHERE id=:id",['id'=>$id]);
+}
+
+function validateTodo($id){
+    $initials = $_SESSION['user']['initials'];
+    $user = getUserByInitials($initials);
+
+    return execute("UPDATE todos SET user_id=:userID WHERE id=:id;",['userID'=>$user['id'],'id'=>$id]);
 }
 
 ?>
