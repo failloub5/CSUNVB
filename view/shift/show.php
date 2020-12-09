@@ -25,7 +25,7 @@ $title = "CSU-NVB - Remise de garde";
                     <td class="col-3 text-right">Novas</td>
                     <td class="col-1 text-center">
                         <select name="novaDay">
-                            <?= ($shiftsheet['novaDay']==NULL) ? '<option value="NULL" selected></option>':''?>
+                            <?= ($shiftsheet['novaDay'] == NULL) ? '<option value="NULL" selected></option>' : '' ?>
                             <?php foreach ($novas as $nova): ?>
                                 <option value="<? $nova['id'] ?>" <?= ($shiftsheet['novaDay'] == $nova['number']) ? 'selected' : '' ?>><?= $nova['number'] ?></option>
                             <?php endforeach; ?>
@@ -33,7 +33,7 @@ $title = "CSU-NVB - Remise de garde";
                     </td>
                     <td class="col-1 text-center">
                         <select name="novaNight">
-                            <?= ($shiftsheet['novaNight']==NULL) ? '<option value="NULL" selected></option>':''?>
+                            <?= ($shiftsheet['novaNight'] == NULL) ? '<option value="NULL" selected></option>' : '' ?>
                             <?php foreach ($novas as $nova): ?>
                                 <option value="<? $nova['id'] ?>" <?= ($shiftsheet['novaNight'] == $nova['number']) ? 'selected' : '' ?>><?= $nova['number'] ?></option>
                             <?php endforeach; ?>
@@ -44,8 +44,8 @@ $title = "CSU-NVB - Remise de garde";
                 <tr>
                     <td class="col-3 text-right">Responsable</td>
                     <td class="col-1 text-center">
-                        <select name="bossDay" >
-                            <?= ($shiftsheet['bossDay']==NULL) ? '<option value="NULL" selected></option>':''?>
+                        <select name="bossDay">
+                            <?= ($shiftsheet['bossDay'] == NULL) ? '<option value="NULL" selected></option>' : '' ?>
                             <?php foreach ($users as $user): ?>
                                 <option value="<? $user['id'] ?>" <?= ($shiftsheet['bossDay'] == $user['initials']) ? 'selected' : '' ?>><?= $user['initials'] ?></option>
                             <?php endforeach; ?>
@@ -53,7 +53,7 @@ $title = "CSU-NVB - Remise de garde";
                     </td>
                     <td class="col-1 text-center">
                         <select name="bossNight">
-                            <?= ($shiftsheet['bossNight']==NULL) ? '<option value="NULL" selected></option>':''?>
+                            <?= ($shiftsheet['bossNight'] == NULL) ? '<option value="NULL" selected></option>' : '' ?>
                             <?php foreach ($users as $user): ?>
                                 <option value="<? $user['id'] ?>" <?= ($shiftsheet['bossNight'] == $user['initials']) ? 'selected' : '' ?>><?= $user['initials'] ?></option>
                             <?php endforeach; ?>
@@ -64,7 +64,7 @@ $title = "CSU-NVB - Remise de garde";
                     <td class="col-3 text-right">Novas</td>
                     <td class="col-1 text-center">
                         <select name="teammateDay">
-                            <?= ($shiftsheet['teammateDay']==NULL) ? '<option value="NULL" selected></option>':''?>
+                            <?= ($shiftsheet['teammateDay'] == NULL) ? '<option value="NULL" selected></option>' : '' ?>
                             <?php foreach ($users as $user): ?>
                                 <option value="<? $user['id'] ?>" <?= ($shiftsheet['teammateDay'] == $user['initials']) ? 'selected' : '' ?>><?= $user['initials'] ?></option>
                             <?php endforeach; ?>
@@ -72,7 +72,7 @@ $title = "CSU-NVB - Remise de garde";
                     </td>
                     <td class="col-1 text-center">
                         <select name="teammateNight">
-                            <?= ($shiftsheet['teammateNight']==NULL) ? '<option value="NULL" selected></option>':''?>
+                            <?= ($shiftsheet['teammateNight'] == NULL) ? '<option value="NULL" selected></option>' : '' ?>
                             <?php foreach ($users as $user): ?>
                                 <option value="<? $user['id'] ?>" <?= ($shiftsheet['teammateNight'] == $user['initials']) ? 'selected' : '' ?>><?= $user['initials'] ?></option>
                             <?php endforeach; ?>
@@ -107,43 +107,52 @@ $title = "CSU-NVB - Remise de garde";
                 </td>
                 <?php if ($enableshiftsheetFilling): //TODO à modifier pour pour pouvoir modifier les valeurs ?>
                     <td class="ackcell" style="padding : 3px; width: 110px;">
-                        <?php if (count($action["checksDay"]) == 0): ?>
-                            <button type="submit" class="btn btn-warning toggleShiftModal" style=" width: 100%;">Valider
-                                <div class="text-success bg-white rounded mt-1">
-                                </div>
-                            </button>
-                        <?php else: ?>
-                            <button type="submit" class="btn btn-success toggleShiftModal">Re-Valider
+                        <button type="submit"
+                                class="btn <?= (count($action["checksDay"]) == 0) ? 'btn-warning' : 'btn-success' ?> toggleShiftModal"
+                                data-title="Garde du <?= date('d.m.Y', strtotime($shiftsheet['date'])) ?>"
+                                data-content="<?= $action['text'] ?> : Jour"
+                                data-shiftSheet_id="<?= $shiftsheet['id'] ?>"
+                                data-action_id="<?= $action['id'] ?>"
+                                style=" width: 100%;">
+                            <?php if (count($action["checksDay"]) == 0): ?>
+                                A Valider
+                            <?php else: ?>
+                                Valider Par
                                 <div class="text-success bg-white rounded mt-1">
                                     <?php foreach ($action["checksDay"] as $check): ?>
                                         <?= $check["initials"] ?>
                                     <?php endforeach; ?>
                                 </div>
-                            </button>
-                        <?php endif; ?>
+                            <?php endif; ?>
+                        </button>
                     </td>
+
                     <td class="ackcell" style="padding : 3px; width: 110px;">
-                        <?php if (count($action["checksNight"]) == 0): ?>
-                            <button type="submit" class="btn btn-warning toggleShiftModal" style=" width: 100%;">Valider
-                                <div class="text-success bg-white rounded mt-1">
-                                </div>
-                            </button>
-                        <?php else: ?>
-                            <button type="submit" class="btn btn-success toggleShiftModal">Re-Valider
+                        <button type="submit"
+                                class="btn <?= (count($action["checksNight"]) == 0) ? 'btn-warning' : 'btn-success' ?> toggleShiftModal"
+                                data-title="Garde du <?= date('d.m.Y', strtotime($shiftsheet['date'])) ?>"
+                                data-content="<?= $action['text'] ?> : Nuit"
+                                data-shiftSheet_id="<?= $shiftsheet['id'] ?>"
+                                data-action_id="<?= $action['id'] ?>"
+                                style=" width: 100%;">
+                            <?php if (count($action["checksNight"]) == 0): ?>
+                                A Valider
+                            <?php else: ?>
+                                Valider Par
                                 <div class="text-success bg-white rounded mt-1">
                                     <?php foreach ($action["checksNight"] as $check): ?>
                                         <?= $check["initials"] ?>
                                     <?php endforeach; ?>
                                 </div>
-                            </button>
-                        <?php endif; ?>
+                            <?php endif; ?>
+                        </button>
                     </td>
                     <td>
                         <?php foreach ($action["comments"] as $comment): ?>
                             [ <?= $comment['initials'] ?>, <?= $comment['time'] ?> ] : <?= $comment['message'] ?>
                             <br>
                         <?php endforeach; ?>
-                        <button type="submit" class="btn bg-white btn-block m-1" style="width:50px;">+</button>
+                        <button type="submit" class="btn bg-white btn-block m-1" style="width:50px;">Ajouter</button>
                     </td>
                 <?php else: ?>
                     <td class="ackcell">
@@ -173,22 +182,26 @@ $title = "CSU-NVB - Remise de garde";
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form method="get" action="?action=          -- à faire --           ">
+            <form method="get" action="?action=checkShift">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modal-title"></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" id="modal-content"></div>
+                <div class="modal-body" id="modal-content">
+                </div>
+                <input type="hidden" name="action_id" id="action_id" value="0">
+                <input type="hidden" name="shiftSheet_id" id="shiftSheet_id" value="0">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                    <button type="button" class="btn btn-primary">Valider</button>
+                    <input type="submit" class="btn btn-primary" value="Valider">
                 </div>
             </form>
         </div>
     </div>
 </div>
+
 <script src="js/shift.js"></script>
 <?php
 $content = ob_get_clean();

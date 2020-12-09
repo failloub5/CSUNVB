@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html>
 <head>
     <meta charset="utf-8">
@@ -38,8 +38,6 @@
     <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 </head>
 <body>
-
-
 <div class="container">
     <header>
         <div class="row banner">

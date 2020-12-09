@@ -76,3 +76,5 @@ function showshift($shiftid)
     require_once VIEW . 'shift/show.php';
 }
 
+//function checkShift
+
