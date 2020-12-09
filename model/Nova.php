@@ -1,7 +1,8 @@
 <?php
 function getNovas()
 {
-    return selectMany('SELECT * FROM novas',[]);
+    $nova= selectMany('SELECT * FROM novas',[]);
+    return $nova;
 }
 
 function addNewNova($nameNova)
