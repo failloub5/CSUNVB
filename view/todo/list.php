@@ -27,14 +27,30 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                     echo ">".$base['name'];
                 }?>
         </select>
-        <select onchange="this.form.submit()" name="selectModel">
-            <!-- TODO (XCL) : faire une fonction getTemplates() qui retourne un tableau des noms de modèles connus -->
-            <?php foreach ($templates as $template): ?>
-                <option><?= $template['name'] ?></option>
-            <?php endforeach; ?>
+    </form>
+    <form action="?action=addWeek&base=<?= $selectedBaseID ?>">
+        <select  name="selectModel">
+            <?php
+                foreach ($templates as $template) {
+                    echo "<option value='".$template['id']."'";
+                    /** Todo : Max
+                     * Géré si vide
+                     * if($templates['template_name'] == "" || $templates['id'] == $maxid['id'] ){
+                        echo "<option value='dernière value'>";
+                     }else {
+                         echo ">" . $template['template_name'];
+                     }
+                     *
+                     *
+                     *
+                     */
+                    echo ">" . $template['template_name'];
+                }
+                /*var_dump($templates);*/
+                ?>
         </select>
         <?php if ($_SESSION['user']['admin'] == 1 && ($_SESSION['base']['id'] == $selectedBaseID)) { ?>
-            <a href="?action=addWeek&base=<?= $selectedBaseID ?>" class="btn btn-primary m-1 pull-right">Nouvelle semaine</a>
+            <button type="submit" class="btn btn-primary m-1 pull-right">Nouvelle semaine</button>
         <?php } ?>
     </form>
 </div>

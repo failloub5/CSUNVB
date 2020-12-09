@@ -124,8 +124,20 @@ function getTemplate_name($id)
     $query ="SELECT template_name 
              FROM todosheets
              WHERE id = :id";
-
     return selectOne($query, ['id'=> $id]);
+}
+
+function getTodosheetMaxID($selectedBaseID){
+    $query = "SELECT MAX(id =:id) 
+              FROM todosheets";
+        return selectOne($query, ['id'=> $selectedBaseID]);
+}
+
+function getTemplates_name($selectedBaseID){
+    $query = "SELECT template_name, id 
+             FROM todosheets
+             WHERE base_id = :id AND template_name is NOT NULL";
+    return selectMany($query, ['id'=> $selectedBaseID]);
 }
 
 ?>

@@ -16,6 +16,9 @@ function listtodoforbase($selectedBaseID){
     $weeksNbrList = getClosedWeeks($selectedBaseID); // La liste des numéros de semaines qui sont fermées
     $activeWeek = getOpenedWeeks($selectedBaseID);  // Le numero de la semaine active
     $baseList = getbases();
+    $templates = getTemplates_name($selectedBaseID);
+    $maxid = getTodosheetMaxID($selectedBaseID);
+
     require_once VIEW . 'todo/list.php';
 }
 
@@ -28,6 +31,7 @@ function showtodo($todo_id){
     $base = getbasebyid($week['base_id']);
     $dates = getDaysForWeekNumber($week['week']);
     $template = getTemplate_name($todo_id);
+
 
     /** Test pour vérifier si une autre feuille est déjà ouverte */
     $alreadyOpen = true;
@@ -115,18 +119,14 @@ function reopenweek($todo_id){
  */
 function closeweek($todo_id){
     $week = getTodosheetByID($todo_id);
-
     closeWeeklyTasks($todo_id);
     setFlashMessage("La semaine ".$week['week']." a été clôturée.");
     listtodoforbase($week['base_id']);
 }
 
 function modelWeek($weekID){
-
     updateTodoSheet($weekID,$_POST['template_name']);
     header('Location: /index.php');
-    /*$currentURL = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-    header('Location: '.$currentURL);*/
 }
 
 function loadAModel($weekID, $template_name){
