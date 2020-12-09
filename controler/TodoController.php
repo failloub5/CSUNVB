@@ -27,6 +27,7 @@ function showtodo($todo_id){
     $week = getTodosheetByID($todo_id);
     $base = getbasebyid($week['base_id']);
     $dates = getDaysForWeekNumber($week['week']);
+    $template = getTemplate_name($todo_id);
 
     /** Test pour vérifier si une autre feuille est déjà ouverte */
     $alreadyOpen = true;
@@ -120,10 +121,12 @@ function closeweek($todo_id){
     listtodoforbase($week['base_id']);
 }
 
-function modelWeek($weekID, $template_name){
-    updateTodoSheet($weekID,$template_name);
-    $currentURL = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-    header('Location: '.$currentURL);
+function modelWeek($weekID){
+
+    updateTodoSheet($weekID,$_POST['template_name']);
+    header('Location: /index.php');
+    /*$currentURL = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    header('Location: '.$currentURL);*/
 }
 
 function loadAModel($weekID, $template_name){

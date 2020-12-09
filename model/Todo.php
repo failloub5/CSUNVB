@@ -25,7 +25,7 @@ function getTodosheetByBaseAndWeek($base_id,$weeknb){
  */
 function getClosedWeeks($baseID)
 {
-    $query = "SELECT t.week, t.id FROM todosheets t JOIN bases b ON t.base_id = b.id WHERE b.id = :baseID AND t.state = 'close' ORDER BY t.week DESC;";
+    $query = "SELECT t.week, t.id, t.template_name FROM todosheets t JOIN bases b ON t.base_id = b.id WHERE b.id = :baseID AND t.state = 'close' ORDER BY t.week DESC;";
     return selectMany($query, ['baseID' => $baseID]);
 }
 
@@ -36,7 +36,7 @@ function getClosedWeeks($baseID)
  */
 function getOpenedWeeks($baseID)
 {
-    $query = "SELECT t.week, t.id FROM todosheets t JOIN bases b ON t.base_id = b.id WHERE b.id = :baseID AND t.state = 'open';";
+    $query = "SELECT t.week, t.id, t.template_name FROM todosheets t JOIN bases b ON t.base_id = b.id WHERE b.id = :baseID AND t.state = 'open';";
     return selectOne($query, ['baseID' => $baseID]);
 }
 
@@ -128,6 +128,13 @@ function validateTodo($id){
     $user = getUserByInitials($initials);
 
     return execute("UPDATE todos SET user_id=:userID WHERE id=:id;",['userID'=>$user['id'],'id'=>$id]);
+function getTemplate_name($id)
+{
+    $query ="SELECT template_name 
+             FROM todosheets
+             WHERE id = :id";
+
+    return selectOne($query, ['id'=> $id]);
 }
 
 ?>

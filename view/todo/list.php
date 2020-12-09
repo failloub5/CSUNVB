@@ -49,7 +49,11 @@ $title = "CSU-NVB - Tâches hebdomadaires";
             </thead>
             <tbody>
             <tr>
-                <td>Semaine <?=$activeWeek['week']?></td>
+                <td>Semaine <?=$activeWeek['week']?>
+                    <?php if ($_SESSION['user']['admin'] == 1 && (isset($activeWeek['template_name']))) { ?>
+                        <img src="./assets/images/template2_16px.png" alt="Template">
+                    <?php } ?>
+                </td>
                 <td>En cours</td>
                 <td>
                     <form>
@@ -79,7 +83,11 @@ $title = "CSU-NVB - Tâches hebdomadaires";
             <tbody>
             <?php foreach ($weeksNbrList as $week):?>
                 <tr>
-                    <td>Semaine <?=$week['week']?></td>
+                    <td>Semaine <?=$week['week']?>
+                        <?php if ($_SESSION['user']['admin'] == 1 && (isset($week['template_name']))) { ?>
+                            <img src="./assets/images/template2_16px.png" alt="Template">
+                        <?php } ?>
+                    </td>
                     <td>Cloturé</td>
                     <td>
                         <form>

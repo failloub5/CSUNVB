@@ -12,11 +12,9 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                 <input type="hidden" name="id" value="<?= $base['id'] ?>">
                 <button type="submit" class='btn btn-primary m-1 float-right'>Retour à la liste</button>
             </form>
-            <form action="?action=modelWeek" method="POST">
-                <input type="hidden" name="weekID" value="<?= $week['id'] ?>">
+            <form action="?action=modelWeek&id=<?= $week['id'] ?>" method="POST">
                 <input type="hidden" name="baseID" value="<?= $base['id'] ?>">
-
-                <input type="text" name="template_name" value="<?= $template['template_name'] ?>">
+                <input type="text" name="template_name" value="<?= $template['template_name']?>">
 
                 <button type="submit" class='btn btn-primary m-1 float-right'>Sauvegarder le nom</button>
             </form>
