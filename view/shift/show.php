@@ -5,35 +5,31 @@ $title = "CSU-NVB - Remise de garde";
 <div class="row m-2">
     <h1>Remise de Garde du <?= date('d.m.Y', strtotime($shiftsheet['date'])) ?> à <?= $shiftsheet['baseName'] ?></h1>
 </div>
-
-<form class="rollingList">
+<?php if ($enableshiftsheetUpdate) : ?>
+<form>
     <input type=hidden name="id" value= <?= $shiftsheet['id'] ?>>
-    <div style="display:flex; align-content: space-between; align-items: center;">
-        <div class="row" style="
-            padding-left:40px;
-            margin-top:20px;
-            margin-bottom:20px;
-            margin-right:60px;">
+    <div class="flex" >
+        <div class="rollingList">
             <table>
                 <tr>
-                    <td class="col-3 text-right"></td>
-                    <td class="col-1 text-right">Jour</td>
-                    <td class="col-1 text-right">Nuit</td>
+                    <td class="col-3 text-center"></td>
+                    <td class="col-1 text-center">Jour</td>
+                    <td class="col-1 text-center">Nuit</td>
                 </tr>
 
                 <tr>
                     <td class="col-3 text-right">Novas</td>
                     <td class="col-1 text-center">
-                        <select name="novaDay">
-                            <?= ($shiftsheet['novaDay'] == NULL) ? '<option value="NULL" selected></option>' : '' ?>
+                        <select name="novaDay" class="formTeamNova">
+                            <?= ($shiftsheet['novaDay']==NULL) ? '<option value="NULL" selected></option>':''?>
                             <?php foreach ($novas as $nova): ?>
                                 <option value="<? $nova['id'] ?>" <?= ($shiftsheet['novaDay'] == $nova['number']) ? 'selected' : '' ?>><?= $nova['number'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </td>
                     <td class="col-1 text-center">
-                        <select name="novaNight">
-                            <?= ($shiftsheet['novaNight'] == NULL) ? '<option value="NULL" selected></option>' : '' ?>
+                        <select name="novaNight" class="formTeamNova">
+                            <?= ($shiftsheet['novaNight']==NULL) ? '<option value="NULL" selected></option>':''?>
                             <?php foreach ($novas as $nova): ?>
                                 <option value="<? $nova['id'] ?>" <?= ($shiftsheet['novaNight'] == $nova['number']) ? 'selected' : '' ?>><?= $nova['number'] ?></option>
                             <?php endforeach; ?>
@@ -44,16 +40,16 @@ $title = "CSU-NVB - Remise de garde";
                 <tr>
                     <td class="col-3 text-right">Responsable</td>
                     <td class="col-1 text-center">
-                        <select name="bossDay">
-                            <?= ($shiftsheet['bossDay'] == NULL) ? '<option value="NULL" selected></option>' : '' ?>
+                        <select name="bossDay" class="formTeamNova">
+                            <?= ($shiftsheet['bossDay']==NULL) ? '<option value="NULL" selected></option>':''?>
                             <?php foreach ($users as $user): ?>
                                 <option value="<? $user['id'] ?>" <?= ($shiftsheet['bossDay'] == $user['initials']) ? 'selected' : '' ?>><?= $user['initials'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </td>
                     <td class="col-1 text-center">
-                        <select name="bossNight">
-                            <?= ($shiftsheet['bossNight'] == NULL) ? '<option value="NULL" selected></option>' : '' ?>
+                        <select name="bossNight" class="formTeamNova">
+                            <?= ($shiftsheet['bossNight']==NULL) ? '<option value="NULL" selected></option>':''?>
                             <?php foreach ($users as $user): ?>
                                 <option value="<? $user['id'] ?>" <?= ($shiftsheet['bossNight'] == $user['initials']) ? 'selected' : '' ?>><?= $user['initials'] ?></option>
                             <?php endforeach; ?>
@@ -63,16 +59,16 @@ $title = "CSU-NVB - Remise de garde";
                 <tr>
                     <td class="col-3 text-right">Novas</td>
                     <td class="col-1 text-center">
-                        <select name="teammateDay">
-                            <?= ($shiftsheet['teammateDay'] == NULL) ? '<option value="NULL" selected></option>' : '' ?>
+                        <select name="teammateDay" class="formTeamNova">
+                            <?= ($shiftsheet['teammateDay']==NULL) ? '<option value="NULL" selected></option>':''?>
                             <?php foreach ($users as $user): ?>
                                 <option value="<? $user['id'] ?>" <?= ($shiftsheet['teammateDay'] == $user['initials']) ? 'selected' : '' ?>><?= $user['initials'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </td>
                     <td class="col-1 text-center">
-                        <select name="teammateNight">
-                            <?= ($shiftsheet['teammateNight'] == NULL) ? '<option value="NULL" selected></option>' : '' ?>
+                        <select name="teammateNight" class="formTeamNova">
+                            <?= ($shiftsheet['teammateNight']==NULL) ? '<option value="NULL" selected></option>':''?>
                             <?php foreach ($users as $user): ?>
                                 <option value="<? $user['id'] ?>" <?= ($shiftsheet['teammateNight'] == $user['initials']) ? 'selected' : '' ?>><?= $user['initials'] ?></option>
                             <?php endforeach; ?>
@@ -87,6 +83,33 @@ $title = "CSU-NVB - Remise de garde";
         </div>
     </div>
 </form>
+<?php else : ?>
+<div class="row rollingList">
+    <table>
+        <tr>
+            <td class="col-3 text-right"></td>
+            <td class="col-1 text-right">Jour</td>
+            <td class="col-1 text-right">Nuit</td>
+        </tr>
+        <tr>
+            <td class="col-3 text-right">Novas</td>
+            <td class="col-1 text-center"><?= $shiftsheet['novaDay'] ?></td>
+            <td class="col-1 text-center"><?= $shiftsheet['novaNight'] ?></td>
+        </tr>
+        <tr>
+            <td class="col-3 text-right">Responsable</td>
+            <td class="col-1 text-center"><?= $shiftsheet['bossDay'] ?></td>
+            <td class="col-1 text-center"><?= $shiftsheet['bossNight'] ?></td>
+        </tr>
+        <tr>
+            <td class="col-3 text-right">Novas</td>
+            <td class="col-1 text-center"><?= $shiftsheet['teammateDay'] ?></td>
+            <td class="col-1 text-center"><?= $shiftsheet['teammateNight'] ?></td>
+        </tr>
+    </table>
+</div>
+
+<?php endif;?>
 
 <?php foreach ($sections as $section): ?>
     <div class="row sectiontitle"><?= $section["title"] ?></div>
