@@ -15,7 +15,7 @@ function getTodosheetByID($id){
  * @return array|mixed|null
  */
 function getTodosheetByBaseAndWeek($base_id,$weeknb){
-    return selectOne("SELECT * FROM todosheets where base_id =:id and week = :weeknb", ['id' => $baseid, 'week' => $weeknb]);
+    return selectOne("SELECT * FROM todosheets where base_id =:id and week = :weeknb", ['id' => $base_id, 'week' => $weeknb]);
 }
 
 /**
@@ -123,11 +123,14 @@ function unvalidateTodo($id){
     return execute("UPDATE todos SET user_id=NULL WHERE id=:id",['id'=>$id]);
 }
 
-function validateTodo($id){
+function validateTodo($id)
+{
     $initials = $_SESSION['user']['initials'];
     $user = getUserByInitials($initials);
 
-    return execute("UPDATE todos SET user_id=:userID WHERE id=:id;",['userID'=>$user['id'],'id'=>$id]);
+    return execute("UPDATE todos SET user_id=:userID WHERE id=:id;", ['userID' => $user['id'], 'id' => $id]);
+}
+
 function getTemplate_name($id)
 {
     $query ="SELECT template_name 
