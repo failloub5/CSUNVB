@@ -119,4 +119,13 @@ function createTodoSheet($base_id, $lastWeek)
     return insert("INSERT INTO todosheets (base_id,state,week) VALUES (:base_id, 'blank', :lastWeek)", ["base_id" => $base_id, "lastWeek" => $lastWeek + 1]);
 }
 
+function getTemplate_name($id)
+{
+    $query ="SELECT template_name 
+             FROM todosheets
+             WHERE id = :id";
+
+    return selectOne($query, ['id'=> $id]);
+}
+
 ?>
