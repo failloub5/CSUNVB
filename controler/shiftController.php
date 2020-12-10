@@ -71,6 +71,13 @@ function showshift($shiftid)
     $shiftsheet = getshiftsheetByID($shiftid);
     $enableshiftsheetUpdate = ($shiftsheet['status'] == "open" || ($shiftsheet['status'] == "blank" && $_SESSION['user']['admin'] == true));
     $enableshiftsheetFilling = ($shiftsheet['status'] == "open" || $shiftsheet['status'] == "reopen");
+    $novas = getNovas();
+    $users = getUsers();
     require_once VIEW . 'shift/show.php';
+}
+
+function checkShift(){
+    checkActionForShift($_POST["action_id"],$_POST["shiftSheet_id"],$_POST["day"]);
+    showshift($_POST["shiftSheet_id"]);
 }
 
