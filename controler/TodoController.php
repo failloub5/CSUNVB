@@ -144,5 +144,5 @@ function switchTodoStatus(){
         validateTodo($todoID);
     }
 
-    showtodo($todosheetID);
+    header('Location: ?action=showtodo&id='.$todosheetID);
 }
