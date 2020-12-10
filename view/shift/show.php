@@ -136,6 +136,7 @@ $title = "CSU-NVB - Remise de garde";
                                 data-content="<?= $action['text'] ?> : Jour"
                                 data-shiftSheet_id="<?= $shiftsheet['id'] ?>"
                                 data-action_id="<?= $action['id'] ?>"
+                                data-day="1"
                                 style=" width: 100%;">
                             <?php if (count($action["checksDay"]) == 0): ?>
                                 A Valider
@@ -157,6 +158,7 @@ $title = "CSU-NVB - Remise de garde";
                                 data-content="<?= $action['text'] ?> : Nuit"
                                 data-shiftSheet_id="<?= $shiftsheet['id'] ?>"
                                 data-action_id="<?= $action['id'] ?>"
+                                data-day="0"
                                 style=" width: 100%;">
                             <?php if (count($action["checksNight"]) == 0): ?>
                                 A Valider
@@ -205,7 +207,7 @@ $title = "CSU-NVB - Remise de garde";
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form method="get" action="?action=checkShift">
+            <form method="post" action="?action=checkShift">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modal-title"></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -216,6 +218,7 @@ $title = "CSU-NVB - Remise de garde";
                 </div>
                 <input type="hidden" name="action_id" id="action_id" value="0">
                 <input type="hidden" name="shiftSheet_id" id="shiftSheet_id" value="0">
+                <input type="hidden" name="day" id="day" value="0">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                     <input type="submit" class="btn btn-primary" value="Valider">

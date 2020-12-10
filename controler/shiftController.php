@@ -76,5 +76,8 @@ function showshift($shiftid)
     require_once VIEW . 'shift/show.php';
 }
 
-//function checkShift
+function checkShift(){
+    checkActionForShift($_POST["action_id"],$_POST["shiftSheet_id"],$_POST["day"]);
+    showshift($_POST["shiftSheet_id"]);
+}
 

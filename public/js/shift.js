@@ -13,8 +13,9 @@ buttons.forEach((item) => {
         $("#shiftModal").modal("toggle");
         document.getElementById("modal-title").innerHTML = this.getAttribute("data-title");
         document.getElementById("modal-content").innerHTML = this.getAttribute("data-content");
-        document.getElementById("action_id").value = 1;//this.getAttribute("data-action_id");
+        document.getElementById("action_id").value = this.getAttribute("data-action_id");
         document.getElementById("shiftSheet_id").value = this.getAttribute("data-shiftSheet_id");
+        document.getElementById("day").value = this.getAttribute("data-day");
     }, false);
 })
 /**
