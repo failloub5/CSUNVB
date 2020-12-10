@@ -136,12 +136,14 @@ function loadAModel($weekID, $template_name){
 function switchTodoStatus(){
     $status = $_POST['modal-todoStatus'];
     $todoID = $_POST['modal-todoID'];
+    $todoType = $_POST['modal-todoType'];
+    $todoValue = $_POST['modal-todoValue'];
     $todosheetID = $_POST['todosheetID'];
 
     if($status == 'open'){
-        unvalidateTodo($todoID);
+        unvalidateTodo($todoID, $todoType);
     } else {
-        validateTodo($todoID);
+        validateTodo($todoID, $todoValue);
     }
 
     header('Location: ?action=showtodo&id='.$todosheetID);

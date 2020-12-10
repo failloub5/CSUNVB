@@ -33,15 +33,15 @@ function getDrugStateButton($state)
     }
 }
 
-function buttonTask($initials, $desription, $taskID, $weekState)
+function buttonTask($initials, $desription, $taskID, $type, $weekState)
 {
     if ($weekState == 'open') {
         if (empty($initials)) {
             $messageQuittance = 'Vous êtes sur le point de quittancer la tâche suivante : <br> "'.$desription.'".' ;
-            return "<button type='button' class='btn btn-secondary toggleTodoModal btn-block m-1' data-title='Quittancer une tâche' data-id='".$taskID."' data-status='close' data-content='" . $messageQuittance . "'>" . $desription . "<div class='bg-white rounded mt-1'><br></div></button>";
+            return "<button type='button' class='btn btn-secondary toggleTodoModal btn-block m-1' data-title='Quittancer une tâche' data-id='".$taskID."' data-status='close' data-type='".$type."' data-content='" . $messageQuittance . "'>" . $desription . "<div class='bg-white rounded mt-1'><br></div></button>";
         } else {
             $messageQuittance = 'Vous êtes sur le point de retirer la quittance de la tâche suivante : <br> "'.$desription.'".' ;
-            return "<button type='button' class='btn btn-success toggleTodoModal btn-block m-1' data-title='Retirer une quittance' data-id='".$taskID."' data-status='open' data-content='" . $messageQuittance . "'>" . $desription . "<div class='text-dark bg-white rounded mt-1'>" . $initials . "</div></button>";
+            return "<button type='button' class='btn btn-success toggleTodoModal btn-block m-1' data-title='Retirer une quittance' data-id='".$taskID."' data-status='open' data-type='".$type."' data-content='" . $messageQuittance . "'>" . $desription . "<div class='text-dark bg-white rounded mt-1'>" . $initials . "</div></button>";
         }
     } else {
         if (empty($initials)) {

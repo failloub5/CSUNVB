@@ -7,7 +7,17 @@ buttons.forEach((item) => {
         document.getElementById("modal-title").innerHTML = this.getAttribute("data-title");
         document.getElementById("modal-content").innerHTML = this.getAttribute("data-content");
         document.getElementById("modal-todoID").value = this.getAttribute("data-id");
-        document.getElementById("modal-todoStatus").value = this.getAttribute("data-status");
+
+        var status = this.getAttribute("data-status");
+        var type = this.getAttribute("data-type");
+
+        if(type == "2" && status == "close"){
+            document.getElementById("modal-todoValue").type = "text";
+        }
+
+        document.getElementById("modal-todoType").value = type;
+        document.getElementById("modal-todoStatus").value = status;
+
     }, false);
 })
 console.log(buttons.length);

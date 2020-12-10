@@ -54,7 +54,7 @@ $title = "CSU-NVB - Tâches hebdomadaires";
         <?php foreach ($dates as $index => $date) : ?>
             <div class="col p-1">
                 <?php foreach ($todoThings[1][$index + 1] as $todothing): ?>
-                    <?= buttonTask($todothing['initials'], $todothing['description'], $todothing['id'], $week['state']) ?>
+                    <?= buttonTask($todothing['initials'], $todothing['description'], $todothing['id'], $todothing['type'], $week['state']) ?>
                 <?php endforeach; ?>
             </div>
         <?php endforeach; ?>
@@ -67,7 +67,7 @@ $title = "CSU-NVB - Tâches hebdomadaires";
         <?php foreach ($dates as $index => $date) : ?>
             <div class="col p-1">
                 <?php foreach ($todoThings[0][$index + 1] as $todothing): ?>
-                    <?= buttonTask($todothing['initials'], $todothing['description'], $todothing['id'], $week['state']) ?>
+                    <?= buttonTask($todothing['initials'], $todothing['description'], $todothing['id'], $todothing['type'], $week['state']) ?>
                 <?php endforeach; ?>
             </div>
         <?php endforeach; ?>
@@ -88,9 +88,13 @@ $title = "CSU-NVB - Tâches hebdomadaires";
             </div>
             <form method="POST" action="?action=switchTodoStatus">
                 <input type="hidden" name="todosheetID" value="<?= $week['id'] ?>">
+                <input type="hidden" id="modal-todoType" name="modal-todoType" value="">
                 <input type="hidden" id="modal-todoID" name="modal-todoID" value="">
                 <input type="hidden" id="modal-todoStatus" name="modal-todoStatus" value="">
-                <div class="modal-body" id="modal-content"></div>
+                <div class="modal-body" >
+                    <div id="modal-content"></div>
+                    <input type="hidden" id="modal-todoValue" name="modal-todoValue">
+                </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Valider</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>

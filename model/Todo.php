@@ -119,17 +119,26 @@ function createTodoSheet($base_id, $lastWeek)
     return insert("INSERT INTO todosheets (base_id,state,week) VALUES (:base_id, 'blank', :lastWeek)", ["base_id" => $base_id, "lastWeek" => $lastWeek + 1]);
 }
 
-function unvalidateTodo($id){
-    return execute("UPDATE todos SET user_id=NULL WHERE id=:id",['id'=>$id]);
+function unvalidateTodo($id, $type){
+    if( $type == 1){
+        return execute("UPDATE todos SET user_id=NULL WHERE id=:id",['id'=>$id]);
+    } else {
+        return execute("UPDATE todos SET user_id=NULL, value=NULL WHERE id=:id",['id'=>$id]);
+    }
+
 }
 
-function validateTodo($id)
+function validateTodo($id, $value)
 {
     $initials = $_SESSION['user']['initials'];
     $user = getUserByInitials($initials);
 
-    return execute("UPDATE todos SET user_id=:userID WHERE id=:id;", ['userID' => $user['id'], 'id' => $id]);
-}
+    if(!empty($value)){
+        return execute("UPDATE todos SET user_id=:userID, value=:value WHERE id=:id;", ['userID' => $user['id'],'value'=> $value, 'id' => $id]);
+    } else  {
+        return execute("UPDATE todos SET user_id=:userID WHERE id=:id;", ['userID' => $user['id'], 'id' => $id]);
+    }
+    }
 
 function getTemplate_name($id)
 {
