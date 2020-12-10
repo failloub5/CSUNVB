@@ -172,7 +172,7 @@ $title = "CSU-NVB - Remise de garde";
                     </td>
                     <td>
                         <?php foreach ($action["comments"] as $comment): ?>
-                            [ <?= $comment['initials'] ?>, <?= $comment['time'] ?> ] : <?= $comment['message'] ?>
+                            [ <?= $comment['initials'] ?> - <?= date('H:i', strtotime($comment['time'])) ?> ] : <?= $comment['message'] ?>
                             <br>
                         <?php endforeach; ?>
                         <button type="submit" class="btn bg-white btn-block m-1 toggleShiftModal"
@@ -180,8 +180,8 @@ $title = "CSU-NVB - Remise de garde";
                                 data-action_id="<?= $action['id'] ?>"
                                 data-action = "?action=commentShift"
                                 data-moreInput = "<input type='text' name='comment' style='margin:0px 0px 10px 10px; width:400px;'>"
-                                style="width:50px;">
-                            Ajouter
+                                style="width:200px;">
+                            Nouveau commentaire
                         </button>
                     </td>
                 <?php else: ?>

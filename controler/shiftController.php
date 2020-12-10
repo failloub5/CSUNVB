@@ -81,3 +81,8 @@ function checkShift(){
     header('Location: ?action=showshift&id='.$_POST["shiftSheet_id"]);
 }
 
+function commentShift(){
+    commentActionForShift($_POST["action_id"],$_POST["shiftSheet_id"],$_POST["comment"]);
+    header('Location: ?action=showshift&id='.$_POST["shiftSheet_id"]);
+}
+
