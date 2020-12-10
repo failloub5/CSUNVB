@@ -16,14 +16,6 @@ function updateDrugName($updatedName, $drugID) {
 }
 
 //-------------------------------------- drugs --------------------------------------------
-
-/**
- *  Retourne les sheet en fonction de la semaine et de la base
- */
-function getSheetByWeek($week, $base) {
-    return selectMany("SELECT drugsheets.id AS drugsheet_id FROM drugsheets INNER JOIN bases ON bases.id=base_id WHERE week ='$week' AND base_id='$base'");
-}
-
 /**
  *  Retourne une sheet précise
  */
@@ -46,10 +38,6 @@ function getNovasForSheet($drugSheetID) {
     return selectMany("SELECT novas.id as id, number FROM novas INNER JOIN drugsheet_use_nova ON nova_id = novas.id WHERE drugsheet_id ='$drugSheetID'");
 }
 
-function getBatches() {
-    return selectOne("SELECT * FROM batches");
-}
-
 /**
  * Retourne les batches de médicaments utilisés sur un rapport précis
  * @param $drugSheetID
@@ -57,36 +45,6 @@ function getBatches() {
  */
 function getBatchesForSheet($drugSheetID) {
     return selectMany("SELECT batches.id AS id, number, drug_id FROM batches INNER JOIN drugsheet_use_batch ON batches.id = batch_id WHERE drugsheet_id='$drugSheetID'");
-}
-
-/**
- * Retourne un item précis, identifié par son id
- */
-function readSheet($id) {
-    return getDrugSheets($_GET["base"])[$id];
-}
-
-/**
- * Retourne un lot par son id
- */
-function readBatch($id) {
-    return selectOne("SELECT * FROM batches WHERE batches.id ='$id'");
-}
-
-/**
- * Retourne un item précis, identifié par son id
- */
-//TODO: utiliser du SQL et pas un foreach ca serait quand meme pas mal
-function readDrug($id) {
-    $SheetsArray = getDrugs();
-    $Sheet = $SheetsArray[$id];
-    $batches = getBatches();
-    foreach ($batches as $batch) {
-        if ($id == $batch["drug_id"]) {
-            $Sheet["batches"][] = $batch["number"];
-        }
-    }
-    return $Sheet;
 }
 
 /**
@@ -111,60 +69,13 @@ function getRestockByDateAndDrug($date, $batch, $nova) {
     $res = selectOne("SELECT quantity FROM restocks WHERE date='$date' AND batch_id='$batch' AND nova_id='$nova'");
     return $res ? $res['quantity'] : ''; // chaîne vide si pas de restock
 }
-
-/**
- * Retourne un item précis, identifié par son id
- */
-function readPharmaCheck($id) {
-    $SheetsArray = getPharmaChecks();
-    if (isset($SheetsArray[$id])) {
-        $base = $SheetsArray[$id];
-        return $base;
-    } else {
-        return false;
-    }
-}
-
-/**
- * Crée un enrgistrement d un item precis
- */
-function createPharmaCheck($item) {
-    $items = getPharmaChecks();
-    $newid = max(array_keys($items)) + 1;
-    $item["id"] = $newid;
-    $items[] = $item;
-    updatepharmachecks($items);
-    return $item;
-}
-
-/**
- * ??? un item precis
- */
-function updatePharmaCheck($item) {
-    $sheets = getPharmaChecks();
-    $sheets[$item["id"]]["id"] = $item["id"];
-    $sheets[$item["id"]]["date"] = $item["date"];
-    $sheets[$item["id"]]["start"] = $item["start"];
-    $sheets[$item["id"]]["end"] = $item["end"];
-    $sheets[$item["id"]]["batch_id"] = $item["batch_id"];
-    $sheets[$item["id"]]["user_id"] = $item["user_id"];
-    $sheets[$item["id"]]["drugSheetID"] = $item["drugSheetID"];
-    updatepharmachecks($sheets);
-}
-
-/**
- * Obtiens tout la liste des items
- */
-function getPharmaChecks() {
-    selectMany('SELECT * FROM pharmachecks');
-}
-
-function readLastWeekDrug($base_id) {
-    return selectOne("SELECT base_id, MAX(week) as 'last_week' FROM drugsheets WHERE base_id ='$base_id' GROUP BY base_id");
+function readLastDrugSheet($base_id) {
+    return selectOne("SELECT base_id, MAX(week) as 'lastWeek' FROM drugsheets WHERE base_id ='$base_id' GROUP BY base_id");
 }
 
 function insertDrugSheet($base_id, $lastWeek) {
-    $lastWeek++; //TODO: UTILISER LA FONCTION DE VICKY
+    //dégoutant, passe a la nouvelle annee grace a +48 si 52eme semaine
+    (($lastWeek % 100) == 52) ? $lastWeek += 48 : $lastWeek++;
     return insert("INSERT INTO drugsheets (base_id,state,week) VALUES ('$base_id', 'vierge', '$lastWeek')");
 }
 

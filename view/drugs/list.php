@@ -11,7 +11,7 @@ $title = "CSU-NVB - Stupéfiants";
 </div>
 <div class="row">
     <form class="col">
-        <input type="hidden" name="action" value="listdrugforbase">
+        <input type="hidden" name="action" value="listDrugSheets">
         <label>
             <select onchange="this.form.submit()" name="id" size="1">
                 <?php foreach($bases as $base): ?>
@@ -30,7 +30,7 @@ $title = "CSU-NVB - Stupéfiants";
     </div>
     <a class="col">
         <?php if ($_SESSION['user']['admin'] == 1): ?>
-            <a href="?action=newDrugSheet&base=<?= $baseID ?>">
+            <a href="?action=newDrugSheet&id=<?= $baseID ?>">
                 <button class='btn btn-primary m-1 float-right'>Nouvelle feuille de stupéfiants</button>
             </a>
         <?php endif; ?>
@@ -49,7 +49,7 @@ $title = "CSU-NVB - Stupéfiants";
             <?php foreach ($drugSheetList as $week): ?>
                 <tr>
                     <td>
-                        <a href='?action=showdrug&id=<?= $week['id'] ?>'>
+                        <a href='?action=showDrugSheet&id=<?= $week['id'] ?>'>
                             Semaine <?= $week["week"] ?>
                         </a>
                     </td>
