@@ -78,6 +78,6 @@ function showshift($shiftid)
 
 function checkShift(){
     checkActionForShift($_POST["action_id"],$_POST["shiftSheet_id"],$_POST["day"]);
-    showshift($_POST["shiftSheet_id"]);
+    header('Location: ?action=showshift&id='.$_POST["shiftSheet_id"]);
 }
 
