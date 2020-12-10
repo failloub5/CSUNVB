@@ -77,12 +77,20 @@ function showshift($shiftid)
 }
 
 function checkShift(){
-    checkActionForShift($_POST["action_id"],$_POST["shiftSheet_id"],$_POST["day"]);
+    $res = checkActionForShift($_POST["action_id"],$_POST["shiftSheet_id"],$_POST["day"]);
+    if($res == false)setFlashMessage("Une erreur est survenue");
     header('Location: ?action=showshift&id='.$_POST["shiftSheet_id"]);
 }
 
 function commentShift(){
-    commentActionForShift($_POST["action_id"],$_POST["shiftSheet_id"],$_POST["comment"]);
+    $res = commentActionForShift($_POST["action_id"],$_POST["shiftSheet_id"],$_POST["comment"]);
+    if($res == false)setFlashMessage("Une erreur est survenue");
     header('Location: ?action=showshift&id='.$_POST["shiftSheet_id"]);
+}
+
+function updateShift(){
+    $res = updateDataShift($_GET["id"],$_POST["novaDay"],$_POST["novaNight"],$_POST["bossDay"],$_POST["bossNight"],$_POST["teammateDay"],$_POST["teammateNight"]);
+    if($res == false)setFlashMessage("Une erreur est survenue");
+    header('Location: ?action=showshift&id='.$_GET["id"]);
 }
 

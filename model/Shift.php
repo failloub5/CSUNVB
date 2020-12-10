@@ -127,3 +127,7 @@ function commentActionForShift($action_id,$shiftSheet_id,$message){
     return execute("Insert into shiftcomments(shiftsheet_id,shiftaction_id,user_id,message)values(:shiftSheet_id,:action_id,:user_id,:message)", ["user_id" => $_SESSION['user']['id'],"shiftSheet_id" => $shiftSheet_id, "action_id" => $action_id, "message" => $message]);
 }
 
+function updateDataShift($id,$novaDay,$novaNight,$bossDay,$bossNight,$teammateDay,$teammateNight){
+    return execute("update shiftsheets set daynova_id =:novaDay, nightnova_id =:novaNight, dayboss_id =:bossDay, nightboss_id =:bossNight, dayteammate_id =:teammateDay, nightteammate_id =:teammateNight WHERE id=:id",["id" => $id,"novaDay" => $novaDay,"novaNight" => $novaNight,"bossDay" => $bossDay,"bossNight" => $bossNight,"teammateDay" => $teammateDay,"teammateNight" => $teammateNight]);
+}
+

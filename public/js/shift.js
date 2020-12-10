@@ -15,7 +15,7 @@ buttons.forEach((item) => {
         document.getElementById("action_id").value = this.getAttribute("data-action_id");
         document.getElementById("day").value = this.getAttribute("data-day");
         document.getElementById("shiftSheetinfo").action = this.getAttribute("data-action");
-        document.getElementById("moreInput").innerHTML = this.getAttribute("data-moreInput");
+        document.getElementById("comment").type = this.getAttribute("data-comment");
     }, false);
 })
 /**
