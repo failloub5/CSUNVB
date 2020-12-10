@@ -90,7 +90,11 @@ function commentShift(){
 
 function updateShift(){
     $res = updateDataShift($_GET["id"],$_POST["novaDay"],$_POST["novaNight"],$_POST["bossDay"],$_POST["bossNight"],$_POST["teammateDay"],$_POST["teammateNight"]);
-    if($res == false)setFlashMessage("Une erreur est survenue");
+    if($res == false){
+        setFlashMessage("Une erreur est survenue");
+    }else{
+        setFlashMessage("Données enregistrées");
+    }
     header('Location: ?action=showshift&id='.$_GET["id"]);
 }
 

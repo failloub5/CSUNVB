@@ -18,6 +18,10 @@ buttons.forEach((item) => {
         document.getElementById("comment").type = this.getAttribute("data-comment");
     }, false);
 })
+
+$( ".shiftInfo" ).change(function() {
+    document.getElementById("updateShift").classList.remove("d-none");
+});
 /**
 
 
