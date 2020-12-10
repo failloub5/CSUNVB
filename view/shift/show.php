@@ -132,11 +132,10 @@ $title = "CSU-NVB - Remise de garde";
                     <td class="ackcell" style="padding : 3px; width: 110px;">
                         <button type="submit"
                                 class="btn <?= (count($action["checksDay"]) == 0) ? 'btn-warning' : 'btn-success' ?> toggleShiftModal"
-                                data-title="Garde du <?= date('d.m.Y', strtotime($shiftsheet['date'])) ?>"
-                                data-content="<?= $action['text'] ?> : Jour"
-                                data-shiftSheet_id="<?= $shiftsheet['id'] ?>"
+                                data-content="Valider <?= $action['text'] ?> : Jour"
                                 data-action_id="<?= $action['id'] ?>"
                                 data-day="1"
+                                data-action = "?action=checkShift"
                                 style=" width: 100%;">
                             <?php if (count($action["checksDay"]) == 0): ?>
                                 A Valider
@@ -154,11 +153,10 @@ $title = "CSU-NVB - Remise de garde";
                     <td class="ackcell" style="padding : 3px; width: 110px;">
                         <button type="submit"
                                 class="btn <?= (count($action["checksNight"]) == 0) ? 'btn-warning' : 'btn-success' ?> toggleShiftModal"
-                                data-title="Garde du <?= date('d.m.Y', strtotime($shiftsheet['date'])) ?>"
-                                data-content="<?= $action['text'] ?> : Nuit"
-                                data-shiftSheet_id="<?= $shiftsheet['id'] ?>"
+                                data-content="Valider <?= $action['text'] ?> : Nuit"
                                 data-action_id="<?= $action['id'] ?>"
                                 data-day="0"
+                                data-action = "?action=checkShift"
                                 style=" width: 100%;">
                             <?php if (count($action["checksNight"]) == 0): ?>
                                 A Valider
@@ -177,7 +175,14 @@ $title = "CSU-NVB - Remise de garde";
                             [ <?= $comment['initials'] ?>, <?= $comment['time'] ?> ] : <?= $comment['message'] ?>
                             <br>
                         <?php endforeach; ?>
-                        <button type="submit" class="btn bg-white btn-block m-1" style="width:50px;">Ajouter</button>
+                        <button type="submit" class="btn bg-white btn-block m-1 toggleShiftModal"
+                                data-content="Ajouter un commentaire  à <?= $action['text'] ?>"
+                                data-action_id="<?= $action['id'] ?>"
+                                data-action = "?action=commentShift"
+                                data-moreInput = "<input type='text' name='comment' style='margin:0px 0px 10px 10px; width:400px;'>"
+                                style="width:50px;">
+                            Ajouter
+                        </button>
                     </td>
                 <?php else: ?>
                     <td class="ackcell">
@@ -207,9 +212,11 @@ $title = "CSU-NVB - Remise de garde";
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form method="post" action="?action=checkShift">
+            <form method="post" id="shiftSheetinfo" action="">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal-title"></h5>
+                    <h5 class="modal-title" id="modal-title">
+                        Garde du <?= date('d.m.Y', strtotime($shiftsheet['date'])) ?>
+                    </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -217,8 +224,9 @@ $title = "CSU-NVB - Remise de garde";
                 <div class="modal-body" id="modal-content">
                 </div>
                 <input type="hidden" name="action_id" id="action_id" value="0">
-                <input type="hidden" name="shiftSheet_id" id="shiftSheet_id" value="0">
+                <input type="hidden" name="shiftSheet_id" value="<?= $shiftsheet['id'] ?>">
                 <input type="hidden" name="day" id="day" value="0">
+                <div id="moreInput"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                     <input type="submit" class="btn btn-primary" value="Valider">
