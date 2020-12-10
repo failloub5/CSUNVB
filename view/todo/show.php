@@ -87,6 +87,7 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                 </button>
             </div>
             <form method="POST" action="?action=switchTodoStatus">
+                <input type="hidden" name="todosheetID" value="<?= $week['id'] ?>">
                 <input type="hidden" id="modal-todoID" name="modal-todoID" value="">
                 <input type="hidden" id="modal-todoStatus" name="modal-todoStatus" value="">
                 <div class="modal-body" id="modal-content"></div>
