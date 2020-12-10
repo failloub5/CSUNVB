@@ -126,7 +126,7 @@ function closeweek($todo_id){
 
 function modelWeek($weekID){
     updateTodoSheet($weekID,$_POST['template_name']);
-    header('Location: /index.php');
+    header('Location: ?action=listtodo');
 }
 
 function loadAModel($weekID, $template_name){
