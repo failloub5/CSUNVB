@@ -74,7 +74,9 @@ function readLastDrugSheet($base_id) {
 }
 
 function insertDrugSheet($base_id, $lastWeek) {
-    //dégoutant, passe a la nouvelle annee grace a +48 si 52eme semaine
+    //magnifique, passe a la nouvelle annee grace a +48 si 52eme semaine
+    if(date("D", $lastWeek / 100 * 100 . "-01-01") == "Wed" || date("D", $lastWeek / 100 * 100 . "-01-01") == "thu")
+        echo "oui cette annee elle a au totale : 53 semaines";
     (($lastWeek % 100) == 52) ? $lastWeek += 48 : $lastWeek++;
     return insert("INSERT INTO drugsheets (base_id,state,week) VALUES ('$base_id', 'vierge', '$lastWeek')");
 }

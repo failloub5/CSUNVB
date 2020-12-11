@@ -59,8 +59,8 @@ $title = "CSU-NVB - Stupéfiants";
                     <?php if ($_SESSION['user']['admin'] == 1): ?>
                         <td>
                             <div class='row'>
-                                <a href='?action=<?= getDrugStateButton($week['state']) ?>DrugSheet&site=<?= $baseID ?>&week=<?= $week["week"]?>'>
-                                    <button class='btn btn-primary btn-sm ml-3'><?= $action ?></button>
+                                <a href='?action=<?= getDrugSheetStateButton($week['state']) ?>DrugSheet&id=<?= $baseID ?>&week=<?= $week["week"]?>'>
+                                    <button class='btn btn-primary btn-sm ml-3'><?= getDrugSheetStateButton($week['state']) ?></button>
                                 </a>
                             </div>
                         </td>

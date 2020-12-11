@@ -31,21 +31,22 @@ function showDrugSheet($drugSheetID) {
 function newDrugSheet($base) {
     $lastWeek = readLastDrugSheet($base);
     insertDrugSheet($base, $lastWeek['lastWeek']);
+    var_dump(getDaysForWeekNumber($lastWeek['lastWeek'] + 1));
     listDrugSheets($base);
 }
 
 //TODO: replace with switch
-function openDrugSheet() {
-    updateSheetState($_POST["baseID"], $_POST["week"], "open");
+function openDrugSheet($base) {
+    updateSheetState($base, $_GET["week"], "open");
     require_once VIEW . 'main/home.php';
 }
 
-function closeDrugSheet() {
-    updateSheetState($_POST["baseID"], $_POST["week"], "closed");
+function closeDrugSheet($base) {
+    updateSheetState($base, $_GET["week"], "closed");
     require_once VIEW . 'main/home.php';
 }
 
-function reopenDrugSheet() {
-    updateSheetState($_POST["baseID"], $_POST["week"], "reopened");
+function reopenDrugSheet($base) {
+    updateSheetState($base, $_GET["week"], "reopened");
     require_once VIEW . 'main/home.php';
 }

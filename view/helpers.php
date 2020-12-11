@@ -20,7 +20,7 @@ function setFlashMessage($message)
     $_SESSION['flashmessage']=$message;
 }
 
-function getDrugStateButton($state) {
+function getDrugSheetStateButton($state) {
      switch ($state) {
          case "closed":
              return "reopen";
