@@ -170,4 +170,10 @@ function getTemplates_name($selectedBaseID)
     return selectMany($query, ['id' => $selectedBaseID]);
 }
 
+function readLastWeekTemplate($Template_name)
+{
+    return selectOne("SELECT id, week AS last_week
+                            FROM todosheets
+                            Where template_name =:Template_name", ["Template_name" => $Template_name]);
+}
 ?>

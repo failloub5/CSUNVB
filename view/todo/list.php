@@ -35,22 +35,9 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                 <?php if (!is_null($maxID['id'])): ?> <!-- valeur modifiée dans Todo -->
                     <option value='lastValue' selected=selected>Dernière semaine en date</option>
                 <?php endif; ?>
-                <?php foreach ($templates as $template) {
-                    echo "<option value='" . $template['id'] . "'";
-                    /** Todo : Max
-                     * Géré si vide
-                     * if($templates['template_name'] == "" || $templates['id'] == $maxid['id'] ){
-                     * echo "<option value='dernière value'>";
-                     * }else {
-                     * echo ">" . $template['template_name'];
-                     * }
-                     *
-                     *
-                     *
-                     */
-                    echo ">" . $template['template_name'];
-                }
-                ?>
+                <?php foreach ($templates as $template) : ?>
+                    <option value='<?= $template['template_name'] ?>'><?= $template['template_name'] ?></option>
+                <?php endforeach;?>
             </select>
             <button type="submit" class="btn btn-primary m-1 pull-right">Nouvelle semaine</button>
         </form>

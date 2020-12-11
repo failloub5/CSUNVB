@@ -64,7 +64,11 @@ function showtodo($todo_id){
 function addWeek(){
     $base = $_SESSION['base']['id']; // On ne peut ajouter une feuille qu'à la base où on se trouve
     //Lit la dernière semaine
-    $week = readLastWeek($base);
+    if($_POST['selectModel'] == 'lastValue'){
+        $week = readLastWeek($base);
+    }else{
+        $week = readLastWeekTemplate($_POST['selectModel']);
+    }
 
     if(empty($week)){
         $week['last_week'] = date("yW"); // Affiche le numéro de la semaine actuelle dans le bon format
