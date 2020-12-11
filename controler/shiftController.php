@@ -9,17 +9,13 @@
  */
 function newShiftSheet()
 {
-    if (isAdmin()) {
-        $result = addNewShiftSheet($_SESSION['base']['id']);
-        if ($result == false) {
-            setFlashMessage("Une erreur est survenue. Impossible d'ajouter la feuille de garde.");
-        } else {
-            setFlashMessage("La feuille de garde a bien été créée !");
-        }
-        listshiftforbase($_SESSION["base"]['id']);
+    $result = addNewShiftSheet($_SESSION['base']['id']);
+    if ($result == false) {
+        setFlashMessage("Une erreur est survenue. Impossible d'ajouter la feuille de garde.");
     } else {
-        home();
+        setFlashMessage("La feuille de garde a bien été créée !");
     }
+    listshiftforbase($_SESSION["base"]['id']);
 }
 
 // Attention: cette fonction se base sur un diagramme d'état simplifié:
@@ -76,25 +72,28 @@ function showshift($shiftid)
     require_once VIEW . 'shift/show.php';
 }
 
-function checkShift(){
-    $res = checkActionForShift($_POST["action_id"],$_POST["shiftSheet_id"],$_POST["day"]);
-    if($res == false)setFlashMessage("Une erreur est survenue");
-    header('Location: ?action=showshift&id='.$_POST["shiftSheet_id"]);
+function checkShift()
+{
+    $res = checkActionForShift($_POST["action_id"], $_POST["shiftSheet_id"], $_POST["day"]);
+    if ($res == false) setFlashMessage("Une erreur est survenue");
+    header('Location: ?action=showshift&id=' . $_POST["shiftSheet_id"]);
 }
 
-function commentShift(){
-    $res = commentActionForShift($_POST["action_id"],$_POST["shiftSheet_id"],$_POST["comment"]);
-    if($res == false)setFlashMessage("Une erreur est survenue");
-    header('Location: ?action=showshift&id='.$_POST["shiftSheet_id"]);
+function commentShift()
+{
+    $res = commentActionForShift($_POST["action_id"], $_POST["shiftSheet_id"], $_POST["comment"]);
+    if ($res == false) setFlashMessage("Une erreur est survenue");
+    header('Location: ?action=showshift&id=' . $_POST["shiftSheet_id"]);
 }
 
-function updateShift(){
-    $res = updateDataShift($_GET["id"],$_POST["novaDay"],$_POST["novaNight"],$_POST["bossDay"],$_POST["bossNight"],$_POST["teammateDay"],$_POST["teammateNight"]);
-    if($res == false){
+function updateShift()
+{
+    $res = updateDataShift($_GET["id"], $_POST["novaDay"], $_POST["novaNight"], $_POST["bossDay"], $_POST["bossNight"], $_POST["teammateDay"], $_POST["teammateNight"]);
+    if ($res == false) {
         setFlashMessage("Une erreur est survenue");
-    }else{
+    } else {
         setFlashMessage("Données enregistrées");
     }
-    header('Location: ?action=showshift&id='.$_GET["id"]);
+    header('Location: ?action=showshift&id=' . $_GET["id"]);
 }
 

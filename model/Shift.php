@@ -128,6 +128,12 @@ function commentActionForShift($action_id,$shiftSheet_id,$message){
 }
 
 function updateDataShift($id,$novaDay,$novaNight,$bossDay,$bossNight,$teammateDay,$teammateNight){
+    if($novaDay=="NULL")$novaDay=null;
+    if($novaNight=="NULL")$novaNight=null;
+    if($bossDay=="NULL")$bossDay=null;
+    if($bossNight=="NULL")$bossNight=null;
+    if($teammateDay=="NULL")$teammateDay=null;
+    if($teammateNight=="NULL")$teammateNight=null;
     return execute("update shiftsheets set daynova_id =:novaDay, nightnova_id =:novaNight, dayboss_id =:bossDay, nightboss_id =:bossNight, dayteammate_id =:teammateDay, nightteammate_id =:teammateNight WHERE id=:id",["id" => $id,"novaDay" => $novaDay,"novaNight" => $novaNight,"bossDay" => $bossDay,"bossNight" => $bossNight,"teammateDay" => $teammateDay,"teammateNight" => $teammateNight]);
 }
 
