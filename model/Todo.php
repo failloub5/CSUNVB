@@ -162,12 +162,12 @@ function getTodosheetMaxID($selectedBaseID)
     return selectOne($query, ['id' => $selectedBaseID]);
 }
 
-function getTemplates_name($selectedBaseID)
+function getTemplates_name()
 {
     $query = "SELECT template_name, id 
              FROM todosheets
-             WHERE base_id = :id AND template_name is NOT NULL";
-    return selectMany($query, ['id' => $selectedBaseID]);
+             WHERE template_name is NOT NULL";
+    return selectMany($query, []);
 }
 
 function readLastWeekTemplate($Template_name)

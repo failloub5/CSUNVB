@@ -16,7 +16,7 @@ function listtodoforbase($selectedBaseID){
     $weeksNbrList = getClosedWeeks($selectedBaseID); // La liste des numéros de semaines qui sont fermées
     $activeWeek = getOpenedWeeks($selectedBaseID);  // Le numero de la semaine active
     $baseList = getbases();
-    $templates = getTemplates_name($selectedBaseID);
+    $templates = getTemplates_name();
     $maxID = getTodosheetMaxID($selectedBaseID);
 
     require_once VIEW . 'todo/list.php';
