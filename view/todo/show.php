@@ -12,7 +12,7 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                 <input type="hidden" name="id" value="<?= $base['id'] ?>">
                 <button type="submit" class='btn btn-primary m-1 float-right'>Retour à la liste</button>
             </form>
-            <?php if(is_null($template['template_name'])) : ?>
+            <?php if($_SESSION['user']['admin'] == 1 && is_null($template['template_name'])) : ?>
             <form action="?action=modelWeek" method="POST">
                 <input type="hidden" name="todosheetID" value="<?= $week['id'] ?>">
                 <input type="hidden" name="baseID" value="<?= $base['id'] ?>">
@@ -20,7 +20,7 @@ $title = "CSU-NVB - Tâches hebdomadaires";
 
                 <button type="submit" class='btn btn-primary m-1 float-right'>Retenir comme modèle</button>
             </form>
-            <?php else: ?>
+            <?php elseif($_SESSION['user']['admin'] == 1 && !is_null($template['template_name'])): ?>
             <form action="?action=deleteTemplate" method="POST">
                 <input type="hidden" name="todosheetID" value="<?= $week['id'] ?>">
                 <button type="submit" class='btn btn-primary m-1 float-right'>Oublier le modèle</button>
