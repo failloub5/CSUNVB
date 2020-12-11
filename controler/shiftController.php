@@ -9,13 +9,15 @@
  */
 function newShiftSheet()
 {
-    $result = addNewShiftSheet($_SESSION['base']['id']);
-    if ($result == false) {
-        setFlashMessage("Une erreur est survenue. Impossible d'ajouter la feuille de garde.");
-    } else {
-        setFlashMessage("La feuille de garde a bien été créée !");
+    if(isAdmin()){
+        $result = addNewShiftSheet($_SESSION['base']['id']);
+        if ($result == false) {
+            setFlashMessage("Une erreur est survenue. Impossible d'ajouter la feuille de garde.");
+        } else {
+            setFlashMessage("La feuille de garde a bien été créée !");
+        }
     }
-    listshiftforbase($_SESSION["base"]['id']);
+    header('Location: http://localhost:8080/?action=listshift');
 }
 
 // Attention: cette fonction se base sur un diagramme d'état simplifié:
