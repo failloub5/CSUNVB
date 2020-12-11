@@ -6,9 +6,9 @@
 
 //Affiche la page de selection de la semaine pour une base choisie
 function listDrugSheets($baseID = null) {
-    $bases = getbases();
     if (is_null($baseID))
         $baseID = $_SESSION["base"]["id"];
+    $bases = getbases();
     $drugSheetList = getDrugSheets($baseID);
     require_once VIEW . 'drugs/list.php';
 }
@@ -31,22 +31,25 @@ function showDrugSheet($drugSheetID) {
 function newDrugSheet($base) {
     $lastWeek = readLastDrugSheet($base);
     insertDrugSheet($base, $lastWeek['lastWeek']);
-    var_dump(getDaysForWeekNumber($lastWeek['lastWeek'] + 1));
     listDrugSheets($base);
+}
+
+function hasOpenDrugSheet($baseID) {
+    return boolval(getOpenDrugSheet($baseID));
 }
 
 //TODO: replace with switch
 function openDrugSheet($base) {
     updateSheetState($base, $_GET["week"], "open");
-    require_once VIEW . 'main/home.php';
+    redirect("listDrugSheets", $base);
 }
 
 function closeDrugSheet($base) {
     updateSheetState($base, $_GET["week"], "closed");
-    require_once VIEW . 'main/home.php';
+    redirect("listDrugSheets", $base);
 }
 
 function reopenDrugSheet($base) {
     updateSheetState($base, $_GET["week"], "reopened");
-    require_once VIEW . 'main/home.php';
+    redirect("listDrugSheets", $base);
 }

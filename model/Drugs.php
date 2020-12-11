@@ -77,10 +77,18 @@ function insertDrugSheet($base_id, $lastWeek) {
     //magnifique, passe a la nouvelle annee grace a +48 si 52eme semaine
     if(date("D", $lastWeek / 100 * 100 . "-01-01") == "Wed" || date("D", $lastWeek / 100 * 100 . "-01-01") == "thu")
         echo "oui cette annee elle a au totale : 53 semaines";
-    (($lastWeek % 100) == 52) ? $lastWeek += 48 : $lastWeek++;
+    (($lastWeek % 100) == 52) ? $lastWeek += 49 : $lastWeek++;
     return insert("INSERT INTO drugsheets (base_id,state,week) VALUES ('$base_id', 'vierge', '$lastWeek')");
 }
 
 function updateSheetState($baseID, $week, $state) {
     return execute("UPDATE drugsheets SET state='$state' WHERE base_id='$baseID' AND week='$week'");
+}
+
+function getOpenDrugSheet($baseID) {
+    return selectOne("SELECT state FROM drugsheets WHERE state = 'open'");
+}
+
+function getDrugSheetState($baseID, $week) {
+    return selectOne("SELECT state FROM drugsheets WHERE base_id = '$baseID' AND week = '$week'");
 }

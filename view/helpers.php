@@ -21,7 +21,7 @@ function setFlashMessage($message)
 }
 
 function getDrugSheetStateButton($state) {
-     switch ($state) {
+    switch ($state) {
          case "closed":
              return "reopen";
          case "open":
