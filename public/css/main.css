@@ -6,10 +6,11 @@
 
 @media only screen and (max-device-width: 1440px) {
     .day {
-        width:100%;
+        width: 100%;
         font-size: 80px;
     }
 }
+
 .week {
     background-color: snow;
     display: flex;
@@ -17,8 +18,8 @@
     flex-wrap: wrap;
     padding: 2px;
     margin: 2px;
-
 }
+
 .day {
     background-color: white;
     display: flex;
@@ -27,6 +28,7 @@
     padding: 2px;
     margin: 2px;
 }
+
 .hour {
     text-align: center;
     background-color: white;
@@ -34,6 +36,7 @@
     margin: 2px;
     border-style: solid;
 }
+
 .dayheader {
     background-color: #87cefa;
     text-align: center;
@@ -42,37 +45,29 @@
     padding: 4px;
 }
 
-.horizontal{
-    font-size: 25px;
-    color: black;
-    text-align: center !important;
-    font-weight: bold;
-    writing-mode: vertical-rl !important;
-    text-orientation: upright !important;
 
-}
-
-.center{
+.center {
     text-align: center;
 }
-.nuitcolor{
+
+.nuitcolor {
     font-size: 25px;
     color: white;
     background-color: navy;
 }
-.over {
 
+.over {
     color: black;
     text-decoration: none;
 }
-.over:hover {
 
+.over:hover {
     color: black;
     background-color: white;
     text-decoration: none;
-
 }
-.weekhead{
+
+.weekhead {
     background-color: #d7fffd;
     border-style: solid;
     text-align: center;
@@ -80,12 +75,11 @@
     font-weight: bold;
     padding: 3px;
 }
-.weeknumber {
 
+.weeknumber {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     padding: 2px;
     margin: 2px;
-
 }
