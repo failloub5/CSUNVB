@@ -78,14 +78,14 @@ function checkShift()
 {
     $res = checkActionForShift($_POST["action_id"], $_POST["shiftSheet_id"], $_POST["day"]);
     if ($res == false) setFlashMessage("Une erreur est survenue");
-    header('Location: ?action=showshift&id=' . $_POST["shiftSheet_id"]);
+    redirect("showshift",$_POST["shiftSheet_id"]);
 }
 
 function commentShift()
 {
     $res = commentActionForShift($_POST["action_id"], $_POST["shiftSheet_id"], $_POST["comment"]);
     if ($res == false) setFlashMessage("Une erreur est survenue");
-    header('Location: ?action=showshift&id=' . $_POST["shiftSheet_id"]);
+    redirect("showshift",$_POST["shiftSheet_id"]);
 }
 
 function updateShift()
@@ -96,6 +96,6 @@ function updateShift()
     } else {
         setFlashMessage("Données enregistrées");
     }
-    header('Location: ?action=showshift&id=' . $_GET["id"]);
+    redirect("showshift",$_GET["id"]);
 }
 
