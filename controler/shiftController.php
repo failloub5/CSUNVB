@@ -17,7 +17,7 @@ function newShiftSheet()
             setFlashMessage("La feuille de garde a bien été créée !");
         }
     }
-    header('Location: http://localhost:8080/?action=listshift');
+   redirect('listshift');
 }
 
 // Attention: cette fonction se base sur un diagramme d'état simplifié:
