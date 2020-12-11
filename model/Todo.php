@@ -62,7 +62,7 @@ function openWeeklyTasks($id)
 
 function readLastWeek($base_id)
 {
-    return selectOne("SELECT MAX(week) as 'last_week', id
+    return selectOne("SELECT MAX(week) as 'last_week', MAX(id) AS 'id'
                             FROM todosheets
                             Where base_id =:base_id
                             GROUP BY base_id", ["base_id" => $base_id]);
