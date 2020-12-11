@@ -17,7 +17,7 @@ function listtodoforbase($selectedBaseID){
     $activeWeek = getOpenedWeeks($selectedBaseID);  // Le numero de la semaine active
     $baseList = getbases();
     $templates = getTemplates_name($selectedBaseID);
-    $maxid = getTodosheetMaxID($selectedBaseID);
+    $maxID = getTodosheetMaxID($selectedBaseID);
 
     require_once VIEW . 'todo/list.php';
 }
@@ -124,9 +124,18 @@ function closeweek($todo_id){
     listtodoforbase($week['base_id']);
 }
 
-function modelWeek($weekID){
-    updateTodoSheet($weekID,$_POST['template_name']);
-    header('Location: ?action=listtodo');
+function modelWeek(){
+    $todosheetID = $_POST['todosheetID'];
+
+    updateTemplateName($todosheetID,$_POST['template_name']);
+    header('Location: ?action=showtodo&id='.$todosheetID);
+}
+
+function deleteTemplate(){
+    $todosheetID = $_POST['todosheetID'];
+
+    deleteTemplateName($todosheetID);
+    header('Location: ?action=showtodo&id='.$todosheetID);
 }
 
 function loadAModel($weekID, $template_name){
