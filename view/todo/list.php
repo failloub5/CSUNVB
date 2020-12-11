@@ -28,31 +28,33 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                 }?>
         </select>
     </form>
-    <form action="?action=addWeek&base=<?= $selectedBaseID ?>">
-        <select  name="selectModel">
-            <?php
-                foreach ($templates as $template) {
-                    echo "<option value='".$template['id']."'";
+    <br>
+    <?php if ($_SESSION['user']['admin'] == 1 && ($_SESSION['base']['id'] == $selectedBaseID)) : ?>
+        <form method="POST" action="?action=addWeek" class="pull-right">
+            <select name="selectModel">
+                <?php if (!is_null($maxID['id'])): ?> <!-- valeur modifiée dans Todo -->
+                    <option value='lastValue' selected=selected>Dernière semaine en date</option>
+                <?php endif; ?>
+                <?php foreach ($templates as $template) {
+                    echo "<option value='" . $template['id'] . "'";
                     /** Todo : Max
                      * Géré si vide
                      * if($templates['template_name'] == "" || $templates['id'] == $maxid['id'] ){
-                        echo "<option value='dernière value'>";
-                     }else {
-                         echo ">" . $template['template_name'];
-                     }
+                     * echo "<option value='dernière value'>";
+                     * }else {
+                     * echo ">" . $template['template_name'];
+                     * }
                      *
                      *
                      *
                      */
                     echo ">" . $template['template_name'];
                 }
-                /*var_dump($templates);*/
                 ?>
-        </select>
-        <?php if ($_SESSION['user']['admin'] == 1 && ($_SESSION['base']['id'] == $selectedBaseID)) { ?>
+            </select>
             <button type="submit" class="btn btn-primary m-1 pull-right">Nouvelle semaine</button>
-        <?php } ?>
-    </form>
+        </form>
+    <?php endif; ?>
 </div>
 <div>
     <h3>Semaine en cours</h3>

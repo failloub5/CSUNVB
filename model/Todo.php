@@ -149,7 +149,7 @@ function getTemplate_name($id)
 }
 
 function getTodosheetMaxID($selectedBaseID){
-    $query = "SELECT MAX(id) 
+    $query = "SELECT MAX(id) AS id
               FROM todosheets
               WHERE base_id =:id";
         return selectOne($query, ['id'=> $selectedBaseID]);
