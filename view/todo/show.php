@@ -111,31 +111,6 @@ $title = "CSU-NVB - Tâches hebdomadaires";
     </div>
 </div>
 
-<!-- Affichage de la pop-up pour le nom de modèle -->
-<div class="modal fade" id="templateModal" tabindex="-1" role="dialog" aria-labelledby="modal-template"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form method="POST" action="?action=">
-                <div class="modal-body" >
-                    <div id="modal-content"></div>
-                    <input type="hidden" id="modal-todoValue" name="modal-todoValue">
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Valider</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 <script src="js/todo.js"></script>
 <?php
 $content = ob_get_clean();
