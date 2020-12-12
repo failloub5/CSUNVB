@@ -20,17 +20,15 @@ function setFlashMessage($message)
     $_SESSION['flashmessage'] = $message;
 }
 
-function getDrugStateButton($state)
-{
-    switch ($state) {
-        case "closed":
-            return "reopen";
-        case "open":
-        case "reopened":
-            return "close";
-        default:
-            return "open";
-    }
+function getDrugSheetStateButton($state) {
+switch ($state) {
+    case "closed":
+        return "reopen";
+    case "open":
+    case "reopened":
+        return "close";
+    default:
+        return "open";
 }
 
 function buttonTask($initials, $desription, $taskID, $type, $weekState)
@@ -73,11 +71,11 @@ function displayDate($date, $format)
  */
 function isAdmin()
 {
-    if ($_SESSION['user']['admin'] == false) {
+    if ($_SESSION['user']['admin'] == 0) {
         setFlashMessage("Vous n'êtes pas autorisé à effectuer cette action !");
-        return true;
+        return false;
     }
-    return false;
+    return true;
 }
 
 function actionForStatus($status)

@@ -15,11 +15,11 @@ require "../path.php";
 require VIEW . "helpers.php";
 require "../globalhelpers.php";
 
-require CONTROLER . "adminController.php";
-require CONTROLER . "drugsController.php";
-require CONTROLER . "mainController.php";
-require CONTROLER . "shiftController.php";
-require CONTROLER . "todoController.php";
+require CONTROLLER . "adminController.php";
+require CONTROLLER . "drugsController.php";
+require CONTROLLER . "mainController.php";
+require CONTROLLER . "shiftController.php";
+require CONTROLLER . "todoController.php";
 
 
 require MODEL . ".const.php";

@@ -25,6 +25,9 @@
     width: 40px;
 }
 
+
+
+/** Ajouté par Paola Costa **/
 .formTeamNova {
     width: 80px;
 }
@@ -39,3 +42,4 @@
     align-content: space-between;
     align-items: center;
 }
+
