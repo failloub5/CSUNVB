@@ -22,7 +22,7 @@ $title = "CSU-NVB - Remise de garde";
         </select>
     </form>
 
-    <?php if (($_SESSION['user']['admin'] == true) && ($_SESSION['base']['id'] == $baseID)) : ?>
+    <?php if (($_SESSION['user']['admin'] == true)) : ?>
         <div class="col">
             <form>
                 <input type="hidden" name="action" value="newShiftSheet">

@@ -73,11 +73,11 @@ function displayDate($date, $format)
  */
 function isAdmin()
 {
-    if ($_SESSION['user']['admin'] == false) {
+    if ($_SESSION['user']['admin'] == 0) {
         setFlashMessage("Vous n'êtes pas autorisé à effectuer cette action !");
-        return true;
+        return false;
     }
-    return false;
+    return true;
 }
 
 function actionForStatus($status)
