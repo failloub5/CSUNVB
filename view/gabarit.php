@@ -20,11 +20,6 @@
     <link href="css/main.css" rel="stylesheet">
     <link href="css/shift.css" rel="stylesheet">
 
-    <!-- Icons -->
-    <link href="assets/icons/general/stylesheets/general_foundicons.css" media="screen" rel="stylesheet"
-          type="text/css"/>
-    <link href="assets/icons/social/stylesheets/social_foundicons.css" media="screen" rel="stylesheet" type="text/css"/>
-
     <link rel="stylesheet" href="assets/fontawesome/css/font-awesome.min.css">
 
     <link href="http://fonts.googleapis.com/css?family=Syncopate" rel="stylesheet" type="text/css">
