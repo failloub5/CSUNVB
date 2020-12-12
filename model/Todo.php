@@ -5,7 +5,8 @@
  * @param $id : l'ID de la semaine à retrouver
  * @return array|mixed|null
  */
-function getTodosheetByID($id){
+function getTodosheetByID($id)
+{
     return selectOne("SELECT * FROM todosheets where id =:id", ['id' => $id]);
 }
 
@@ -14,8 +15,9 @@ function getTodosheetByID($id){
  * @param $id : l'ID de la semaine à retrouver
  * @return array|mixed|null
  */
-function getTodosheetByBaseAndWeek($base_id,$weeknb){
-    return selectOne("SELECT * FROM todosheets where base_id =:id and week = :weeknb", ['id' => $baseid, 'week' => $weeknb]);
+function getTodosheetByBaseAndWeek($base_id, $weeknb)
+{
+    return selectOne("SELECT * FROM todosheets where base_id =:id and week = :weeknb", ['id' => $base_id, 'week' => $weeknb]);
 }
 
 /**
@@ -25,7 +27,7 @@ function getTodosheetByBaseAndWeek($base_id,$weeknb){
  */
 function getClosedWeeks($baseID)
 {
-    $query = "SELECT t.week, t.id FROM todosheets t JOIN bases b ON t.base_id = b.id WHERE b.id = :baseID AND t.state = 'close' ORDER BY t.week DESC;";
+    $query = "SELECT t.week, t.id, t.template_name FROM todosheets t JOIN bases b ON t.base_id = b.id WHERE b.id = :baseID AND t.state = 'close' ORDER BY t.week DESC;";
     return selectMany($query, ['baseID' => $baseID]);
 }
 
@@ -36,7 +38,7 @@ function getClosedWeeks($baseID)
  */
 function getOpenedWeeks($baseID)
 {
-    $query = "SELECT t.week, t.id FROM todosheets t JOIN bases b ON t.base_id = b.id WHERE b.id = :baseID AND t.state = 'open';";
+    $query = "SELECT t.week, t.id, t.template_name FROM todosheets t JOIN bases b ON t.base_id = b.id WHERE b.id = :baseID AND t.state = 'open';";
     return selectOne($query, ['baseID' => $baseID]);
 }
 
@@ -60,26 +62,27 @@ function openWeeklyTasks($id)
 
 function readLastWeek($base_id)
 {
-    return selectOne("SELECT MAX(week) as 'last_week', id
+    return selectOne("SELECT MAX(week) as 'last_week', MAX(id) AS 'id'
                             FROM todosheets
                             Where base_id =:base_id
-                            GROUP BY base_id",["base_id" => $base_id]);
+                            GROUP BY base_id", ["base_id" => $base_id]);
 }
 
-function weeknew($base,$week)
+function weeknew($base, $week)
 {
+    // todo : remplacer la requete execute par une requete insert !
     execute("INSERT INTO todosheets(week,state ,base_id)
                    VALUES('$week','close','$base')", []);
 
     $query = "SELECT id FROM todosheets 
                 WHERE week = :week AND base_id = :base";
 
-    return selectOne($query, ['week'=> $week, 'base'=> $base]);
+    return selectOne($query, ['week' => $week, 'base' => $base]);
 }
 
 function readTodoThingsForDay($sid, $day, $dayOfWeek)
 {
-    $res = selectMany("SELECT description, type, u.initials AS 'initials'
+    $res = selectMany("SELECT description, type, value, u.initials AS 'initials', todos.id AS id
                              FROM todos 
                              INNER JOIN todothings t ON todos.todothing_id = t.id
                              LEFT JOIN users u ON todos.user_id = u.id
@@ -87,8 +90,9 @@ function readTodoThingsForDay($sid, $day, $dayOfWeek)
     return $res;
 }
 
-function readTodoForASheet($sheetID){
-    $query =  "SELECT todothing_id, daything, day_of_week
+function readTodoForASheet($sheetID)
+{
+    $query = "SELECT todothing_id, daything, day_of_week
                 FROM todos
                 INNER JOIN todothings ON todos.todothing_id = todothings.id
                 INNER JOIN todosheets ON todos.todosheet_id = todosheets.id
@@ -97,20 +101,22 @@ function readTodoForASheet($sheetID){
     return selectMany($query, ['id' => $sheetID]);
 }
 
-function addtoDo($todoID, $weekID, $dayOfWeek){
+function addtoDo($todoID, $weekID, $dayOfWeek)
+{
     $query = "INSERT INTO todos (todothing_id, todosheet_id, day_of_week) VALUE (:todoID, :sheetID, :day)";
-    execute($query, ['todoID' =>$todoID, 'sheetID' =>$weekID, 'day'=>$dayOfWeek]);
+    execute($query, ['todoID' => $todoID, 'sheetID' => $weekID, 'day' => $dayOfWeek]);
 }
 
-/**
- * Modifie un item précis
- * Le paramètre $item est un item complet (donc un tableau associatif)
- * ...
- */
-function updateTodoSheet($id, $template_name)
+function updateTemplateName($id, $template_name)
 {
     return execute(
-        "UPDATE todosheets SET template_name=:template_name WHERE id =:id",['template_name'=>$template_name,'id'=>$id]);
+        "UPDATE todosheets SET template_name=:template_name WHERE id =:id", ['template_name' => $template_name, 'id' => $id]);
+}
+
+function deleteTemplateName($id)
+{
+    return execute(
+        "UPDATE todosheets SET template_name=NULL WHERE id =:id", ['id' => $id]);
 }
 
 function createTodoSheet($base_id, $lastWeek)
@@ -118,4 +124,56 @@ function createTodoSheet($base_id, $lastWeek)
     return insert("INSERT INTO todosheets (base_id,state,week) VALUES (:base_id, 'blank', :lastWeek)", ["base_id" => $base_id, "lastWeek" => $lastWeek + 1]);
 }
 
+function unvalidateTodo($id, $type)
+{
+    if ($type == 1) {
+        return execute("UPDATE todos SET user_id=NULL WHERE id=:id", ['id' => $id]);
+    } else {
+        return execute("UPDATE todos SET user_id=NULL, value=NULL WHERE id=:id", ['id' => $id]);
+    }
+
+}
+
+function validateTodo($id, $value)
+{
+    $initials = $_SESSION['user']['initials'];
+    $user = getUserByInitials($initials);
+
+    if (!empty($value)) {
+        return execute("UPDATE todos SET user_id=:userID, value=:value WHERE id=:id;", ['userID' => $user['id'], 'value' => $value, 'id' => $id]);
+    } else {
+        return execute("UPDATE todos SET user_id=:userID WHERE id=:id;", ['userID' => $user['id'], 'id' => $id]);
+    }
+}
+
+function getTemplate_name($id)
+{
+    $query = "SELECT template_name 
+             FROM todosheets
+             WHERE id = :id";
+    return selectOne($query, ['id' => $id]);
+}
+
+function getTodosheetMaxID($selectedBaseID)
+{
+    $query = "SELECT MAX(id) AS id
+              FROM todosheets
+              WHERE base_id =:id";
+    return selectOne($query, ['id' => $selectedBaseID]);
+}
+
+function getTemplates_name()
+{
+    $query = "SELECT template_name, id 
+             FROM todosheets
+             WHERE template_name is NOT NULL";
+    return selectMany($query, []);
+}
+
+function readLastWeekTemplate($Template_name)
+{
+    return selectOne("SELECT id, week AS last_week
+                            FROM todosheets
+                            Where template_name =:Template_name", ["Template_name" => $Template_name]);
+}
 ?>

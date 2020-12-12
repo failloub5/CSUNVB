@@ -4,6 +4,25 @@
  * Auteur: Thomas Grossmann / Mounir Fiaux
  * Date: Mars 2020
  **/
+
+// formulaire de vérification pour shiftModal
+
+var buttons = document.querySelectorAll('.toggleShiftModal');
+buttons.forEach((item) => {
+    item.addEventListener('click', function (event) {
+        $("#shiftModal").modal("toggle");
+        document.getElementById("modal-content").innerHTML = this.getAttribute("data-content");
+        document.getElementById("action_id").value = this.getAttribute("data-action_id");
+        document.getElementById("day").value = this.getAttribute("data-day");
+        document.getElementById("shiftSheetinfo").action = this.getAttribute("data-action");
+        document.getElementById("moreInput").innerHTML = this.getAttribute("data-moreInput");
+    }, false);
+})
+/**
+
+
+
+//todo vérifier l'utilité Michael
 document.addEventListener("DOMContentLoaded", evenement);
 
 function fn_Chk_Rad_J() {
@@ -636,4 +655,4 @@ function evenement() {
             console.log (evt.target.getAttribute('data-line')+evt.target.getAttribute('data-type'))
         })
     });
-}
+}*/

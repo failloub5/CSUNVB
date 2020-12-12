@@ -12,13 +12,20 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                 <input type="hidden" name="id" value="<?= $base['id'] ?>">
                 <button type="submit" class='btn btn-primary m-1 float-right'>Retour à la liste</button>
             </form>
+            <?php if($_SESSION['user']['admin'] == 1 && is_null($template['template_name'])) : ?>
             <form action="?action=modelWeek" method="POST">
-                <input type="hidden" name="weekID" value="<?= $week['id'] ?>">
+                <input type="hidden" name="todosheetID" value="<?= $week['id'] ?>">
                 <input type="hidden" name="baseID" value="<?= $base['id'] ?>">
-                <input type="hidden" name="template_name" value="<?= $template['template_name'] ?>">
+                <input type="text" name="template_name" value="<?= $template['template_name']?>">
 
-                <button type="submit" class='btn btn-primary m-1 float-right'>Sauvegarder le nom</button>
+                <button type="submit" class='btn btn-primary m-1 float-right'>Retenir comme modèle</button>
             </form>
+            <?php elseif($_SESSION['user']['admin'] == 1 && !is_null($template['template_name'])): ?>
+            <form action="?action=deleteTemplate" method="POST">
+                <input type="hidden" name="todosheetID" value="<?= $week['id'] ?>">
+                <button type="submit" class='btn btn-primary m-1 float-right'>Oublier le modèle</button>
+            </form>
+            <?php endif; ?>
         </div>
         <?php if ($_SESSION['user']['admin'] == 1 && $alreadyOpen == false && $week['state'] == "close"): ?>
             <div>
@@ -44,7 +51,8 @@ $title = "CSU-NVB - Tâches hebdomadaires";
 <div>
     <div class="week text-center p-0">
         <?php foreach ($dates as $index => $date) : ?>
-            <div class='bg-dark text-white col-md font-weight-bold'><?= $days[$index + 1] ?><br><?= $date ?></div>
+            <div class='bg-dark text-white col-md font-weight-bold'><?= $days[$index + 1] ?>
+                <br><?= displayDate($date, 0) ?></div>
         <?php endforeach; ?>
     </div>
     <div class="week text-center bg-secondary">
@@ -54,8 +62,8 @@ $title = "CSU-NVB - Tâches hebdomadaires";
         <?php foreach ($dates as $index => $date) : ?>
             <div class="col p-1">
                 <?php foreach ($todoThings[1][$index + 1] as $todothing): ?>
-                    <?= buttonTask($todothing['initials'], $todothing['description'], $week['state']) ?>
-                <?php endforeach;?>
+                    <?= buttonTask($todothing['initials'], $todothing['description'], $todothing['id'], $todothing['type'], $week['state']) ?>
+                <?php endforeach; ?>
             </div>
         <?php endforeach; ?>
     </div>
@@ -67,16 +75,43 @@ $title = "CSU-NVB - Tâches hebdomadaires";
         <?php foreach ($dates as $index => $date) : ?>
             <div class="col p-1">
                 <?php foreach ($todoThings[0][$index + 1] as $todothing): ?>
-                    <?= buttonTask($todothing['initials'], $todothing['description'], $week['state']) ?>
-                <?php endforeach;?>
+                    <?= buttonTask($todothing['initials'], $todothing['description'], $todothing['id'], $todothing['type'], $week['state']) ?>
+                <?php endforeach; ?>
             </div>
         <?php endforeach; ?>
     </div>
     <br>
 </div>
-<div>
-    <?= popUpValidation("Quittance","sans valeur")?>
+<!-- Affichage de la pop-up pour les quittances -->
+<div class="modal fade" id="todoModal" tabindex="-1" role="dialog" aria-labelledby="modal-taskValidation"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" action="?action=switchTodoStatus">
+                <input type="hidden" name="todosheetID" value="<?= $week['id'] ?>">
+                <input type="hidden" id="modal-todoType" name="modal-todoType" value="">
+                <input type="hidden" id="modal-todoID" name="modal-todoID" value="">
+                <input type="hidden" id="modal-todoStatus" name="modal-todoStatus" value="">
+                <div class="modal-body" >
+                    <div id="modal-content"></div>
+                    <input type="hidden" id="modal-todoValue" name="modal-todoValue">
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Valider</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+<script src="js/todo.js"></script>
 <?php
 $content = ob_get_clean();
 require GABARIT;

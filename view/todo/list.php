@@ -27,16 +27,21 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                     echo ">".$base['name'];
                 }?>
         </select>
-        <select onchange="this.form.submit()" name="selectModel">
-            <!-- TODO (XCL) : faire une fonction getTemplates() qui retourne un tableau des noms de modèles connus -->
-            <?php foreach ($templates as $template): ?>
-                <option><?= $template['name'] ?></option>
-            <?php endforeach; ?>
-        </select>
-        <?php if ($_SESSION['user']['admin'] == 1) { ?>
-            <a href="?action=addWeek&base=<?= $selectedBaseID ?>" class="btn btn-primary m-1 pull-right">Nouvelle semaine</a>
-        <?php } ?>
     </form>
+    <br>
+    <?php if ($_SESSION['user']['admin'] == 1 && ($_SESSION['base']['id'] == $selectedBaseID)) : ?>
+        <form method="POST" action="?action=addWeek" class="pull-right">
+            <select name="selectModel">
+                <?php if (!is_null($maxID['id'])): ?> <!-- valeur modifiée dans Todo -->
+                    <option value='lastValue' selected=selected>Dernière semaine en date</option>
+                <?php endif; ?>
+                <?php foreach ($templates as $template) : ?>
+                    <option value='<?= $template['template_name'] ?>'><?= $template['template_name'] ?></option>
+                <?php endforeach;?>
+            </select>
+            <button type="submit" class="btn btn-primary m-1 pull-right">Nouvelle semaine</button>
+        </form>
+    <?php endif; ?>
 </div>
 <div>
     <h3>Semaine en cours</h3>
@@ -49,7 +54,11 @@ $title = "CSU-NVB - Tâches hebdomadaires";
             </thead>
             <tbody>
             <tr>
-                <td>Semaine <?=$activeWeek['week']?></td>
+                <td>Semaine <?=$activeWeek['week']?>
+                    <?php if ($_SESSION['user']['admin'] == 1 && (isset($activeWeek['template_name']))) { ?>
+                        <img src="./assets/images/template2_16px.png" alt="Template">
+                    <?php } ?>
+                </td>
                 <td>En cours</td>
                 <td>
                     <form>
@@ -79,7 +88,11 @@ $title = "CSU-NVB - Tâches hebdomadaires";
             <tbody>
             <?php foreach ($weeksNbrList as $week):?>
                 <tr>
-                    <td>Semaine <?=$week['week']?></td>
+                    <td>Semaine <?=$week['week']?>
+                        <?php if ($_SESSION['user']['admin'] == 1 && (isset($week['template_name']))) { ?>
+                            <img src="./assets/images/template2_16px.png" alt="Template">
+                        <?php } ?>
+                    </td>
                     <td>Cloturé</td>
                     <td>
                         <form>
