@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html>
 <head>
     <meta charset="utf-8">
@@ -36,15 +36,8 @@
 
     <script src="node_modules/jquery/dist/jquery.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
-
-
-    <!-- Javascript  -->
-    <script src="js/shift.js"></script>
-
 </head>
 <body>
-
-
 <div class="container">
     <header>
         <div class="row banner">

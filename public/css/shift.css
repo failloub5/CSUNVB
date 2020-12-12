@@ -24,3 +24,22 @@
 .table .ackcell {
     width: 40px;
 }
+
+
+
+/** Ajouté par Paola Costa **/
+.formTeamNova {
+    width: 80px;
+}
+
+.rollingList {
+    padding-left:40px;
+    margin-right: 50px;
+}
+
+.flex{
+    display:flex;
+    align-content: space-between;
+    align-items: center;
+}
+

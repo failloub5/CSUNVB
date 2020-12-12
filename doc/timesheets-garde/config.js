@@ -1,3 +1,3 @@
 projectId = 'XCLGRP1'
-team = ["Paola","Michaël","Xavier"]
+team = ["Paola","Michael","Xavier"]
 timeUnit = "min"

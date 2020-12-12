@@ -16,6 +16,9 @@ function listtodoforbase($selectedBaseID){
     $weeksNbrList = getClosedWeeks($selectedBaseID); // La liste des numéros de semaines qui sont fermées
     $activeWeek = getOpenedWeeks($selectedBaseID);  // Le numero de la semaine active
     $baseList = getbases();
+    $templates = getTemplates_name();
+    $maxID = getTodosheetMaxID($selectedBaseID);
+
     require_once VIEW . 'todo/list.php';
 }
 
@@ -26,7 +29,9 @@ function listtodoforbase($selectedBaseID){
 function showtodo($todo_id){
     $week = getTodosheetByID($todo_id);
     $base = getbasebyid($week['base_id']);
-    $dates = getDatesFromWeekNumber($week['week']);
+    $dates = getDaysForWeekNumber($week['week']);
+    $template = getTemplate_name($todo_id);
+
 
     /** Test pour vérifier si une autre feuille est déjà ouverte */
     $alreadyOpen = true;
@@ -37,6 +42,12 @@ function showtodo($todo_id){
     for ($daynight=0; $daynight <= 1; $daynight++) {
         for ($dayofweek = 1; $dayofweek <= 7; $dayofweek++) {
             $todoThings[$daynight][$dayofweek] = readTodoThingsForDay($todo_id,$daynight,$dayofweek);
+            foreach ($todoThings[$daynight][$dayofweek] as $key => $todoThing){
+                if($todoThing['type'] == "2" && !is_null($todoThing['value'])){
+                    $todoThings[$daynight][$dayofweek][$key]['description'] = str_replace("....", "".$todoThing['value']."", "".$todoThing['description']."");
+                }
+            }
+
         }
     }
 
@@ -45,26 +56,6 @@ function showtodo($todo_id){
     require_once VIEW . 'todo/show.php';
 }
 
-/**
- * Fonction qui retourne les dates des jours de la semaine, à partir d'un numéro de semaine
- * @param $weekNumber : Le numéro de la semaine dont on veut connaitre les dates
- * @return array : les dates de la semaine
- */
-function getDatesFromWeekNumber($weekNumber){
-    $year = 2000 + intdiv($weekNumber,100);
-    $week = $weekNumber%100;
-
-    $dates = Array();
-    $time = strtotime(sprintf("%4dW%02d", $year, $week));
-
-    for($i = 0; $i < 7; $i++){
-        $day = date(strtotime("+".$i." day", $time));
-        $fullDate = strftime('%e %b %Y', $day);
-        $dates[] = $fullDate;
-    }
-
-    return $dates;
-}
 
 /**
  * Fonction qui ajoute à la bbd dans todosheets les données relative à base_id et week
@@ -75,15 +66,15 @@ function addWeek(){
     //Lit la dernière semaine
     $week = readLastWeek($base);
 
-    if(empty($week)){
-        $week['last_week'] = date("yW"); // Affiche le numéro de la semaine actuelle dans le bon format
-        // $week['id'] = 23; /** toDO : Semaine par défaut ? */
-    }else {
-        /*Sinon ajouter 1 nouvelle semaine à celle déjà existante*/
-        $week['last_week'] = nextWeekNumber($week['last_week']);
+    if($_POST['selectModel'] == 'lastValue'){
+        $template = $week;
+    }else{
+        $template = readLastWeekTemplate($_POST['selectModel']);
     }
 
-    $toDos = readTodoForASheet($week['id']);
+    $week['last_week'] = nextWeekNumber($week['last_week']);
+
+    $toDos = readTodoForASheet($template['id']);
     $newWeek = weeknew($base, $week['last_week']);
 
     foreach ($toDos as $todo) {
@@ -128,18 +119,41 @@ function reopenweek($todo_id){
  */
 function closeweek($todo_id){
     $week = getTodosheetByID($todo_id);
-
     closeWeeklyTasks($todo_id);
     setFlashMessage("La semaine ".$week['week']." a été clôturée.");
     listtodoforbase($week['base_id']);
 }
 
-function modelWeek($weekID, $template_name){
-    updateTodoSheet($weekID,$template_name);
-    $currentURL = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-    header('Location: '.$currentURL);
+function modelWeek(){
+    $todosheetID = $_POST['todosheetID'];
+
+    updateTemplateName($todosheetID,$_POST['template_name']);
+    header('Location: ?action=showtodo&id='.$todosheetID);
+}
+
+function deleteTemplate(){
+    $todosheetID = $_POST['todosheetID'];
+
+    deleteTemplateName($todosheetID);
+    header('Location: ?action=showtodo&id='.$todosheetID);
 }
 
 function loadAModel($weekID, $template_name){
     $toDos = readTodoForASheet($week['id']);  // TODO (noté par XCL) : corriger ce code qui ne fait rien
+}
+
+function switchTodoStatus(){
+    $status = $_POST['modal-todoStatus'];
+    $todoID = $_POST['modal-todoID'];
+    $todoType = $_POST['modal-todoType'];
+    $todoValue = $_POST['modal-todoValue'];
+    $todosheetID = $_POST['todosheetID'];
+
+    if($status == 'open'){
+        unvalidateTodo($todoID, $todoType);
+    } else {
+        validateTodo($todoID, $todoValue);
+    }
+
+    header('Location: ?action=showtodo&id='.$todosheetID);
 }

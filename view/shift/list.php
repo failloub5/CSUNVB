@@ -22,7 +22,7 @@ $title = "CSU-NVB - Remise de garde";
         </select>
     </form>
 
-    <?php if (($_SESSION['user']['admin'] == true) && ($_SESSION['base']['id'] == $baseID)) : ?>
+    <?php if (($_SESSION['user']['admin'] == true)) : ?>
         <div class="col">
             <form>
                 <input type="hidden" name="action" value="newShiftSheet">
@@ -64,9 +64,10 @@ $title = "CSU-NVB - Remise de garde";
                     <form>
                         <input type="hidden" name="action" value="altershiftsheetStatus">
                         <input type=hidden name="id" value= <?= $shiftsheet['id'] ?>>
-                        <button class="btn btn-primary btn-sm"><?= $shiftsheet['status'] ?></button>
+                        <button class="btn btn-primary btn-sm"><?= actionForStatus($shiftsheet['statusslug'])?></button>
                     </form>
                 <?php } ?>
+
             </td>
         </tr>
     <?php } ?>
