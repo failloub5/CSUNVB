@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`bases` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB;
 
 
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`novas` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `number` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `number_UNIQUE` (`number` ASC) VISIBLE)
+  UNIQUE INDEX `number_UNIQUE` (`number` ASC) )
 ENGINE = InnoDB;
 
 
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`drugs` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB;
 
 
@@ -56,9 +56,9 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`batches` (
   `drug_id` INT NOT NULL,
   `base_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `number_UNIQUE` (`number` ASC) VISIBLE,
-  INDEX `fk_batches_drugs_idx` (`drug_id` ASC) VISIBLE,
-  INDEX `fk_batches_bases1_idx` (`base_id` ASC) VISIBLE,
+  UNIQUE INDEX `number_UNIQUE` (`number` ASC) ,
+  INDEX `fk_batches_drugs_idx` (`drug_id` ASC) ,
+  INDEX `fk_batches_bases1_idx` (`base_id` ASC) ,
   CONSTRAINT `fk_batches_bases1`
     FOREIGN KEY (`base_id`)
     REFERENCES `csunvb_csu`.`bases` (`id`)
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`users` (
   `admin` TINYINT NOT NULL,
   `firstconnect` TINYINT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `initials_UNIQUE` (`initials` ASC) VISIBLE)
+  UNIQUE INDEX `initials_UNIQUE` (`initials` ASC) )
 ENGINE = InnoDB;
 
 
@@ -97,8 +97,8 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`drugsheets` (
   `state` VARCHAR(45) NOT NULL,
   `base_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_drugsheets_bases1_idx` (`base_id` ASC) VISIBLE,
-  UNIQUE INDEX `drugSHEETUNIQ` (`week` ASC, `base_id` ASC) VISIBLE,
+  INDEX `fk_drugsheets_bases1_idx` (`base_id` ASC) ,
+  UNIQUE INDEX `drugSHEETUNIQ` (`week` ASC, `base_id` ASC) ,
   CONSTRAINT `fk_drugsheets_bases1`
     FOREIGN KEY (`base_id`)
     REFERENCES `csunvb_csu`.`bases` (`id`)
@@ -119,9 +119,9 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`pharmachecks` (
   `user_id` INT NOT NULL,
   `drugsheet_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_pharmachecks_batches1_idx` (`batch_id` ASC) VISIBLE,
-  INDEX `fk_pharmachecks_users1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_pharmachecks_drugsheets1_idx` (`drugsheet_id` ASC) VISIBLE,
+  INDEX `fk_pharmachecks_batches1_idx` (`batch_id` ASC) ,
+  INDEX `fk_pharmachecks_users1_idx` (`user_id` ASC) ,
+  INDEX `fk_pharmachecks_drugsheets1_idx` (`drugsheet_id` ASC) ,
   CONSTRAINT `fk_pharmachecks_batches1`
     FOREIGN KEY (`batch_id`)
     REFERENCES `csunvb_csu`.`batches` (`id`)
@@ -153,10 +153,10 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`novachecks` (
   `user_id` INT NOT NULL,
   `drugsheet_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_novachecks_drugs1_idx` (`drug_id` ASC) VISIBLE,
-  INDEX `fk_novachecks_novas1_idx` (`nova_id` ASC) VISIBLE,
-  INDEX `fk_novachecks_users1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_novachecks_drugsheets1_idx` (`drugsheet_id` ASC) VISIBLE,
+  INDEX `fk_novachecks_drugs1_idx` (`drug_id` ASC) ,
+  INDEX `fk_novachecks_novas1_idx` (`nova_id` ASC) ,
+  INDEX `fk_novachecks_users1_idx` (`user_id` ASC) ,
+  INDEX `fk_novachecks_drugsheets1_idx` (`drugsheet_id` ASC) ,
   CONSTRAINT `fk_novachecks_drugs1`
     FOREIGN KEY (`drug_id`)
     REFERENCES `csunvb_csu`.`drugs` (`id`)
@@ -191,9 +191,9 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`restocks` (
   `nova_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_restocks_batches1_idx` (`batch_id` ASC) VISIBLE,
-  INDEX `fk_restocks_novas1_idx` (`nova_id` ASC) VISIBLE,
-  INDEX `fk_restocks_users1_idx` (`user_id` ASC) VISIBLE,
+  INDEX `fk_restocks_batches1_idx` (`batch_id` ASC) ,
+  INDEX `fk_restocks_novas1_idx` (`nova_id` ASC) ,
+  INDEX `fk_restocks_users1_idx` (`user_id` ASC) ,
   CONSTRAINT `fk_restocks_batches1`
     FOREIGN KEY (`batch_id`)
     REFERENCES `csunvb_csu`.`batches` (`id`)
@@ -222,8 +222,8 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`drugsignatures` (
   `drugsheet_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_drugsignatures_drugsheets1_idx` (`drugsheet_id` ASC) VISIBLE,
-  INDEX `fk_drugsignatures_users1_idx` (`user_id` ASC) VISIBLE,
+  INDEX `fk_drugsignatures_drugsheets1_idx` (`drugsheet_id` ASC) ,
+  INDEX `fk_drugsignatures_users1_idx` (`user_id` ASC) ,
   CONSTRAINT `fk_drugsignatures_drugsheets1`
     FOREIGN KEY (`drugsheet_id`)
     REFERENCES `csunvb_csu`.`drugsheets` (`id`)
@@ -245,9 +245,9 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`drugsheet_use_nova` (
   `drugsheet_id` INT NOT NULL,
   `nova_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_drugsheet_use_nova_drugsheets1_idx` (`drugsheet_id` ASC) VISIBLE,
-  INDEX `fk_drugsheet_use_nova_novas1_idx` (`nova_id` ASC) VISIBLE,
-  UNIQUE INDEX `unique_use` (`drugsheet_id` ASC, `nova_id` ASC) VISIBLE,
+  INDEX `fk_drugsheet_use_nova_drugsheets1_idx` (`drugsheet_id` ASC) ,
+  INDEX `fk_drugsheet_use_nova_novas1_idx` (`nova_id` ASC) ,
+  UNIQUE INDEX `unique_use` (`drugsheet_id` ASC, `nova_id` ASC) ,
   CONSTRAINT `fk_drugsheet_use_nova_drugsheets1`
     FOREIGN KEY (`drugsheet_id`)
     REFERENCES `csunvb_csu`.`drugsheets` (`id`)
@@ -269,9 +269,9 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`drugsheet_use_batch` (
   `drugsheet_id` INT NOT NULL,
   `batch_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_drugsheet_use_batch_drugsheets1_idx` (`drugsheet_id` ASC) VISIBLE,
-  INDEX `fk_drugsheet_use_batch_batches1_idx` (`batch_id` ASC) VISIBLE,
-  UNIQUE INDEX `unique_use` (`drugsheet_id` ASC, `batch_id` ASC) VISIBLE,
+  INDEX `fk_drugsheet_use_batch_drugsheets1_idx` (`drugsheet_id` ASC) ,
+  INDEX `fk_drugsheet_use_batch_batches1_idx` (`batch_id` ASC) ,
+  UNIQUE INDEX `unique_use` (`drugsheet_id` ASC, `batch_id` ASC) ,
   CONSTRAINT `fk_drugsheet_use_batch_drugsheets1`
     FOREIGN KEY (`drugsheet_id`)
     REFERENCES `csunvb_csu`.`drugsheets` (`id`)
@@ -295,8 +295,8 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`todosheets` (
   `base_id` INT NOT NULL,
   `template_name` VARCHAR(45) NULL DEFAULT NULL COMMENT 'The name under which the drugsheet may be identified as a templatre to be create new sheets. Copies will NOT carry that name',
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `model_name_UNIQUE` (`template_name` ASC) VISIBLE,
-  INDEX `fk_todosheets_bases1_idx` (`base_id` ASC) VISIBLE,
+  UNIQUE INDEX `model_name_UNIQUE` (`template_name` ASC) ,
+  INDEX `fk_todosheets_bases1_idx` (`base_id` ASC) ,
   CONSTRAINT `fk_todosheets_bases1`
     FOREIGN KEY (`base_id`)
     REFERENCES `csunvb_csu`.`bases` (`id`)
@@ -315,7 +315,7 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`todothings` (
   `type` INT NOT NULL DEFAULT 1 COMMENT '1: done/not done\\n2: has a value',
   `display_order` INT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `text_UNIQUE` (`description` ASC) VISIBLE)
+  UNIQUE INDEX `text_UNIQUE` (`description` ASC) )
 ENGINE = InnoDB;
 
 
@@ -331,9 +331,9 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`todos` (
   `done_at` DATETIME NULL,
   `day_of_week` INT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_todoitems_todotexts1_idx` (`todothing_id` ASC) VISIBLE,
-  INDEX `fk_todoitems_todosheets1_idx` (`todosheet_id` ASC) VISIBLE,
-  INDEX `fk_todoitems_users1_idx` (`user_id` ASC) VISIBLE,
+  INDEX `fk_todoitems_todotexts1_idx` (`todothing_id` ASC) ,
+  INDEX `fk_todoitems_todosheets1_idx` (`todosheet_id` ASC) ,
+  INDEX `fk_todoitems_users1_idx` (`user_id` ASC) ,
   CONSTRAINT `fk_todoitems_todotexts1`
     FOREIGN KEY (`todothing_id`)
     REFERENCES `csunvb_csu`.`todothings` (`id`)
@@ -360,7 +360,7 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`status` (
   `slug` VARCHAR(10) UNIQUE NOT NULL,
   `displayname` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB;
 
 
@@ -379,16 +379,16 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`shiftsheets` (
   `daynova_id` INT NULL,
   `nightnova_id` INT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_shiftsheets_bases1_idx` (`base_id` ASC) VISIBLE,
-  UNIQUE INDEX `uniq` (`base_id` ASC, `date` ASC) VISIBLE,
-  INDEX `fk_shiftSheets_status1_idx` (`status_id` ASC) VISIBLE,
-  INDEX `fk_shiftSheets_users1_idx` (`dayboss_id` ASC) VISIBLE,
-  INDEX `fk_shiftSheets_users2_idx` (`nightboss_id` ASC) VISIBLE,
-  INDEX `fk_shiftSheets_users3_idx` (`dayteammate_id` ASC) VISIBLE,
-  INDEX `fk_shiftSheets_users4_idx` (`nightteammate_id` ASC) VISIBLE,
-  INDEX `fk_shiftSheets_novas1_idx` (`daynova_id` ASC) VISIBLE,
-  INDEX `fk_shiftSheets_novas2_idx` (`nightnova_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_shiftsheets_bases1_idx` (`base_id` ASC) ,
+  UNIQUE INDEX `uniq` (`base_id` ASC, `date` ASC) ,
+  INDEX `fk_shiftSheets_status1_idx` (`status_id` ASC) ,
+  INDEX `fk_shiftSheets_users1_idx` (`dayboss_id` ASC) ,
+  INDEX `fk_shiftSheets_users2_idx` (`nightboss_id` ASC) ,
+  INDEX `fk_shiftSheets_users3_idx` (`dayteammate_id` ASC) ,
+  INDEX `fk_shiftSheets_users4_idx` (`nightteammate_id` ASC) ,
+  INDEX `fk_shiftSheets_novas1_idx` (`daynova_id` ASC) ,
+  INDEX `fk_shiftSheets_novas2_idx` (`nightnova_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_shiftsheets_bases1`
     FOREIGN KEY (`base_id`)
     REFERENCES `csunvb_csu`.`bases` (`id`)
@@ -439,8 +439,8 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`shiftsections` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `title_UNIQUE` (`title` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
+  UNIQUE INDEX `title_UNIQUE` (`title` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB;
 
 
@@ -452,8 +452,8 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`shiftactions` (
   `text` VARCHAR(45) NOT NULL,
   `shiftsection_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_shift_lines_shift_sections1_idx` (`shiftsection_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_shift_lines_shift_sections1_idx` (`shiftsection_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_shift_lines_shift_sections1`
     FOREIGN KEY (`shiftsection_id`)
     REFERENCES `csunvb_csu`.`shiftsections` (`id`)
@@ -474,10 +474,10 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`shiftcomments` (
   `shiftsheet_id` INT NOT NULL,
   `shiftaction_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_comments_users1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_comments_shiftSheets1_idx` (`shiftsheet_id` ASC) VISIBLE,
-  INDEX `fk_comments_shiftActions1_idx` (`shiftaction_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_comments_users1_idx` (`user_id` ASC) ,
+  INDEX `fk_comments_shiftSheets1_idx` (`shiftsheet_id` ASC) ,
+  INDEX `fk_comments_shiftActions1_idx` (`shiftaction_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_comments_users1`
     FOREIGN KEY (`user_id`)
     REFERENCES `csunvb_csu`.`users` (`id`)
@@ -507,10 +507,10 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`shiftchecks` (
   `user_id` INT NOT NULL,
   `shiftaction_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_shiftChecks_shiftSheets1_idx` (`shiftsheet_id` ASC) VISIBLE,
-  INDEX `fk_shiftChecks_users1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_shiftChecks_shiftActions1_idx` (`shiftaction_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_shiftChecks_shiftSheets1_idx` (`shiftsheet_id` ASC) ,
+  INDEX `fk_shiftChecks_users1_idx` (`user_id` ASC) ,
+  INDEX `fk_shiftChecks_shiftActions1_idx` (`shiftaction_id` ASC) ,
   CONSTRAINT `fk_shiftChecks_shiftSheets1`
     FOREIGN KEY (`shiftsheet_id`)
     REFERENCES `csunvb_csu`.`shiftsheets` (`id`)
