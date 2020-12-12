@@ -13,9 +13,9 @@
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- paths are from root ( where there is index.php ) -->
-    <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-    <link href="node_modules/bootstrap/dist/css/bootstrap-grid.css" rel="stylesheet">
-    <link href="node_modules/bootstrap/dist/css/bootstrap-reboot.css" rel="stylesheet">
+    <link href="assets/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/bootstrap/dist/css/bootstrap-grid.css" rel="stylesheet">
+    <link href="assets/bootstrap/dist/css/bootstrap-reboot.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
     <link href="css/shift.css" rel="stylesheet">
@@ -34,8 +34,8 @@
     <link href="http://fonts.googleapis.com/css?family=Pontano+Sans" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet" type="text/css">
 
-    <script src="node_modules/jquery/dist/jquery.js"></script>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="assets/jquery/dist/jquery.js"></script>
+    <script src="assets/bootstrap/dist/js/bootstrap.js"></script>
 </head>
 <body>
 <div class="container">
