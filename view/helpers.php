@@ -20,32 +20,32 @@ function setFlashMessage($message)
     $_SESSION['flashmessage'] = $message;
 }
 
-function getDrugStateButton($state)
-{
-    switch ($state) {
-        case "closed":
-            return "reopen";
-        case "open":
-        case "reopened":
-            return "close";
-        default:
-            return "open";
-    }
+function getDrugSheetStateButton($state) {
+switch ($state) {
+    case "closed":
+        return "reopen";
+    case "open":
+    case "reopened":
+        return "close";
+    default:
+        return "open";
 }
 
-function buttonTask($initials, $desription, $weekState)
+function buttonTask($initials, $desription, $taskID, $type, $weekState)
 {
     if ($weekState == 'open') {
         if (empty($initials)) {
-            return '<button type="button" class=\'btn btn-secondary toggleTodoModal btn-block m-1\' data-title="Dimanche(à changer)" data-content="' . $desription . '">' . $desription . '<div class=\'bg-white rounded mt-1\'><br></div></button>';
+            $messageQuittance = 'Vous êtes sur le point de quittancer la tâche suivante : <br> "'.$desription.'".' ;
+            return "<button type='button' class='btn btn-secondary toggleTodoModal btn-block m-1' data-title='Quittancer une tâche' data-id='".$taskID."' data-status='close' data-type='".$type."' data-content='" . $messageQuittance . "'>" . $desription . "<div class='bg-white rounded mt-1'><br></div></button>";
         } else {
-            return "<button type='submit' class='btn btn-success btn-block m-1'>" . $desription . "<div class='text-success bg-white rounded mt-1'>" . $initials . "</div></button>";
+            $messageQuittance = 'Vous êtes sur le point de retirer la quittance de la tâche suivante : <br> "'.$desription.'".' ;
+            return "<button type='button' class='btn btn-success toggleTodoModal btn-block m-1' data-title='Retirer une quittance' data-id='".$taskID."' data-status='open' data-type='".$type."' data-content='" . $messageQuittance . "'>" . $desription . "<div class='text-dark bg-white rounded mt-1'>" . $initials . "</div></button>";
         }
     } else {
         if (empty($initials)) {
-            return "<button type='submit' class='btn btn-warning btn-block m-1' disabled >" . $desription . "<div class='bg-white rounded mt-1'><br></div></button>";
+            return "<button type='button' class='btn btn-warning btn-block m-1' disabled >" . $desription . "<div class='bg-white rounded mt-1'><br></div></button>";
         } else {
-            return "<button type='submit' class='btn btn-success btn-block m-1' disabled >" . $desription . "<div class='text-success bg-white rounded mt-1'>" . $initials . "</div></button>";
+            return "<button type='button' class='btn btn-success btn-block m-1' disabled >" . $desription . "<div class='text-dark bg-white rounded mt-1'>" . $initials . "</div></button>";
         }
     }
 }
@@ -93,4 +93,10 @@ function actionForStatus($status)
             return "action indéterminée";
     }
 }
+
+function affichageDebug($var)
+{
+    echo "<pre>", var_dump($var), "</pre>";
+}
+
 ?>
