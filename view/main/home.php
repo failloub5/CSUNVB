@@ -17,7 +17,7 @@ $title = "CSU-NVB - Accueil";
         <?php endif; ?>
         <a class="col-4 bigfont btn btn-primary btn-large p-5 m-5 font-weight-bolder" href="?action=listshift">Remise de garde</a>
         <a class="col-4 bigfont btn btn-primary btn-large p-5 m-5 font-weight-bolder" href="?action=listtodo">Tâches hebdomadaires</a>
-        <a class="col-4 bigfont btn btn-primary btn-large p-5 m-5 font-weight-bolder" href="?action=listdrug">Stupéfiants</a>
+        <a class="col-4 bigfont btn btn-primary btn-large p-5 m-5 font-weight-bolder" href="?action=listDrugSheets">Stupéfiants</a>
     </div>
 
 </div>

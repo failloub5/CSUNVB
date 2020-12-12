@@ -20,17 +20,15 @@ function setFlashMessage($message)
     $_SESSION['flashmessage'] = $message;
 }
 
-function getDrugStateButton($state)
-{
-    switch ($state) {
-        case "closed":
-            return "reopen";
-        case "open":
-        case "reopened":
-            return "close";
-        default:
-            return "open";
-    }
+function getDrugSheetStateButton($state) {
+switch ($state) {
+    case "closed":
+        return "reopen";
+    case "open":
+    case "reopened":
+        return "close";
+    default:
+        return "open";
 }
 
 function buttonTask($initials, $desription, $taskID, $type, $weekState)
