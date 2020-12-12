@@ -2,7 +2,7 @@
 
 L’objectif du projet est de créer un site web application permettant aux membres du Centre de Secours et d’Urgences du Nord Vaudois et de la Broie (CSU-NVB) de gérer les rapports de contrôles journaliers et hebdomadaires usuels.
 
-Un premier niveau de détail des fonctionnalités du site se trouve dans le [cahier des charges](CdC.md)
+Un premier niveau de détail des fonctionnalités du site se trouve dans le [cahier des charges](doc/CdC.md)
 
 Les spécifications exactes sur lesquelles le développement est effectué se trouvent dans les User Stories des projets IceScrum (détails ci-dessous)
 
