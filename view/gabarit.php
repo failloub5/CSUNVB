@@ -20,7 +20,7 @@
     <link href="css/main.css" rel="stylesheet">
     <link href="css/shift.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="assets/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/@fortawesome/fontawesome-free/css/all.css" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Syncopate" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet" type="text/css">
