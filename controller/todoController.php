@@ -1,6 +1,3 @@
-<!--
-COMMENTAIRES
--->
 <?php
 
 /** Fonction qui permet l'affichage des semaines de tâches pour la base par défaut (où on est loggé)
