@@ -3,7 +3,7 @@ ob_start();
 $title = "CSU-NVB - Remise de garde";
 ?>
 <div class="row m-2">
-    <h1>Remise de Garde du <?= date('d.m.Y', strtotime($shiftsheet['date'])) ?> à <?= $shiftsheet['baseName'] ?></h1>
+    <h1>Remise de Garde du <?= date('d.m.Y', strtotime($shiftsheet['date'])) ?> à <?= $shiftsheet['baseName'] ?> (<?= showSheetState($shiftsheet['id'], "shift") ?>)</h1>
 </div>
 <form action="?action=updateShift&id=<?= $shiftsheet['id'] ?>" method="POST">
     <input type=hidden name="id" value= <?= $shiftsheet['id'] ?>>

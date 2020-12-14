@@ -56,4 +56,44 @@ function getDaysForWeekNumber($weekNumber){
     return $dates;
 }
 
+/**
+ * Return the state of the sheet on the screen
+ * @param $id id of the pages on the screen
+ * @param $zone name of the zone used (shift, drugs, todo)
+ * @return $state
+ */
+function showSheetState($id, $zone){
+    if($zone == "shift"){
+        $slug = getStateFromSheet($id);
+    }
+    else if($zone == "todo"){
+
+    }
+    else if ($zone == "drugs"){
+
+    }
+    else{
+
+    }
+
+    switch($slug){
+        case "blank":
+            $state = "En préparation";
+            break;
+        case "open":
+        case "reopen":
+            $state = "Active";
+            break;
+        case "close":
+            $state = "Inactive";
+            break;
+        default:
+            $state = "Non défini";
+            break;
+    }
+
+    return $state;
+}
+
+
 ?>

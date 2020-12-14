@@ -137,3 +137,6 @@ function updateDataShift($id,$novaDay,$novaNight,$bossDay,$bossNight,$teammateDa
     return execute("update shiftsheets set daynova_id =:novaDay, nightnova_id =:novaNight, dayboss_id =:bossDay, nightboss_id =:bossNight, dayteammate_id =:teammateDay, nightteammate_id =:teammateNight WHERE id=:id",["id" => $id,"novaDay" => $novaDay,"novaNight" => $novaNight,"bossDay" => $bossDay,"bossNight" => $bossNight,"teammateDay" => $teammateDay,"teammateNight" => $teammateNight]);
 }
 
+function getStateFromSheet($id){
+    return execute("SELECT status.slug FROM status LEFT JOIN shiftsheets ON shiftsheets.status_id = status.id WHERE shiftsheets.id =: sheetID", ["sheetID"=>$id]);
+}
