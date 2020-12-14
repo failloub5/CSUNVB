@@ -55,5 +55,3 @@ function getDaysForWeekNumber($weekNumber){
 
     return $dates;
 }
-
-?>

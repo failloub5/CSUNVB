@@ -100,5 +100,3 @@ function affichageDebug($var)
 {
     echo "<pre>", var_dump($var), "</pre>";
 }
-
-?>

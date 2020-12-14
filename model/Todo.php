@@ -176,4 +176,3 @@ function readLastWeekTemplate($Template_name)
                             FROM todosheets
                             Where template_name =:Template_name", ["Template_name" => $Template_name]);
 }
-?>
