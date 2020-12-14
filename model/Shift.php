@@ -138,5 +138,5 @@ function updateDataShift($id,$novaDay,$novaNight,$bossDay,$bossNight,$teammateDa
 }
 
 function getStateFromSheet($id){
-    return execute("SELECT status.slug FROM status LEFT JOIN shiftsheets ON shiftsheets.status_id = status.id WHERE shiftsheets.id =: sheetID", ["sheetID"=>$id]);
+    return execute("SELECT status.slug FROM status LEFT JOIN shiftsheets ON shiftsheets.status_id = status.id WHERE shiftsheets.id =:sheetID", ["sheetID"=>$id]);
 }
