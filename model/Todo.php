@@ -176,4 +176,9 @@ function readLastWeekTemplate($Template_name)
                             FROM todosheets
                             Where template_name =:Template_name", ["Template_name" => $Template_name]);
 }
+
+function getStateFromTodo($id){
+    return execute("SELECT status.slug FROM status LEFT JOIN todosheets ON todosheets.status_id = status.id WHERE todosheets.id =:sheetID", ["sheetID"=>$id]);
+}
+
 ?>

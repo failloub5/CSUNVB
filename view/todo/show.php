@@ -4,7 +4,7 @@ $title = "CSU-NVB - Tâches hebdomadaires";
 ?>
 <div>
     <h1>Tâches hebdomadaires</h1>
-    <h2>Semaine <?= $week['week'] ?> - Base de <?= $base['name'] ?></h2>
+    <h2>Semaine <?= $week['week'] ?> - Base de <?= $base['name']?> <?= showSheetState($week['id'], "todo") ?></h2>
     <div>
         <div>
             <form>

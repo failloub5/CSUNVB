@@ -67,7 +67,8 @@ function showSheetState($id, $zone){
         $slug = getStateFromSheet($id);
     }
     else if($zone == "todo"){
-
+        /** $slug = getStateFromTodo($id); */
+        $slug = "tes<t";
     }
     else if ($zone == "drugs"){
 
@@ -78,17 +79,20 @@ function showSheetState($id, $zone){
 
     switch($slug){
         case "blank":
-            $state = "En préparation";
+            $state = "[En préparation]";
             break;
         case "open":
         case "reopen":
-            $state = "Active";
+            $state = "[Active]";
             break;
         case "close":
-            $state = "Inactive";
+            $state = "[Inactive]";
+            break;
+        case "archived":
+            $state = "[Archivée]";
             break;
         default:
-            $state = "Non défini";
+            $state = "[Non défini]";
             break;
     }
 
