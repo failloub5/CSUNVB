@@ -10,11 +10,11 @@ var buttons = document.querySelectorAll('.toggleShiftModal');
 buttons.forEach((item) => {
     item.addEventListener('click', function (event) {
         $("#shiftModal").modal("toggle");
-        document.getElementById("modal-content").innerHTML = this.getAttribute("data-content");
-        document.getElementById("action_id").value = this.getAttribute("data-action_id");
-        document.getElementById("day").value = this.getAttribute("data-day");
-        document.getElementById("shiftSheetinfo").action = this.getAttribute("data-action");
-        document.getElementById("comment").type = this.getAttribute("data-comment");
+        $("#action_id").val( this.getAttribute("data-action_id"));
+        $("#day").val( this.getAttribute("data-day"));
+        $("#modal-content").html(this.getAttribute("data-content"));
+        $("#shiftSheetinfo").attr('action', this.getAttribute("data-action"));
+        $("#comment").prop("type",this.getAttribute("data-comment"));
     }, false);
 })
 
@@ -22,9 +22,8 @@ $(".shiftInfo").change(function () {
     document.getElementById("updateShift").classList.remove("d-none");
 });
 
-
 function diplayShiftForBase() {
-    var id = document.getElementById("id").value;
+    var id = $("#id").val();
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
