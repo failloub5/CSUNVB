@@ -71,7 +71,8 @@ function showSheetState($id, $zone){
         $slug = "tes<t";
     }
     else if ($zone == "drugs"){
-
+        /** $slug = getStateFromDrugs($id); */
+        $slug = "tsers";
     }
     else{
 
