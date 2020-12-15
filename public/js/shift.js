@@ -21,3 +21,16 @@ buttons.forEach((item) => {
 $(".shiftInfo").change(function () {
     document.getElementById("updateShift").classList.remove("d-none");
 });
+
+
+function diplayShiftForBase() {
+    var id = document.getElementById("id").value;
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            $("#tableContent").html(this.responseText);
+        }
+    };
+    request.open("GET", "?action=displayShift&id="+ id, true);
+    request.send();
+}

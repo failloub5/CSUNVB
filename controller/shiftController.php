@@ -9,7 +9,7 @@
  */
 function newShiftSheet()
 {
-    if(isAdmin()){
+    if (isAdmin()) {
         $result = addNewShiftSheet($_SESSION['base']['id']);
         if ($result == false) {
             setFlashMessage("Une erreur est survenue. Impossible d'ajouter la feuille de garde.");
@@ -17,7 +17,7 @@ function newShiftSheet()
             setFlashMessage("La feuille de garde a bien été créée !");
         }
     }
-   redirect('listshift');
+    redirect('listshift');
 }
 
 // Attention: cette fonction se base sur un diagramme d'état simplifié:
@@ -59,7 +59,6 @@ function listshift()
 function listshiftforbase($baseID)
 {
     $Bases = getbases();
-    $shiftsheets = getshiftsheetForBase($baseID);
     require_once VIEW . 'shift/list.php';
 }
 
@@ -78,14 +77,14 @@ function checkShift()
 {
     $res = checkActionForShift($_POST["action_id"], $_POST["shiftSheet_id"], $_POST["day"]);
     if ($res == false) setFlashMessage("Une erreur est survenue");
-    redirect("showshift",$_POST["shiftSheet_id"]);
+    redirect("showshift", $_POST["shiftSheet_id"]);
 }
 
 function commentShift()
 {
     $res = commentActionForShift($_POST["action_id"], $_POST["shiftSheet_id"], $_POST["comment"]);
     if ($res == false) setFlashMessage("Une erreur est survenue");
-    redirect("showshift",$_POST["shiftSheet_id"]);
+    redirect("showshift", $_POST["shiftSheet_id"]);
 }
 
 function updateShift()
@@ -96,6 +95,13 @@ function updateShift()
     } else {
         setFlashMessage("Données enregistrées");
     }
-    redirect("showshift",$_GET["id"]);
+    redirect("showshift", $_GET["id"]);
 }
 
+
+function displayShift($baseID = null)
+{
+    if($baseID == null)$baseID = $_SESSION['base']['id'];
+    $shiftsheets = getshiftsheetForBase($baseID);
+    require_once VIEW . 'shift/template/listForBase.php';
+}
