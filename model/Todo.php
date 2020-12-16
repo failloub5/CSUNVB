@@ -10,9 +10,12 @@ function getTodosheetByID($id)
     return selectOne("SELECT * FROM todosheets where id =:id", ['id' => $id]);
 }
 
+
+
 /**
  * Fonction permettant de récupérer l'ensemble des informations d'une semaine pour une base et une semaine précise
- * @param $id : l'ID de la semaine à retrouver
+ * @param $base_id
+ * @param $weeknb : l'ID de la semaine à retrouver
  * @return array|mixed|null
  */
 function getTodosheetByBaseAndWeek($base_id, $weeknb)
@@ -50,6 +53,24 @@ function getOpenWeeks($baseID)
     $query = "SELECT t.week, t.id, t.template_name FROM todosheets t JOIN bases b ON t.base_id = b.id WHERE b.id = :baseID AND t.state = 'open';";
     return selectOne($query, ['baseID' => $baseID]);
 }
+
+function getBlankWeeks($baseID)
+{
+    $query = "";
+    return selectOne($query, ['baseID' => $baseID]);
+}
+
+function getReopenWeeks($baseID)
+{
+    $query = "";
+    return selectOne($query, ['baseID' => $baseID]);
+}
+
+//function getStateFromTodo($id){
+//    return execute("SELECT status.slug FROM status LEFT JOIN todosheets ON todosheets.status_id = status.id WHERE todosheets.id =:sheetID", ["sheetID"=>$id]);
+//}
+
+
 
 /**
  * Fonction permettant de fermer une semaine

@@ -12,7 +12,12 @@ function listtodo(){
 function listtodoforbase($selectedBaseID){
     /*$status = closeStatus*/
     $weeksNbrList = close($selectedBaseID/*,$status*/); // La liste des numéros de semaines qui sont fermées
-    $openWeek = getOpenWeeks($selectedBaseID);  // Le numero de la semaine active
+    /*$openWeek = getOpenWeeks($selectedBaseID);  Le numero de la semaine active*/
+    $closeWeeks = getCloseWeeks($selectedBaseID); // La liste des numéros de semaines qui sont fermées
+    $openWeeks = getOpenWeeks($selectedBaseID);  // Le numero de la semaine active
+//    $blankWeeks = getBlankWeeks($selectedBaseID); todo;
+//    $reopenWeeks = getReopenWeeks($selectedBaseID); todo;
+//    $archiveWeeks = getArchiveWeeks($selectedBaseID); todo;
     $baseList = getbases();
     $templates = getTemplates_name();
     $maxID = getTodosheetMaxID($selectedBaseID);
