@@ -468,19 +468,20 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `csunvb_csu`.`shiftcomments` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `message` VARCHAR(200) NOT NULL,
-  `time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `time` DATETIME NOT NULL DEFAULT current_timestamp(),
   `carryOn` TINYINT(1) NOT NULL DEFAULT 0,
+  `endOfCarryOn` DATETIME NULL,
   `user_id` INT NOT NULL,
   `shiftsheet_id` INT NOT NULL,
   `shiftaction_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_comments_users1_idx` (`user_id` ASC) ,
-  INDEX `fk_comments_shiftSheets1_idx` (`shiftsheet_id` ASC) ,
-  INDEX `fk_comments_shiftActions1_idx` (`shiftaction_id` ASC) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  CONSTRAINT `fk_comments_users1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `csunvb_csu`.`users` (`id`)
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_comments_users1_idx` (`user_id` ASC) VISIBLE,
+  INDEX `fk_comments_shiftSheets1_idx` (`shiftsheet_id` ASC) VISIBLE,
+  INDEX `fk_comments_shiftActions1_idx` (`shiftaction_id` ASC) VISIBLE,
+  CONSTRAINT `fk_comments_shiftActions1`
+    FOREIGN KEY (`shiftaction_id`)
+    REFERENCES `csunvb_csu`.`shiftactions` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_comments_shiftSheets1`
@@ -488,9 +489,9 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`shiftcomments` (
     REFERENCES `csunvb_csu`.`shiftsheets` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_comments_shiftActions1`
-    FOREIGN KEY (`shiftaction_id`)
-    REFERENCES `csunvb_csu`.`shiftactions` (`id`)
+  CONSTRAINT `fk_comments_users1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `csunvb_csu`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
