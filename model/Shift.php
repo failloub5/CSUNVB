@@ -28,7 +28,7 @@ function getshiftchecksForAction($action_id, $shiftsheet_id, $day)
 
 function getShiftCommentsForAction($action_id, $shiftsheet_id)
 {
-    $comments = selectMany('SELECT shiftcomments.message, shiftcomments.carryOn, shiftcomments.time, users.initials FROM shiftcomments inner join users on users.id = shiftcomments.user_id where shiftaction_id =:action_id and shiftsheet_id =:shiftsheet_id', ['action_id' => $action_id, 'shiftsheet_id' => $shiftsheet_id]);
+    $comments = selectMany('SELECT shiftcomments.message, shiftcomments.carryOn, shiftcomments.id, shiftcomments.time, users.initials FROM shiftcomments inner join users on users.id = shiftcomments.user_id where shiftaction_id =:action_id and shiftsheet_id =:shiftsheet_id', ['action_id' => $action_id, 'shiftsheet_id' => $shiftsheet_id]);
     return $comments;
 }
 
