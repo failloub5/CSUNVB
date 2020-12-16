@@ -38,16 +38,16 @@ ob_start();
             <?php foreach ($drugs as $drug): ?>
                 <tr>
                     <td class="font-weight-bold"><?= $drug["name"] ?></td>
-                    <td><?php //TODO: td a supprimer? ?></td>
+                    <td></td>
                     <?php foreach ($novas as $nova): ?>
                         <?php $ncheck = getNovaCheckByDateAndBatch($date, $drug['id'], $nova['id'], $drugsheet['id']); // not great practice, but it spares repeated queries on the db ?>
                         <td>
                             <div class="text-center">
-                                <?= $ncheck ? $ncheck["start"] : ''?> - <?= $ncheck ? $ncheck["end"] : ''?>
+                                <?= $ncheck ? $ncheck["start"] : ''?> - <?= $ncheck ? $ncheck["end"] : '' ?>
                             </div>
                         </td>
                     <?php endforeach; ?>
-                    <td><?php //TODO: td a supprimer? ?></td>
+                    <td></td>
                 </tr>
                 <!-- Plusieurs lignes avec les batches nom de ce médicament, les restocks et les pharmachecks -->
                 <?php foreach ($batchesByDrugId[$drug["id"]] as $batch): ?>

@@ -70,13 +70,26 @@ function getRestockByDateAndDrug($date, $batch, $nova) {
     return $res ? $res['quantity'] : ''; // chaîne vide si pas de restock
 }
 function getLatestDrugSheetWeekNb($base_id) {
-    return selectOne("SELECT MAX(week) as 'week' FROM drugsheets WHERE base_id ='$base_id' GROUP BY base_id");
+    return selectOne("SELECT id,MAX(week) as 'week' FROM drugsheets WHERE base_id ='$base_id' GROUP BY base_id");
 }
 
 function insertDrugSheet($base_id, $lastWeek) {
     //magnifique, passe a la nouvelle annee grace a +48 si 52eme semaine
     (($lastWeek % 100) == 52) ? $lastWeek += 49 : $lastWeek++;
     return insert("INSERT INTO drugsheets (base_id,state,week) VALUES ('$base_id', 'vierge', '$lastWeek')");
+}
+
+function cloneLatestDrugSheet($newSheetID, $oldSheetID) {
+    //clone last used novas
+    $queryResult = selectMany("SELECT nova_id FROM drugsheet_use_nova WHERE drugsheet_id = '$oldSheetID'");
+    foreach( $queryResult as $nova) {
+        insert("INSERT INTO drugsheet_use_nova (nova_id,drugsheet_id) VALUES ('$nova[nova_id]','$newSheetID')");
+    }
+    //clone last used drugs
+    $queryResult = selectMany("SELECT batch_id FROM drugsheet_use_batch WHERE drugsheet_id = '$oldSheetID'");
+    foreach( $queryResult as $batch) {
+        insert("INSERT INTO drugsheet_use_batch (batch_id,drugsheet_id) VALUES ('$batch[batch_id]','$newSheetID')");
+    }
 }
 
 function updateSheetState($baseID, $week, $state) {

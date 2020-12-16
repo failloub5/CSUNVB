@@ -22,16 +22,17 @@ function showDrugSheet($drugSheetID) {
     foreach ($BatchesForSheet as $p) {
         $batchesByDrugId[$p["drug_id"]][] = $p;
     }
+    //TODO: les drugs ne sont pas get correctement. devrait se faire via l'id des batchs presents dans la feuille et pas juste la liste complete des drogues existates
     $drugs = getDrugs();
     $site = getbasebyid($drugsheet['base_id'])['name'];
     $buttonState = getDrugSheetStateButton(getDrugSheetState($drugsheet["base_id"], $drugsheet["week"])["state"]);
     require_once VIEW . 'drugs/show.php';
 }
 
-// récupérer la valeur de $item puis transférer les valeurs
 function newDrugSheet($base) {
-    insertDrugSheet($base, getLatestDrugSheetWeekNb($base)['week']);
-    listDrugSheets($base);
+    $oldSheet = getLatestDrugSheetWeekNb($base);
+    cloneLatestDrugSheet(insertDrugSheet($base, $oldSheet['week']), $oldSheet['id']);
+    redirect("listDrugSheets", $base);
 }
 
 function hasOpenDrugSheet($baseID) {
