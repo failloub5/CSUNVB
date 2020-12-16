@@ -24,13 +24,13 @@ function showDrugSheet($drugSheetID) {
     }
     $drugs = getDrugs();
     $site = getbasebyid($drugsheet['base_id'])['name'];
+    $buttonState = getDrugSheetStateButton(getDrugSheetState($drugsheet["base_id"], $drugsheet["week"])["state"]);
     require_once VIEW . 'drugs/show.php';
 }
 
 // récupérer la valeur de $item puis transférer les valeurs
 function newDrugSheet($base) {
-    $lastWeek = readLastDrugSheet($base);
-    insertDrugSheet($base, $lastWeek['lastWeek']);
+    insertDrugSheet($base, getLatestDrugSheetWeekNb($base)['week']);
     listDrugSheets($base);
 }
 

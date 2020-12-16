@@ -69,14 +69,12 @@ function getRestockByDateAndDrug($date, $batch, $nova) {
     $res = selectOne("SELECT quantity FROM restocks WHERE date='$date' AND batch_id='$batch' AND nova_id='$nova'");
     return $res ? $res['quantity'] : ''; // chaîne vide si pas de restock
 }
-function readLastDrugSheet($base_id) {
-    return selectOne("SELECT base_id, MAX(week) as 'lastWeek' FROM drugsheets WHERE base_id ='$base_id' GROUP BY base_id");
+function getLatestDrugSheetWeekNb($base_id) {
+    return selectOne("SELECT MAX(week) as 'week' FROM drugsheets WHERE base_id ='$base_id' GROUP BY base_id");
 }
 
 function insertDrugSheet($base_id, $lastWeek) {
     //magnifique, passe a la nouvelle annee grace a +48 si 52eme semaine
-    if(date("D", $lastWeek / 100 * 100 . "-01-01") == "Wed" || date("D", $lastWeek / 100 * 100 . "-01-01") == "thu")
-        echo "oui cette annee elle a au totale : 53 semaines";
     (($lastWeek % 100) == 52) ? $lastWeek += 49 : $lastWeek++;
     return insert("INSERT INTO drugsheets (base_id,state,week) VALUES ('$base_id', 'vierge', '$lastWeek')");
 }

@@ -12,8 +12,8 @@ ob_start();
 </div>
 <h2>Site de <?= $site ?>, Semaine N°<?= $drugsheet["week"] ?></h2>
 <?php //TODO: a simplifier ?>
-<a href='?action=<?= getDrugSheetStateButton(getDrugSheetState($drugsheet["base_id"], $drugsheet["week"])["state"]); ?>DrugSheet&id=<?= $drugsheet["base_id"] ?>&week=<?= $drugsheet["week"]?>'>
-    <button class='btn btn-primary btn-sm ml-3'><?= getDrugSheetStateButton(getDrugSheetState($drugsheet["base_id"], $drugsheet["week"])["state"]) ?></button>
+<a href='?action=<?= $buttonState ?>DrugSheet&id=<?= $drugsheet["base_id"] ?>&week=<?= $drugsheet["week"]?>'>
+    <button class='btn btn-primary btn-sm ml-3'><?= $buttonState ?></button>
 </a>
 <?php foreach ($dates as $date): ?>
     <table border="1" class="table table-bordered">
