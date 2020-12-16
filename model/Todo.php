@@ -42,7 +42,7 @@ function getCloseWeeks($baseID)
 function getOpenWeeks($baseID)
 {
     $query = "SELECT t.week, t.id, t.template_name FROM todosheets t JOIN bases b ON t.base_id = b.id WHERE b.id = :baseID AND t.state = 'open';";
-    return selectOne($query, ['baseID' => $baseID]);
+    return selectMany($query, ['baseID' => $baseID]);
 }
 
 function getBlankWeeks($baseID)
