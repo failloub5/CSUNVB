@@ -161,17 +161,17 @@ $title = "CSU-NVB - Remise de garde";
                     </td>
                     <td>
                         <?php foreach ($action["comments"] as $comment): ?>
-                            <div class="comment">
-                                <?php if ($comment['carryOn'] == 0): ?>
-                                    <div class="hide">
+                            <div class="<?= ($comment['carryOn'] == 1) ? 'carry' : 'notCarry' ?>" id="comment-<?= $comment['id'] ?>">
+
+                                    <button class="removeCarryOnBtn carried" value=<?= $comment['id'] ?>>
+                                        <i class="fas fa-thumbtack fa-lg" style="color:#000000"></i>
+                                    </button>
+
+                                    <button class="addCarryOnBtn addCarry" value=<?= $comment['id'] ?>>
                                         <i class="fas fa-thumbtack fa-rotate-90 fa-lg" style="color:#777777"></i>
-                                    </div>
-                                <?php else: ?>
-                                    <i class="fas fa-thumbtack fa-lg" style="color:#000000"></i>
-                                <?php endif; ?>
+                                    </button>
 
                                 [ <?= $comment['initials'] ?> - <?= date('H:i', strtotime($comment['time'])) ?> ] :
-                                <br>
                                 <?= $comment['message'] ?>
                                 <hr>
                             </div>

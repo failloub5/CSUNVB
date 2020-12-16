@@ -18,6 +18,25 @@ buttons.forEach((item) => {
     }, false);
 })
 
+var addCarryOnBtn = document.querySelectorAll('.addCarryOnBtn');
+addCarryOnBtn.forEach((item) => {
+    item.addEventListener('click', function (event) {
+        $( "#comment-" + this.value ).removeClass( "notCarry" );
+        $( "#comment-" + this.value ).addClass( "carry" );
+    }, false);
+})
+
+
+var removeCarryOnBtn = document.querySelectorAll('.removeCarryOnBtn');
+removeCarryOnBtn.forEach((item) => {
+    item.addEventListener('click', function (event) {
+        $( "#comment-" + this.value ).removeClass( "carry" );
+        $( "#comment-" + this.value ).addClass( "notCarry" );
+    }, false);
+})
+
+
+
 $(".shiftInfo").change(function () {
     document.getElementById("updateShift").classList.remove("d-none");
 });
