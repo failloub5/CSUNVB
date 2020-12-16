@@ -10,7 +10,8 @@ function listtodo(){
  * @param $selectedBaseID : l'ID de la base dont les semaines sont à afficher
  */
 function listtodoforbase($selectedBaseID){
-    $weeksNbrList = getClosedWeeks($selectedBaseID); // La liste des numéros de semaines qui sont fermées
+    /*$status = closeStatus*/
+    $weeksNbrList = close($selectedBaseID/*,$status*/); // La liste des numéros de semaines qui sont fermées
     $openWeek = getOpenWeeks($selectedBaseID);  // Le numero de la semaine active
     $baseList = getbases();
     $templates = getTemplates_name();
