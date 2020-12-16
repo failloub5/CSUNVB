@@ -26,9 +26,14 @@ function getshiftchecksForAction($action_id, $shiftsheet_id, $day)
     return $checks;
 }
 
-function getShiftCommentsForAction($action_id, $shiftsheet_id)
+function getShiftCommentsForAction($action_id, $shiftsheet_id, $base_id)
 {
-    $comments = selectMany('SELECT shiftcomments.message, shiftcomments.carryOn, shiftcomments.id, shiftcomments.time, users.initials FROM shiftcomments inner join users on users.id = shiftcomments.user_id where shiftaction_id =:action_id and shiftsheet_id =:shiftsheet_id', ['action_id' => $action_id, 'shiftsheet_id' => $shiftsheet_id]);
+    $comments = selectMany('
+SELECT shiftcomments.message, shiftcomments.carryOn, shiftcomments.id, shiftcomments.time, users.initials 
+FROM shiftcomments 
+inner join users on users.id = shiftcomments.user_id
+inner join shiftsheets on shiftsheets.id = shiftcomments.shiftsheet_id
+where shiftaction_id =:action_id and (shiftsheet_id =:shiftsheet_id or ( carryOn = 1 and shiftsheets.base_id =:base_id))', ['action_id' => $action_id, 'shiftsheet_id' => $shiftsheet_id,'base_id' => $base_id]);
     return $comments;
 }
 
@@ -38,7 +43,7 @@ function getActionsFromSection($sectionID)
     return $sectionActions;
 }
 
-function getshiftsections($shiftSheetID)
+function getshiftsections($shiftSheetID, $baseID)
 {
     $shiftsections = selectMany('SELECT * FROM shiftsections', []);
     foreach ($shiftsections as &$section){
@@ -46,7 +51,7 @@ function getshiftsections($shiftSheetID)
         foreach ($section["actions"]  as &$action){
             $action['checksDay'] = getshiftchecksForAction($action["id"], $shiftSheetID,1);
             $action['checksNight'] = getshiftchecksForAction($action["id"], $shiftSheetID,0);
-            $action["comments"] = getShiftCommentsForAction($action["id"], $shiftSheetID);
+            $action["comments"] = getShiftCommentsForAction($action["id"], $shiftSheetID, $baseID);
         }
     }
     return $shiftsections;
@@ -69,7 +74,7 @@ WHERE shiftsheets.base_id =:base_id order by date DESC;', ["base_id" => $base_id
 
 function getshiftsheetByID($id)
 {
-    return selectOne('SELECT bases.name as baseName, shiftsheets.id, shiftsheets.date, shiftsheets.base_id, status.slug AS status,novaDay.number AS novaDay, novaNight.number AS novaNight, bossDay.initials AS bossDay, bossNight.initials AS bossNight,teammateDay.initials AS teammateDay, teammateNight.initials AS teammateNight
+    return selectOne('SELECT bases.name as baseName,bases.id as baseID, shiftsheets.id, shiftsheets.date, shiftsheets.base_id, status.slug AS status,novaDay.number AS novaDay, novaNight.number AS novaNight, bossDay.initials AS bossDay, bossNight.initials AS bossNight,teammateDay.initials AS teammateDay, teammateNight.initials AS teammateNight
 FROM shiftsheets
 INNER JOIN bases ON bases.id = shiftsheets.base_id
 INNER JOIN status ON status.id = shiftsheets.status_id
@@ -140,3 +145,12 @@ function updateDataShift($id,$novaDay,$novaNight,$bossDay,$bossNight,$teammateDa
 function getStateFromSheet($id){
     return execute("SELECT status.slug FROM status LEFT JOIN shiftsheets ON shiftsheets.status_id = status.id WHERE shiftsheets.id =:sheetID", ["sheetID"=>$id]);
 }
+
+function addCarryOnComment($commentID){
+    return execute("update shiftcomments set carryON = 1 where id=:commentID",["commentID"=>$commentID]);
+}
+
+function endCarrOnComment($commentID){
+    return execute("update shiftcomments set endOfCarryOn = current_timestamp() where id=:commentID",["commentID"=>$commentID]);
+}
+

@@ -23,6 +23,13 @@ addCarryOnBtn.forEach((item) => {
     item.addEventListener('click', function (event) {
         $( "#comment-" + this.value ).removeClass( "notCarry" );
         $( "#comment-" + this.value ).addClass( "carry" );
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+            }
+        };
+        request.open("GET", "?action=addCarryOnComment&id="+ this.value, true);
+        request.send();
     }, false);
 })
 
@@ -32,9 +39,15 @@ removeCarryOnBtn.forEach((item) => {
     item.addEventListener('click', function (event) {
         $( "#comment-" + this.value ).removeClass( "carry" );
         $( "#comment-" + this.value ).addClass( "notCarry" );
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+            }
+        };
+        request.open("GET", "?action=endCarrOnComment&id="+ this.value, true);
+        request.send();
     }, false);
 })
-
 
 
 $(".shiftInfo").change(function () {
