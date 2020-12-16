@@ -3,7 +3,8 @@ ob_start();
 $title = "CSU-NVB - Remise de garde";
 ?>
 <div class="row m-2">
-    <h1>Remise de Garde du <?= date('d.m.Y', strtotime($shiftsheet['date'])) ?> à <?= $shiftsheet['baseName'] ?> <?= showSheetState($shiftsheet['id'], "shift") ?></h1>
+    <h1>Remise de Garde du <?= date('d.m.Y', strtotime($shiftsheet['date'])) ?>
+        à <?= $shiftsheet['baseName'] ?> <?= showSheetState($shiftsheet['id'], "shift") ?></h1>
 </div>
 <form action="?action=updateShift&id=<?= $shiftsheet['id'] ?>" method="POST">
     <input type=hidden name="id" value= <?= $shiftsheet['id'] ?>>
@@ -160,15 +161,32 @@ $title = "CSU-NVB - Remise de garde";
                     </td>
                     <td>
                         <?php foreach ($action["comments"] as $comment): ?>
-                            [ <?= $comment['initials'] ?> - <?= date('H:i', strtotime($comment['time'])) ?> ] : <?= $comment['message'] ?>
-                            <br>
+                            <div class="comment">
+                                <?php if ($comment['carryOn'] == 0): ?>
+                                    <div class="hide">
+                                        <i class="fas fa-thumbtack fa-rotate-90 fa-lg" style="color:#777777"></i>
+                                    </div>
+                                <?php else: ?>
+                                    <i class="fas fa-thumbtack fa-lg" style="color:#000000"></i>
+                                <?php endif; ?>
+
+                                [ <?= $comment['initials'] ?> - <?= date('H:i', strtotime($comment['time'])) ?> ] :
+                                <br>
+                                <?= $comment['message'] ?>
+                                <hr>
+                            </div>
+
                         <?php endforeach; ?>
+
+
                         <button type="submit" class="btn bg-white btn-block m-1 toggleShiftModal"
                                 data-content="Ajouter un commentaire  à <?= $action['text'] ?>"
                                 data-action_id="<?= $action['id'] ?>" data-action="?action=commentShift"
                                 data-comment="text" style="width:200px;">
                             Nouveau commentaire
                         </button>
+
+
                     </td>
                 <?php else: ?>
                     <td class="ackcell">

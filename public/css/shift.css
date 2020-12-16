@@ -43,3 +43,15 @@
     align-items: center;
 }
 
+/** ajouté par Michael Gogniat **/
+.hide {
+    display: none;
+}
+
+.comment:hover .hide {
+    display: block;
+    display: inline;
+}
+
+
+
