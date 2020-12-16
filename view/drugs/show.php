@@ -40,7 +40,7 @@ ob_start();
                     <td class="font-weight-bold"><?= $drug["name"] ?></td>
                     <td></td>
                     <?php foreach ($novas as $nova): ?>
-                        <?php $ncheck = getNovaCheckByDateAndBatch($date, $drug['id'], $nova['id'], $drugsheet['id']); // not great practice, but it spares repeated queries on the db ?>
+                        <?php $ncheck = getNovaCheckByDateAndDrug($date, $drug['id'], $nova['id'], $drugsheet['id']); // not great practice, but it spares repeated queries on the db ?>
                         <td>
                             <div class="text-center">
                                 <?= $ncheck ? $ncheck["start"] : ''?> - <?= $ncheck ? $ncheck["end"] : '' ?>

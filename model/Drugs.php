@@ -19,10 +19,16 @@ function updateDrugName($updatedName, $drugID) {
 /**
  *  Retourne une sheet précise
  */
-function getDrugSheetById($sheet_id) {
-    return selectOne("SELECT * FROM drugsheets WHERE id = :id",['id' => $sheet_id]);
+function getDrugSheetById($sheetID) {
+    return selectOne("SELECT * FROM drugsheets WHERE id = '$sheetID'");
 }
 
+function getDrugsInDrugSheet($sheetID) {
+    return selectMany("SELECT drugs.name,drugs.id FROM drugsheet_use_batch
+                             JOIN batches ON drugsheet_use_batch.batch_id=batches.id
+                             JOIN drugs ON batches.drug_id=drugs.id
+                             WHERE drugsheet_use_batch.drugsheet_id = '$sheetID'");
+}
 /**
  * Retourne la liste des drugsheets pour une base donnée.
  */
@@ -58,7 +64,7 @@ function getPharmaCheckByDateAndBatch($date, $batch, $drugSheetID) {
 /**
  * Retourne le novacheck du jour donné pour un médicament précis dans une nova lors de son utilisation dans une drugsheet
  */
-function getNovaCheckByDateAndBatch($date, $drug, $nova, $drugSheetID) {
+function getNovaCheckByDateAndDrug($date, $drug, $nova, $drugSheetID) {
     return selectOne("SELECT start,end FROM novachecks WHERE date='$date' AND drug_id='$drug' AND nova_id='$nova' AND drugsheet_id='$drugSheetID'");
 }
 

@@ -22,8 +22,7 @@ function showDrugSheet($drugSheetID) {
     foreach ($BatchesForSheet as $p) {
         $batchesByDrugId[$p["drug_id"]][] = $p;
     }
-    //TODO: les drugs ne sont pas get correctement. devrait se faire via l'id des batchs presents dans la feuille et pas juste la liste complete des drogues existates
-    $drugs = getDrugs();
+    $drugs = getDrugsInDrugSheet($drugSheetID);
     $site = getbasebyid($drugsheet['base_id'])['name'];
     $buttonState = getDrugSheetStateButton(getDrugSheetState($drugsheet["base_id"], $drugsheet["week"])["state"]);
     require_once VIEW . 'drugs/show.php';
