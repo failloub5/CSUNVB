@@ -11,7 +11,7 @@ function listtodo(){
  */
 function listtodoforbase($selectedBaseID){
     $weeksNbrList = getClosedWeeks($selectedBaseID); // La liste des numéros de semaines qui sont fermées
-    $activeWeek = getOpenedWeeks($selectedBaseID);  // Le numero de la semaine active
+    $openWeek = getOpenWeeks($selectedBaseID);  // Le numero de la semaine active
     $baseList = getbases();
     $templates = getTemplates_name();
     $maxID = getTodosheetMaxID($selectedBaseID);
@@ -32,7 +32,7 @@ function showtodo($todo_id){
 
     /** Test pour vérifier si une autre feuille est déjà ouverte */
     $alreadyOpen = true;
-    if(empty(getOpenedWeeks($base['id']))){
+    if(empty(getOpenWeeks($base['id']))){
         $alreadyOpen = false;
     }
 
