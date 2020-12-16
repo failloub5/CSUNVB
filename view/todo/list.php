@@ -56,7 +56,7 @@ $title = "CSU-NVB - Tâches hebdomadaires";
             <tr>
                 <td>Semaine <?=$activeWeek['week']?>
                     <?php if ($_SESSION['user']['admin'] == 1 && (isset($activeWeek['template_name']))) { ?>
-                        <img src="./assets/images/template2_16px.png" alt="Template">
+                        <i class="fas fa-file-alt" title="<?=$activeWeek['template_name']?>"></i>
                     <?php } ?>
                 </td>
                 <td>En cours</td>
@@ -90,7 +90,7 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                 <tr>
                     <td>Semaine <?=$week['week']?>
                         <?php if ($_SESSION['user']['admin'] == 1 && (isset($week['template_name']))) { ?>
-                            <img src="./assets/images/template2_16px.png" alt="Template">
+                            <i class="fas fa-file-alt" title="<?=$activeWeek['template_name']?>"></i>
                         <?php } ?>
                     </td>
                     <td>Cloturé</td>
