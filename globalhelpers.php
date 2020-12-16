@@ -83,11 +83,13 @@ function showSheetState($id, $zone){
             $state = "[En préparation]";
             break;
         case "open":
-        case "reopen":
             $state = "[Active]";
             break;
+        case "reopen":
+            $state = "[En correction]";
+            break;
         case "close":
-            $state = "[Inactive]";
+            $state = "[Fermée]";
             break;
         case "archived":
             $state = "[Archivée]";
