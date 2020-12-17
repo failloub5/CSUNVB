@@ -28,19 +28,20 @@ function getTodosheetByBaseAndWeek($base_id, $weeknb)
  * @param $baseID : l'ID de la base dont on cherche les semaines fermées
  * @return array|mixed|null
  */
-function close($baseID/*,$status*/)
+function getCloseWeeks($baseID)
 {
 
     $query = "SELECT t.week, t.id, t.template_name 
               FROM todosheets t JOIN bases b ON t.base_id = b.id 
               WHERE b.id = :baseID AND t.state = 'close' ORDER BY t.week DESC;";
     /*$query = "SELECT t.week, t.id, t.template_name
-    *        FROM todosheets t JOIN bases b ON t.base_id = b.id
-    *        JOIN status ON t.id = status.id
-    *        WHERE b.id = :baseID AND status.slug = :Slug
+    *        FROM todosheets t
+    *        JOIN bases b ON t.base_id = b.id
+    *        JOIN status ON t.status_id = status.id
+    *        WHERE b.id = :baseID AND status.slug = 'close'
     *        ORDER BY t.week DESC;";
     */
-    return selectMany($query, ['baseID' => $baseID/*,'Slug' => $status */]);
+    return selectMany($query, ['baseID' => $baseID]);
 }
 
 /**

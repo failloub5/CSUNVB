@@ -10,8 +10,7 @@ function listtodo(){
  * @param $selectedBaseID : l'ID de la base dont les semaines sont à afficher
  */
 function listtodoforbase($selectedBaseID){
-    /*$status = closeStatus*/
-    $weeksNbrList = close($selectedBaseID/*,$status*/); // La liste des numéros de semaines qui sont fermées
+
     $openWeeks = getOpenWeeks($selectedBaseID);  // Le numero de la semaine active
     $closeWeeks = getCloseWeeks($selectedBaseID); // La liste des numéros de semaines qui sont fermées
 //    $blankWeeks = getBlankWeeks($selectedBaseID); todo;
@@ -29,6 +28,7 @@ function listtodoforbase($selectedBaseID){
  * @param $todo_id : l'ID de la feuille de tâche à afficher
  */
 function showtodo($todo_id){
+    /*$status = closeStatus;*/
     $week = getTodosheetByID($todo_id);
     $base = getbasebyid($week['base_id']);
     $dates = getDaysForWeekNumber($week['week']);
