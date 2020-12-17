@@ -84,15 +84,15 @@ function actionForStatus($status)
 {
     switch ($status) {
         case "blank":
-            return "Ouvrir";
+            return "Activer";
         case "open":
             return "Fermer";
         case "close":
-            return "Réouvrir";
+            return "Corriger";
         case "reopen":
-            return "Fermer";
+            return "Refermer";
         default:
-            return "action indéterminée";
+            return "Action indéterminée";
     }
 }
 
