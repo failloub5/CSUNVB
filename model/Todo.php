@@ -67,6 +67,12 @@ function getReopenWeeks($baseID)
     return selectOne($query, ['baseID' => $baseID]);
 }
 
+function getArchivedWeeks($baseID)
+{
+    $query = "";
+    return selectOne($query, ['baseID' => $baseID]);
+}
+
 //function getStateFromTodo($id){
 //    return execute("SELECT status.slug FROM status LEFT JOIN todosheets ON todosheets.status_id = status.id WHERE todosheets.id =:sheetID", ["sheetID"=>$id]);
 //}
