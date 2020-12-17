@@ -45,9 +45,9 @@
             </div>
         </div>
         <div>
-            <a href="?action=home" class="btn btn-primary m-1 pull-right">Accueil</a>
+            <a href="?action=home" class="btn btn-primary m-1 float-right">Accueil</a>
             <?php if (isset($_SESSION['user'])) : ?>
-                <a href="?action=disconnect" class="btn btn-primary m-1 pull-right">Se déconnecter</a>
+                <a href="?action=disconnect" class="btn btn-primary m-1 float-right">Se déconnecter</a>
                 <p>Connecté en tant que : <strong><?= $_SESSION['user']['initials'] ?></strong> à
                     <strong><?= $_SESSION['base']['name'] ?></strong>
                 </p>
