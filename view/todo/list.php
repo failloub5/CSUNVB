@@ -43,36 +43,19 @@ $title = "CSU-NVB - Tâches hebdomadaires";
 </div>
 <div> <!-- Sections d'affichage des différentes feuilles -->
     <div> <!-- Feuilles ouvertes -->
-        <h3>Semaine <?= showSlugs("open") ?></h3>
-        <?php if (!empty($openWeeks)): ?>
-            <table class="table">
-                <thead class="thead-dark">
-                <th>Semaine n°</th>
-                <th>Actions</th>
-                </thead>
-                <tbody>
-                <?php foreach ($openWeeks as $week): ?>
-                    <tr>
-                        <td>Semaine <?= $week['week'] ?>
-                            <!-- Affichage du logo de template si nécessaire -->
-                            <?php if ($_SESSION['user']['admin'] == 1 && (isset($week['template_name']))) : ?>
-                                <i class="fas fa-file-alt" title="<?= $week['template_name'] ?>"></i>
-                            <?php endif; ?>
-                        </td>
-                        <td>
-                            <?= showDetailsButton("showtodo", $week['id']) ?>
-                            <?= slugsButtonTodo("open", $week['id']) ?>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-                </tr>
-                </tbody>
-            </table>
-        <?php else : ?>
-            <div>
-                <p>Aucune feuille de tâche n'est actuellement <?= showSlugs("open") ?>.</p>
-            </div>
-        <?php endif; ?>
+        <?= showSheetsTodoByStatus("open", $openWeeks) ?>
+    </div>
+    <div> <!-- Feuilles en préparation -->
+        <?= showSheetsTodoByStatus("blank", $blankWeeks) ?>
+    </div>
+    <div> <!-- Feuilles en correction -->
+        <?= showSheetsTodoByStatus("reopen", $reopenWeeks) ?>
+    </div>
+    <div> <!-- Feuilles fermées -->
+        <?= showSheetsTodoByStatus("close", $closeWeeks) ?>
+    </div>
+    <div> <!-- Feuilles archivées -->
+        <?= showSheetsTodoByStatus("archived", $archivedWeeks) ?>
     </div>
 
 </div>

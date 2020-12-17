@@ -106,9 +106,8 @@ function affichageDebug($var)
  * @param $slug
  * @return string
  */
-function showSlugs($slug)
+function showState($slug)
 {
-
     switch ($slug) {
         case "blank":
             return "en préparation";
@@ -125,6 +124,44 @@ function showSlugs($slug)
     }
 }
 
+function showSheetsTodoByStatus($slug, $sheets)
+{
+    /* todo (VB) : style css en fonction du slug (pour le titre) */
+    $html = "<div><h3>Semaine " . showState($slug) . "</h3></div>";
+
+    if (!empty($sheets)) {
+        $html = $html . "<div><table class='table'>
+                        <thead class='thead-dark'><th>Semaine n°</th><th style='width: 300px; text-align: center'>Actions</th></thead>
+                        <tbody>";
+
+        $actionDetail = "";
+
+        foreach ($sheets as $sheet) {
+
+            $html = $html . "<tr> <td>Semaine " . $sheet['week'];
+
+            if ($_SESSION['user']['admin'] == 1 && (isset($week['template_name']))) {
+                $html = $html . "<i class='fas fa-file-alt' title='" . $week['template_name'] . "'></i>";
+            }
+
+            $html = $html . "<td class='d-flex justify-content-around'>
+                            <form>
+                                <input type='hidden' name='action' value='showtodo'>
+                                <input type='hidden' name='id' value='" . $sheet['id'] . "'>
+                                <button type='submit' class='btn btn-primary'>Détails</button>
+                            </form>
+                            " . slugsButtonTodo($slug, $sheet['id']) . " </td>";
+        }
+
+        $html = $html . "</tr> </tbody> </table></div>";
+
+    } else {
+        $html = $html."<div><p>Aucune feuille de tâche n'est actuellement " . showState($slug) . ".</p></div>";
+    }
+
+    return $html;
+}
+
 /**
  * @param $slug
  * @return string
@@ -137,39 +174,39 @@ function slugsButtonTodo($slug, $sheetID)
             $buttons = $buttons . "<form>
                     <input type='hidden' name='action' value=''>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
-                    <button type='submit' class='btn btn-primary m-1 float-right'>Activer</button>
+                    <button type='submit' class='btn btn-primary'>Activer</button>
                     </form>";
         case "archived":
             $buttons = $buttons . "<form>
                     <input type='hidden' name='action' value=''>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
-                    <button type='submit' class='btn btn-primary m-1 float-right'>Supprimer</button>
+                    <button type='submit' class='btn btn-primary'>Supprimer</button>
                     </form>";
             break;
         case "open":
             $buttons = $buttons . "<form>
                     <input type='hidden' name='action' value=''>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
-                    <button type='submit' class='btn btn-primary m-1 float-right'>Fermer</button>
+                    <button type='submit' class='btn btn-primary'>Fermer</button>
                     </form>";
             break;
         case "reopen":
             $buttons = $buttons . "<form>
                     <input type='hidden' name='action' value=''>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
-                    <button type='submit' class='btn btn-primary m-1 float-right'>Refermer</button>
+                    <button type='submit' class='btn btn-primary'>Refermer</button>
                     </form>";
             break;
         case "close":
             $buttons = $buttons . "<form>
                     <input type='hidden' name='action' value=''>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
-                    <button type='submit' class='btn btn-primary m-1 float-right'>Corriger</button>
+                    <button type='submit' class='btn btn-primary'>Corriger</button>
                     </form>";
             $buttons = $buttons . "<form>
                     <input type='hidden' name='action' value=''>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
-                    <button type='submit' class='btn btn-primary m-1 float-right'>Archiver</button>
+                    <button type='submit' class='btn btn-primary'>Archiver</button>
                     </form>";
             break;
         default:
@@ -177,14 +214,4 @@ function slugsButtonTodo($slug, $sheetID)
     }
     return $buttons;
 
-}
-
-function showDetailsButton($action, $sheetID)
-{
-
-    return "<form>
-            <input type='hidden' name='action' value='" . $action . "'>
-            <input type='hidden' name='id' value='" . $sheetID . "'>
-            <button type='submit' class='btn btn-primary m-1 float-right'>Détails</button>
-            </form>";
 }
