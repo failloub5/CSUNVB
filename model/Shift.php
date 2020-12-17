@@ -4,11 +4,20 @@
  * Date: Mars 2020
  **/
 
-
+/**
+ * function to modify the status of the shiftsheet to open based on the sheet ID
+ * @param $id : the id of the sheet
+ * @return bool|null
+ */
 function openShiftPage($id){
     return execute("update shiftsheets set status_id= (select id from status where slug = 'open') WHERE id=:id",["id" => $id]);
 }
 
+/**
+ * function to modify the status of the shiftsheet to reopen based on the sheet ID
+ * @param $id : the id of the sheet
+ * @return bool|null
+ */
 function reopenShiftPage($id)
 {
     return execute("update shiftsheets set status_id= (select id from status where slug = 'open') WHERE id=:id",["id" => $id]);
