@@ -23,55 +23,18 @@ function getTodosheetByBaseAndWeek($base_id, $weeknb)
     return selectOne("SELECT * FROM todosheets where base_id =:id and week = :weeknb", ['id' => $base_id, 'week' => $weeknb]);
 }
 
-/**
- * Fonction permettant de rechercher dans la base de données lu numéro et l'id des semaines fermées pour une base spécifique
- * @param $baseID : l'ID de la base dont on cherche les semaines fermées
- * @return array|mixed|null
- */
-function getCloseWeeks($baseID)
-{
 
-    $query = "SELECT t.week, t.id, t.template_name 
-              FROM todosheets t JOIN bases b ON t.base_id = b.id 
-              WHERE b.id = :baseID AND t.state = 'close' ORDER BY t.week DESC;";
-    /*$query = "SELECT t.week, t.id, t.template_name
-    *        FROM todosheets t
-    *        JOIN bases b ON t.base_id = b.id
-    *        JOIN status ON t.status_id = status.id
-    *        WHERE b.id = :baseID AND status.slug = 'close'
-    *        ORDER BY t.week DESC;";
-    */
-    return selectMany($query, ['baseID' => $baseID]);
+function getWeeksBySlugs($baseID, $slug)
+{
+    $query = "SELECT t.week, t.id, t.template_name
+            FROM todosheets t
+            JOIN bases b ON t.base_id = b.id
+            JOIN status ON t.status_id = status.id
+            WHERE b.id = :baseID AND status.slug =:slug
+            ORDER BY t.week DESC;";
+    return selectMany($query, ['baseID' => $baseID, 'slug' => $slug]);
 }
 
-/**
- * Fonction permettant de rechercher dans la base de données lu numéro et l'id de la semaine ouverte pour une base spécifique
- * @param $baseID : l'ID de la base dont on cherche la semaine ouverte
- * @return array|mixed|null
- */
-function getOpenWeeks($baseID)
-{
-    $query = "SELECT t.week, t.id, t.template_name FROM todosheets t JOIN bases b ON t.base_id = b.id WHERE b.id = :baseID AND t.state = 'open';";
-    return selectMany($query, ['baseID' => $baseID]);
-}
-
-function getBlankWeeks($baseID)
-{
-    $query = "";
-    return selectOne($query, ['baseID' => $baseID]);
-}
-
-function getReopenWeeks($baseID)
-{
-    $query = "";
-    return selectOne($query, ['baseID' => $baseID]);
-}
-
-function getArchivedWeeks($baseID)
-{
-    $query = "";
-    return selectOne($query, ['baseID' => $baseID]);
-}
 
 //function getStateFromTodo($id){
 //    return execute("SELECT status.slug FROM status LEFT JOIN todosheets ON todosheets.status_id = status.id WHERE todosheets.id =:sheetID", ["sheetID"=>$id]);
