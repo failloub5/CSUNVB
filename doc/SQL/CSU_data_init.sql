@@ -82,10 +82,11 @@ UNLOCK TABLES;
 
 -- table status
 INSERT INTO `status` VALUES
-(1,'blank','Vierge'),
-(2,'open','Ouvert'),
+(1,'blank','En préparation'),
+(2,'open','Actif'),
 (3,'close','Fermé'),
-(4,'reopen','Réouvert');
+(4,'reopen','En correction'),
+(5,'archive','Archivé');
 
 -- table shiftsections
 INSERT INTO `shiftsections` VALUES
@@ -115,3 +116,7 @@ INSERT INTO `shiftactions` VALUES
 (17,'Centrale propre',4),
 (18,'Tâches du jour effectuées',4),
 (19,'Dimanche ',4);
+
+-- table guardactions
+INSERT INTO `shiftmodels` VALUES
+(1,'Modele');

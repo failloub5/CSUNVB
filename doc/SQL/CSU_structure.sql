@@ -360,8 +360,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `csunvb_csu`.`status` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `slug` VARCHAR(10) NOT NULL,
-  `displayname` VARCHAR(10) NOT NULL,
+  `slug` VARCHAR(25) NOT NULL,
+  `displayname` VARCHAR(25) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `slug` (`slug` ASC) VISIBLE,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
