@@ -16,7 +16,7 @@ function listtodoforbase($selectedBaseID){
     $closeWeeks = getWeeksBySlugs($selectedBaseID, 'close');
     $blankWeeks = getWeeksBySlugs($selectedBaseID, 'blank');
     $reopenWeeks = getWeeksBySlugs($selectedBaseID, 'reopen');
-    $archivedWeeks = getWeeksBySlugs($selectedBaseID, 'archived');
+    $archiveWeeks = getWeeksBySlugs($selectedBaseID, 'archive');
 
     $baseList = getbases();
     $templates = getTemplates_name();

@@ -97,7 +97,7 @@ function actionForStatus($status)
     }
 }
 
-function affichageDebug($var)
+function affichageDebug($var) // todo : supprimer pour la release
 {
     echo "<pre>", var_dump($var), "</pre>";
 }
@@ -117,7 +117,7 @@ function showState($slug)
             return "en correction";
         case "close":
             return "fermée";
-        case "archived":
+        case "archive":
             return "archivée";
         default:
             return "[Non défini]";
@@ -127,10 +127,31 @@ function showState($slug)
 function showSheetsTodoByStatus($slug, $sheets)
 {
     /* todo (VB) : style css en fonction du slug (pour le titre) */
-    $html = "<div><h3>Semaine " . showState($slug) . "</h3></div>";
+    switch ($slug) {
+        case "blank":
+            $html = "<div class='slugBlank'>";
+            break;
+        case "open":
+            $html = "<div class='slugOpen'>";
+            break;
+        case "reopen":
+            $html = "<div class='slugReopen'>";
+            break;
+        case "close":
+            $html = "<div class='slugClose'>";
+            break;
+        case "archive":
+            $html = "<div class='slugArchive'>";
+            break;
+        default:
+            $html = "<div>";
+            break;
+    }
+
+    $html = $html."<h3>Semaine " . showState($slug) . "</h3></div>";
 
     if (!empty($sheets)) {
-        $html = $html . "<div><table class='table'>
+        $html = $html . "<div><table class='table table-bordered'>
                         <thead class='thead-dark'><th>Semaine n°</th><th style='width: 300px; text-align: center'>Actions</th></thead>
                         <tbody>";
 
@@ -144,13 +165,13 @@ function showSheetsTodoByStatus($slug, $sheets)
                 $html = $html . "<i class='fas fa-file-alt' title='" . $week['template_name'] . "'></i>";
             }
 
-            $html = $html . "<td class='d-flex justify-content-around'>
-                            <form>
-                                <input type='hidden' name='action' value='showtodo'>
-                                <input type='hidden' name='id' value='" . $sheet['id'] . "'>
-                                <button type='submit' class='btn btn-primary'>Détails</button>
-                            </form>
-                            " . slugsButtonTodo($slug, $sheet['id']) . " </td>";
+            $html = $html . "<td><div class='d-flex justify-content-around'>
+                                <form>
+                                    <input type='hidden' name='action' value='showtodo'>
+                                    <input type='hidden' name='id' value='" . $sheet['id'] . "'>
+                                    <button type='submit' class='btn btn-primary'>Détails</button>
+                                </form>
+                            " . slugsButtonTodo($slug, $sheet['id']) . "</div></td>";
         }
 
         $html = $html . "</tr> </tbody> </table></div>";
@@ -176,7 +197,7 @@ function slugsButtonTodo($slug, $sheetID)
                     <input type='hidden' name='id' value='" . $sheetID . "'>
                     <button type='submit' class='btn btn-primary'>Activer</button>
                     </form>";
-        case "archived":
+        case "archive":
             $buttons = $buttons . "<form>
                     <input type='hidden' name='action' value=''>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
