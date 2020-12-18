@@ -56,4 +56,59 @@ function getDaysForWeekNumber($weekNumber){
     return $dates;
 }
 
-?>
+/**
+ * Return the state of the sheet on the screen
+ * @param $id id of the pages on the screen
+ * @param $zone name of the zone used (shift, drugs, todo)
+ * @return $state
+ */
+function showSheetState($id, $zone){
+    if($zone == "shift"){
+        $slug = getStateFromSheet($id);
+    }
+    else if($zone == "todo"){
+        /** $slug = getStateFromTodo($id); */
+        $slug = "tes<t";
+    }
+    else if ($zone == "drugs"){
+        /** $slug = getStateFromDrugs($id); */
+        $slug = "tsers";
+    }
+    else{
+
+    }
+
+    switch($slug){
+        case "blank":
+            $state = "[En préparation]";
+            break;
+        case "open":
+            $state = "[Active]";
+            break;
+        case "reopen":
+            $state = "[En correction]";
+            break;
+        case "close":
+            $state = "[Fermée]";
+            break;
+        case "archived":
+            $state = "[Archivée]";
+            break;
+        default:
+            $state = "[Non défini]";
+            break;
+    }
+
+    return $state;
+}
+
+/**
+ * Tells if the current user (logged in) can perform a certain action according to the policy
+ * @param $action
+ * @return bool
+ */
+function ican ($action)
+{
+    require_once ('policies.php');
+    return isset($policies[$_SESSION['user']['admin']][$action]);
+}

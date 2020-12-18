@@ -35,7 +35,7 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                     <button type="submit" class='btn btn-primary m-1 float-right'>Réouvrir</button>
                 </form>
             </div>
-        <?php elseif ($_SESSION['user']['admin'] == 1 && $week['state'] == "open"): ?>
+        <?php elseif (ican('closesheet') && $week['state'] == "open"): ?>
             <div>
                 <form>
                     <input type="hidden" name="action" value="closeweek">
