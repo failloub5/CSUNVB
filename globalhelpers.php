@@ -102,5 +102,13 @@ function showSheetState($id, $zone){
     return $state;
 }
 
-
-?>
+/**
+ * Tells if the current user (logged in) can perform a certain action according to the policy
+ * @param $action
+ * @return bool
+ */
+function ican ($action)
+{
+    require_once ('policies.php');
+    return isset($policies[$_SESSION['user']['admin']][$action]);
+}
