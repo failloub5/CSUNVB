@@ -25,9 +25,9 @@ $title = "CSU-NVB - Tâches hebdomadaires";
             </select>
         </form>
     </div>
-    <div> <!-- Liste déroulante pour le choix du modèle et bouton de nouvelle semaine -->
+    <div style="height: 50px;"> <!-- Liste déroulante pour le choix du modèle et bouton de nouvelle semaine -->
         <?php if ($_SESSION['user']['admin'] == 1 && ($_SESSION['base']['id'] == $selectedBaseID)) : ?>
-            <form method="POST" action="?action=addWeek" class="pull-right">
+            <form method="POST" action="?action=addWeek" class="float-right">
                 <select name="selectModel">
                     <?php if (!is_null($maxID['id'])): ?>
                         <option value='lastValue' selected=selected>Dernière semaine en date</option>
@@ -38,6 +38,7 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                 </select>
                 <button type="submit" class="btn btn-primary m-1 pull-right">Nouvelle semaine</button>
             </form>
+
         <?php endif; ?>
     </div>
 </div>
@@ -45,19 +46,23 @@ $title = "CSU-NVB - Tâches hebdomadaires";
     <div> <!-- Feuilles ouvertes -->
         <?= showSheetsTodoByStatus("open", $openWeeks) ?>
     </div>
+    <br>
     <div> <!-- Feuilles en préparation -->
         <?= showSheetsTodoByStatus("blank", $blankWeeks) ?>
     </div>
+    <br>
     <div> <!-- Feuilles en correction -->
         <?= showSheetsTodoByStatus("reopen", $reopenWeeks) ?>
     </div>
+    <br>
     <div> <!-- Feuilles fermées -->
         <?= showSheetsTodoByStatus("close", $closeWeeks) ?>
     </div>
+    <br>
     <div> <!-- Feuilles archivées -->
         <?= showSheetsTodoByStatus("archive", $archiveWeeks) ?>
     </div>
-
+    <br>
 </div>
 
 <?php

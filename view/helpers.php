@@ -112,13 +112,13 @@ function showState($slug)
         case "blank":
             return "en préparation";
         case "open":
-            return "active";
+            return "active(s)";
         case "reopen":
             return "en correction";
         case "close":
-            return "fermée";
+            return "fermée(s)";
         case "archive":
-            return "archivée";
+            return "archivée(s)";
         default:
             return "[Non défini]";
     }
@@ -126,7 +126,6 @@ function showState($slug)
 
 function showSheetsTodoByStatus($slug, $sheets)
 {
-    /* todo (VB) : style css en fonction du slug (pour le titre) */
     switch ($slug) {
         case "blank":
             $html = "<div class='slugBlank'>";
@@ -148,7 +147,7 @@ function showSheetsTodoByStatus($slug, $sheets)
             break;
     }
 
-    $html = $html."<h3>Semaine " . showState($slug) . "</h3></div>";
+    $html = $html."<h3>Semaine(s) " . showState($slug) . "</h3></div>";
 
     if (!empty($sheets)) {
         $html = $html . "<div><table class='table table-bordered'>
@@ -166,8 +165,7 @@ function showSheetsTodoByStatus($slug, $sheets)
             }
 
             $html = $html . "<td><div class='d-flex justify-content-around'>
-                                <form>
-                                    <input type='hidden' name='action' value='showtodo'>
+                                <form method='GET' action='showtodo'>
                                     <input type='hidden' name='id' value='" . $sheet['id'] . "'>
                                     <button type='submit' class='btn btn-primary'>Détails</button>
                                 </form>
@@ -192,43 +190,49 @@ function slugsButtonTodo($slug, $sheetID)
     $buttons = "";
     switch ($slug) {
         case "blank":
-            $buttons = $buttons . "<form>
-                    <input type='hidden' name='action' value=''>
+            if(ican('opensheet')){
+                $buttons = $buttons . "<form  method='POST' action=''>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
                     <button type='submit' class='btn btn-primary'>Activer</button>
                     </form>";
+            }
         case "archive":
-            $buttons = $buttons . "<form>
-                    <input type='hidden' name='action' value=''>
+            if(ican('deletesheet')) {
+                $buttons = $buttons . "<form  method='POST' action=''>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
                     <button type='submit' class='btn btn-primary'>Supprimer</button>
                     </form>";
+            }
             break;
         case "open":
-            $buttons = $buttons . "<form>
-                    <input type='hidden' name='action' value=''>
+            if(ican('closesheet')) {
+                $buttons = $buttons . "<form  method='POST' action=''>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
                     <button type='submit' class='btn btn-primary'>Fermer</button>
                     </form>";
+            }
             break;
         case "reopen":
-            $buttons = $buttons . "<form>
-                    <input type='hidden' name='action' value=''>
+            if(ican('closesheet')) {
+                $buttons = $buttons . "<form  method='POST' action=''>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
                     <button type='submit' class='btn btn-primary'>Refermer</button>
                     </form>";
+            }
             break;
         case "close":
-            $buttons = $buttons . "<form>
-                    <input type='hidden' name='action' value=''>
+            if(ican('opensheet')) {
+                $buttons = $buttons . "<form  method='POST' action=''>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
                     <button type='submit' class='btn btn-primary'>Corriger</button>
                     </form>";
-            $buttons = $buttons . "<form>
-                    <input type='hidden' name='action' value=''>
+            }
+            if(ican('archivesheet')) {
+                $buttons = $buttons . "<form  method='POST' action=''>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
                     <button type='submit' class='btn btn-primary'>Archiver</button>
                     </form>";
+            }
             break;
         default:
             break;

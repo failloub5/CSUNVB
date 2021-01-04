@@ -19,6 +19,9 @@ $policies = [
     1 => [
         "editsheet" => true,
         "closesheet" => true,
+        "opensheet" => true,
+        "archivesheet" => true,
+        "deletesheet" => true,
         "createsheet" => true
     ]
 ];
