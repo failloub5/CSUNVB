@@ -100,6 +100,14 @@ table.table-bordered > thead > tr > th{
 table.table-bordered > tbody > tr > td{
     border:1px solid  #454d55;
 }
+.slugBlank,
+.slugOpen,
+.slugClose,
+.slugReopen,
+.slugArchive{
+    display: flex;
+    justify-content: space-between;
+}
 
 /* ------------------------------------------------------------
 * Fonds de couleur correspondant aux différents slugs
@@ -118,12 +126,4 @@ table.table-bordered > tbody > tr > td{
 }
 .slugArchive{
     background-color: #f5f5f5;
-}
-.slugBlank,
-.slugOpen,
-.slugClose,
-.slugReopen,
-.slugArchive{
-    display: flex;
-    justify-content: space-between;
 }

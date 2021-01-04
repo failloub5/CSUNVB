@@ -167,7 +167,8 @@ function showSheetsTodoByStatus($slug, $sheets)
             }
 
             $html = $html . "<td><div class='d-flex justify-content-around'>
-                                <form method='GET' action='showtodo'>
+                                <form>
+                                    <input type='hidden' name='action' value='showtodo'>
                                     <input type='hidden' name='id' value='" . $sheet['id'] . "'>
                                     <button type='submit' class='btn btn-primary'>Détails</button>
                                 </form>

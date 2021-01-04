@@ -39,7 +39,7 @@ function showtodo($todo_id){
 
     /** Test pour vérifier si une autre feuille est déjà ouverte */
     $alreadyOpen = true;
-    if(empty(getOpenWeeks($base['id']))){
+    if(empty(getWeeksBySlugs($base['id'], 'open'))){
         $alreadyOpen = false;
     }
 
