@@ -147,7 +147,9 @@ function showSheetsTodoByStatus($slug, $sheets)
             break;
     }
 
-    $html = $html."<h3>Semaine(s) " . showState($slug) . "</h3></div>";
+    $html = $html."<h3>Semaine(s) " . showState($slug) . "</h3>
+                    <button class='btn'><i class='fas fa-caret-square-down' style='font-size: 1.75rem'></i></button>
+                    </div>";
 
     if (!empty($sheets)) {
         $html = $html . "<div><table class='table table-bordered'>
@@ -183,6 +185,7 @@ function showSheetsTodoByStatus($slug, $sheets)
 
 /**
  * @param $slug
+ * @param $sheetID
  * @return string
  */
 function slugsButtonTodo($slug, $sheetID)
