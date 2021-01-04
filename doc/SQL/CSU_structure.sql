@@ -367,13 +367,13 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`status` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `csunvb_csu`.`shiftmodels`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `csunvb_csu`.`shiftmodels` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
+  `suggested` TINYINT(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `idshiftmodels_UNIQUE` (`id` ASC) VISIBLE,
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
@@ -557,7 +557,7 @@ ENGINE = InnoDB;
 -- Table `csunvb_csu`.`shiftmodel_has_shiftaction`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `csunvb_csu`.`shiftmodel_has_shiftaction` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `shiftaction_id` INT NOT NULL,
   `shiftmodel_id` INT NOT NULL,
   INDEX `fk_shiftactions_has_shiftmodels_shiftmodels1_idx` (`shiftmodel_id` ASC) VISIBLE,
@@ -580,3 +580,4 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
