@@ -148,7 +148,7 @@ function showSheetsTodoByStatus($slug, $sheets)
     }
 
     $html = $html."<h3>Semaine(s) " . showState($slug) . "</h3>
-                    <button class='btn dropdownButton'><i class='fas fa-caret-square-down' data-list='".$slug."' style='font-size: 1.75rem'></i></button>
+                    <button class='btn dropdownButton'><i class='fas fa-caret-square-down' data-list='".$slug."' ></i></button>
                     </div>";
 
     if (!empty($sheets)) {
