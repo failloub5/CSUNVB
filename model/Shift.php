@@ -97,16 +97,14 @@ WHERE shiftsheets.id =:id;', ["id" => $id]);
 }
 
 
-function addNewShiftSheet($idBase)
+function addNewShiftSheet($baseID)
 {
     try {
-        $date = getNewDate($idBase);
+        $date = getNewDate($baseID);
         if($date == null) {
-            $insertshiftsheet = execute("Insert into shiftsheets(date,status_id,base_id)
-        values(current_timestamp(),:status_id,:idBase)", ['status_id' => 1, 'idBase' => $idBase]);
+            $insertshiftsheet = execute("INSERT INTO shiftsheets (shiftmodel_id,status_id,base_id) VALUES (1,1,:base)", ['base' => $baseID]);
         }else{
-            $insertshiftsheet = execute("Insert into shiftsheets(date,status_id,base_id)
-        values(:date,:status_id,:idBase)", ['date' => $date, 'status_id' => 1, 'idBase' => $idBase]);
+            $insertshiftsheet = execute("INSERT INTO shiftsheets (date,shiftmodel_id,status_id,base_id) VALUES (:date,1,1,:base)", ['date' => $date, 'base' => $baseID]);
         }
         if ($insertshiftsheet == false) {
             throw new Exception("L'enregistrement ne s'est pas effectué correctement");

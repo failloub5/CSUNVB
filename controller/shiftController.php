@@ -7,17 +7,16 @@
 /**
  * @param $baseID
  */
-function newShiftSheet()
+function newShiftSheet($baseID)
 {
     if (isAdmin()) {
-        $result = addNewShiftSheet($_SESSION['base']['id']);
+        $result = addNewShiftSheet($baseID);
         if ($result == false) {
             setFlashMessage("Une erreur est survenue. Impossible d'ajouter la feuille de garde.");
         } else {
             setFlashMessage("La feuille de garde a bien été créée !");
         }
     }
-    redirect('listshift');
 }
 
 // Attention: cette fonction se base sur un diagramme d'état simplifié:

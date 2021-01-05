@@ -19,16 +19,14 @@ $title = "CSU-NVB - Remise de garde";
     </form>
     <?php if (($_SESSION['user']['admin'] == true)) : ?>
         <div class="col">
-            <form>
-                <input type="hidden" name="action" value="newShiftSheet">
-                <input type="hidden" name="id" value="<?= $baseID ?>">
-                <button type="submit" class='btn btn-primary m-1 float-right'>Nouvelle Feuille de garde</button>
-            </form>
+            <button class='btn btn-primary m-1 float-right' onclick="newShiftSheet()">Nouvelle Feuille de garde</button>
         </div>
     <?php endif; ?>
 </div>
 <div id="tableContent">
     <?php displayShift(); ?>
+</div>
+<div id="result">
 </div>
 <?php
 $content = ob_get_clean();

@@ -385,7 +385,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `csunvb_csu`.`shiftsheets` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `date` DATE NOT NULL,
+  `date` DATE NOT NULL DEFAULT current_timestamp(),
   `shiftmodel_id` INT NOT NULL,
   `base_id` INT NOT NULL,
   `status_id` INT NOT NULL,

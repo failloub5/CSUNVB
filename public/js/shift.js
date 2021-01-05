@@ -65,3 +65,18 @@ function diplayShiftForBase() {
     request.open("GET", "?action=displayShift&id="+ id, true);
     request.send();
 }
+
+
+
+function newShiftSheet() {
+    var id = $("#id").val();
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            $("#result").html(this.responseText);
+        }
+    };
+    request.open("GET", "?action=newShiftSheet&id= "+ id, true);
+    request.send();
+    diplayShiftForBase();
+}
