@@ -7,6 +7,7 @@
 $title = "CSU-NVB - Stupéfiants";
 ob_start();
 ?>
+<script src="js/drugs.js"></script>
 <div class="row m-2">
     <h1>Stupéfiants</h1>
 </div>
@@ -41,15 +42,15 @@ ob_start();
                     <td></td>
                     <?php foreach ($novas as $nova): ?>
                         <?php $ncheck = getNovaCheckByDateAndDrug($date, $drug['id'], $nova['id'], $drugsheet['id']); // not great practice, but it spares repeated queries on the db ?>
-                        <td>
-                            <div class="text-center">
-                                <?= $ncheck ? $ncheck["start"] : ''?> - <?= $ncheck ? $ncheck["end"] : '' ?>
-                            </div>
+                        <td id="nova<?= $nova["number"] ?>">
+                            <input type="number" min="0" width="30" height="100" class="text-center" value="<?= $ncheck ? $ncheck["start"] : ''?>" onchange="novaCheck(<?= $nova["number"] ?>);" id="nova<?= $nova["number"] ?>start">
+                            </input>
+                            <input type="number" min="0" width="20" height="30" class="text-center" value="<?= $ncheck ? $ncheck["end"] : '' ?>" onchange="novaCheck(<?= $nova["number"] ?>);" id="nova<?= $nova["number"] ?>end">
+                            </input>
                         </td>
                     <?php endforeach; ?>
                     <td></td>
                 </tr>
-                <!-- Plusieurs lignes avec les batches nom de ce médicament, les restocks et les pharmachecks -->
                 <?php foreach ($batchesByDrugId[$drug["id"]] as $batch): ?>
                     <?php $pcheck = getPharmaCheckByDateAndBatch($date, $batch['id'], $drugsheet['id']); // not great practice, but  it spares repeated queries on the db ?>
                     <tr>
