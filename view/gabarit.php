@@ -31,6 +31,7 @@
 
     <script src="assets/jquery/dist/jquery.js"></script>
     <script src="assets/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="js/global.js" defer></script>
 </head>
 <body>
 <div class="container">
