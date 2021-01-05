@@ -71,12 +71,22 @@ function diplayShiftForBase() {
 function newShiftSheet() {
     var id = $("#id").val();
     var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            $("#result").html(this.responseText);
-        }
-    };
     request.open("GET", "?action=newShiftSheet&id= "+ id, true);
+    request.send();
+    diplayShiftForBase();
+}
+
+function altershiftsheetStatus() {
+    var id = $("#id").val();
+    var request = new XMLHttpRequest();
+    request.open("GET", "?action=newShiftSheet&id= "+ id, true);
+    request.send();
+    diplayShiftForBase();
+}
+
+function alterShiftStatus(shiftSheetID){
+    var request = new XMLHttpRequest();
+    request.open("GET", "?action=altershiftsheetStatus&id= "+ shiftSheetID, true);
     request.send();
     diplayShiftForBase();
 }

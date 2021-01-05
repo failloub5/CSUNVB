@@ -33,13 +33,10 @@ ob_start();
                             ($_SESSION['user']['admin'] == true and $shiftsheet['statusslug'] == 'close') ||
                             $shiftsheet['statusslug'] == 'open' ||
                             $shiftsheet['statusslug'] == 'reopen')) : ?>
-                        <form>
-                            <input type="hidden" name="action" value="altershiftsheetStatus">
-                            <input type=hidden name="id" value= <?= $shiftsheet['id'] ?>>
-                            <button class="btn btn-primary btn-sm">
-                                <?= actionForStatus($shiftsheet['statusslug']) ?>
-                            </button>
-                        </form>
+
+                        <button class="btn btn-primary btn-sm" onclick="alterShiftStatus(<?= $shiftsheet['id'] ?>)">
+                            <?= actionForStatus($shiftsheet['statusslug']) ?>
+                        </button>
                     <?php endif; ?>
                 </td>
             </tr>
