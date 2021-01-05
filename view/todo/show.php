@@ -27,7 +27,8 @@ $title = "CSU-NVB - Tâches hebdomadaires";
             </form>
             <?php endif; ?>
         </div>
-        <?php if ($_SESSION['user']['admin'] == 1 && $alreadyOpen == false && $week['state'] == "close"): ?>
+        <!-- A CHANGER -->
+        <?php if ($_SESSION['user']['admin'] == 1 && $alreadyOpen == false && $week['slug'] == "close"): ?>
             <div>
                 <form>
                     <input type="hidden" name="action" value="reopenweek">
@@ -35,7 +36,8 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                     <button type="submit" class='btn btn-primary m-1 float-right'>Réouvrir</button>
                 </form>
             </div>
-        <?php elseif (ican('closesheet') && $week['state'] == "open"): ?>
+            <!-- A CHANGER -->
+        <?php elseif (ican('closesheet') && $week['slug'] == "open"): ?>
             <div>
                 <form>
                     <input type="hidden" name="action" value="closeweek">
@@ -62,7 +64,7 @@ $title = "CSU-NVB - Tâches hebdomadaires";
         <?php foreach ($dates as $index => $date) : ?>
             <div class="col p-1">
                 <?php foreach ($todoThings[1][$index + 1] as $todothing): ?>
-                    <?= buttonTask($todothing['initials'], $todothing['description'], $todothing['id'], $todothing['type'], $week['state']) ?>
+                    <?= buttonTask($todothing['initials'], $todothing['description'], $todothing['id'], $todothing['type'], $week['slug']) ?>
                 <?php endforeach; ?>
             </div>
         <?php endforeach; ?>
@@ -75,7 +77,7 @@ $title = "CSU-NVB - Tâches hebdomadaires";
         <?php foreach ($dates as $index => $date) : ?>
             <div class="col p-1">
                 <?php foreach ($todoThings[0][$index + 1] as $todothing): ?>
-                    <?= buttonTask($todothing['initials'], $todothing['description'], $todothing['id'], $todothing['type'], $week['state']) ?>
+                    <?= buttonTask($todothing['initials'], $todothing['description'], $todothing['id'], $todothing['type'], $week['slug']) ?>
                 <?php endforeach; ?>
             </div>
         <?php endforeach; ?>

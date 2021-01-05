@@ -7,7 +7,12 @@
  */
 function getTodosheetByID($id)
 {
-    return selectOne("SELECT * FROM todosheets where id =:id", ['id' => $id]);
+    /*return selectOne("SELECT * FROM todosheets where id =:id", ['id' => $id]);*/
+    return selectOne("SELECT *
+                             FROM todosheets
+                             LEFT JOIN status ON todosheets.status_id = status.id
+                             WHERE todosheets.id =:id", ['id' => $id]);
+
 }
 
 
@@ -48,7 +53,7 @@ function getWeeksBySlugs($baseID, $slug)
  */
 function closeWeeklyTasks($id)
 {
-    execute("UPDATE todosheets set state='close' WHERE id=:id", ['id' => $id]);
+    execute("UPDATE todosheets set status_id=3 WHERE id=:id", ['id' => $id]);
 }
 
 /**
@@ -57,7 +62,7 @@ function closeWeeklyTasks($id)
  */
 function openWeeklyTasks($id)
 {
-    execute("UPDATE todosheets set state='open' WHERE id=:id", ['id' => $id]);
+    execute("UPDATE todosheets set status_id=2 WHERE id=:id", ['id' => $id]);
 }
 
 function readLastWeek($base_id)
@@ -71,8 +76,8 @@ function readLastWeek($base_id)
 function weeknew($base, $week)
 {
     // todo : remplacer la requete execute par une requete insert !
-    execute("INSERT INTO todosheets(week,state ,base_id)
-                   VALUES('$week','close','$base')", []);
+    execute("INSERT INTO todosheets(week,status_id ,base_id)
+                   VALUES('$week',3,'$base')", []);
 
     $query = "SELECT id FROM todosheets 
                 WHERE week = :week AND base_id = :base";
@@ -121,7 +126,7 @@ function deleteTemplateName($id)
 
 function createTodoSheet($base_id, $lastWeek)
 {
-    return insert("INSERT INTO todosheets (base_id,state,week) VALUES (:base_id, 'blank', :lastWeek)", ["base_id" => $base_id, "lastWeek" => $lastWeek + 1]);
+    return insert("INSERT INTO todosheets (base_id,status_id,week) VALUES (:base_id, 1, :lastWeek)", ["base_id" => $base_id, "lastWeek" => $lastWeek + 1]);
 }
 
 function unvalidateTodo($id, $type)
