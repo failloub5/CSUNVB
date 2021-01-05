@@ -42,10 +42,10 @@ ob_start();
                     <td></td>
                     <?php foreach ($novas as $nova): ?>
                         <?php $ncheck = getNovaCheckByDateAndDrug($date, $drug['id'], $nova['id'], $drugsheet['id']); // not great practice, but it spares repeated queries on the db ?>
-                        <td id="nova<?= $nova["number"] ?>">
-                            <input type="number" min="0" width="30" height="100" class="text-center" value="<?= $ncheck ? $ncheck["start"] : ''?>" onchange="novaCheck(<?= $nova["number"] ?>);" id="nova<?= $nova["number"] ?>start">
+                        <td id="<?= $nova["number"] . $drug["name"] . $date ?>">
+                            <input type="number" min="0" width="30" height="100" class="text-center" value="<?= $ncheck ? $ncheck["start"] : ''?>" onchange="novaCheck(<?= "'" . $nova["number"] . "', '" . $drug["name"] . "', '" . $date . "'" ?>);" id="<?= $nova["number"] . $drug["name"] . $date ?>start">
                             </input>
-                            <input type="number" min="0" width="20" height="30" class="text-center" value="<?= $ncheck ? $ncheck["end"] : '' ?>" onchange="novaCheck(<?= $nova["number"] ?>);" id="nova<?= $nova["number"] ?>end">
+                            <input type="number" min="0" width="20" height="30" class="text-center" value="<?= $ncheck ? $ncheck["end"] : '' ?>" onchange="novaCheck(<?= "'" . $nova["number"] . "', '" . $drug["name"] . "', '" . $date . "'" ?>);" id="<?= $nova["number"] . $drug["name"] . $date ?>end">
                             </input>
                         </td>
                     <?php endforeach; ?>
