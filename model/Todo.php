@@ -1,8 +1,10 @@
 <?php
+/**Function for the daily task section**/
+
 
 /**
- * Fonction permettant de récupérer l'ensemble des informations d'une semaine grâce à son ID
- * @param $id : l'ID de la semaine à retrouver
+ * Function that gets all data from a weekly sheet based on it's ID
+ * @param $id : ID of the desired sheet
  * @return array|mixed|null
  */
 function getTodosheetByID($id)
@@ -18,9 +20,9 @@ function getTodosheetByID($id)
 
 
 /**
- * Fonction permettant de récupérer l'ensemble des informations d'une semaine pour une base et une semaine précise
- * @param $base_id
- * @param $weeknb : l'ID de la semaine à retrouver
+ * Function that gets all data from a weekly sheet based on week number and base id *
+ * @param $base_id : ID of the desired base
+ * @param $weeknb : Number of the desired week. format: yynn where yy is 2 digit year and nn is week number
  * @return array|mixed|null
  */
 function getTodosheetByBaseAndWeek($base_id, $weeknb)
@@ -28,7 +30,12 @@ function getTodosheetByBaseAndWeek($base_id, $weeknb)
     return selectOne("SELECT * FROM todosheets where base_id =:id and week = :weeknb", ['id' => $base_id, 'week' => $weeknb]);
 }
 
-
+/**
+ * Function that gets all weekly sheets based on base ID and slug name
+ * @param $baseID : ID of the desired base
+ * @param $slug : Name of desired slug. Values: blank, open, close, reopen
+ * @return array|mixed|null
+ */
 function getWeeksBySlugs($baseID, $slug)
 {
     $query = "SELECT t.week, t.id, t.template_name
@@ -48,8 +55,8 @@ function getWeeksBySlugs($baseID, $slug)
 
 
 /**
- * Fonction permettant de fermer une semaine
- * @param $id : l'ID de la semaine à fermer
+ * Function that sets status of specified weekly sheet to close
+ * @param $id : ID of the week to close
  */
 function closeWeeklyTasks($id)
 {
@@ -57,14 +64,19 @@ function closeWeeklyTasks($id)
 }
 
 /**
- * Fonction permettant d'ouvrir une semaine
- * @param $id : l'ID de la semaine à ouvrir
+ * Function that sets status of specified weekly sheet to open
+ * @param $id : ID of the week to open
  */
 function openWeeklyTasks($id)
 {
     execute("UPDATE todosheets set status_id=2 WHERE id=:id", ['id' => $id]);
 }
 
+/**
+ * Function that gets the latest week for a defined base
+ * @param $base_id
+ * @return array|mixed|null
+ */
 function readLastWeek($base_id)
 {
     return selectOne("SELECT MAX(week) as 'last_week', MAX(id) AS 'id'
@@ -73,16 +85,17 @@ function readLastWeek($base_id)
                             GROUP BY base_id", ["base_id" => $base_id]);
 }
 
+
+/**
+ * @param $base
+ * @param $week
+ * @return array|mixed|null
+ */
 function weeknew($base, $week)
 {
-    // todo : remplacer la requete execute par une requete insert !
-    execute("INSERT INTO todosheets(week,status_id ,base_id)
-                   VALUES('$week',3,'$base')", []);
-
-    $query = "SELECT id FROM todosheets 
-                WHERE week = :week AND base_id = :base";
-
-    return selectOne($query, ['week' => $week, 'base' => $base]);
+    // todo : check if working
+    return insert("INSERT INTO todosheets(week ,status_id ,base_id)
+                   VALUES('$week','3','$base')", []);
 }
 
 function readTodoThingsForDay($sid, $day, $dayOfWeek)

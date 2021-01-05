@@ -87,6 +87,10 @@ textarea{
     border:1px solid black;
 }
 
+.dropdownButton > i {
+    font-size: 1.75rem;
+}
+
 /* ------------------------------------------------------------
 * Styles CSS utilisés pour l'affichage des listes de feuilles
  -------------------------------------------------------------- */
@@ -107,6 +111,10 @@ table.table-bordered > tbody > tr > td{
 .slugArchive{
     display: flex;
     justify-content: space-between;
+}
+.actions{
+    width: 300px;
+    text-align: center;
 }
 
 /* ------------------------------------------------------------

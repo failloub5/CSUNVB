@@ -148,12 +148,12 @@ function showSheetsTodoByStatus($slug, $sheets)
     }
 
     $html = $html."<h3>Semaine(s) " . showState($slug) . "</h3>
-                    <button class='btn'><i class='fas fa-caret-square-down' style='font-size: 1.75rem'></i></button>
+                    <button class='btn dropdownButton'><i class='fas fa-caret-square-down' data-list='".$slug."' ></i></button>
                     </div>";
 
     if (!empty($sheets)) {
-        $html = $html . "<div><table class='table table-bordered'>
-                        <thead class='thead-dark'><th>Semaine n°</th><th style='width: 300px; text-align: center'>Actions</th></thead>
+        $html = $html . "<div class='".$slug."Sheets'><table class='table table-bordered'>
+                        <thead class='thead-dark'><th>Semaine n°</th><th class='actions'>Actions</th></thead>
                         <tbody>";
 
         $actionDetail = "";
@@ -178,7 +178,7 @@ function showSheetsTodoByStatus($slug, $sheets)
         $html = $html . "</tr> </tbody> </table></div>";
 
     } else {
-        $html = $html."<div><p>Aucune feuille de tâche n'est actuellement " . showState($slug) . ".</p></div>";
+        $html = $html."<div class='".$slug."Sheets'><p>Aucune feuille de tâche n'est actuellement " . showState($slug) . ".</p></div>";
     }
 
     return $html;

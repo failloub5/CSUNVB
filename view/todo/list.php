@@ -59,10 +59,6 @@ $title = "CSU-NVB - Tâches hebdomadaires";
         <?= showSheetsTodoByStatus("close", $closeWeeks) ?>
     </div>
     <br>
-    <div> <!-- Feuilles archivées -->
-        <?= showSheetsTodoByStatus("archive", $archiveWeeks) ?>
-    </div>
-    <br>
 </div>
 
 <?php
