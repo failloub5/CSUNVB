@@ -210,6 +210,25 @@ $title = "CSU-NVB - Remise de garde";
         <?php endforeach; ?>
         </tbody>
     </table>
+
+<!-- todo (PCA) : lier les boutons pour faire l'ajout de tâches -->
+    <div>
+        <form action="?action=addTask" method="POST">
+            <input type="hidden" name="shiftsheetID" value="<?= $shiftsheet['id'] ?>">
+            <input type="text" name="taskToAdd" value=" xxx ">
+            OU
+            <select name="taskToAdd">
+                <option value="NULL" selected></option>
+                <?php foreach ($tasks as $$task): ?>
+                <!--  -->
+                    <option value="<?= $task['id'] ?>"><?= $task['text'] ?></option>
+                <?php endforeach; ?>
+            </select>
+            <button type="submit" class='btn btn-primary m-1 float-right'>Ajouter aux tâches</button>
+        </form>
+    </div>
+
+
 <?php endforeach; ?>
 
 <div class="modal fade" id="shiftModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
