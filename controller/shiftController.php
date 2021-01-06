@@ -47,15 +47,10 @@ function altershiftsheetStatus($sheet_id)
     }
 }
 
-// default: the base where the user logged
-function listshift()
+//
+function listshift($baseID = null)
 {
-    listshiftforbase($_SESSION['base']['id']);
-}
-
-// List shifts for a specific base
-function listshiftforbase($baseID)
-{
+    if($baseID == null)$baseID = $_SESSION['base']['id'];
     $Bases = getbases();
     require_once VIEW . 'shift/list.php';
 }
