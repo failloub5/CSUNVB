@@ -45,7 +45,7 @@ WHERE shiftaction_id = :action_id AND (shiftsheets.id = :shiftsheet_id or ((carr
     return $comments;
 }
 
-function getActionsFromModel($sectionID,$model_id)
+function getSelectedActions($sectionID,$model_id)
 {
     $sectionActions = selectMany('SELECT shiftactions.* FROM shiftmodel_has_shiftaction
 INNER JOIN shiftactions
@@ -54,11 +54,17 @@ WHERE shiftmodel_id = :model_id AND shiftsection_id = :sectionID', ['sectionID' 
     return $sectionActions;
 }
 
+function getNotSelectedActions($sectionID,$model_id)
+{
+
+}
+
 function getshiftsections($shiftSheetID, $baseID)
 {
     $shiftsections = selectMany('SELECT * FROM shiftsections', []);
     foreach ($shiftsections as &$section){
-        $section["actions"] = getActionsFromModel($section["id"],getshiftsheetByID($shiftSheetID)["shiftmodel_id"]);
+        $section["actions"] = getSelectedActions($section["id"],getshiftsheetByID($shiftSheetID)["shiftmodel_id"]);
+        $section["unusedActions"] = getNotSelectedActions($section["id"],getshiftsheetByID($shiftSheetID)["shiftmodel_id"]);
         foreach ($section["actions"]  as &$action){
             $action['checksDay'] = getshiftchecksForAction($action["id"], $shiftSheetID,1);
             $action['checksNight'] = getshiftchecksForAction($action["id"], $shiftSheetID,0);
