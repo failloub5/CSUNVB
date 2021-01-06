@@ -212,19 +212,19 @@ $title = "CSU-NVB - Remise de garde";
             <td colspan="4" style="padding: 0px;">
                 <!-- todo (PCA) : lier les boutons pour faire l'ajout de tâches -->
                 <div>
-                    <form action="?action=addTask" method="POST">
-                        <input type="hidden" name="shiftsheetID" value="<?= $shiftsheet['id'] ?>" style="margin : 6px;">
-                        <input type="text" name="taskToAdd" value=" xxx " style="margin : 6px;">
-                        OU
-                        <select name="taskToAdd">
-                            <option value="NULL" selected></option>
-                            <?php foreach ($tasks as $$task): ?>
-                                <!--  -->
-                                <option value="<?= $task['id'] ?>"><?= $task['text'] ?></option>
-                            <?php endforeach; ?>
+                    <div class="float-left">
+                        <button type="submit" class='btn btn-success m-1'">Ajouter</button>
+                        <select class="selectpicker">
+                            <option>Mustard</option>
+                            <option>Ketchup</option>
+                            <option>Relish</option>
                         </select>
-                        <button type="submit" class='btn btn-success m-1 float-right';">Ajouter</button>
-                    </form>
+
+                    </div>
+                    <div class="float-left" style="margin-left: 50px">
+                        <button type="submit" class='btn btn-success m-1'">Créer</button>
+                        <input type="text" name="taskToAdd" value=" xxx " style="margin : 6px;">
+                    </div class="float-left">
                 </div>
             </td>
         </tr>
