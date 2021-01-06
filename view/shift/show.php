@@ -3,8 +3,8 @@ ob_start();
 $title = "CSU-NVB - Remise de garde";
 ?>
 <div class="row m-2">
-    <h1>Remise de Garde du <?= date('d.m.Y', strtotime($shiftsheet['date'])) ?>
-        à <?= $shiftsheet['baseName'] ?> <?= showSheetState($shiftsheet['id'], "shift") ?></h1>
+    <h1>Remise de Garde du <?= date('d.m.Y', strtotime($shiftsheet['date'])) ?> à <?= $shiftsheet['baseName'] ?> <?= showSheetState($shiftsheet['id'], "shift") ?><?= $shiftsheet['shiftmodel_id'] ?></h1>
+    <input type="hidden" id="shiftDate" value="<?=$shiftsheet['date']?>">
 </div>
 <form action="?action=updateShift&id=<?= $shiftsheet['id'] ?>" method="POST">
     <input type=hidden name="id" value= <?= $shiftsheet['id'] ?>>
@@ -161,7 +161,7 @@ $title = "CSU-NVB - Remise de garde";
                     </td>
                     <td>
                         <?php foreach ($action["comments"] as $comment): ?>
-                            <div class="<?= ($comment['carryOn'] == 1) ? 'carry' : 'notCarry' ?>" id="comment-<?= $comment['id'] ?>">
+                            <div class="<?= ($comment['carryOn'] == 1 and $comment['endOfCarryOn'] == null) ? 'carry' : 'notCarry' ?>" id="comment-<?= $comment['id'] ?>">
 
                                     <button class="removeCarryOnBtn carried" value=<?= $comment['id'] ?>>
                                         <i class="fas fa-thumbtack fa-lg" style="color:#000000"></i>
@@ -171,7 +171,7 @@ $title = "CSU-NVB - Remise de garde";
                                         <i class="fas fa-thumbtack fa-rotate-90 fa-lg" style="color:#777777"></i>
                                     </button>
 
-                                [ <?= $comment['initials'] ?> - <?= date('H:i', strtotime($comment['time'])) ?> ] :
+                                <strong>[ <?= $comment['initials'] ?> - <?=date('H:i', strtotime($comment['time']))?> <?= ($comment['carryOn'] == 1) ? date('/  d.m.Y ', strtotime($comment['time'])) : "" ?>] :</strong>
                                 <?= $comment['message'] ?>
                                 <hr>
                             </div>

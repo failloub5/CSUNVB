@@ -37,18 +37,20 @@ function getshiftchecksForAction($action_id, $shiftsheet_id, $day)
 
 function getShiftCommentsForAction($action_id, $shiftsheet_id, $base_id)
 {
-    $comments = selectMany('
-SELECT shiftcomments.message, shiftcomments.carryOn, shiftcomments.id, shiftcomments.time, users.initials 
+    $comments = selectMany('SELECT shiftcomments.message, shiftcomments.carryOn, shiftcomments.id, shiftcomments.time, users.initials ,shiftsheets.date,shiftcomments.endOfCarryOn
 FROM shiftcomments 
 inner join users on users.id = shiftcomments.user_id
 inner join shiftsheets on shiftsheets.id = shiftcomments.shiftsheet_id
-where shiftaction_id =:action_id and (shiftsheet_id =:shiftsheet_id or ( carryOn = 1 and shiftsheets.base_id =:base_id))', ['action_id' => $action_id, 'shiftsheet_id' => $shiftsheet_id,'base_id' => $base_id]);
+WHERE shiftaction_id = :action_id AND (shiftsheets.id = :shiftsheet_id or ((carryOn = 1  AND ( (endOfCarryOn IS NULL AND :date > shiftsheets.date) OR :date BETWEEN shiftsheets.date AND endOfCarryOn)) and shiftsheets.base_id = :base_id))', ['action_id' => $action_id, 'shiftsheet_id' => $shiftsheet_id,'base_id' => $base_id, 'date' => getshiftsheetByID($shiftsheet_id)["date"]]);
     return $comments;
 }
 
-function getActionsFromSection($sectionID)
+function getActionsFromModel($sectionID,$model_id)
 {
-    $sectionActions = selectMany('SELECT id, text FROM shiftactions WHERE shiftsection_id =:sectionID', ['sectionID' => $sectionID]);
+    $sectionActions = selectMany('SELECT shiftactions.* FROM shiftmodel_has_shiftaction
+INNER JOIN shiftactions
+ON shiftactions.id = shiftmodel_has_shiftaction.shiftaction_id
+WHERE shiftmodel_id = :model_id AND shiftsection_id = :sectionID', ['sectionID' => $sectionID, 'model_id' => $model_id]);
     return $sectionActions;
 }
 
@@ -56,7 +58,7 @@ function getshiftsections($shiftSheetID, $baseID)
 {
     $shiftsections = selectMany('SELECT * FROM shiftsections', []);
     foreach ($shiftsections as &$section){
-        $section["actions"] = getActionsFromSection($section["id"]);
+        $section["actions"] = getActionsFromModel($section["id"],getshiftsheetByID($shiftSheetID)["shiftmodel_id"]);
         foreach ($section["actions"]  as &$action){
             $action['checksDay'] = getshiftchecksForAction($action["id"], $shiftSheetID,1);
             $action['checksNight'] = getshiftchecksForAction($action["id"], $shiftSheetID,0);
@@ -83,7 +85,7 @@ WHERE shiftsheets.base_id =:base_id order by date DESC;', ["base_id" => $base_id
 
 function getshiftsheetByID($id)
 {
-    return selectOne('SELECT bases.name as baseName,bases.id as baseID, shiftsheets.id, shiftsheets.date, shiftsheets.base_id, status.slug AS status,novaDay.number AS novaDay, novaNight.number AS novaNight, bossDay.initials AS bossDay, bossNight.initials AS bossNight,teammateDay.initials AS teammateDay, teammateNight.initials AS teammateNight
+    return selectOne('SELECT bases.name as baseName,bases.id as baseID, shiftsheets.id, shiftsheets.date, shiftsheets.base_id,shiftsheets.shiftmodel_id, status.slug AS status,novaDay.number AS novaDay, novaNight.number AS novaNight, bossDay.initials AS bossDay, bossNight.initials AS bossNight,teammateDay.initials AS teammateDay, teammateNight.initials AS teammateNight
 FROM shiftsheets
 INNER JOIN bases ON bases.id = shiftsheets.base_id
 INNER JOIN status ON status.id = shiftsheets.status_id
@@ -154,10 +156,10 @@ function getStateFromSheet($id){
 }
 
 function addCarryOnComment($commentID){
-    return execute("update shiftcomments set carryON = 1 where id=:commentID",["commentID"=>$commentID]);
+    return execute("update shiftcomments set carryON = 1, endOfCarryOn = null where id=:commentID",["commentID"=>$commentID]);
 }
 
-function endCarrOnComment($commentID){
-    return execute("update shiftcomments set endOfCarryOn = current_timestamp() where id=:commentID",["commentID"=>$commentID]);
+function carryOffComment(){
+    return execute("update shiftcomments set endOfCarryOn = :carryOff where id= :commentID",["commentID"=>$_POST["commentID"],"carryOff"=>$_POST["carryOff"]]);
 }
 

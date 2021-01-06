@@ -37,17 +37,27 @@ addCarryOnBtn.forEach((item) => {
 var removeCarryOnBtn = document.querySelectorAll('.removeCarryOnBtn');
 removeCarryOnBtn.forEach((item) => {
     item.addEventListener('click', function (event) {
-        $( "#comment-" + this.value ).removeClass( "carry" );
-        $( "#comment-" + this.value ).addClass( "notCarry" );
-        var request = new XMLHttpRequest();
-        request.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
+        $( "#comment-" + this.value ).removeClass( "carry" )
+        $( "#comment-" + this.value ).addClass( "notCarry" )
+        $.ajax({
+            type: "POST",
+            url: "?action=carryOffComment",
+            data: {
+                carryOff: $("#shiftDate").val(),
+                commentID: this.value
+            },
+            cache: false,
+            success: function(data) {
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr);
             }
-        };
-        request.open("GET", "?action=endCarrOnComment&id="+ this.value, true);
-        request.send();
+        });
     }, false);
 })
+
+
+
 
 
 $(".shiftInfo").change(function () {

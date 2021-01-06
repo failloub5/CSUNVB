@@ -8,9 +8,9 @@ $title = "CSU-NVB - Remise de garde";
 </div>
 
 <div class="row">
-    <form action="?action=listshift" class="col">
-        <input type="hidden" name="action" value="listshiftforbase">
-        <select onchange="diplayShiftForBase()" name="id" size="1" id="id">
+    <form>
+        <input type="hidden" name="action" value="listshift">
+        <select onchange="this.form.submit()" name="id" size="1" id="id">
             <?php foreach ($Bases as $base) : ?>
                 <option value="<?= $base['id'] ?>" <?= ($baseID == $base['id']) ? 'selected' : '' ?>
                         name="site"><?= $base['name'] ?></option>
@@ -24,7 +24,7 @@ $title = "CSU-NVB - Remise de garde";
     <?php endif; ?>
 </div>
 <div id="tableContent">
-    <?php displayShift(); ?>
+    <?php displayShift($baseID); ?>
 </div>
 <div id="result">
 </div>
