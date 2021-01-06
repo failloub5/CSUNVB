@@ -175,4 +175,11 @@ insert into `shiftcomments` (id,message,user_id,shiftsheet_id,shiftaction_id )VA
 (4,'Commentaire', 15,2,1),
 (5,'Commentaire', 87,2,7);
 
+-- table guardactions
+INSERT INTO `shiftactions` VALUES
+(20,'Sortir le chien',1),
+(21,'Vider les poubelles',1),
+(22,'Faire le ménage',1),
+(23,'Vérification quelconque',2);
+
 
