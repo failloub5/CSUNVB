@@ -97,31 +97,40 @@ function actionForStatus($status)
     }
 }
 
-function affichageDebug($var) // todo : supprimer pour la release
-{
-    echo "<pre>", var_dump($var), "</pre>";
-}
 
-/**
- * @param $slug
- * @return string
- */
-function showState($slug)
+function showState($slug, $plural = 0)
 {
     switch ($slug) {
         case "blank":
-            return "en préparation";
+            $result = "en préparation";
+            break;
         case "open":
-            return "active(s)";
+            $result = "active";
+            if ($plural) {
+                $result = $result."(s)";
+            }
+            break;
         case "reopen":
-            return "en correction";
+            $result = "en correction";
+            break;
         case "close":
-            return "fermée(s)";
+            $result = "fermée";
+            if ($plural) {
+                $result = $result."(s)";
+            }
+            break;
         case "archive":
-            return "archivée(s)";
+            $result = "archivée";
+            if ($plural) {
+                $result = $result."(s)";
+            }
+            break;
         default:
-            return "[Non défini]";
+            $result = "[Non défini]";
+            break;
     }
+
+    return $result;
 }
 
 function showSheetsTodoByStatus($slug, $sheets)
@@ -147,12 +156,12 @@ function showSheetsTodoByStatus($slug, $sheets)
             break;
     }
 
-    $html = $html."<h3>Semaine(s) " . showState($slug) . "</h3>
-                    <button class='btn dropdownButton'><i class='fas fa-caret-square-down' data-list='".$slug."' ></i></button>
+    $html = $html . "<h3>Semaine(s) " . showState($slug, 1) . "</h3>
+                    <button class='btn dropdownButton'><i class='fas fa-caret-square-down' data-list='" . $slug . "' ></i></button>
                     </div>";
 
     if (!empty($sheets)) {
-        $html = $html . "<div class='".$slug."Sheets'><table class='table table-bordered'>
+        $html = $html . "<div class='" . $slug . "Sheets'><table class='table table-bordered'>
                         <thead class='thead-dark'><th>Semaine n°</th><th class='actions'>Actions</th></thead>
                         <tbody>";
 
@@ -162,7 +171,7 @@ function showSheetsTodoByStatus($slug, $sheets)
 
             $html = $html . "<tr> <td>Semaine " . $sheet['week'];
 
-            if ($_SESSION['user']['admin'] == 1 && (isset($week['template_name']))) {
+            if (ican('createsheet') && (isset($week['template_name']))) {
                 $html = $html . "<i class='fas fa-file-alt' title='" . $week['template_name'] . "'></i>";
             }
 
@@ -178,7 +187,7 @@ function showSheetsTodoByStatus($slug, $sheets)
         $html = $html . "</tr> </tbody> </table></div>";
 
     } else {
-        $html = $html."<div class='".$slug."Sheets'><p>Aucune feuille de tâche n'est actuellement " . showState($slug) . ".</p></div>";
+        $html = $html . "<div class='" . $slug . "Sheets'><p>Aucune feuille de tâche n'est actuellement " . showState($slug) . ".</p></div>";
     }
 
     return $html;
@@ -192,16 +201,18 @@ function showSheetsTodoByStatus($slug, $sheets)
 function slugsButtonTodo($slug, $sheetID)
 {
     $buttons = "";
+
     switch ($slug) {
         case "blank":
-            if(ican('opensheet')){
+            if (ican('opensheet')) {
                 $buttons = $buttons . "<form  method='POST' action=''>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
+                    <input type='hidden' name='newSlug' value='open'>
                     <button type='submit' class='btn btn-primary'>Activer</button>
                     </form>";
             }
         case "archive":
-            if(ican('deletesheet')) {
+            if (ican('deletesheet')) {
                 $buttons = $buttons . "<form  method='POST' action=''>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
                     <button type='submit' class='btn btn-primary'>Supprimer</button>
@@ -209,31 +220,35 @@ function slugsButtonTodo($slug, $sheetID)
             }
             break;
         case "open":
-            if(ican('closesheet')) {
+            if (ican('closesheet')) {
                 $buttons = $buttons . "<form  method='POST' action=''>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
+                    <input type='hidden' name='newSlug' value='close'>
                     <button type='submit' class='btn btn-primary'>Fermer</button>
                     </form>";
             }
             break;
         case "reopen":
-            if(ican('closesheet')) {
+            if (ican('closesheet')) {
                 $buttons = $buttons . "<form  method='POST' action=''>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
+                    <input type='hidden' name='newSlug' value='close'>
                     <button type='submit' class='btn btn-primary'>Refermer</button>
                     </form>";
             }
             break;
         case "close":
-            if(ican('opensheet')) {
+            if (ican('opensheet')) {
                 $buttons = $buttons . "<form  method='POST' action=''>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
+                    <input type='hidden' name='newSlug' value='reopen'>
                     <button type='submit' class='btn btn-primary'>Corriger</button>
                     </form>";
             }
-            if(ican('archivesheet')) {
+            if (ican('archivesheet')) {
                 $buttons = $buttons . "<form  method='POST' action=''>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
+                    <input type='hidden' name='newSlug' value='archive'>
                     <button type='submit' class='btn btn-primary'>Archiver</button>
                     </form>";
             }

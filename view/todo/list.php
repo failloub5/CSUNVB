@@ -25,8 +25,8 @@ $title = "CSU-NVB - Tâches hebdomadaires";
             </select>
         </form>
     </div>
-    <div style="height: 50px;"> <!-- Liste déroulante pour le choix du modèle et bouton de nouvelle semaine -->
-        <?php if ($_SESSION['user']['admin'] == 1 && ($_SESSION['base']['id'] == $selectedBaseID)) : ?>
+    <div class="newSheetZone"> <!-- Liste déroulante pour le choix du modèle et bouton de nouvelle semaine -->
+        <?php if (ican('createsheet') && ($_SESSION['base']['id'] == $selectedBaseID)) : ?>
             <form method="POST" action="?action=addWeek" class="float-right">
                 <select name="selectModel">
                     <?php if (!is_null($maxID['id'])): ?>
@@ -38,7 +38,6 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                 </select>
                 <button type="submit" class="btn btn-primary m-1 pull-right">Nouvelle semaine</button>
             </form>
-
         <?php endif; ?>
     </div>
 </div>

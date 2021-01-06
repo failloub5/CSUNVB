@@ -91,6 +91,10 @@ textarea{
     font-size: 1.75rem;
 }
 
+.newSheetZone{
+    height: 50px;
+}
+
 /* ------------------------------------------------------------
 * Styles CSS utilisés pour l'affichage des listes de feuilles
  -------------------------------------------------------------- */
@@ -109,6 +113,7 @@ table.table-bordered > tbody > tr > td{
 .slugClose,
 .slugReopen,
 .slugArchive{
+    padding: 5px;
     display: flex;
     justify-content: space-between;
 }
