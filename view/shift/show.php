@@ -3,7 +3,7 @@ ob_start();
 $title = "CSU-NVB - Remise de garde";
 ?>
 <div class="row m-2">
-    <h1>Remise de Garde du <?= date('d.m.Y', strtotime($shiftsheet['date'])) ?> à <?= $shiftsheet['baseName'] ?> <?= showSheetState($shiftsheet['id'], "shift") ?><?= $shiftsheet['shiftmodel_id'] ?></h1>
+    <h1>Remise de Garde du <?= date('d.m.Y', strtotime($shiftsheet['date'])) ?> à <?= $shiftsheet['baseName'] ?> <?= showSheetState($shiftsheet['id'], "shift") ?></h1>
     <input type="hidden" id="shiftDate" value="<?=$shiftsheet['date']?>">
 </div>
 <form action="?action=updateShift&id=<?= $shiftsheet['id'] ?>" method="POST">
@@ -208,25 +208,30 @@ $title = "CSU-NVB - Remise de garde";
                 <?php endif; ?>
             </tr>
         <?php endforeach; ?>
+        <tr>
+            <td colspan="4" style="padding: 0px;">
+                <!-- todo (PCA) : lier les boutons pour faire l'ajout de tâches -->
+                <div>
+                    <form action="?action=addTask" method="POST">
+                        <input type="hidden" name="shiftsheetID" value="<?= $shiftsheet['id'] ?>" style="margin : 6px;">
+                        <input type="text" name="taskToAdd" value=" xxx " style="margin : 6px;">
+                        OU
+                        <select name="taskToAdd">
+                            <option value="NULL" selected></option>
+                            <?php foreach ($tasks as $$task): ?>
+                                <!--  -->
+                                <option value="<?= $task['id'] ?>"><?= $task['text'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <button type="submit" class='btn btn-success m-1 float-right';">Ajouter</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
         </tbody>
     </table>
 
-<!-- todo (PCA) : lier les boutons pour faire l'ajout de tâches -->
-    <div>
-        <form action="?action=addTask" method="POST">
-            <input type="hidden" name="shiftsheetID" value="<?= $shiftsheet['id'] ?>">
-            <input type="text" name="taskToAdd" value=" xxx ">
-            OU
-            <select name="taskToAdd">
-                <option value="NULL" selected></option>
-                <?php foreach ($tasks as $$task): ?>
-                <!--  -->
-                    <option value="<?= $task['id'] ?>"><?= $task['text'] ?></option>
-                <?php endforeach; ?>
-            </select>
-            <button type="submit" class='btn btn-primary m-1 float-right'>Ajouter aux tâches</button>
-        </form>
-    </div>
+
 
 
 <?php endforeach; ?>
