@@ -23,6 +23,10 @@ function reopenShiftPage($id)
     return execute("update shiftsheets set status_id= (select id from status where slug = 'open') WHERE id=:id",["id" => $id]);
 }
 
+/**
+ * @param $id
+ * @return bool|null
+ */
 function closeShiftPage($id)
 {
     return execute("update shiftsheets set status_id= (select id from status where slug = 'close') WHERE id=:id",["id" => $id]);
@@ -47,24 +51,30 @@ WHERE shiftaction_id = :action_id AND (shiftsheets.id = :shiftsheet_id or ((carr
 
 function getSelectedActions($sectionID,$model_id)
 {
-    $sectionActions = selectMany('SELECT shiftactions.* FROM shiftmodel_has_shiftaction
+    $actions = selectMany('SELECT shiftactions.* FROM shiftmodel_has_shiftaction
 INNER JOIN shiftactions
 ON shiftactions.id = shiftmodel_has_shiftaction.shiftaction_id
 WHERE shiftmodel_id = :model_id AND shiftsection_id = :sectionID', ['sectionID' => $sectionID, 'model_id' => $model_id]);
-    return $sectionActions;
+    return $actions;
 }
 
 function getNotSelectedActions($sectionID,$model_id)
 {
-
+    $actions = selectMany('SELECT * FROM shiftactions WHERE id NOT IN
+(SELECT shiftactions.id FROM shiftmodel_has_shiftaction
+INNER JOIN shiftactions
+ON shiftactions.id = shiftmodel_has_shiftaction.shiftaction_id
+WHERE shiftmodel_id = :model_id)
+AND shiftsection_id = :sectionID', ['sectionID' => $sectionID, 'model_id' => $model_id]);
+    return $actions;
 }
 
 function getshiftsections($shiftSheetID, $baseID)
 {
     $shiftsections = selectMany('SELECT * FROM shiftsections', []);
     foreach ($shiftsections as &$section){
-        $section["actions"] = getSelectedActions($section["id"],getshiftsheetByID($shiftSheetID)["shiftmodel_id"]);
-        $section["unusedActions"] = getNotSelectedActions($section["id"],getshiftsheetByID($shiftSheetID)["shiftmodel_id"]);
+        $section["actions"] = getSelectedActions($section["id"],getshiftsheetByID($shiftSheetID)["model"]);
+        $section["unusedActions"] = getNotSelectedActions($section["id"],getshiftsheetByID($shiftSheetID)["model"]);
         foreach ($section["actions"]  as &$action){
             $action['checksDay'] = getshiftchecksForAction($action["id"], $shiftSheetID,1);
             $action['checksNight'] = getshiftchecksForAction($action["id"], $shiftSheetID,0);
@@ -91,7 +101,7 @@ WHERE shiftsheets.base_id =:base_id order by date DESC;', ["base_id" => $base_id
 
 function getshiftsheetByID($id)
 {
-    return selectOne('SELECT bases.name as baseName,bases.id as baseID, shiftsheets.id, shiftsheets.date, shiftsheets.base_id,shiftsheets.shiftmodel_id, status.slug AS status,novaDay.number AS novaDay, novaNight.number AS novaNight, bossDay.initials AS bossDay, bossNight.initials AS bossNight,teammateDay.initials AS teammateDay, teammateNight.initials AS teammateNight
+    return selectOne('SELECT bases.name as baseName,bases.id as baseID, shiftsheets.id, shiftsheets.date, shiftsheets.base_id,shiftsheets.shiftmodel_id as model, status.slug AS status,novaDay.number AS novaDay, novaNight.number AS novaNight, bossDay.initials AS bossDay, bossNight.initials AS bossNight,teammateDay.initials AS teammateDay, teammateNight.initials AS teammateNight
 FROM shiftsheets
 INNER JOIN bases ON bases.id = shiftsheets.base_id
 INNER JOIN status ON status.id = shiftsheets.status_id
@@ -168,4 +178,46 @@ function addCarryOnComment($commentID){
 function carryOffComment(){
     return execute("update shiftcomments set endOfCarryOn = :carryOff where id= :commentID",["commentID"=>$_POST["commentID"],"carryOff"=>$_POST["carryOff"]]);
 }
+
+function getModelName($id){
+    return selectOne("select name from shiftmodels where id=:id", ["id" => $id])["name"];
+}
+
+/**
+ * crée une copie d'model de feuille de garde
+ * @param $modelID identifant de la feuille à copier
+ * @return identifiant du nouveau model
+ */
+function copyModel($modelID){
+    execute("INSERT INTO `shiftmodels` (NAME) VALUES (null)", []);
+    $newID = selectOne("SELECT MAX(id) AS max FROM shiftmodels", [])["max"];
+    $actionToCopy = selectMany('SELECT shiftactions.id FROM shiftmodel_has_shiftaction
+INNER JOIN shiftactions
+ON shiftactions.id = shiftmodel_has_shiftaction.shiftaction_id
+WHERE shiftmodel_id = :model_id ', ['model_id' => $modelID]);
+    foreach ($actionToCopy as $action){
+        execute("INSERT INTO `shiftmodel_has_shiftaction` (shiftaction_id,shiftmodel_id) VALUES (:actionID,:modelID)", ["modelID"=> $newID, "actionID" => $action["id"]]);
+    }
+    return $newID;
+}
+
+/**
+ * modifie le modele sur lequel se base une feuille de garde
+ * @param $sheetID identifiant de la feuille de garde
+ * @param $newID identifiant du nouveau modele
+ * @return bool|null
+ */
+function updateModelID($sheetID, $newID){
+    execute("update shiftsheets set shiftmodel_id = :newID where id= :sheetID",["newID"=>$newID,"sheetID"=>$sheetID]);
+}
+
+function addShiftAction($modelID,$actionID){
+    execute("INSERT INTO `shiftmodel_has_shiftaction` (shiftaction_id,shiftmodel_id) VALUES (:actionID,:modelID)", ["modelID"=> $modelID, "actionID" => $actionID]);
+}
+
+function creatShiftAction($action){
+    execute("INSERT INTO `shiftactions` (text,shiftsection_id) VALUES (:action,1)", ["action"=> $action]);
+    return selectOne("SELECT MAX(id) AS max FROM shiftactions", [])["max"];
+}
+
 

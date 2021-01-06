@@ -99,3 +99,41 @@ function displayShift($baseID = null)
     $shiftsheets = getshiftsheetForBase($baseID);
     require_once VIEW . 'shift/template/listForBase.php';
 }
+
+/**
+ * Ajoute une action déjà à une feuille de garde
+ * @param $sheetID
+ */
+function addActionForShift($sheetID){
+    $modelID = configureModel($sheetID,$_POST["model"]);
+    addShiftAction($modelID,$_POST["actionID"]);
+    redirect("showshift", $sheetID);
+}
+
+/**
+ * Crée une action et l'ajoute à la feuille de garde
+ * @param $sheetID
+ */
+function creatActionForShift($sheetID){
+    $actionID = creatShiftAction($_POST["actionToAdd"]);
+    $modelID = configureModel($sheetID,$_POST["model"]);
+    addShiftAction($modelID,$actionID);
+    redirect("showshift", $sheetID);
+}
+
+/**
+ * dupplique le modele de la feuille de garde si il est utilisé sur d'autre feuilles de garde afin de ne pas les mofifiers
+ * @param $sheetID identifiant de la feuille de garde
+ * @param $modelID identifiant du model de la feuille de garde
+ * @return identifiant du nouveau model de la feuille de garde
+ */
+function configureModel($sheetID, $modelID){
+    //si le modèle ne possède pas de nom, il n'est pas utilisé pour créer d'autre feuille, il n'y a donc pas besoin de le mofifier
+    if(getModelName($modelID) != ""){
+        $newID = copyModel($modelID);
+        updateModelID($sheetID,$newID);
+        return $newID;
+    }
+    return $modelID;
+}
+

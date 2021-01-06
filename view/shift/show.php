@@ -210,29 +210,30 @@ $title = "CSU-NVB - Remise de garde";
         <?php endforeach; ?>
         <tr>
             <td colspan="4" style="padding: 0px;">
-                <!-- todo (PCA) : lier les boutons pour faire l'ajout de tâches -->
                 <div>
                     <div class="float-left">
-                        <button type="submit" class='btn btn-success m-1'">Ajouter</button>
-                        <select class="selectpicker">
-                            <option>Mustard</option>
-                            <option>Ketchup</option>
-                            <option>Relish</option>
-                        </select>
-
+                        <form action="?action=addActionForShift&id=<?=$shiftsheet['id'] ?>" method="post">
+                            <input type="hidden" name="model" value="<?=$shiftsheet['model'] ?>">
+                            <button type="submit" class='btn btn-success m-1'">Ajouter</button>
+                            <select name="actionID">
+                                <?php foreach ($section["unusedActions"] as $action): ?>
+                                    <option value="<?=$action["id"]?>"><?=$action["text"]?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </form>
                     </div>
                     <div class="float-left" style="margin-left: 50px">
-                        <button type="submit" class='btn btn-success m-1'">Créer</button>
-                        <input type="text" name="taskToAdd" value=" xxx " style="margin : 6px;">
+                        <form action="?action=creatActionForShift&id=<?=$shiftsheet['id'] ?>" method="post">
+                            <input type="hidden" name="model" value="<?=$shiftsheet['model'] ?>">
+                            <button type="submit" class='btn btn-success m-1'">Créer</button>
+                            <input type="text" name="actionToAdd" value="" style="margin : 6px;">
+                        </form>
                     </div class="float-left">
                 </div>
             </td>
         </tr>
         </tbody>
     </table>
-
-
-
 
 <?php endforeach; ?>
 

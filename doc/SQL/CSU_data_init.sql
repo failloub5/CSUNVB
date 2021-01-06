@@ -120,7 +120,7 @@ INSERT INTO `shiftactions` VALUES
 -- table shiftmodels
 INSERT INTO `shiftmodels` VALUES
 (1,'Classic',1),
-(2,'Modèle du jour',0);
+(2,'',0);
 
 -- table shiftmodel_has_shiftaction
 insert into shiftmodel_has_shiftaction VALUES
