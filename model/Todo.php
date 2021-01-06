@@ -95,7 +95,7 @@ function weeknew($base, $week)
 {
     // todo : check if working
     return insert("INSERT INTO todosheets(week ,status_id ,base_id)
-                   VALUES('$week','3','$base')", []);
+                   VALUES('$week','3','$base')", []); // 3 is value for close
 }
 
 function readTodoThingsForDay($sid, $day, $dayOfWeek)
