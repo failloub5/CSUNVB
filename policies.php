@@ -12,11 +12,11 @@
 // 1: admin
 // A user is allowed to perform 'action' if and only if $policies[admin][action] is set
 
-$policies = [
-    0 => [
+return [
+    "0" => [
         "editsheet" => true,
     ],
-    1 => [
+    "1" => [
         "editsheet" => true,
         "closesheet" => true,
         "opensheet" => true,

@@ -109,7 +109,6 @@ function showSheetState($id, $zone){
  */
 function ican ($action)
 {
-    require_once ('policies.php');
+    $policies = require('policies.php');
     return isset($policies[$_SESSION['user']['admin']][$action]);
 }
-
