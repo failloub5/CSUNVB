@@ -215,9 +215,19 @@ function addShiftAction($modelID,$actionID){
     execute("INSERT INTO `shiftmodel_has_shiftaction` (shiftaction_id,shiftmodel_id) VALUES (:actionID,:modelID)", ["modelID"=> $modelID, "actionID" => $actionID]);
 }
 
-function creatShiftAction($action){
-    execute("INSERT INTO `shiftactions` (text,shiftsection_id) VALUES (:action,1)", ["action"=> $action]);
+function creatShiftAction($action,$section){
+    execute("INSERT INTO `shiftactions` (text,shiftsection_id) VALUES (:action,:section)", ["action"=> $action,"section"=>$section]);
     return selectOne("SELECT MAX(id) AS max FROM shiftactions", [])["max"];
 }
 
+function removeShiftAction($modelID,$actionID){
+    execute("DELETE FROM `shiftmodel_has_shiftaction` WHERE shiftaction_id=:actionID and shiftmodel_id=:modelID;", ["actionID"=> $actionID,"modelID"=> $modelID]);
+}
 
+function getShiftActionID($actionName){
+    return selectOne("SELECT id from shiftactions where text=:actionName", ["actionName" => $actionName])["id"];
+}
+
+function getShiftActionName($actionID){
+    return selectOne("SELECT text from shiftactions where id=:actionID", ["actionID" => $actionID])["text"];
+}

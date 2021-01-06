@@ -60,7 +60,7 @@ function showshift($shiftid)
     $shiftsheet = getshiftsheetByID($shiftid);
     $sections = getshiftsections($shiftid,$shiftsheet["baseID"]);
     $enableshiftsheetUpdate = ($shiftsheet['status'] == "open" || ($shiftsheet['status'] == "blank" && $_SESSION['user']['admin'] == true));
-    $enableshiftsheetFilling = ($shiftsheet['status'] == "open" || $shiftsheet['status'] == "reopen");
+    $enableshiftsheetFilling = ($shiftsheet['status'] == "open" || $shiftsheet['status'] == "reopen" && $_SESSION['user']['admin'] == true);
 
     $novas = getNovas();
     $users = getUsers();
@@ -107,6 +107,7 @@ function displayShift($baseID = null)
 function addActionForShift($sheetID){
     $modelID = configureModel($sheetID,$_POST["model"]);
     addShiftAction($modelID,$_POST["actionID"]);
+    setFlashMessage("L'action <strong>".getShiftActionName($_POST["actionID"])."</strong> à été ajoutée à la feuille");
     redirect("showshift", $sheetID);
 }
 
@@ -115,11 +116,25 @@ function addActionForShift($sheetID){
  * @param $sheetID
  */
 function creatActionForShift($sheetID){
-    $actionID = creatShiftAction($_POST["actionToAdd"]);
+    $actionID = getShiftActionID($_POST["actionToAdd"]);
+    if($actionID == null){
+        $actionID = creatShiftAction($_POST["actionToAdd"],$_POST["section"]);
+        setFlashMessage("Nouvelle action <strong>".$_POST["actionToAdd"]."</strong> créée et ajoutée à la feuille");
+    }else{
+        setFlashMessage("L'action <strong>".$_POST["actionToAdd"]."</strong> à été ajoutée à la feuille");
+    }
     $modelID = configureModel($sheetID,$_POST["model"]);
     addShiftAction($modelID,$actionID);
     redirect("showshift", $sheetID);
 }
+
+function removeActionForShift($sheetID){
+    $modelID = configureModel($sheetID,$_POST["model"]);
+    removeShiftAction($modelID,$_POST["action"]);
+    setFlashMessage("l'action <strong>".getShiftActionName($_POST["action"])."</strong> a été suprimée");
+    redirect("showshift", $sheetID);
+}
+
 
 /**
  * dupplique le modele de la feuille de garde si il est utilisé sur d'autre feuilles de garde afin de ne pas les mofifiers

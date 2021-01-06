@@ -119,7 +119,16 @@ $title = "CSU-NVB - Remise de garde";
         foreach ($section["actions"] as $action): ?>
             <tr>
                 <td class="actionname">
-                    <?= $action['text'] ?>
+                    <?php if ($shiftsheet['status'] == "blank" && $_SESSION['user']['admin'] == true):?>
+                        <form action="?action=removeActionForShift&id=<?=$shiftsheet['id'] ?>" method="post" style="display: inline">
+                            <input type="hidden" name="model" value="<?=$shiftsheet['model'] ?>">
+                            <input type="hidden" name="action" value="<?= $action['id'] ?>">
+                            <button type="submit" class="btn btn-danger" >
+                                <i class="fas fa-times" style = "margin-right: 4px;"></i>
+                            </button>
+                        </form>
+                    <?php endif; ?>
+                    <div style="display: inline;margin-left: 8px;"><?= $action['text'] ?></div>
                 </td>
                 <?php if ($enableshiftsheetFilling): ?>
                     <td class="ackcell" style="padding : 3px; width: 110px;">
@@ -208,33 +217,35 @@ $title = "CSU-NVB - Remise de garde";
                 <?php endif; ?>
             </tr>
         <?php endforeach; ?>
-        <tr>
-            <td colspan="4" style="padding: 0px;">
-                <div>
-                    <div class="float-left">
-                        <form action="?action=addActionForShift&id=<?=$shiftsheet['id'] ?>" method="post">
-                            <input type="hidden" name="model" value="<?=$shiftsheet['model'] ?>">
-                            <button type="submit" class='btn btn-success m-1'">Ajouter</button>
-                            <select name="actionID">
-                                <?php foreach ($section["unusedActions"] as $action): ?>
-                                    <option value="<?=$action["id"]?>"><?=$action["text"]?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </form>
+        <?php if ($shiftsheet['status'] == "blank" && $_SESSION['user']['admin'] == true):?>
+            <tr>
+                <td colspan="4" style="padding: 0px;">
+                    <div>
+                        <div class="float-left">
+                            <form action="?action=addActionForShift&id=<?=$shiftsheet['id'] ?>" method="post">
+                                <input type="hidden" name="model" value="<?=$shiftsheet['model'] ?>">
+                                <button type="submit" class='btn btn-success m-1'">Ajouter</button>
+                                <select name="actionID">
+                                    <?php foreach ($section["unusedActions"] as $action): ?>
+                                        <option value="<?=$action["id"]?>"><?=$action["text"]?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </form>
+                        </div>
+                        <div class="float-left" style="margin-left: 50px">
+                            <form action="?action=creatActionForShift&id=<?=$shiftsheet['id'] ?>" method="post">
+                                <input type="hidden" name="model" value="<?=$shiftsheet['model'] ?>">
+                                <input type="hidden" name="section" value="<?=$section['id'] ?>">
+                                <button type="submit" class='btn btn-success m-1'">Créer</button>
+                                <input type="text" name="actionToAdd" value="" style="margin : 6px;">
+                            </form>
+                        </div class="float-left">
                     </div>
-                    <div class="float-left" style="margin-left: 50px">
-                        <form action="?action=creatActionForShift&id=<?=$shiftsheet['id'] ?>" method="post">
-                            <input type="hidden" name="model" value="<?=$shiftsheet['model'] ?>">
-                            <button type="submit" class='btn btn-success m-1'">Créer</button>
-                            <input type="text" name="actionToAdd" value="" style="margin : 6px;">
-                        </form>
-                    </div class="float-left">
-                </div>
-            </td>
-        </tr>
+                </td>
+            </tr>
+        <?php endif; ?>
         </tbody>
     </table>
-
 <?php endforeach; ?>
 
 <div class="modal fade" id="shiftModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
