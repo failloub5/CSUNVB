@@ -205,7 +205,7 @@ function slugsButtonTodo($slug, $sheetID)
     switch ($slug) {
         case "blank":
             if (ican('opensheet')) {
-                $buttons = $buttons . "<form  method='POST' action=''>
+                $buttons = $buttons . "<form  method='POST' action='?action=switchSheetState'>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
                     <input type='hidden' name='newSlug' value='open'>
                     <button type='submit' class='btn btn-primary'>Activer</button>
@@ -221,7 +221,7 @@ function slugsButtonTodo($slug, $sheetID)
             break;
         case "open":
             if (ican('closesheet')) {
-                $buttons = $buttons . "<form  method='POST' action=''>
+                $buttons = $buttons . "<form  method='POST' action='?action=switchSheetState'>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
                     <input type='hidden' name='newSlug' value='close'>
                     <button type='submit' class='btn btn-primary'>Fermer</button>
@@ -230,7 +230,7 @@ function slugsButtonTodo($slug, $sheetID)
             break;
         case "reopen":
             if (ican('closesheet')) {
-                $buttons = $buttons . "<form  method='POST' action=''>
+                $buttons = $buttons . "<form  method='POST' action='?action=switchSheetState'>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
                     <input type='hidden' name='newSlug' value='close'>
                     <button type='submit' class='btn btn-primary'>Refermer</button>
@@ -239,14 +239,14 @@ function slugsButtonTodo($slug, $sheetID)
             break;
         case "close":
             if (ican('opensheet')) {
-                $buttons = $buttons . "<form  method='POST' action=''>
+                $buttons = $buttons . "<form  method='POST' action='?action=switchSheetState'>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
                     <input type='hidden' name='newSlug' value='reopen'>
                     <button type='submit' class='btn btn-primary'>Corriger</button>
                     </form>";
             }
             if (ican('archivesheet')) {
-                $buttons = $buttons . "<form  method='POST' action=''>
+                $buttons = $buttons . "<form  method='POST' action='?action=switchSheetState'>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
                     <input type='hidden' name='newSlug' value='archive'>
                     <button type='submit' class='btn btn-primary'>Archiver</button>

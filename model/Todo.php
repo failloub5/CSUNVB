@@ -9,7 +9,6 @@
  */
 function getTodosheetByID($id)
 {
-    /*return selectOne("SELECT * FROM todosheets where id =:id", ['id' => $id]);*/
     return selectOne("SELECT *
                              FROM todosheets
                              LEFT JOIN status ON todosheets.status_id = status.id
@@ -54,23 +53,7 @@ function getWeeksBySlugs($baseID, $slug)
 
 
 
-/**
- * Function that sets status of specified weekly sheet to close
- * @param $id : ID of the week to close
- */
-function closeWeeklyTasks($id)
-{
-    execute("UPDATE todosheets set status_id=3 WHERE id=:id", ['id' => $id]);
-}
 
-/**
- * Function that sets status of specified weekly sheet to open
- * @param $id : ID of the week to open
- */
-function openWeeklyTasks($id)
-{
-    execute("UPDATE todosheets set status_id=2 WHERE id=:id", ['id' => $id]);
-}
 
 /**
  * Function that gets the latest week for a defined base
@@ -195,10 +178,40 @@ function readLastWeekTemplate($Template_name)
                             Where template_name =:Template_name", ["Template_name" => $Template_name]);
 }
 
-
+/*
 function closeStatus(){
     return selectOne("SELECT slug
                       FROM status
                       Where slug = 'close'", []);
 
+}*/
+
+/**
+ * Function that sets status of specified weekly sheet to close
+ * @param $id : ID of the week to close
+ */
+function changeSheetState($id, $slug)
+{
+    $query = "UPDATE todosheets SET status_id=";
+
+    switch($slug){
+        case "open":
+            $query = $query."2";
+            break;
+        case "reopen":
+            $query = $query."4";
+            break;
+        case "close":
+            $query = $query."3";
+            break;
+        case "archive":
+            $query = $query."5";
+            break;
+        default:
+            break;
+    }
+
+    $query = $query." WHERE id=:id";
+
+    return execute($query,['id' => $id]);
 }

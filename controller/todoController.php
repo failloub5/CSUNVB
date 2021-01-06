@@ -30,12 +30,10 @@ function listtodoforbase($selectedBaseID){
  * @param $todo_id : l'ID de la feuille de tâche à afficher
  */
 function showtodo($todo_id){
-    /*$status = closeStatus;*/
     $week = getTodosheetByID($todo_id);
     $base = getbasebyid($week['base_id']);
     $dates = getDaysForWeekNumber($week['week']);
     $template = getTemplate_name($todo_id);
-
 
     /** Test pour vérifier si une autre feuille est déjà ouverte */
     $alreadyOpen = true;
@@ -105,28 +103,6 @@ function nextWeekNumber($weekNbr){
     return  date("yW", $nextWeek);
 }
 
-/**
- * Function qui ouvre une semaine fermée et affiche sa vue détaillée
- * @param $baseID : l'ID de la base à laquelle appartient la semaine
- * @param $weekID : l'ID de la semaine a ouvrir
- */
-function reopenweek($todo_id){
-    openWeeklyTasks($todo_id);
-    setFlashMessage("La semaine a été ouverte.");
-    showtodo($todo_id);
-}
-
-/**
- * Function qui ferme une semaine ouverte et renvoie sur la liste des semaines
- * @param $baseID : l'ID de la base à laquelle appartient la semaine
- * @param $weekID : l'ID de la semaine a fermer
- */
-function closeweek($todo_id){
-    $week = getTodosheetByID($todo_id);
-    closeWeeklyTasks($todo_id);
-    setFlashMessage("La semaine ".$week['week']." a été clôturée.");
-    listtodoforbase($week['base_id']);
-}
 
 function modelWeek(){
     $todosheetID = $_POST['todosheetID'];
@@ -160,4 +136,37 @@ function switchTodoStatus(){
     }
 
     header('Location: ?action=showtodo&id='.$todosheetID);
+}
+
+/**
+ * Fonction qui permet de changer l'état d'une feuille
+ */
+function switchSheetState(){
+    $sheetID = $_POST['id'];
+    $newSlug = $_POST['newSlug'];
+
+    $sheet = getTodosheetByID($sheetID);
+
+    changeSheetState($sheetID, $newSlug);
+    $message = "La semaine ".$sheet['week']." a été ";
+
+    switch($newSlug){
+        case "open":
+            $message = $message."ouverte.";
+            break;
+        case "reopen":
+            $message = $message."ré-ouverte.";
+            break;
+        case "close":
+            $message = $message."fermée.";
+            break;
+        case "archive":
+            $message = $message."archivée.";
+            break;
+        default:
+            break;
+    }
+
+    setFlashMessage($message);
+    header('Location: ?action=listtodoforbase&id='.$sheet['base_id']);
 }
