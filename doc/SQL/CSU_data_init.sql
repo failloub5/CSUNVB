@@ -95,7 +95,7 @@ INSERT INTO `shiftsections` VALUES
 (3,'Matériel & Télécom'),
 (4,'Véhicules & Interventions');
 
--- table guardactions
+-- table shiftactions
 INSERT INTO `shiftactions` VALUES
 (1,'Radios',1),
 (2,'Détecteurs CO',1),
