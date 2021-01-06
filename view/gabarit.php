@@ -20,12 +20,7 @@
 
     <link rel="stylesheet" href="assets/@fortawesome/fontawesome-free/css/all.css" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css?family=Syncopate" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Pontano+Sans" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet" type="text/css">
+
 
     <script src="assets/jquery/dist/jquery.js"></script>
     <script src="assets/bootstrap/dist/js/bootstrap.js"></script>
