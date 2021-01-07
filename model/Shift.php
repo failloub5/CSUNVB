@@ -20,7 +20,7 @@ function openShiftPage($id){
  */
 function reopenShiftPage($id)
 {
-    return execute("update shiftsheets set status_id= (select id from status where slug = 'open') WHERE id=:id",["id" => $id]);
+    return execute("update shiftsheets set status_id= (select id from status where slug = 'reopen') WHERE id=:id",["id" => $id]);
 }
 
 /**
