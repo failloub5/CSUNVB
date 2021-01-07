@@ -322,7 +322,7 @@ function listShiftSheet($slug, $shiftList)
                 <td>Jour : " . $shift['bossDay'] . "<br>Nuit : " . $shift['bossNight'] . "</td>
                 <td>Jour : " . $shift['teammateDay'] . "<br>Nuit : " . $shift['teammateNight'] . "</td>
                 <td><!-- TODO (XCL): faire un helper qui donne l'action correspondante à l'état actuel -->";
-            if ((($_SESSION['user']['admin'] == true and getNbshiftsheet('open', $_GET["id"]) == 0) ||
+            if ((($_SESSION['user']['admin'] == true and getNbshiftsheet('open', $shift["base_id"]) == 0) ||
                 ($_SESSION['user']['admin'] == true and $shift['statusslug'] == 'close') ||
                 $shift['statusslug'] == 'open' ||
                 $shift['statusslug'] == 'reopen')) {
