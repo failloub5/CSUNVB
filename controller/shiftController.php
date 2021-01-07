@@ -17,6 +17,8 @@ function newShiftSheet($baseID)
             setFlashMessage("La feuille de garde a bien été créée !");
         }
     }
+    $sheets= getAllShiftForBase($baseID);
+    return listSheet("shift",$sheets);
 }
 
 // Attention: cette fonction se base sur un diagramme d'état simplifié:
@@ -46,12 +48,11 @@ function altershiftsheetStatus($sheet_id)
             break;
     }
 }
-
-//
 function listshift($baseID = null)
 {
     if($baseID == null)$baseID = $_SESSION['base']['id'];
     $Bases = getbases();
+    $sheets= getAllShiftForBase($baseID);
     require_once VIEW . 'shift/list.php';
 }
 
@@ -96,8 +97,9 @@ function updateShift()
 function displayShift($baseID = null)
 {
     if($baseID == null)$baseID = $_SESSION['base']['id'];
-    $shiftsheets = getshiftsheetForBase($baseID);
-    require_once VIEW . 'shift/template/listForBase.php';
+    $Bases = getbases();
+    $sheets= getAllShiftForBase($baseID);
+    echo listSheet("shift",$sheets);
 }
 
 /**

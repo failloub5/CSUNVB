@@ -84,7 +84,29 @@ function getshiftsections($shiftSheetID, $baseID)
     return $shiftsections;
 }
 
+function getAllShiftForBase($baseID){
+    $slugs = selectMany("SELECT id,slug as name FROM status",[]);
+    foreach ($slugs as $slug){
+        $sheets[$slug["name"]]= getShiftWithStatus($baseID,$slug["id"]);
+    }
+    return  $sheets;
+}
 
+function getShiftWithStatus($baseID,$slugID)
+{
+    return selectMany('SELECT shiftsheets.id, shiftsheets.date, shiftsheets.base_id, status.displayname AS status, status.slug AS statusslug,novaDay.number AS novaDay, novaNight.number AS novaNight, bossDay.initials AS bossDay, bossNight.initials AS bossNight,teammateDay.initials AS teammateDay, teammateNight.initials AS teammateNight
+FROM shiftsheets
+INNER JOIN status ON status.id = shiftsheets.status_id
+LEFT JOIN novas novaDay ON novaDay.id = shiftsheets.daynova_id
+LEFT JOIN novas novaNight ON novaNight.id = shiftsheets.nightnova_id
+LEFT JOIN users bossDay ON bossDay.id = shiftsheets.dayboss_id
+LEFT JOIN users bossNight ON bossNight.id = shiftsheets.nightboss_id
+LEFT JOIN users teammateDay ON teammateDay.id = shiftsheets.dayteammate_id
+LEFT JOIN users teammateNight ON teammateNight.id = shiftsheets.nightteammate_id
+WHERE shiftsheets.base_id =:base_id and status.id =:slugID order by date DESC;', ["base_id" => $baseID, "slugID" => $slugID ]);
+}
+
+//TODO remove
 function getshiftsheetForBase($base_id)
 {
     return selectMany('SELECT shiftsheets.id, shiftsheets.date, shiftsheets.base_id, status.displayname AS status, status.slug AS statusslug,novaDay.number AS novaDay, novaNight.number AS novaNight, bossDay.initials AS bossDay, bossNight.initials AS bossNight,teammateDay.initials AS teammateDay, teammateNight.initials AS teammateNight

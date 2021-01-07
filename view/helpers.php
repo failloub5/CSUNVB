@@ -107,7 +107,7 @@ function showState($slug, $plural = 0)
         case "open":
             $result = "active";
             if ($plural) {
-                $result = $result."(s)";
+                $result = $result . "(s)";
             }
             break;
         case "reopen":
@@ -116,13 +116,13 @@ function showState($slug, $plural = 0)
         case "close":
             $result = "fermée";
             if ($plural) {
-                $result = $result."(s)";
+                $result = $result . "(s)";
             }
             break;
         case "archive":
             $result = "archivée";
             if ($plural) {
-                $result = $result."(s)";
+                $result = $result . "(s)";
             }
             break;
         default:
@@ -260,7 +260,8 @@ function slugsButtonTodo($slug, $sheetID)
 
 }
 
-function listSheet($page,$sheets){
+function listSheet($page, $sheets)
+{
     switch ($page) {
         case "shift":
             $function = "listShiftSheet";
@@ -271,30 +272,59 @@ function listSheet($page,$sheets){
     $html = "<div> <!-- Sections d'affichage des différentes feuilles -->";
     $html .= "<div> <!-- Feuilles ouvertes -->
         <div class='slugBlank'>
-        ".$function("open",$sheets["open"])."
-    </div>";
+        " . $function("open", $sheets["open"]) . "
+    </div><br>";
     $html .= "<div> <!-- Feuilles en préparation -->
         <div class='slugOpen'>
-        ".$function("blank",$sheets["blank"])."
-    </div>";
+        " . $function("blank", $sheets["blank"]) . "
+    </div><br>";
     $html .= "<div> <!-- Feuilles en correction -->
         <div class='slugReopen'>
-        ".$function("reopen",$sheets["reopen"])."
-    </div>";
+        " . $function("reopen", $sheets["reopen"]) . "
+    </div><br>";
     $html .= "<div> <!-- Feuilles fermées -->
         <div class='slugClose'>
-        ".$function("close",$sheets["close"])."
+        " . $function("close", $sheets["close"]) . "
     </div>";
     return $html;
 }
 
-function listShiftSheet($slug,$shiftList){
+function listShiftSheet($slug, $shiftList)
+{
     $html = "<h3>Semaine(s) " . showState($slug, 1) . "</h3>
                     <button class='btn dropdownButton'><i class='fas fa-caret-square-down' data-list='" . $slug . "' ></i></button>
                     </div>";
-    if(count($shiftList>0)){
-
-    }else{
+    if (count($shiftList) > 0) {
+        $head = '<table class="table table-bordered  table-striped" style="text-align: center">
+        <thead class="thead-dark">
+        <th>Date</th>
+        <th>État</th>
+        <th>Véhicule</th>
+        <th>Responsable</th>
+        <th>Équipage</th>
+        <th>Action</th>
+        </thead>';
+        $body = "";
+        foreach ($shiftList as $shift) {
+            $body .= "<tr>
+                <td><a href='?action=showshift&id=''" . $shift['id'] . "class='btn'>" . date('d.m.Y', strtotime($shift['date'])) . "</a></td>
+                <td>" . $shift['status'] . "</td>
+                <td>Jour : " . $shift['novaDay'] . "<br>Nuit : " . $shift['novaNight'] . "</td>
+                <td>Jour : " . $shift['bossDay'] . "<br>Nuit : " . $shift['bossNight'] . "</td>
+                <td>Jour : " . $shift['teammateDay'] . "<br>Nuit : " . $shift['teammateNight'] . "</td>
+                <td><!-- TODO (XCL): faire un helper qui donne l'action correspondante à l'état actuel -->";
+            if ((($_SESSION['user']['admin'] == true and getNbshiftsheet('open', $baseID) == 0) ||
+                ($_SESSION['user']['admin'] == true and $shift['statusslug'] == 'close') ||
+                $shift['statusslug'] == 'open' ||
+                $shift['statusslug'] == 'reopen')) {
+                $body .= "<button class='btn btn-primary btn-sm' onclick='alterShiftStatus(".$shift['id'].")'>" . actionForStatus($shift['statusslug']) . "</button>";
+            }
+            $body .= "</td></tr>";
+        }
+        $foot = "</table>";
+        $table = $head . $body . $foot;
+        $html .= $table;
+    } else {
         $html .= "<div class='" . $slug . "Sheets'><p>Aucune feuille de tâche n'est actuellement " . showState($slug) . ".</p></div>";
     }
     return $html;
