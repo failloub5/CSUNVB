@@ -26,8 +26,7 @@ $title = "CSU-NVB - Remise de garde";
 <div id="tableContent">
     <?php displayShift($baseID); ?>
 </div>
-<div id="result">
-</div>
+<?php//= listSheet("shift") ?>
 <?php
 $content = ob_get_clean();
 require GABARIT;

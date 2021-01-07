@@ -268,3 +268,43 @@ function slugsButtonTodo($slug, $sheetID)
     return $buttons;
 
 }
+
+function listSheet($page,$sheets){
+    switch ($page) {
+        case "shift":
+            $function = "listShiftSheet";
+            break;
+        default:
+            break;
+    }
+    $html = "<div> <!-- Sections d'affichage des différentes feuilles -->";
+    $html .= "<div> <!-- Feuilles ouvertes -->
+        <div class='slugBlank'>
+        ".$function("open",$sheets["open"])."
+    </div>";
+    $html .= "<div> <!-- Feuilles en préparation -->
+        <div class='slugOpen'>
+        ".$function("blank",$sheets["blank"])."
+    </div>";
+    $html .= "<div> <!-- Feuilles en correction -->
+        <div class='slugReopen'>
+        ".$function("reopen",$sheets["reopen"])."
+    </div>";
+    $html .= "<div> <!-- Feuilles fermées -->
+        <div class='slugClose'>
+        ".$function("close",$sheets["close"])."
+    </div>";
+    return $html;
+}
+
+function listShiftSheet($slug,$shiftList){
+    $html = "<h3>Semaine(s) " . showState($slug, 1) . "</h3>
+                    <button class='btn dropdownButton'><i class='fas fa-caret-square-down' data-list='" . $slug . "' ></i></button>
+                    </div>";
+    if(count($shiftList>0)){
+
+    }else{
+        $html .= "<div class='" . $slug . "Sheets'><p>Aucune feuille de tâche n'est actuellement " . showState($slug) . ".</p></div>";
+    }
+    return $html;
+}
