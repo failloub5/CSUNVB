@@ -130,6 +130,10 @@ function configureModel($sheetID, $modelID){
 
 function shiftSwitchState(){
     $res = setSlugForShift($_POST["id"],$_POST["newSlug"]);
-    redirect("listshift",$_POST["baseID"]);
+    redirect("listshift",getBaseIDForShift($_POST["id"]));
 }
 
+function shiftDelete(){
+    $res = shiftSheetDelete($_POST["id"]);
+    redirect("listshift",getBaseIDForShift($_POST["id"]));
+}

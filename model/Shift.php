@@ -1,36 +1,10 @@
 <?php
 /**
- * Auteur: Thomas Grossmann / Mounir Fiaux
- * Date: Mars 2020
+ * Auteur: Gogniat Michael / Paola Costa
+ * Date: Decembre 2020
  **/
 
-/**
- * function to modify the status of the shiftsheet to open based on the sheet ID
- * @param $id : the id of the sheet
- * @return bool|null
- */
-function openShiftPage($id){
-    return execute("update shiftsheets set status_id= (select id from status where slug = 'open') WHERE id=:id",["id" => $id]);
-}
 
-/**
- * function to modify the status of the shiftsheet to reopen based on the sheet ID
- * @param $id : the id of the sheet
- * @return bool|null
- */
-function reopenShiftPage($id)
-{
-    return execute("update shiftsheets set status_id= (select id from status where slug = 'reopen') WHERE id=:id",["id" => $id]);
-}
-
-/**
- * @param $id
- * @return bool|null
- */
-function closeShiftPage($id)
-{
-    return execute("update shiftsheets set status_id= (select id from status where slug = 'close') WHERE id=:id",["id" => $id]);
-}
 
 
 function getshiftchecksForAction($action_id, $shiftsheet_id, $day)
@@ -106,21 +80,6 @@ LEFT JOIN users teammateNight ON teammateNight.id = shiftsheets.nightteammate_id
 WHERE shiftsheets.base_id =:base_id and status.id =:slugID order by date DESC;', ["base_id" => $baseID, "slugID" => $slugID ]);
 }
 
-//TODO remove
-function getshiftsheetForBase($base_id)
-{
-    return selectMany('SELECT shiftsheets.id, shiftsheets.date, shiftsheets.base_id, status.displayname AS status, status.slug AS statusslug,novaDay.number AS novaDay, novaNight.number AS novaNight, bossDay.initials AS bossDay, bossNight.initials AS bossNight,teammateDay.initials AS teammateDay, teammateNight.initials AS teammateNight
-FROM shiftsheets
-INNER JOIN status ON status.id = shiftsheets.status_id
-LEFT JOIN novas novaDay ON novaDay.id = shiftsheets.daynova_id
-LEFT JOIN novas novaNight ON novaNight.id = shiftsheets.nightnova_id
-LEFT JOIN users bossDay ON bossDay.id = shiftsheets.dayboss_id
-LEFT JOIN users bossNight ON bossNight.id = shiftsheets.nightboss_id
-LEFT JOIN users teammateDay ON teammateDay.id = shiftsheets.dayteammate_id
-LEFT JOIN users teammateNight ON teammateNight.id = shiftsheets.nightteammate_id
-WHERE shiftsheets.base_id =:base_id order by date DESC;', ["base_id" => $base_id]);
-}
-
 function getshiftsheetByID($id)
 {
     return selectOne('SELECT bases.name as baseName,bases.id as baseID, shiftsheets.id, shiftsheets.date, shiftsheets.base_id,shiftsheets.shiftmodel_id as model, status.slug AS status,novaDay.number AS novaDay, novaNight.number AS novaNight, bossDay.initials AS bossDay, bossNight.initials AS bossNight,teammateDay.initials AS teammateDay, teammateNight.initials AS teammateNight
@@ -193,6 +152,10 @@ function getStateFromSheet($id){
     return execute("SELECT status.slug FROM status LEFT JOIN shiftsheets ON shiftsheets.status_id = status.id WHERE shiftsheets.id =:sheetID", ["sheetID"=>$id]);
 }
 
+function getBaseIDForShift($id){
+    return execute("SELECT base_id FROM shiftsheets where id =:id", ["id"=>$id])["base_id"];
+}
+
 function addCarryOnComment($commentID){
     return execute("update shiftcomments set carryON = 1, endOfCarryOn = null where id=:commentID",["commentID"=>$commentID]);
 }
@@ -256,4 +219,8 @@ function getShiftActionName($actionID){
 
 function setSlugForShift($id,$slug){
     return execute("update shiftsheets set status_id= (select id from status where slug =:slug) WHERE id=:id",["slug" => $slug,"id" => $id]);
+}
+
+function shiftSheetDelete($id){
+    return execute("DELETE FROM shiftsheets WHERE id=:id",["id" => $id]);
 }
