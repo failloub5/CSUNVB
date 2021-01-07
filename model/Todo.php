@@ -60,7 +60,7 @@ function getWeeksBySlugs($baseID, $slug)
  * @param $base_id
  * @return array|mixed|null
  */
-function readLastWeek($base_id)
+function GetLastWeek($base_id)
 {
     return selectOne("SELECT MAX(week) as 'last_week', MAX(id) AS 'id'
                             FROM todosheets
@@ -70,15 +70,13 @@ function readLastWeek($base_id)
 
 
 /**
- * @param $base
- * @param $week
- * @return array|mixed|null
+ * @param $baseID
+ * @param $weekNbr
+ * @return string|null
  */
-function weeknew($base, $week)
+function createNewSheet($baseID, $weekNbr)
 {
-    // todo : check if working
-    return insert("INSERT INTO todosheets(week ,status_id ,base_id)
-                   VALUES('$week','3','$base')", []); // 3 is value for close
+    return insert("INSERT INTO todosheets(base_id,status_id,week) VALUES(:base_id, 1, :week)", ["base_id" => $baseID, "week" => $weekNbr]); // 1 is value for blank
 }
 
 function readTodoThingsForDay($sid, $day, $dayOfWeek)
@@ -93,7 +91,7 @@ function readTodoThingsForDay($sid, $day, $dayOfWeek)
 
 function readTodoForASheet($sheetID)
 {
-    $query = "SELECT todothing_id, daything, day_of_week
+    $query = "SELECT todothing_id AS id, daything, day_of_week AS 'day'
                 FROM todos
                 INNER JOIN todothings ON todos.todothing_id = todothings.id
                 INNER JOIN todosheets ON todos.todosheet_id = todosheets.id
@@ -102,7 +100,7 @@ function readTodoForASheet($sheetID)
     return selectMany($query, ['id' => $sheetID]);
 }
 
-function addtoDo($todoID, $weekID, $dayOfWeek)
+function addTodoThing($todoID, $weekID, $dayOfWeek)
 {
     $query = "INSERT INTO todos (todothing_id, todosheet_id, day_of_week) VALUE (:todoID, :sheetID, :day)";
     execute($query, ['todoID' => $todoID, 'sheetID' => $weekID, 'day' => $dayOfWeek]);
@@ -120,10 +118,7 @@ function deleteTemplateName($id)
         "UPDATE todosheets SET template_name=NULL WHERE id =:id", ['id' => $id]);
 }
 
-function createTodoSheet($base_id, $lastWeek)
-{
-    return insert("INSERT INTO todosheets (base_id,status_id,week) VALUES (:base_id, 1, :lastWeek)", ["base_id" => $base_id, "lastWeek" => $lastWeek + 1]);
-}
+
 
 function unvalidateTodo($id, $type)
 {
@@ -147,7 +142,7 @@ function validateTodo($id, $value)
     }
 }
 
-function getTemplate_name($id)
+function getTemplateName($id)
 {
     $query = "SELECT template_name 
              FROM todosheets
@@ -163,7 +158,7 @@ function getTodosheetMaxID($selectedBaseID)
     return selectOne($query, ['id' => $selectedBaseID]);
 }
 
-function getTemplates_name()
+function getAllTemplateNames()
 {
     $query = "SELECT template_name, id 
              FROM todosheets
@@ -171,11 +166,11 @@ function getTemplates_name()
     return selectMany($query, []);
 }
 
-function readLastWeekTemplate($Template_name)
+function getTemplateSheet($templateName)
 {
     return selectOne("SELECT id, week AS last_week
                             FROM todosheets
-                            Where template_name =:Template_name", ["Template_name" => $Template_name]);
+                            Where template_name =:template", ["template" => $templateName]);
 }
 
 /*
@@ -187,8 +182,9 @@ function closeStatus(){
 }*/
 
 /**
- * Function that sets status of specified weekly sheet to close
- * @param $id : ID of the week to close
+ * @param $id
+ * @param $slug
+ * @return bool|null
  */
 function changeSheetState($id, $slug)
 {
@@ -214,4 +210,12 @@ function changeSheetState($id, $slug)
     $query = $query." WHERE id=:id";
 
     return execute($query,['id' => $id]);
+}
+
+/**
+ * @param $id
+ * @return bool|null
+ */
+function deleteTodoSheet($id){
+    return execute("DELETE FROM todosheets WHERE id=:id",['id' => $id]);
 }

@@ -204,16 +204,25 @@ function slugsButtonTodo($slug, $sheetID)
 
     switch ($slug) {
         case "blank":
+            // Test pour vérifier si une autre feuille est déjà ouverte
+            $sheet = getTodosheetByID($sheetID);
+            $alreadyOpen = (empty(getWeeksBySlugs($sheet['base_id'], 'open'))) ? false : true;
+
             if (ican('opensheet')) {
-                $buttons = $buttons . "<form  method='POST' action='?action=switchSheetState'>
+                if(!$alreadyOpen){
+                    $buttons = $buttons . "<form  method='POST' action='?action=switchSheetState'>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
                     <input type='hidden' name='newSlug' value='open'>
                     <button type='submit' class='btn btn-primary'>Activer</button>
                     </form>";
+                } else {
+                    $buttons = $buttons ."<form><button type='submit' class='btn btn-primary' disabled>Activer</button></form>";
+                }
+
             }
         case "archive":
-            if (ican('deletesheet')) {
-                $buttons = $buttons . "<form  method='POST' action=''>
+            if (ican('deletesheet')) { // TODO : ajouter une verification de la part de l'utilisateur (VB)
+                $buttons = $buttons . "<form  method='POST' action='?action=deleteSheet'>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
                     <button type='submit' class='btn btn-primary'>Supprimer</button>
                     </form>";
