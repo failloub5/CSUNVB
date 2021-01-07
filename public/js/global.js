@@ -2,7 +2,6 @@ var dropdownButtons = document.querySelectorAll('.dropdownButton');
 
 dropdownButtons.forEach((item) => {
     item.addEventListener('click', function (event) {
-
         var state = event.target.dataset.list;
         var elements = document.getElementsByClassName(state+"Sheets");
 
@@ -13,6 +12,5 @@ dropdownButtons.forEach((item) => {
                 elements[i].classList.add('d-none');
             }
         }
-
     }, false);
 })
