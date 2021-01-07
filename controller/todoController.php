@@ -16,7 +16,7 @@ function listtodoforbase($selectedBaseID){
     $closeWeeks = getWeeksBySlugs($selectedBaseID, 'close');
     $blankWeeks = getWeeksBySlugs($selectedBaseID, 'blank');
     $reopenWeeks = getWeeksBySlugs($selectedBaseID, 'reopen');
-    $archiveWeeks = getWeeksBySlugs($selectedBaseID, 'archive');
+    //$archiveWeeks = getWeeksBySlugs($selectedBaseID, 'archive');
 
     $baseList = getbases();
     $templates = getTemplates_name();
@@ -168,5 +168,14 @@ function switchSheetState(){
     }
 
     setFlashMessage($message);
+    header('Location: ?action=listtodoforbase&id='.$sheet['base_id']);
+}
+
+function deleteSheet(){
+    $sheetID = $_POST['id'];
+    $sheet = getTodosheetByID($sheetID);
+
+    deleteTodoSheet($sheetID);
+    setFlashMessage("La semaine ".$sheet['week']." a correctement été supprimée.");
     header('Location: ?action=listtodoforbase&id='.$sheet['base_id']);
 }

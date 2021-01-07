@@ -212,8 +212,8 @@ function slugsButtonTodo($slug, $sheetID)
                     </form>";
             }
         case "archive":
-            if (ican('deletesheet')) {
-                $buttons = $buttons . "<form  method='POST' action=''>
+            if (ican('deletesheet')) { // TODO : ajouter une verification de la part de l'utilisateur (VB)
+                $buttons = $buttons . "<form  method='POST' action='?action=deleteSheet'>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
                     <button type='submit' class='btn btn-primary'>Supprimer</button>
                     </form>";

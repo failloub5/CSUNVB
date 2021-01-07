@@ -78,7 +78,7 @@ function weeknew($base, $week)
 {
     // todo : check if working
     return insert("INSERT INTO todosheets(week ,status_id ,base_id)
-                   VALUES('$week','3','$base')", []); // 3 is value for close
+                   VALUES('$week','1','$base')", []); // 1 is value for blank
 }
 
 function readTodoThingsForDay($sid, $day, $dayOfWeek)
@@ -120,7 +120,7 @@ function deleteTemplateName($id)
         "UPDATE todosheets SET template_name=NULL WHERE id =:id", ['id' => $id]);
 }
 
-function createTodoSheet($base_id, $lastWeek)
+function createTodoSheet($base_id, $lastWeek) // todo : Controler son utilisation (VB)
 {
     return insert("INSERT INTO todosheets (base_id,status_id,week) VALUES (:base_id, 1, :lastWeek)", ["base_id" => $base_id, "lastWeek" => $lastWeek + 1]);
 }
@@ -214,4 +214,9 @@ function changeSheetState($id, $slug)
     $query = $query." WHERE id=:id";
 
     return execute($query,['id' => $id]);
+}
+
+
+function deleteTodoSheet($id){
+    return execute("DELETE FROM todosheets WHERE id=:id",['id' => $id]);
 }
