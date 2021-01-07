@@ -10,16 +10,18 @@ $title = "CSU-NVB - Remise de garde";
 <div class="row">
     <form>
         <input type="hidden" name="action" value="listshift">
-        <select onchange="this.form.submit()" name="id" size="1" id="id">
-            <?php foreach ($Bases as $base) : ?>
+        <select onchange="this.form.submit()" name="id" size="1">
+            <?php foreach ($bases as $base) : ?>
                 <option value="<?= $base['id'] ?>" <?= ($baseID == $base['id']) ? 'selected' : '' ?>
-                        name="site"><?= $base['name'] ?></option>
+                        name="base"><?= $base['name'] ?></option>
             <?php endforeach; ?>
         </select>
     </form>
     <?php if (($_SESSION['user']['admin'] == true)) : ?>
         <div class="col">
-            <button class='btn btn-primary m-1 float-right' onclick="newShiftSheet()">Nouvelle Feuille de garde</button>
+            <form action="?action=newShiftSheet&id=<?=$baseID?>" method="post">
+                <button class='btn btn-primary m-1 float-right'>Nouvelle Feuille de garde</button>
+            </form>
         </div>
     <?php endif; ?>
 </div>

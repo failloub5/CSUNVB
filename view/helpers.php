@@ -345,7 +345,7 @@ function slugButtons($page, $sheet, $slug)
         case "blank":
             if (ican('opensheet')) {
                 // Test pour vérifier si une autre feuille est déjà ouverte
-                if(true/**!checkOpen($page,$sheet["base_id"])*/){
+                if(!checkOpen($page,$sheet["base_id"])){
                     $buttons .= "<form  method='POST' action='?action=".$page."SwitchState'>
                     <input type='hidden' name='id' value='" . $sheet["id"] . "'>
                     <input type='hidden' name='newSlug' value='open'>

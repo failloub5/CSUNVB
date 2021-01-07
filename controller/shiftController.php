@@ -18,14 +18,14 @@ function newShiftSheet($baseID)
         }
     }
     $sheets= getAllShiftForBase($baseID);
-    return listSheet("shift",$sheets);
+    redirect("listshift",$baseID);
 }
 
 
 function listshift($baseID = null)
 {
     if($baseID == null)$baseID = $_SESSION['base']['id'];
-    $Bases = getbases();
+    $bases = getbases();
     $sheets= getAllShiftForBase($baseID);
     require_once VIEW . 'shift/list.php';
 }
@@ -130,6 +130,7 @@ function configureModel($sheetID, $modelID){
 
 function shiftSwitchState(){
     $res = setSlugForShift($_POST["id"],$_POST["newSlug"]);
+
     redirect("listshift",getBaseIDForShift($_POST["id"]));
 }
 
