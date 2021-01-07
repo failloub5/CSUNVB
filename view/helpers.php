@@ -307,17 +307,15 @@ function listShiftSheet($slug, $shiftList)
         $head = '<table class="table table-bordered  table-striped '.$slug.'Sheets" style="text-align: center">
         <thead class="thead-dark">
         <th>Date</th>
-        <th>État</th>
         <th>Véhicule</th>
         <th>Responsable</th>
         <th>Équipage</th>
-        <th>Action</th>
+        <th class="actions">Action</th>
         </thead>';
         $body = "";
         foreach ($shiftList as $shift) {
             $body .= "<tr>
-                <td><a href='?action=showshift&id=''" . $shift['id'] . "class='btn'>" . date('d.m.Y', strtotime($shift['date'])) . "</a></td>
-                <td>" . $shift['status'] . "</td>
+                <td>".date('d.m.Y', strtotime($shift['date']))."</td>
                 <td>Jour : " . $shift['novaDay'] . "<br>Nuit : " . $shift['novaNight'] . "</td>
                 <td>Jour : " . $shift['bossDay'] . "<br>Nuit : " . $shift['bossNight'] . "</td>
                 <td>Jour : " . $shift['teammateDay'] . "<br>Nuit : " . $shift['teammateNight'] . "</td>
