@@ -266,7 +266,6 @@ function slugsButtonTodo($slug, $sheetID)
             break;
     }
     return $buttons;
-
 }
 
 function listSheet($page, $sheets)
@@ -316,16 +315,23 @@ function listShiftSheet($slug, $shiftList)
         foreach ($shiftList as $shift) {
             $body .= "<tr>
                 <td>".date('d.m.Y', strtotime($shift['date']))."</td>
-                <td>Jour : " . $shift['novaDay'] . "<br>Nuit : " . $shift['novaNight'] . "</td>
+                <td>Jour : ".$shift["slug"] . $shift['novaDay'] . "<br>Nuit : " . $shift['novaNight'] . "</td>
                 <td>Jour : " . $shift['bossDay'] . "<br>Nuit : " . $shift['bossNight'] . "</td>
-                <td>Jour : " . $shift['teammateDay'] . "<br>Nuit : " . $shift['teammateNight'] . "</td>
-                <td><!-- TODO (XCL): faire un helper qui donne l'action correspondante à l'état actuel -->";
-            if ((($_SESSION['user']['admin'] == true and getNbshiftsheet('open', $shift["base_id"]) == 0) ||
+                <td>Jour : " . $shift['teammateDay'] . "<br>Nuit : " . $shift['teammateNight'] . "</td>";
+            $body .="<td><div class='d-flex justify-content-around'>
+                                <form>
+                                    <input type='hidden' name='action' value='showShift'>
+                                    <input type='hidden' name='id' value='" . $shift['id'] . "'>
+                                    <button type='submit' class='btn btn-primary'>Détails</button>
+                                </form>
+            " . slugsButtonTodo($slug, $shift) . "</div></td>";
+
+            /**if ((($_SESSION['user']['admin'] == true and getNbshiftsheet('open', $shift["base_id"]) == 0) ||
                 ($_SESSION['user']['admin'] == true and $shift['statusslug'] == 'close') ||
                 $shift['statusslug'] == 'open' ||
                 $shift['statusslug'] == 'reopen')) {
                 $body .= "<button class='btn btn-primary btn-sm' onclick='alterShiftStatus(".$shift['id'].")'>" . actionForStatus($shift['statusslug']) . "</button>";
-            }
+            }*/
             $body .= "</td></tr>";
         }
         $foot = "</table>";
@@ -335,4 +341,75 @@ function listShiftSheet($slug, $shiftList)
         $html .= "<div class='" . $slug . "Sheets'><p>Aucune feuille de tâche n'est actuellement " . showState($slug) . ".</p></div>";
     }
     return $html;
+}
+
+
+
+function slugsButtons($page, $sheet, $slug)
+{
+    $buttons = "";
+
+    switch ($slug) {
+        case "blank":
+            // Test pour vérifier si une autre feuille est déjà ouverte
+            $alreadyOpen = (empty("get".$page."BySlugs"($sheet['base_id'], 'open'))) ? false : true;
+
+            if (ican('opensheet')) {
+                if(!$alreadyOpen){
+                    $buttons = $buttons . "<form  method='POST' action='?action=switchSheetState'>
+                    <input type='hidden' name='id' value='" . $sheet["id"] . "'>
+                    <input type='hidden' name='newSlug' value='open'>
+                    <button type='submit' class='btn btn-primary'>Activer</button>
+                    </form>";
+                } else {
+                    $buttons = $buttons ."<form><button type='submit' class='btn btn-primary' disabled>Activer</button></form>";
+                }
+
+            }
+        case "archive":
+            if (ican('deletesheet')) { // TODO : ajouter une verification de la part de l'utilisateur (VB)
+                $buttons = $buttons . "<form  method='POST' action='?action=deleteSheet'>
+                    <input type='hidden' name='id' value='" . $sheetID . "'>
+                    <button type='submit' class='btn btn-primary'>Supprimer</button>
+                    </form>";
+            }
+            break;
+        case "open":
+            if (ican('closesheet')) {
+                $buttons = $buttons . "<form  method='POST' action='?action=switchSheetState'>
+                    <input type='hidden' name='id' value='" . $sheetID . "'>
+                    <input type='hidden' name='newSlug' value='close'>
+                    <button type='submit' class='btn btn-primary'>Fermer</button>
+                    </form>";
+            }
+            break;
+        case "reopen":
+            if (ican('closesheet')) {
+                $buttons = $buttons . "<form  method='POST' action='?action=switchSheetState'>
+                    <input type='hidden' name='id' value='" . $sheetID . "'>
+                    <input type='hidden' name='newSlug' value='close'>
+                    <button type='submit' class='btn btn-primary'>Refermer</button>
+                    </form>";
+            }
+            break;
+        case "close":
+            if (ican('opensheet')) {
+                $buttons = $buttons . "<form  method='POST' action='?action=switchSheetState'>
+                    <input type='hidden' name='id' value='" . $sheetID . "'>
+                    <input type='hidden' name='newSlug' value='reopen'>
+                    <button type='submit' class='btn btn-primary'>Corriger</button>
+                    </form>";
+            }
+            if (ican('archivesheet')) {
+                $buttons = $buttons . "<form  method='POST' action='?action=switchSheetState'>
+                    <input type='hidden' name='id' value='" . $sheetID . "'>
+                    <input type='hidden' name='newSlug' value='archive'>
+                    <button type='submit' class='btn btn-primary'>Archiver</button>
+                    </form>";
+            }
+            break;
+        default:
+            break;
+    }
+    return $buttons;
 }
