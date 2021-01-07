@@ -96,7 +96,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `csunvb_csu`.`status` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `slug` VARCHAR(10) UNIQUE NOT NULL,
-  `displayname` VARCHAR(10) NOT NULL,
+  `displayname` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB;
