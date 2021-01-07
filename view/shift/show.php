@@ -104,7 +104,9 @@ $title = "CSU-NVB - Remise de garde";
         </div>
     </div>
 </form>
-
+<div class='d-flex float-right'>
+    <?= slugButtons("shift", $shiftsheet, $shiftsheet["status"])?>
+</div>
 <?php foreach ($sections as $section): ?>
     <div class="row sectiontitle"><?= $section["title"] ?></div>
     <table class="table table-bordered table-striped">
