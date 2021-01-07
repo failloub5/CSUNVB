@@ -9,7 +9,7 @@
  */
 function getTodosheetByID($id)
 {
-    return selectOne("SELECT *
+    return selectOne("SELECT todosheets.id AS id, week, base_id, template_name, slug, displayname
                              FROM todosheets
                              LEFT JOIN status ON todosheets.status_id = status.id
                              WHERE todosheets.id =:id", ['id' => $id]);
