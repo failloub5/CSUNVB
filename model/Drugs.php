@@ -23,6 +23,10 @@ function getDrugSheetById($sheetID) {
     return selectOne("SELECT * FROM drugsheets WHERE id = '$sheetID'");
 }
 
+function getDrugSheetsByState($state) {
+    return selectMany("SELECT * FROM drugsheets WHERE state = '$state'");
+}
+
 function getDrugsInDrugSheet($sheetID) {
     return selectMany("SELECT drugs.name,drugs.id FROM drugsheet_use_batch
                              JOIN batches ON drugsheet_use_batch.batch_id=batches.id
@@ -75,6 +79,7 @@ function getRestockByDateAndDrug($date, $batch, $nova) {
     $res = selectOne("SELECT quantity FROM restocks WHERE date='$date' AND batch_id='$batch' AND nova_id='$nova'");
     return $res ? $res['quantity'] : ''; // chaîne vide si pas de restock
 }
+
 function getLatestDrugSheetWeekNb($base_id) {
     return selectOne("SELECT id,MAX(week) as 'week' FROM drugsheets WHERE base_id ='$base_id' GROUP BY base_id");
 }

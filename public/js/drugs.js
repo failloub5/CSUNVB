@@ -4,13 +4,14 @@
  **/
 
 function novaCheck(novaID, drugID, dateID) {
-    console.log(novaID + drugID + dateID + "start");
-    let originalQuantity = document.getElementById(novaID + drugID + dateID + "start").value;
-    let currentQuantity = document.getElementById(novaID + drugID + dateID + "end").value;
+    divid = novaID + drugID + dateID;
+    console.log(divid);
+    let originalQuantity = document.getElementById(divid + "start").value;
+    let currentQuantity = document.getElementById(divid + "end").value;
     if(Number(currentQuantity) !== Number(originalQuantity)) {
-        document.getElementById("nova" + novaID).style = "background-color: orange;"
+        document.getElementById(divid).style = "background-color: orange;"
     } else {
-        document.getElementById("nova" + novaID).removeAttribute("style");
+        document.getElementById(divid).removeAttribute("style");
     }
 }
 
