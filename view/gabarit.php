@@ -24,6 +24,7 @@
 
     <script src="assets/jquery/dist/jquery.js"></script>
     <script src="assets/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="js/global.js" defer></script>
 </head>
 <body>
 <div class="container">
@@ -38,9 +39,9 @@
             </div>
         </div>
         <div>
-            <a href="?action=home" class="btn btn-primary m-1 pull-right">Accueil</a>
+            <a href="?action=home" class="btn btn-primary m-1 float-right">Accueil</a>
             <?php if (isset($_SESSION['user'])) : ?>
-                <a href="?action=disconnect" class="btn btn-primary m-1 pull-right">Se déconnecter</a>
+                <a href="?action=disconnect" class="btn btn-primary m-1 float-right">Se déconnecter</a>
                 <p>Connecté en tant que : <strong><?= $_SESSION['user']['initials'] ?></strong> à
                     <strong><?= $_SESSION['base']['name'] ?></strong>
                 </p>

@@ -76,6 +76,32 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `csunvb_csu`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `csunvb_csu`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `firstname` VARCHAR(45) NOT NULL,
+  `lastname` VARCHAR(45) NOT NULL,
+  `initials` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(100) NOT NULL,
+  `admin` TINYINT NOT NULL,
+  `firstconnect` TINYINT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `initials_UNIQUE` (`initials` ASC) )
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `csunvb_csu`.`status`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `csunvb_csu`.`status` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `slug` VARCHAR(10) UNIQUE NOT NULL,
+  `displayname` VARCHAR(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
 -- Table `csunvb_csu`.`drugsheets`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `csunvb_csu`.`drugsheets` (
@@ -287,14 +313,13 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`drugsheet_use_batch` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `csunvb_csu`.`todosheets`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `csunvb_csu`.`todosheets` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `week` INT NOT NULL,
-  `state` VARCHAR(45) NOT NULL,
+  `status_id` INT NOT NULL,
   `base_id` INT NOT NULL,
   `template_name` VARCHAR(45) NULL DEFAULT NULL COMMENT 'The name under which the drugsheet may be identified as a templatre to be create new sheets. Copies will NOT carry that name',
   PRIMARY KEY (`id`),
@@ -303,6 +328,11 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`todosheets` (
   CONSTRAINT `fk_todosheets_bases1`
     FOREIGN KEY (`base_id`)
     REFERENCES `csunvb_csu`.`bases` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_todosheets_status1`
+    FOREIGN KEY (`status_id`)
+    REFERENCES `csunvb_csu`.`status` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

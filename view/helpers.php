@@ -37,11 +37,11 @@ function buttonTask($initials, $desription, $taskID, $type, $weekState)
 {
     if ($weekState == 'open') {
         if (empty($initials)) {
-            $messageQuittance = 'Vous êtes sur le point de quittancer la tâche suivante : <br> "'.$desription.'".' ;
-            return "<button type='button' class='btn btn-secondary toggleTodoModal btn-block m-1' data-title='Quittancer une tâche' data-id='".$taskID."' data-status='close' data-type='".$type."' data-content='" . $messageQuittance . "'>" . $desription . "<div class='bg-white rounded mt-1'><br></div></button>";
+            $messageQuittance = 'Vous êtes sur le point de quittancer la tâche suivante : <br> "' . $desription . '".';
+            return "<button type='button' class='btn btn-secondary toggleTodoModal btn-block m-1' data-title='Quittancer une tâche' data-id='" . $taskID . "' data-status='close' data-type='" . $type . "' data-content='" . $messageQuittance . "'>" . $desription . "<div class='bg-white rounded mt-1'><br></div></button>";
         } else {
-            $messageQuittance = 'Vous êtes sur le point de retirer la quittance de la tâche suivante : <br> "'.$desription.'".' ;
-            return "<button type='button' class='btn btn-success toggleTodoModal btn-block m-1' data-title='Retirer une quittance' data-id='".$taskID."' data-status='open' data-type='".$type."' data-content='" . $messageQuittance . "'>" . $desription . "<div class='text-dark bg-white rounded mt-1'>" . $initials . "</div></button>";
+            $messageQuittance = 'Vous êtes sur le point de retirer la quittance de la tâche suivante : <br> "' . $desription . '".';
+            return "<button type='button' class='btn btn-success toggleTodoModal btn-block m-1' data-title='Retirer une quittance' data-id='" . $taskID . "' data-status='open' data-type='" . $type . "' data-content='" . $messageQuittance . "'>" . $desription . "<div class='text-dark bg-white rounded mt-1'>" . $initials . "</div></button>";
         }
     } else {
         if (empty($initials)) {
@@ -80,6 +80,7 @@ function isAdmin()
     return true;
 }
 
+// todo (VB) : supprimer dès que les vues 'list' sont homogènes
 function actionForStatus($status)
 {
     switch ($status) {
@@ -96,9 +97,165 @@ function actionForStatus($status)
     }
 }
 
-function affichageDebug($var)
+
+function showState($slug, $plural = 0)
 {
-    echo "<pre>", var_dump($var), "</pre>";
+    switch ($slug) {
+        case "blank":
+            $result = "en préparation";
+            break;
+        case "open":
+            $result = "active";
+            if ($plural) {
+                $result = $result."(s)";
+            }
+            break;
+        case "reopen":
+            $result = "en correction";
+            break;
+        case "close":
+            $result = "fermée";
+            if ($plural) {
+                $result = $result."(s)";
+            }
+            break;
+        case "archive":
+            $result = "archivée";
+            if ($plural) {
+                $result = $result."(s)";
+            }
+            break;
+        default:
+            $result = "[Non défini]";
+            break;
+    }
+
+    return $result;
 }
 
-?>
+function showSheetsTodoByStatus($slug, $sheets)
+{
+    switch ($slug) {
+        case "blank":
+            $html = "<div class='slugBlank'>";
+            break;
+        case "open":
+            $html = "<div class='slugOpen'>";
+            break;
+        case "reopen":
+            $html = "<div class='slugReopen'>";
+            break;
+        case "close":
+            $html = "<div class='slugClose'>";
+            break;
+        case "archive":
+            $html = "<div class='slugArchive'>";
+            break;
+        default:
+            $html = "<div>";
+            break;
+    }
+
+    $html = $html . "<h3>Semaine(s) " . showState($slug, 1) . "</h3>
+                    <button class='btn dropdownButton'><i class='fas fa-caret-square-down' data-list='" . $slug . "' ></i></button>
+                    </div>";
+
+    if (!empty($sheets)) {
+        $html = $html . "<div class='" . $slug . "Sheets'><table class='table table-bordered'>
+                        <thead class='thead-dark'><th>Semaine n°</th><th class='actions'>Actions</th></thead>
+                        <tbody>";
+
+        $actionDetail = "";
+
+        foreach ($sheets as $sheet) {
+
+            $html = $html . "<tr> <td>Semaine " . $sheet['week'];
+
+            if (ican('createsheet') && (isset($week['template_name']))) {
+                $html = $html . "<i class='fas fa-file-alt' title='" . $week['template_name'] . "'></i>";
+            }
+
+            $html = $html . "<td><div class='d-flex justify-content-around'>
+                                <form>
+                                    <input type='hidden' name='action' value='showtodo'>
+                                    <input type='hidden' name='id' value='" . $sheet['id'] . "'>
+                                    <button type='submit' class='btn btn-primary'>Détails</button>
+                                </form>
+                            " . slugsButtonTodo($slug, $sheet['id']) . "</div></td>";
+        }
+
+        $html = $html . "</tr> </tbody> </table></div>";
+
+    } else {
+        $html = $html . "<div class='" . $slug . "Sheets'><p>Aucune feuille de tâche n'est actuellement " . showState($slug) . ".</p></div>";
+    }
+
+    return $html;
+}
+
+/**
+ * @param $slug
+ * @param $sheetID
+ * @return string
+ */
+function slugsButtonTodo($slug, $sheetID)
+{
+    $buttons = "";
+
+    switch ($slug) {
+        case "blank":
+            if (ican('opensheet')) {
+                $buttons = $buttons . "<form  method='POST' action='?action=switchSheetState'>
+                    <input type='hidden' name='id' value='" . $sheetID . "'>
+                    <input type='hidden' name='newSlug' value='open'>
+                    <button type='submit' class='btn btn-primary'>Activer</button>
+                    </form>";
+            }
+        case "archive":
+            if (ican('deletesheet')) {
+                $buttons = $buttons . "<form  method='POST' action=''>
+                    <input type='hidden' name='id' value='" . $sheetID . "'>
+                    <button type='submit' class='btn btn-primary'>Supprimer</button>
+                    </form>";
+            }
+            break;
+        case "open":
+            if (ican('closesheet')) {
+                $buttons = $buttons . "<form  method='POST' action='?action=switchSheetState'>
+                    <input type='hidden' name='id' value='" . $sheetID . "'>
+                    <input type='hidden' name='newSlug' value='close'>
+                    <button type='submit' class='btn btn-primary'>Fermer</button>
+                    </form>";
+            }
+            break;
+        case "reopen":
+            if (ican('closesheet')) {
+                $buttons = $buttons . "<form  method='POST' action='?action=switchSheetState'>
+                    <input type='hidden' name='id' value='" . $sheetID . "'>
+                    <input type='hidden' name='newSlug' value='close'>
+                    <button type='submit' class='btn btn-primary'>Refermer</button>
+                    </form>";
+            }
+            break;
+        case "close":
+            if (ican('opensheet')) {
+                $buttons = $buttons . "<form  method='POST' action='?action=switchSheetState'>
+                    <input type='hidden' name='id' value='" . $sheetID . "'>
+                    <input type='hidden' name='newSlug' value='reopen'>
+                    <button type='submit' class='btn btn-primary'>Corriger</button>
+                    </form>";
+            }
+            if (ican('archivesheet')) {
+                $buttons = $buttons . "<form  method='POST' action='?action=switchSheetState'>
+                    <input type='hidden' name='id' value='" . $sheetID . "'>
+                    <input type='hidden' name='newSlug' value='archive'>
+                    <button type='submit' class='btn btn-primary'>Archiver</button>
+                    </form>";
+            }
+            break;
+        default:
+            break;
+    }
+    return $buttons;
+
+}
