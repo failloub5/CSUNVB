@@ -253,3 +253,7 @@ function getShiftActionID($actionName){
 function getShiftActionName($actionID){
     return selectOne("SELECT text from shiftactions where id=:actionID", ["actionID" => $actionID])["text"];
 }
+
+function setSlugForShift($id,$slug){
+    return execute("update shiftsheets set status_id= (select id from status where slug =:slug) WHERE id=:id",["slug" => $slug,"id" => $id]);
+}

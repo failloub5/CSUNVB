@@ -21,33 +21,7 @@ function newShiftSheet($baseID)
     return listSheet("shift",$sheets);
 }
 
-// Attention: cette fonction se base sur un diagramme d'état simplifié:
-// blank -> open -> close -> reopen -> close
-// Elle ne fonctionnera pas le jour où on pourra passer d'un état à un autre parmi plusieurs
-function altershiftsheetStatus($sheet_id)
-{
-    $sheet = getshiftsheetByID($sheet_id);
-    switch ($sheet["status"]) {
-        case 'open' :
-        case 'reopen' :
-            closeShiftPage($sheet["id"]);
-            break;
-        case 'blank' :
-            if (($_SESSION['user']['admin'] == true)) {
-                if (getNbshiftsheet('open', $sheet["base_id"]) == 0) {
-                    openShiftPage($sheet["id"]);
-                } else {
-                    $_SESSION["flashmessage"] = "Une autre feuille est déjà ouverte";
-                }
-            }
-            break;
-        case 'close' :
-            if (($_SESSION['user']['admin'] == true)) reopenShiftPage($sheet["id"]);
-            break;
-        default :
-            break;
-    }
-}
+
 function listshift($baseID = null)
 {
     if($baseID == null)$baseID = $_SESSION['base']['id'];
@@ -152,5 +126,10 @@ function configureModel($sheetID, $modelID){
         return $newID;
     }
     return $modelID;
+}
+
+function shiftSwitchState(){
+    $res = setSlugForShift($_POST["id"],$_POST["newSlug"]);
+    redirect("listshift",$_POST["baseID"]);
 }
 

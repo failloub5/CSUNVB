@@ -60,10 +60,6 @@ removeCarryOnBtn.forEach((item) => {
 
 
 
-$(".shiftInfo").change(function () {
-    document.getElementById("updateShift").classList.remove("d-none");
-});
-
 function diplayShiftForBase() {
     var id = $("#id").val();
     var request = new XMLHttpRequest();
@@ -86,17 +82,4 @@ function newShiftSheet() {
     diplayShiftForBase();
 }
 
-function altershiftsheetStatus() {
-    var id = $("#id").val();
-    var request = new XMLHttpRequest();
-    request.open("GET", "?action=newShiftSheet&id= "+ id, true);
-    request.send();
-    diplayShiftForBase();
-}
 
-function alterShiftStatus(shiftSheetID){
-    var request = new XMLHttpRequest();
-    request.open("GET", "?action=altershiftsheetStatus&id= "+ shiftSheetID, true);
-    request.send();
-    diplayShiftForBase();
-}
