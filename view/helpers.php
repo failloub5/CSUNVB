@@ -303,7 +303,7 @@ function listShiftSheet($slug, $shiftList)
                     <button class='btn dropdownButton'><i class='fas fa-caret-square-down' data-list='" . $slug . "' ></i></button>
                     </div>";
     if (count($shiftList) > 0) {
-        $head = '<table class="table table-bordered  table-striped '.$slug.'Sheets" style="text-align: center">
+        $head = '<table class="table table-bordered '.$slug.'Sheets" style="text-align: center">
         <thead class="thead-dark">
         <th>Date</th>
         <th>Véhicule</th>
@@ -315,7 +315,7 @@ function listShiftSheet($slug, $shiftList)
         foreach ($shiftList as $shift) {
             $body .= "<tr>
                 <td>".date('d.m.Y', strtotime($shift['date']))."</td>
-                <td>Jour : ".$shift["slug"] . $shift['novaDay'] . "<br>Nuit : " . $shift['novaNight'] . "</td>
+                <td>Jour : ". $shift['novaDay'] . "<br>Nuit : " . $shift['novaNight'] . "</td>
                 <td>Jour : " . $shift['bossDay'] . "<br>Nuit : " . $shift['bossNight'] . "</td>
                 <td>Jour : " . $shift['teammateDay'] . "<br>Nuit : " . $shift['teammateNight'] . "</td>";
             $body .="<td><div class='d-flex justify-content-around'>

@@ -3,12 +3,11 @@ ob_start();
 $title = "CSU-NVB - Remise de garde";
 ?>
 <script src="js/shift.js"></script>
-<div class="row m-2">
+<div>
     <h1>Remise de Garde</h1>
 </div>
-
-<div class="row">
-    <form>
+<div>
+    <form><!-- Liste déroulante pour le choix de la base -->
         <input type="hidden" name="action" value="listshift">
         <select onchange="this.form.submit()" name="id" size="1">
             <?php foreach ($bases as $base) : ?>
@@ -17,16 +16,25 @@ $title = "CSU-NVB - Remise de garde";
             <?php endforeach; ?>
         </select>
     </form>
-    <?php if (($_SESSION['user']['admin'] == true)) : ?>
-        <div class="col">
-            <form action="?action=newShiftSheet&id=<?=$baseID?>" method="post">
-                <button class='btn btn-primary m-1 float-right'>Nouvelle Feuille de garde</button>
+    <div class="newSheetZone"> <!-- Liste déroulante pour le choix du modèle et bouton de nouvelle semaine -->
+        <?php if (ican('createsheet')) : ?>
+            <form method="POST" action="?action=newShiftSheet&id=<?= $baseID ?>" class="float-right">
+                <select name="selectModel">
+                    <option value='lastValue' selected=selected>En développement</option>
+                    <?php foreach ($templates as $template) : ?>
+                        <option value='<?= $template['template_name'] ?>'><?= $template['template_name'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <button class='btn btn-primary m-1'>Nouvelle Feuille de garde</button>
             </form>
-        </div>
-    <?php endif; ?>
+        <?php endif; ?>
+    </div>
+
 </div>
+
+
 <div id="tableContent">
-    <?= listSheet("shift",$sheets) ?>
+    <?= listSheet("shift", $sheets) ?>
 </div>
 <?php
 $content = ob_get_clean();
