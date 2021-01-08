@@ -17,7 +17,7 @@ $title = "CSU-NVB - Remise de garde";
         </select>
     </form>
     <div class="newSheetZone"> <!-- Liste déroulante pour le choix du modèle et bouton de nouvelle semaine -->
-        <?php if (ican('createsheet')) : ?>
+        <?php if (ican('createsheet') && ($_SESSION['base']['id'] == $baseID)) : ?>
             <form method="POST" action="?action=newShiftSheet&id=<?= $baseID ?>" class="float-right">
                 <select name="selectModel">
                     <option value='lastValue' selected=selected>En développement</option>
