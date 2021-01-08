@@ -346,7 +346,7 @@ function slugButtons($page, $sheet, $slug)
             if (ican('opensheet')) {
                 // Test pour vérifier si une autre feuille est déjà ouverte
                 if(!checkOpen($page,$sheet["base_id"])){
-                    $buttons .= "<form  method='POST' action='?action=".$page."SwitchState'>
+                    $buttons .= "<form  method='POST' action='?action=".$page."SheetSwitchState'>
                     <input type='hidden' name='id' value='" . $sheet["id"] . "'>
                     <input type='hidden' name='newSlug' value='open'>
                     <button type='submit' class='btn btn-primary'>Activer</button>
@@ -357,7 +357,7 @@ function slugButtons($page, $sheet, $slug)
             }
         case "archive":
             if (ican('deletesheet')) { // TODO : ajouter une verification de la part de l'utilisateur (VB)
-                $buttons .= "<form  method='POST' action='?action=".$page."Delete'>
+                $buttons .= "<form  method='POST' action='?action=".$page."DeleteSheet'>
                     <input type='hidden' name='id' value='" . $sheet["id"] . "'>
                     <button type='submit' class='btn btn-primary'>Supprimer</button>
                     </form>";
@@ -365,7 +365,7 @@ function slugButtons($page, $sheet, $slug)
             break;
         case "open":
             if (ican('closesheet')) {
-                $buttons .= "<form  method='POST' action='?action=".$page."SwitchState'>
+                $buttons .= "<form  method='POST' action='?action=".$page."SheetSwitchState'>
                     <input type='hidden' name='id' value='" .  $sheet["id"]  . "'>
                     <input type='hidden' name='newSlug' value='close'>
                     <button type='submit' class='btn btn-primary'>Fermer</button>
@@ -374,7 +374,7 @@ function slugButtons($page, $sheet, $slug)
             break;
         case "reopen":
             if (ican('closesheet')) {
-                $buttons .= "<form  method='POST' action='?action=".$page."SwitchState'>
+                $buttons .= "<form  method='POST' action='?action=".$page."SheetSwitchState'>
                     <input type='hidden' name='id' value='" . $sheet["id"] . "'>
                     <input type='hidden' name='newSlug' value='close'>
                     <button type='submit' class='btn btn-primary'>Refermer</button>
@@ -383,14 +383,14 @@ function slugButtons($page, $sheet, $slug)
             break;
         case "close":
             if (ican('opensheet')) {
-                $buttons .= "<form  method='POST' action='?action=".$page."SwitchState'>
+                $buttons .= "<form  method='POST' action='?action=".$page."SheetSwitchState'>
                     <input type='hidden' name='id' value='" . $sheet["id"] . "'>
                     <input type='hidden' name='newSlug' value='reopen'>
                     <button type='submit' class='btn btn-primary'>Corriger</button>
                     </form>";
             }
             if (ican('archivesheet')) {
-                $buttons .= "<form  method='POST' action='?action=".$page."SwitchState'>
+                $buttons .= "<form  method='POST' action='?action=".$page."SheetSwitchState'>
                     <input type='hidden' name='id' value='" . $sheet["id"] . "'>
                     <input type='hidden' name='newSlug' value='archive'>
                     <button type='submit' class='btn btn-primary'>Archiver</button>
