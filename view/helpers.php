@@ -20,6 +20,7 @@ function setFlashMessage($message)
     $_SESSION['flashmessage'] = $message;
 }
 
+// todo (VB) : supprimer dès que les vues 'list' sont homogènes
 function getDrugSheetStateButton($state)
 {
     switch ($state) {
@@ -165,14 +166,12 @@ function showSheetsTodoByStatus($slug, $sheets)
                         <thead class='thead-dark'><th>Semaine n°</th><th class='actions'>Actions</th></thead>
                         <tbody>";
 
-        $actionDetail = "";
-
         foreach ($sheets as $sheet) {
 
             $html = $html . "<tr> <td>Semaine " . $sheet['week'];
 
-            if (ican('createsheet') && (isset($week['template_name']))) {
-                $html = $html . "<i class='fas fa-file-alt' title='" . $week['template_name'] . "'></i>";
+            if (ican('createsheet') && (isset($sheet['template_name']))) {
+                $html = $html . "<i class='fas fa-file-alt template' title='" . $sheet['template_name'] . "'></i>";
             }
 
             $html = $html . "<td><div class='d-flex justify-content-around'>

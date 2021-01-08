@@ -5,14 +5,15 @@ $title = "CSU-NVB - Tâches hebdomadaires";
 <div>
     <h1>Tâches hebdomadaires</h1>
     <h2>Semaine <?= $week['week'] ?> - Base de <?= $base['name']?> <?= showSheetState($week['id'], "todo") ?></h2>
+    <form>
+        <input type="hidden" name="action" value="listtodoforbase">
+        <input type="hidden" name="id" value="<?= $base['id'] ?>">
+        <button type="submit" class='btn btn-primary m-1 float-right'>Retour à la liste</button>
+    </form>
+</div>
+<div>
     <div>
-        <div>
-            <form>
-                <input type="hidden" name="action" value="listtodoforbase">
-                <input type="hidden" name="id" value="<?= $base['id'] ?>">
-                <button type="submit" class='btn btn-primary m-1 float-right'>Retour à la liste</button>
-            </form>
-            <?php if($_SESSION['user']['admin'] == 1 && is_null($template['template_name'])) : ?>
+        <?php if($_SESSION['user']['admin'] == 1 && is_null($template['template_name'])) : ?>
             <form action="?action=modelWeek" method="POST">
                 <input type="hidden" name="todosheetID" value="<?= $week['id'] ?>">
                 <input type="hidden" name="baseID" value="<?= $base['id'] ?>">
@@ -20,35 +21,16 @@ $title = "CSU-NVB - Tâches hebdomadaires";
 
                 <button type="submit" class='btn btn-primary m-1 float-right'>Retenir comme modèle</button>
             </form>
-            <?php elseif($_SESSION['user']['admin'] == 1 && !is_null($template['template_name'])): ?>
+        <?php elseif($_SESSION['user']['admin'] == 1 && !is_null($template['template_name'])): ?>
             <form action="?action=deleteTemplate" method="POST">
                 <input type="hidden" name="todosheetID" value="<?= $week['id'] ?>">
                 <button type="submit" class='btn btn-primary m-1 float-right'>Oublier le modèle</button>
             </form>
-            <?php endif; ?>
-        </div>
-        <!-- A CHANGER -->
-        <?php if ($_SESSION['user']['admin'] == 1 && $alreadyOpen == false && $week['slug'] == "close"): ?>
-            <div>
-                <form>
-                    <input type="hidden" name="action" value="reopenweek">
-                    <input type="hidden" name="id" value="<?= $week['id'] ?>">
-                    <button type="submit" class='btn btn-primary m-1 float-right'>Réouvrir</button>
-                </form>
-            </div>
-            <!-- A CHANGER -->
-        <?php elseif (ican('closesheet') && $week['slug'] == "open"): ?>
-            <div>
-                <form>
-                    <input type="hidden" name="action" value="closeweek">
-                    <input type="hidden" name="id" value="<?= $week['id'] ?>">
-                    <button type="submit" class='btn btn-primary m-1 float-right'>Clôturer</button>
-                </form>
-            </div>
         <?php endif; ?>
     </div>
-    <br>
-    <br>
+</div>
+<div> <!-- Boutons relatifs à l'état de la feuille -->
+<?=  slugsButtonTodo($week['slug'], $week['id'])?>
 </div>
 <div>
     <div class="week text-center p-0">
