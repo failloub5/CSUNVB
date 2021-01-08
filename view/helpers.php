@@ -162,7 +162,7 @@ function showSheetsTodoByStatus($slug, $sheets)
                     </div>";
 
     if (!empty($sheets)) {
-        $html = $html . "<div class='" . $slug . "Sheets'><table class='table table-bordered'>
+        $html = $html . "<div class='" . $slug . "Sheets' style='margin-top: 0px;'><table class='table table-bordered' style='margin-top: 0px;'>
                         <thead class='thead-dark'><th>Semaine n°</th><th class='actions'>Actions</th></thead>
                         <tbody>";
 
