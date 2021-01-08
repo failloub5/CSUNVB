@@ -29,7 +29,6 @@ $title = "CSU-NVB - Remise de garde";
             </form>
         <?php endif; ?>
     </div>
-
 </div>
 
 

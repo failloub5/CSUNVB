@@ -307,7 +307,7 @@ function listShiftSheet($slug, $shiftList)
                     <button class='btn dropdownButton'><i class='fas fa-caret-square-down' data-list='" . $slug . "' ></i></button>
                     </div>";
     if (count($shiftList) > 0) {
-        $head = '<table class="table table-bordered '.$slug.'Sheets" style="text-align: center">
+        $head = '<table class="table table-bordered '.$slug.'Sheets" style="margin-top:0px; text-align: center">
         <thead class="thead-dark">
         <th>Date</th>
         <th>Véhicule</th>
