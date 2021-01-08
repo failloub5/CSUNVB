@@ -212,7 +212,7 @@ function slugsButtonTodo($slug, $sheetID)
                     $buttons = $buttons . "<form  method='POST' action='?action=switchSheetState'>
                     <input type='hidden' name='id' value='" . $sheetID . "'>
                     <input type='hidden' name='newSlug' value='open'>
-                    <button type='submit' class='btn btn-primary'>Activer</button>
+                    <button type='submit' class='btn btn-primary float-right'>Activer</button>
                     </form>";
                 } else {
                     $buttons = $buttons ."<form><button type='submit' class='btn btn-primary' disabled>Activer</button></form>";
@@ -235,6 +235,11 @@ function slugsButtonTodo($slug, $sheetID)
                     <button type='submit' class='btn btn-primary'>Fermer</button>
                     </form>";
             }
+            $buttons = $buttons . "<form  method='POST' action='?action=switchSheetState'>
+                    <input type='hidden' name='id' value='" . $sheetID . "'>
+                    <input type='hidden' name='newSlug' value='print_pdf'>
+                    <button type='submit' class='btn btn-primary'>Imprimer pdf</button>
+                    </form>";
             break;
         case "reopen":
             if (ican('closesheet')) {

@@ -18,7 +18,6 @@ $title = "CSU-NVB - Tâches hebdomadaires";
                 <input type="hidden" name="todosheetID" value="<?= $week['id'] ?>">
                 <input type="hidden" name="baseID" value="<?= $base['id'] ?>">
                 <input type="text" name="template_name" value="<?= $template['template_name']?>">
-
                 <button type="submit" class='btn btn-primary m-1 float-right'>Retenir comme modèle</button>
             </form>
         <?php elseif($_SESSION['user']['admin'] == 1 && !is_null($template['template_name'])): ?>
