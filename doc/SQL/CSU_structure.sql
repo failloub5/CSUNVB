@@ -356,7 +356,7 @@ CREATE TABLE IF NOT EXISTS `csunvb_csu`.`todos` (
   CONSTRAINT `fk_todoitems_todosheets1`
     FOREIGN KEY (`todosheet_id`)
     REFERENCES `csunvb_csu`.`todosheets` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_todoitems_todotexts1`
     FOREIGN KEY (`todothing_id`)
