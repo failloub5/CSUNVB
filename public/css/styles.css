@@ -122,6 +122,10 @@ table.table-bordered > tbody > tr > td{
     text-align: center;
 }
 
+.template{
+    margin: 5px;
+}
+
 /* ------------------------------------------------------------
 * Fonds de couleur correspondant aux différents slugs
  -------------------------------------------------------------- */
