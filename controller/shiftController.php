@@ -18,40 +18,14 @@ function newShiftSheet($baseID)
         }
     }
     $sheets= getAllShiftForBase($baseID);
-    return listSheet("shift",$sheets);
+    redirect("listshift",$baseID);
 }
 
-// Attention: cette fonction se base sur un diagramme d'état simplifié:
-// blank -> open -> close -> reopen -> close
-// Elle ne fonctionnera pas le jour où on pourra passer d'un état à un autre parmi plusieurs
-function altershiftsheetStatus($sheet_id)
-{
-    $sheet = getshiftsheetByID($sheet_id);
-    switch ($sheet["status"]) {
-        case 'open' :
-        case 'reopen' :
-            closeShiftPage($sheet["id"]);
-            break;
-        case 'blank' :
-            if (($_SESSION['user']['admin'] == true)) {
-                if (getNbshiftsheet('open', $sheet["base_id"]) == 0) {
-                    openShiftPage($sheet["id"]);
-                } else {
-                    $_SESSION["flashmessage"] = "Une autre feuille est déjà ouverte";
-                }
-            }
-            break;
-        case 'close' :
-            if (($_SESSION['user']['admin'] == true)) reopenShiftPage($sheet["id"]);
-            break;
-        default :
-            break;
-    }
-}
+
 function listshift($baseID = null)
 {
     if($baseID == null)$baseID = $_SESSION['base']['id'];
-    $Bases = getbases();
+    $bases = getbases();
     $sheets= getAllShiftForBase($baseID);
     require_once VIEW . 'shift/list.php';
 }
@@ -154,3 +128,20 @@ function configureModel($sheetID, $modelID){
     return $modelID;
 }
 
+function shiftSheetSwitchState(){
+    $res = setSlugForShift($_POST["id"],$_POST["newSlug"]);
+
+    redirect("listshift",getBaseIDForShift($_POST["id"]));
+}
+
+function shiftDeleteSheet(){
+    $res = shiftSheetDelete($_POST["id"]);
+    redirect("listshift",getBaseIDForShift($_POST["id"]));
+}
+function shiftPDF($id){
+    $pdf = new FPDF();
+    $pdf->AddPage();
+    $pdf->SetFont('Arial','B',16);
+    $pdf->Cell(40,10,"Voici un Pdf pas vraiment utile pour le moment");
+    $pdf->Output("D","unPDF.pdf");
+}
